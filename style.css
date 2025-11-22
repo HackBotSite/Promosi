@@ -15,9 +15,10 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 1000;
 }
 nav .logo img {
-  height: 40px;
+  height: 80px; /* logo lebih besar */
 }
 nav .menu a {
   color: white;
@@ -30,34 +31,17 @@ nav .menu a {
 .hero {
   height: 100vh;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(to right,#0a1f44,#1a3a6e);
-  color: white;
-  padding-top: 60px; /* offset navbar */
-}
-.hero h1 {
-  font-size: 3em;
-  margin: 0;
-}
-.hero p {
-  font-size: 1.2em;
-}
-.hero button {
-  padding: 10px 20px;
-  background: #FFD700;
-  border: none;
-  border-radius: 5px;
-  font-weight: bold;
-  cursor: pointer;
+  padding-top: 80px; /* offset navbar */
+  position: relative;
 }
 
 /* Slider */
 .slider {
   position: relative;
   max-width: 1200px;
-  margin: 30px auto;
+  margin: 0 auto;
   overflow: hidden;
   border-radius: 10px;
 }
@@ -82,6 +66,33 @@ nav .menu a {
   color: #fff;
   border: none;
   padding: 10px;
+  cursor: pointer;
+}
+
+/* Hero text overlay */
+.hero-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+  text-shadow: 0 2px 5px rgba(0,0,0,0.7);
+}
+.hero-text h1 {
+  font-size: 3em;
+  margin-bottom: 20px;
+}
+.hero-text p {
+  font-size: 1.2em;
+  margin-bottom: 20px;
+}
+.hero-text button {
+  padding: 10px 20px;
+  background: #FFD700;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
   cursor: pointer;
 }
 
@@ -114,13 +125,3 @@ footer {
 }
 
 /* WhatsApp Floating */
-.wa-float {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: #25D366;
-  padding: 15px;
-  border-radius: 50%;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-}
-.
