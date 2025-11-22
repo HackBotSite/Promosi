@@ -101,24 +101,20 @@ nav .menu a:hover {
   cursor: pointer;
 }
 
-/* Hero text overlay 
+/* Hero text overlay */
 .hero-text {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  color: white;
-  text-shadow: 0 2px 5px rgba(0,0,0,0.4);
 }
-.hero-text h1 {
-  font-size: 3em;
-  margin-bottom: 20px;
-}
+
+.hero-text h1,
 .hero-text p {
-  font-size: 1.2em;
-  margin-bottom: 20px;
+  display: none; /* sembunyikan teks judul & paragraf */
 }
+
 .hero-text button {
   padding: 10px 20px;
   background: #e4b100;
@@ -129,9 +125,11 @@ nav .menu a:hover {
   color: #1c1f2a;
   transition: background 0.3s ease;
 }
+
 .hero-text button:hover {
   background: #f1c400;
-}*/
+}
+
 
 /* Sections */
 .section {
