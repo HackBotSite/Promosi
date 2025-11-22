@@ -13,18 +13,27 @@ nav {
   top: 0;
   width: 100%;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   z-index: 1000;
+  box-sizing: border-box;
 }
+
 nav .logo img {
-  height: 80px; /* logo lebih besar */
+  height: 80px;
 }
+
+nav .menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
 nav .menu a {
   color: white;
-  margin: 0 15px;
   text-decoration: none;
   font-weight: bold;
+  white-space: nowrap;
 }
 
 /* Hero */
