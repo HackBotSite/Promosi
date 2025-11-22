@@ -101,7 +101,7 @@ nav .menu a:hover {
   cursor: pointer;
 }
 
-/* Hero text overlay */
+/* Hero text overlay 
 .hero-text {
   position: absolute;
   top: 50%;
@@ -131,7 +131,7 @@ nav .menu a:hover {
 }
 .hero-text button:hover {
   background: #f1c400;
-}
+}*/
 
 /* Sections */
 .section {
