@@ -125,3 +125,21 @@ footer {
 }
 
 /* WhatsApp Floating */
+.wa-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #25D366;
+  padding: 15px;
+  border-radius: 50%;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.wa-float img {
+  width: 30px;
+  height: 30px;
+}
+
