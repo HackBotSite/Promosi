@@ -259,6 +259,31 @@ nav .menu a:hover {
   color: #e4b100;
 }
 
+.dashboard-layout {
+  display: flex;
+  min-height: 100vh;
+  background: #1c1f2a;
+  color: #fff;
+  padding-top: 80px; /* offset navbar */
+}
+
+.sidebar {
+  width: 240px;
+  background: #2c2f3a;
+  padding: 20px;
+  min-height: calc(100vh - 80px); /* sidebar full height */
+  position: fixed;
+  top: 80px; /* di bawah navbar */
+  left: 0;
+}
+
+.dashboard-content {
+  flex: 1;
+  margin-left: 240px; /* beri ruang sidebar */
+  padding: 40px;
+}
+
+
 
 /* Footer */
 footer {
