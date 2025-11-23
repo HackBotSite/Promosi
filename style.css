@@ -283,6 +283,61 @@ nav .menu a:hover {
   padding: 40px;
 }
 
+.apikey-box {
+  margin-bottom: 40px;
+}
+.apikey-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+#apikey {
+  background: #2c2f3a;
+  color: #fff;
+  border: 1px solid #444;
+  padding: 10px;
+  border-radius: 6px;
+  width: 100%;
+  max-width: 300px;
+}
+.apikey-container button {
+  background: #e4b100;
+  color: #1c1f2a;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.apikey-container button:hover {
+  background: #f1c400;
+}
+
+.endpoint-table {
+  margin-bottom: 40px;
+}
+.endpoint-table table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+.endpoint-table th,
+.endpoint-table td {
+  border: 1px solid #444;
+  padding: 12px;
+  text-align: left;
+}
+.endpoint-table th {
+  background: #2c2f3a;
+  color: #e4b100;
+}
+.endpoint-table tr:nth-child(even) {
+  background: #1f212b;
+}
+.endpoint-table tr:hover {
+  background: #2a2d3a;
+}
+
 
 
 /* Footer */
