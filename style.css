@@ -279,8 +279,8 @@ nav .menu a:hover {
 
 .dashboard-content {
   flex: 1;
-  margin-left: 240px; /* ruang sidebar */
-  padding: 20px 30px; /* lebih rapat */
+  margin-left: 240px;
+  padding: 100px 30px 30px; /* top padding ditambah agar tidak tertutup navbar */
   max-width: calc(100% - 240px);
 }
 
