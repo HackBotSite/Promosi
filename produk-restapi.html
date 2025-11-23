@@ -6,6 +6,15 @@
   <title>Dashboard RestAPI - TeamHackBotsRG</title>
   <link rel="stylesheet" href="style.css">
 </head>
+<script>
+  function copyApiKey() {
+    const input = document.getElementById("apikey");
+    input.select();
+    input.setSelectionRange(0, 99999);
+    document.execCommand("copy");
+    alert("API Key berhasil disalin!");
+  }
+</script>
 <body class="dashboard">
 
   <!-- Navbar -->
@@ -45,6 +54,14 @@
       </ul>
     </aside>
 
+    <section class="apikey-box">
+      <h2>API Key Anda</h2>
+      <div class="apikey-container">
+        <input type="text" id="apikey" value="teamhackbotsrg-rg123456" readonly>
+        <button onclick="copyApiKey()">Copy</button>
+      </div>
+    </section>
+
     <!-- Konten utama -->
     <main class="dashboard-content">
       <h1>Dashboard RestAPI</h1>
@@ -56,6 +73,36 @@
         <div class="card"><h3>Total Requests</h3><p>37,245,119</p></div>
         <div class="card"><h3>Requests Today</h3><p>3,615</p></div>
       </div>
+
+      <section class="endpoint-table">
+        <h2>Daftar Endpoint</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Endpoint</th>
+              <th>Deskripsi</th>
+              <th>Contoh URL</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>/api/users</td>
+              <td>Ambil data pengguna</td>
+              <td>https://teamhackbotsrg.my.id/api/users</td>
+            </tr>
+            <tr>
+              <td>/api/status</td>
+              <td>Status server & uptime</td>
+              <td>https://teamhackbotsrg.my.id/api/status</td>
+            </tr>
+            <tr>
+              <td>/api/image/random</td>
+              <td>Gambar acak dari kategori</td>
+              <td>https://teamhackbotsrg.my.id/api/image/random?apikey=teamhackbotsrg-xyz123456</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
 
       <!-- S&K -->
       <section class="terms">
