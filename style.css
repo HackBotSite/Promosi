@@ -152,6 +152,77 @@ nav .menu a:hover {
   border-radius: 8px;
 }
 
+/* Hover effect untuk card */
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Gallery Grid */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.gallery img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  object-fit: cover;
+}
+
+/* Hover effect */
+.gallery img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+}
+
+/* Section styling */
+.produk-detail {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.produk-detail h2 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  text-align: center;
+  color: #333;
+}
+
+.produk-detail p {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 30px;
+  color: #555;
+  line-height: 1.6;
+}
+
+/* Back link */
+.back-link {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.back-link a {
+  text-decoration: none;
+  color: #fff;
+  background: #333;
+  padding: 10px 20px;
+  border-radius: 6px;
+  transition: background 0.3s ease;
+}
+
+.back-link a:hover {
+  background: #555;
+}
+
 /* Footer */
 footer {
   background: #0a1f44;
