@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard RestAPI - HackBotsApi</title>
+  <title>Dashboard RestAPI - HackBots</title>
   <link rel="stylesheet" href="style.css">
+  <script>
+    function copyApiKey() {
+      const input = document.getElementById("apikey");
+      input.select();
+      input.setSelectionRange(0, 99999);
+      document.execCommand("copy");
+      alert("API Key berhasil disalin!");
+    }
+  </script>
 </head>
-<script>
-  function copyApiKey() {
-    const input = document.getElementById("apikey");
-    input.select();
-    input.setSelectionRange(0, 99999);
-    document.execCommand("copy");
-    alert("API Key berhasil disalin!");
-  }
-</script>
 <body class="dashboard">
 
   <!-- Navbar -->
@@ -36,11 +36,11 @@
     <!-- Sidebar -->
     <aside class="sidebar">
       <div class="sidebar-header">
-        <h2>TeamHackBotsRG API</h2>
+        <h2>HackBots API</h2>
       </div>
       <h3>Kategori API</h3>
       <ul>
-        <li><a href="#" class="active">Dashboard</a></li>
+        <li><a href="produk-restapi.html" class="active">Dashboard</a></li>
         <li><a href="pricing.html">Pricing</a></li>
         <li><a href="#">Changelog / WhatsApp</a></li>
         <li><a href="#">All Feature</a></li>
@@ -54,15 +54,7 @@
       </ul>
     </aside>
 
-    <section class="apikey-box">
-      <h2>API Key Anda</h2>
-      <div class="apikey-container">
-        <input type="text" id="apikey" value="teamhackbotsrg-rg123456" readonly>
-        <button onclick="copyApiKey()">Copy</button>
-      </div>
-    </section>
-
-    <!-- Konten utama -->
+    <!-- Konten utama Dashboard -->
     <main class="dashboard-content">
       <h1>Dashboard RestAPI</h1>
 
@@ -86,38 +78,65 @@
         </div>
       </section>
 
-      <!-- S&K -->
-      <section class="terms-box">
-        <h2>S&K (Syarat & Ketentuan)</h2>
-        <div class="terms-item">
-          <p>1. Jangan flooding requests.</p>
-          <p>2. Membuat banyak akun pada IP yang sama maka IP otomatis akan di block.</p>
-          <p>3. Owner dapat sewaktu waktu mengubah ketentuan di website ini, demi menjaga kualitas website.</p>
-          <p>4. Dilarang keras untuk menyebarkan apikey Anda, jika ketahuan. InsyaAllah akan di block :)</p>
-          <p>5. Jangan ditembak atuh, sakit.</p>
-          <p>6. Owner tidak bertanggung jawab atas apa yang Anda lakukan dalam penggunaan website ini.</p>
+      <!-- API Key -->
+      <section class="apikey-box">
+        <h2>API Key Anda</h2>
+        <div class="apikey-container">
+          <input type="text" id="apikey" value="teamhackbotsrg-rg123456" readonly>
+          <button onclick="copyApiKey()">Copy</button>
         </div>
       </section>
 
-
-      <!-- Thanks To -->
-      <section class="thanks">
-        <h2>Thanks To</h2>
-        <p>
-          Allah SWT, My Friends, dan semua pengguna yang bijak serta selalu mendukung saya.
-        </p>
+      <!-- Endpoint Table -->
+      <section class="endpoint-table">
+        <h2>Endpoint Table</h2>
+        <table>
+          <tr>
+            <th>Endpoint</th>
+            <th>Deskripsi</th>
+          </tr>
+          <tr>
+            <td>/api/example</td>
+            <td>Contoh endpoint</td>
+          </tr>
+        </table>
       </section>
 
-      <!-- Contact -->
-      <section class="contact">
-        <h2>Contact Me</h2>
-        <p>Untuk pembelian Premium/VIP, laporan bug, atau request fitur:</p>
-        <ul>
-          <li><a href="https://wa.me/6285717777189" target="_blank">WhatsApp</a></li>
-        </ul>
+      <!-- Terms -->
+      <section class="terms-box">
+        <h2>Syarat & Ketentuan</h2>
+        <div class="terms-item">
+          <p>Gunakan API sesuai aturan.</p>
+          <p>Jangan abuse request.</p>
+        </div>
       </section>
     </main>
   </div>
 
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 HB Digital Solutions</p>
+  </footer>
+
+  <!-- WhatsApp Floating -->
+  <a href="https://wa.me/6285717777189" target="_blank" class="wa-float">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+  </a>
+
+  <!-- Script Slider -->
+  <script>
+    let index = 0;
+    const slides = document.getElementById('slides');
+    if (slides) {
+      const total = slides.children.length;
+      function showSlide(i) {
+        index = (i + total) % total;
+        slides.style.transform = `translateX(-${index * 100}%)`;
+      }
+      function nextSlide() { showSlide(index + 1); }
+      function prevSlide() { showSlide(index - 1); }
+      setInterval(nextSlide, 4000);
+    }
+  </script>
 </body>
 </html>
