@@ -272,9 +272,7 @@ nav .menu a:hover {
   background: #2c2f3a;
   padding: 20px;
   min-height: calc(100vh - 80px); /* sidebar full height */
-  position: fixed;
-  top: 80px; /* di bawah navbar */
-  left: 0;
+  position: relative; /* ikut layout, bukan fixed */
 }
 
 .dashboard-content {
