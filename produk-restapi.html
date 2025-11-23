@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RestAPI - TeamHackBotsRG</title>
+  <title>Dashboard RestAPI - TeamHackBotsRG</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <!-- Navbar -->
-  <nav>
+  <nav class="navbar">
     <div class="logo">
       <img src="https://ik.imagekit.io/wamr3naeq/thb/hbds.png" alt="Logo HB Digital">
     </div>
@@ -21,37 +21,62 @@
     </div>
   </nav>
 
-  <!-- Judul Halaman -->
-  <header class="page-header">
-    <h1>Detail Produk: RestAPI</h1>
-  </header>
+  <!-- Layout utama -->
+  <div class="dashboard-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <h3>Kategori API</h3>
+      <ul>
+        <li><a href="#">Downloader</a></li>
+        <li><a href="#">Checker</a></li>
+        <li><a href="#">Education</a></li>
+        <li><a href="#">Anime Manga</a></li>
+        <li><a href="#">Image Creator</a></li>
+        <li><a href="#">Entertainment</a></li>
+        <li><a href="#">Primbon</a></li>
+        <li><a href="#">Other</a></li>
+      </ul>
+    </aside>
 
-  <!-- Detail Produk -->
-  <section class="produk-detail">
-    <h2>RestAPI</h2>
-    <p>
-      Layanan RestAPI kami membantu bisnis dan pengembang menghubungkan aplikasi mobile, website, maupun sistem backend
-      dengan cara yang aman, cepat, dan terstruktur. Kami membangun API dengan dokumentasi yang jelas, endpoint yang
-      efisien, serta sistem autentikasi yang kuat untuk menjaga keamanan data. RestAPI yang kami kembangkan mendukung
-      integrasi lintas platform, sehingga memudahkan pengembangan aplikasi modern yang membutuhkan komunikasi real-time
-      dan pertukaran data yang stabil.
-    </p>
+    <!-- Konten utama -->
+    <main class="dashboard-content">
+      <h1>Dashboard RestAPI</h1>
 
-    <!-- Gallery -->
-    <div class="gallery">
-      <img src="https://picsum.photos/400/250?random=31" alt="Contoh Dokumentasi API">
-      <img src="https://picsum.photos/400/250?random=32" alt="Contoh Dashboard API">
-      <img src="https://picsum.photos/400/250?random=33" alt="Contoh Integrasi API">
-      <img src="https://picsum.photos/400/250?random=34" alt="Contoh Keamanan API">
-      <img src="https://picsum.photos/400/250?random=35" alt="Contoh Performa API">
-      <img src="https://picsum.photos/400/250?random=36" alt="Contoh API Custom">
-    </div>
-  </section>
+      <div class="stats-grid">
+        <div class="card"><h3>Visitor</h3><p>12,509,171</p></div>
+        <div class="card"><h3>Users</h3><p>13,309</p></div>
+        <div class="card"><h3>Total Requests</h3><p>37,244,934</p></div>
+        <div class="card"><h3>Requests Today</h3><p>3,430</p></div>
+      </div>
 
-  <!-- Back link -->
-  <section class="back-link">
-    <a href="index.html">← Kembali ke Produk Kami</a>
-  </section>
+      <section class="terms">
+        <h2>S&K (Syarat & Ketentuan)</h2>
+        <ul>
+          <li>Jangan flooding requests.</li>
+          <li>IP dengan banyak akun akan otomatis diblokir.</li>
+          <li>Owner dapat mengubah ketentuan sewaktu-waktu.</li>
+          <li>Dilarang menyebarkan API key Anda.</li>
+          <li>Jangan ditembak atuh, sakit.</li>
+          <li>Owner tidak bertanggung jawab atas penggunaan Anda.</li>
+        </ul>
+      </section>
+
+      <section class="thanks">
+        <h2>Thanks To</h2>
+        <p>Allah SWT, My Friends, Krypton Byte, ArugaZ, My Parents, dan semua pengguna yang bijak.</p>
+      </section>
+
+      <section class="contact">
+        <h2>Contact Me</h2>
+        <p>Untuk pembelian Premium/VIP, laporan bug, atau request fitur:</p>
+        <ul>
+          <li><a href="#">WhatsApp</a></li>
+          <li><a href="#">Telegram</a></li>
+          <li><a href="#">Instagram</a></li>
+        </ul>
+      </section>
+    </main>
+  </div>
 
 </body>
 </html>
