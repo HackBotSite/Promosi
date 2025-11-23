@@ -271,16 +271,15 @@ nav .menu a:hover {
   width: 240px;
   background: #2c2f3a;
   padding: 20px;
-  min-height: calc(100vh - 80px); /* sidebar full height */
   position: relative; /* ikut layout, bukan fixed */
 }
 
 .dashboard-content {
   flex: 1;
-  margin-left: 240px;
-  padding: 100px 30px 30px; /* top padding ditambah agar tidak tertutup navbar */
-  max-width: calc(100% - 240px);
+  padding: 30px; /* cukup padding biasa, tidak perlu margin-left */
+  box-sizing: border-box;
 }
+
 
 .apikey-box {
   margin-bottom: 40px;
