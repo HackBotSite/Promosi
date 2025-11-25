@@ -583,7 +583,7 @@ footer {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background: #25D366;
+  background: #25D366; /* warna khas WhatsApp */
   padding: 15px;
   border-radius: 50%;
   box-shadow: 0 2px 5px rgba(0,0,0,0.3);
@@ -591,22 +591,15 @@ footer {
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  transition: transform 0.2s ease;
+}
+.wa-float:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
 }
 .wa-float img {
   width: 30px;
   height: 30px;
 }
 
-.wa-float:hover {
-  transform: scale(1.1);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-}
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-  100% { transform: scale(1); }
-}
-.wa-float {
-  animation: pulse 2s infinite;
-}
 
