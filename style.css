@@ -597,3 +597,16 @@ footer {
   height: 30px;
 }
 
+.wa-float:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+.wa-float {
+  animation: pulse 2s infinite;
+}
+
