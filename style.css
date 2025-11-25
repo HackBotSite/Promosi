@@ -535,6 +535,40 @@ nav .menu .dropbtn:hover {
   background: #f1c400;
 }
 
+.sidebar h2 {
+  font-size: 1rem;
+  margin: 20px 0 10px;
+  color: #e4b100; /* emas untuk judul */
+  border-bottom: 1px solid #444;
+  padding-bottom: 4px;
+}
+
+.sidebar .nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px;
+}
+
+.sidebar .nav-list li a {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.sidebar .nav-list li a:hover {
+  background: #2a2d3a;
+  color: #16d6ff; /* cyan/neon saat hover */
+}
+
+.sidebar .nav-list li a.active {
+  background: rgba(22,214,255,0.12);
+  color: #16d6ff;
+  font-weight: bold;
+}
+
 
 /* Footer */
 footer {
