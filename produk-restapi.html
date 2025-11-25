@@ -1,160 +1,505 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard RestAPI - HackBots</title>
-  <link rel="stylesheet" href="style.css">
-  <script>
-    function copyApiKey() {
-      const input = document.getElementById("apikey");
-      input.select();
-      input.setSelectionRange(0, 99999);
-      document.execCommand("copy");
-      alert("API Key berhasil disalin!");
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>REST API Showcase — HB Digital</title>
+
+  <!-- Font & base -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #0b1220;              /* biru tua */
+      --bg-2: #0e1627;
+      --card: #111a2e;
+      --text: #eaf2ff;
+      --muted: #a9b7d9;
+      --accent: #16d6ff;          /* cyan/neon */
+      --accent-2: #68f0ff;
+      --yellow: #ffcf5a;
+      --red: #ff6b6b;
+      --green: #43d39e;
+      --blue: #5aa8ff;
+      --border: #1d2740;
+      --shadow: 0 10px 30px rgba(0,0,0,0.35);
+      --radius: 14px;
     }
-  </script>
+
+    * { box-sizing: border-box }
+    html, body { height: 100% }
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 400px at 10% -10%, rgba(22,214,255,0.12), transparent 60%),
+        radial-gradient(800px 300px at 90% -20%, rgba(104,240,255,0.10), transparent 70%),
+        linear-gradient(180deg, var(--bg), var(--bg-2) 35%, var(--bg));
+    }
+
+    /* Navbar premium */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+      backdrop-filter: saturate(1.3) blur(10px);
+      background: rgba(10,16,30,0.65);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 20px; max-width: 1200px; margin: 0 auto;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: 0.3px }
+    .brand img { height: 42px; width: auto; filter: drop-shadow(0 2px 6px rgba(22,214,255,0.3)); }
+    .brand .title { font-weight: 700 }
+    .brand .badge { font-size: 12px; color: var(--accent); border: 1px dashed var(--accent); padding: 2px 8px; border-radius: 999px }
+
+    .menu { display: flex; gap: 18px; align-items: center }
+    .menu a { color: var(--text); text-decoration: none; padding: 8px 10px; border-radius: 8px; transition: 0.2s ease }
+    .menu a:hover { background: rgba(88,180,255,0.12); color: var(--accent) }
+
+    /* Layout: sidebar + content */
+    .layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 20px;
+      padding: 110px 20px 30px; /* offset navbar */
+      max-width: 1200px; margin: 0 auto;
+    }
+
+    /* Sidebar (responsive + sticky) */
+    aside.sidebar {
+      position: sticky; top: 90px;
+      align-self: start;
+      background: linear-gradient(180deg, rgba(17,26,46,0.9), rgba(13,20,36,0.9));
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+    .sidebar h2 {
+      margin: 0 0 14px; font-size: 1rem; color: var(--muted); font-weight: 700; letter-spacing: 0.4px
+    }
+    .nav-list { list-style: none; padding: 0; margin: 0 }
+    .nav-list li { margin-bottom: 8px }
+    .nav-list a {
+      display: flex; align-items: center; gap: 10px;
+      color: var(--text); text-decoration: none; padding: 10px 12px; border-radius: 10px;
+      border: 1px solid transparent; transition: 0.2s ease;
+    }
+    .nav-list a:hover { border-color: var(--border); background: rgba(90,168,255,0.08); color: var(--accent) }
+    .nav-list a.active { background: rgba(22,214,255,0.12); border-color: var(--accent); color: var(--accent) }
+
+    /* Content wrapper */
+    main {
+      display: grid; gap: 20px;
+    }
+
+    /* Hero section */
+    .hero {
+      background: linear-gradient(180deg, rgba(17,26,46,0.85), rgba(13,20,36,0.7));
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 28px;
+      position: relative; overflow: hidden;
+    }
+    .hero::after {
+      content: ""; position: absolute; inset: -2px;
+      background: radial-gradient(600px 180px at 20% 0%, rgba(22,214,255,0.15), transparent 70%);
+      pointer-events: none;
+    }
+    .hero h1 {
+      margin: 0 0 8px; font-size: clamp(28px, 4vw, 40px);
+      background: linear-gradient(90deg, #9fe7ff, #16d6ff 50%, #68f0ff);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      letter-spacing: 0.6px; font-weight: 800;
+    }
+    .hero p { margin: 0; color: var(--muted) }
+
+    /* API key box */
+    .apikey {
+      display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+      background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 16px;
+    }
+    .apikey input {
+      flex: 1; min-width: 220px; padding: 12px; border-radius: 10px;
+      border: 1px solid var(--border); background: #0c1426; color: var(--text);
+      font-family: monospace;
+    }
+    .btn {
+      padding: 10px 14px; border-radius: 10px; border: 1px solid var(--accent);
+      background: linear-gradient(180deg, rgba(22,214,255,0.15), rgba(22,214,255,0.08));
+      color: var(--text); cursor: pointer; transition: transform 0.12s ease, box-shadow 0.2s ease;
+    }
+    .btn:hover { box-shadow: 0 6px 12px rgba(22,214,255,0.2) }
+    .btn:active { transform: translateY(1px) }
+
+    /* Toast */
+    .toast {
+      position: fixed; bottom: 20px; right: 20px; z-index: 60;
+      background: #0e1628; color: var(--text); border: 1px solid var(--accent);
+      padding: 10px 14px; border-radius: 12px; box-shadow: var(--shadow);
+      opacity: 0; transform: translateY(10px); transition: 0.25s ease;
+    }
+    .toast.show { opacity: 1; transform: translateY(0) }
+
+    /* Endpoint table */
+    .card {
+      background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+      box-shadow: var(--shadow); overflow: hidden;
+    }
+    .card-header { padding: 16px 18px; border-bottom: 1px solid var(--border); font-weight: 700 }
+    .table {
+      width: 100%; border-collapse: collapse;
+    }
+    .table th, .table td {
+      padding: 12px 14px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: middle;
+    }
+    .table th { color: var(--muted); font-weight: 700 }
+    .badge {
+      display: inline-block; padding: 4px 8px; border-radius: 999px; font-size: 12px; font-weight: 700;
+    }
+    .GET { background: rgba(67,211,158,0.18); color: var(--green); border: 1px solid rgba(67,211,158,0.4) }
+    .POST { background: rgba(90,168,255,0.18); color: var(--blue); border: 1px solid rgba(90,168,255,0.4) }
+    .PUT { background: rgba(255,207,90,0.18); color: var(--yellow); border: 1px solid rgba(255,207,90,0.4) }
+    .DELETE { background: rgba(255,107,107,0.18); color: var(--red); border: 1px solid rgba(255,107,107,0.4) }
+
+    .action { display: flex; gap: 8px; align-items: center; flex-wrap: wrap }
+
+    /* Response panel */
+    .response {
+      margin-top: 14px; background: #0c1426; border: 1px solid var(--border);
+      border-radius: 12px; padding: 12px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      color: #cfe7ff; white-space: pre-wrap; word-break: break-word;
+    }
+
+    /* Tabs for code samples */
+    .tabs { margin-top: 16px; }
+    .tab-list { display: flex; gap: 8px; margin-bottom: 10px }
+    .tab-btn {
+      padding: 8px 12px; border-radius: 10px; border: 1px solid var(--border);
+      background: #0c1426; color: var(--text); cursor: pointer;
+    }
+    .tab-btn.active { border-color: var(--accent); color: var(--accent) }
+    .code {
+      background: #0c1426; border: 1px solid var(--border); border-radius: 12px;
+      padding: 12px; overflow: auto; max-height: 300px; font-family: Consolas, Menlo, monospace; color: #cfe7ff;
+    }
+    .hl-kw { color: #68f0ff }
+    .hl-str { color: #9fe7ff }
+    .hl-comm { color: #7aa1c7 }
+
+    /* Footer */
+    footer {
+      margin-top: 20px;
+      background: rgba(10,16,30,0.6); border-top: 1px solid var(--border);
+      backdrop-filter: blur(6px); color: var(--muted);
+    }
+    .footer-inner {
+      max-width: 1200px; margin: 0 auto; padding: 18px 20px;
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .links { display: flex; gap: 14px }
+    .links a { color: var(--muted); text-decoration: none }
+    .links a:hover { color: var(--accent) }
+
+    /* Responsive */
+    @media (max-width: 960px){
+      .layout { grid-template-columns: 1fr; }
+      aside.sidebar { position: relative; top: 0 }
+    }
+  </style>
 </head>
-<body class="dashboard">
+<body>
 
   <!-- Navbar -->
-  <nav>
-    <div class="logo">
-      <img src="https://ik.imagekit.io/wamr3naeq/thb/hbds.png" alt="Logo HB Digital">
-    </div>
-    <div class="menu">
-      <a href="index.html#beranda">Beranda</a>
-
-      <!-- Dropdown Layanan -->
-      <div class="dropdown">
-        <button class="dropbtn">
-          Layanan <span class="arrow">▼</span>
-        </button>
-        <div class="dropdown-content">
-          <a href="produk-website.html">Jasa Pembuatan Website</a>
-        
-          <a href="produk-editing.html">Jasa Editing / Design</a>
-
-          <a href="produk-aplikasi.html">Jasa Pembuatan Aplikasi Android & PC</a>
-
-          <a href="produk-aplikasi.html">Jasa Penyedia Panel & VPS</a>
-
-          <a href="produk-restapi.html">Rest API</a>
-        </div>
+  <nav aria-label="Top navigation">
+    <div class="nav-inner">
+      <div class="brand">
+        <img src="https://ik.imagekit.io/wamr3naeq/thb/hbds.png" alt="Logo HB Digital">
+        <span class="title">Hacksbots Digital Solution</span>
+        <span class="badge">REST API</span>
       </div>
-
-      <a href="index.html#tentang">Tentang</a>
-      <a href="index.html#bantuan">Bantuan</a>
+      <div class="menu" role="menubar">
+        <a role="menuitem" href="#home">Beranda</a>
+        <a role="menuitem" href="#docs">Dokumentasi</a>
+        <a role="menuitem" href="#code">Contoh Kode</a>
+        <a role="menuitem" href="#contact">Bantuan</a>
+      </div>
     </div>
   </nav>
 
-  <!-- Layout utama -->
-  <div class="dashboard-layout">
+  <!-- Layout -->
+  <div class="layout">
 
     <!-- Sidebar -->
-    <aside class="sidebar">
-      <div class="sidebar-header">
-        <h2>HackBots API</h2>
-      </div>
-      <h3>Kategori API</h3>
-      <ul>
-        <li><a href="produk-restapi.html" class="active">Dashboard</a></li>
-        <li><a href="pricing.html">Pricing</a></li>
-        <li><a href="#">Changelog / WhatsApp</a></li>
-        <li><a href="#">All Feature</a></li>
-        <li><a href="#">Islami</a></li>
-        <li><a href="#">Downloader</a></li>
-        <li><a href="#">Information</a></li>
-        <li><a href="#">Checker</a></li>
-        <li><a href="#">Education</a></li>
-        <li><a href="#">Anime Manga</a></li>
-        <li><a href="#">Movie Story</a></li>
+    <aside class="sidebar" aria-label="Sidebar navigation">
+      <h2>Bots API</h2>
+      <ul class="nav-list">
+        <li><a class="active" href="#home">Dashboard</a></li>
+        <li><a href="#docs">Endpoint</a></li>
+        <li><a href="#code">Contoh Kode</a></li>
+        <li><a href="#status">Status</a></li>
+        <li><a href="#changelog">Changelog</a></li>
       </ul>
     </aside>
 
-    <!-- Konten utama Dashboard -->
-    <main class="dashboard-content">
-      <h1>Dashboard RestAPI</h1>
+    <!-- Main content -->
+    <main>
 
-      <!-- Statistik -->
-      <section class="stat-box">
-        <div class="stat-item">
-          <h3>Visitor</h3>
-          <p>12,509,355</p>
-        </div>
-        <div class="stat-item">
-          <h3>Users</h3>
-          <p>13,309</p>
-        </div>
-        <div class="stat-item">
-          <h3>Total Requests</h3>
-          <p>37,245,119</p>
-        </div>
-        <div class="stat-item">
-          <h3>Requests Today</h3>
-          <p>3,615</p>
-        </div>
+      <!-- Hero -->
+      <section class="hero" id="home" aria-labelledby="hero-title">
+        <h1 id="hero-title">REST API Showcase</h1>
+        <p>API premium dengan desain elegan, interaksi halus, dan dokumentasi yang ramah developer.</p>
       </section>
 
-      <!-- API Key -->
-      <section class="apikey-box">
-        <h2>API Key Anda</h2>
-        <div class="apikey-container">
-          <input type="text" id="apikey" value="teamhackbotsrg-rg123456" readonly>
-          <button onclick="copyApiKey()">Copy</button>
-        </div>
+      <!-- API Key box -->
+      <section class="apikey" aria-label="API key">
+        <input id="apiKeyInput" type="text" value="sk-demo-api-key-1234567890abcdef" readonly aria-label="API key demo" />
+        <button class="btn" id="copyBtn" aria-live="polite">Copy API Key</button>
       </section>
 
-      <!-- Endpoint Table -->
-      <section class="endpoint-table">
-        <h2>Endpoint Table</h2>
-        <table>
-          <tr>
-            <th>Endpoint</th>
-            <th>Deskripsi</th>
-          </tr>
-          <tr>
-            <td>/api/example</td>
-            <td>Contoh endpoint</td>
-          </tr>
+      <!-- Endpoint table -->
+      <section class="card" id="docs" aria-labelledby="docs-title">
+        <div class="card-header" id="docs-title">Dokumentasi API</div>
+        <table class="table" aria-describedby="docs-title">
+          <thead>
+            <tr>
+              <th>Method</th>
+              <th>Endpoint</th>
+              <th>Description</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="endpointTableBody">
+            <!-- Filled by JS -->
+          </tbody>
         </table>
+        <div id="responsePanel" class="response" aria-live="polite" style="display:none"></div>
       </section>
 
-      <!-- Terms -->
-      <section class="terms-box">
-        <h2>Syarat & Ketentuan</h2>
-        <div class="terms-item">
-          <p>Gunakan API sesuai aturan.</p>
-          <p>Jangan abuse request.</p>
+      <!-- Code samples -->
+      <section class="card" id="code" aria-labelledby="code-title">
+        <div class="card-header" id="code-title">Contoh Kode</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode tabs">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsSample" id="tabJS">JavaScript (Fetch)</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="curlSample" id="tabCurl">cURL</button>
+          </div>
+
+          <div id="jsSample" role="tabpanel" aria-labelledby="tabJS" class="code">
+<pre><code><span class="hl-comm">// GET daftar user</span>
+<span class="hl-kw">fetch</span>(<span class="hl-str">'/api/users'</span>, {
+  headers: { <span class="hl-str">'x-api-key'</span>: <span class="hl-str">'sk-demo-api-key-1234567890abcdef'</span> }
+}).then(r =&gt; r.json()).then(console.log);
+
+<span class="hl-comm">// POST tambah user</span>
+<span class="hl-kw">fetch</span>(<span class="hl-str">'/api/users'</span>, {
+  method: <span class="hl-str">'POST'</span>,
+  headers: {
+    <span class="hl-str">'Content-Type'</span>: <span class="hl-str">'application/json'</span>,
+    <span class="hl-str">'x-api-key'</span>: <span class="hl-str">'sk-demo-api-key-1234567890abcdef'</span>
+  },
+  body: <span class="hl-str">JSON.stringify({ name: 'Raka', email: 'raka@example.com' })</span>
+}).then(r =&gt; r.json()).then(console.log);
+
+<span class="hl-comm">// GET detail user</span>
+<span class="hl-kw">fetch</span>(<span class="hl-str">'/api/users/123'</span>, { headers: { <span class="hl-str">'x-api-key'</span>: <span class="hl-str">'sk-demo-api-key-1234567890abcdef'</span> } })
+  .then(r =&gt; r.json()).then(console.log);
+
+<span class="hl-comm">// PUT update user</span>
+<span class="hl-kw">fetch</span>(<span class="hl-str">'/api/users/123'</span>, {
+  method: <span class="hl-str">'PUT'</span>,
+  headers: {
+    <span class="hl-str">'Content-Type'</span>: <span class="hl-str">'application/json'</span>,
+    <span class="hl-str">'x-api-key'</span>: <span class="hl-str">'sk-demo-api-key-1234567890abcdef'</span>
+  },
+  body: <span class="hl-str">JSON.stringify({ name: 'Raka Updated' })</span>
+}).then(r =&gt; r.json()).then(console.log);
+
+<span class="hl-comm">// DELETE user</span>
+<span class="hl-kw">fetch</span>(<span class="hl-str">'/api/users/123'</span>, {
+  method: <span class="hl-str">'DELETE'</span>,
+  headers: { <span class="hl-str">'x-api-key'</span>: <span class="hl-str">'sk-demo-api-key-1234567890abcdef'</span> }
+}).then(r =&gt; r.json()).then(console.log);</code></pre>
+          </div>
+
+          <div id="curlSample" role="tabpanel" aria-labelledby="tabCurl" class="code" style="display:none">
+<pre><code><span class="hl-comm"># GET daftar user</span>
+curl -H <span class="hl-str">"x-api-key: sk-demo-api-key-1234567890abcdef"</span> <span class="hl-str">"/api/users"</span>
+
+<span class="hl-comm"># POST tambah user</span>
+curl -X POST -H <span class="hl-str">"Content-Type: application/json"</span> -H <span class="hl-str">"x-api-key: sk-demo-api-key-1234567890abcdef"</span> \
+-d <span class="hl-str">'{"name":"Raka","email":"raka@example.com"}'</span> <span class="hl-str">"/api/users"</span>
+
+<span class="hl-comm"># GET detail user</span>
+curl -H <span class="hl-str">"x-api-key: sk-demo-api-key-1234567890abcdef"</span> <span class="hl-str">"/api/users/123"</span>
+
+<span class="hl-comm"># PUT update user</span>
+curl -X PUT -H <span class="hl-str">"Content-Type: application/json"</span> -H <span class="hl-str">"x-api-key: sk-demo-api-key-1234567890abcdef"</span> \
+-d <span class="hl-str">'{"name":"Raka Updated"}'</span> <span class="hl-str">"/api/users/123"</span>
+
+<span class="hl-comm"># DELETE user</span>
+curl -X DELETE -H <span class="hl-str">"x-api-key: sk-demo-api-key-1234567890abcdef"</span> <span class="hl-str">"/api/users/123"</span></code></pre>
+          </div>
         </div>
       </section>
+
+      <!-- Footer -->
+      <footer aria-label="Footer">
+        <div class="footer-inner">
+          <div>© 2025 HB Digital Solutions — REST API Showcase</div>
+          <div class="links">
+            <a href="#" aria-label="GitHub">GitHub</a>
+            <a href="#" aria-label="Twitter">Twitter</a>
+            <a href="#" aria-label="External site">Website</a>
+          </div>
+        </div>
+      </footer>
+
     </main>
   </div>
 
-  <!-- Footer -->
-  <footer>
-    <p>© 2025 HB Digital Solutions</p>
-  </footer>
+  <!-- Toast -->
+  <div id="toast" class="toast" role="status" aria-live="polite">Disalin!</div>
 
-  <!-- WhatsApp Floating -->
-  <a href="https://wa.me/6285717777189" target="_blank" class="wa-float">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
-  </a>
-
-  <!-- Script Slider -->
   <script>
-    let index = 0;
-    const slides = document.getElementById('slides');
-    if (slides) {
-      const total = slides.children.length;
-      function showSlide(i) {
-        index = (i + total) % total;
-        slides.style.transform = `translateX(-${index * 100}%)`;
-      }
-      function nextSlide() { showSlide(index + 1); }
-      function prevSlide() { showSlide(index - 1); }
-      setInterval(nextSlide, 4000);
+    // Data: endpoint list (mock)
+    const endpoints = [
+      { method: 'GET',    path: '/api/users',        desc: 'Mengambil daftar user' },
+      { method: 'POST',   path: '/api/users',        desc: 'Menambahkan user baru' },
+      { method: 'GET',    path: '/api/users/{id}',   desc: 'Mengambil detail user' },
+      { method: 'PUT',    path: '/api/users/{id}',   desc: 'Update data user' },
+      { method: 'DELETE', path: '/api/users/{id}',   desc: 'Hapus user' }
+    ];
+
+    // Mock store
+    let users = [
+      { id: 1, name: 'Raka',  email: 'raka@example.com' },
+      { id: 2, name: 'Dian',  email: 'dian@example.com' },
+      { id: 3, name: 'Sari',  email: 'sari@example.com' }
+    ];
+
+    // Helpers
+    const toastEl = document.getElementById('toast');
+    function toast(msg) {
+      toastEl.textContent = msg;
+      toastEl.classList.add('show');
+      setTimeout(() => toastEl.classList.remove('show'), 1800);
     }
+
+    // Copy API key
+    document.getElementById('copyBtn').addEventListener('click', () => {
+      const input = document.getElementById('apiKeyInput');
+      input.select(); input.setSelectionRange(0, 99999);
+      document.execCommand('copy');
+      toast('API key disalin');
+    });
+
+    // Render endpoint table
+    const tbody = document.getElementById('endpointTableBody');
+    endpoints.forEach((ep, i) => {
+      const tr = document.createElement('tr');
+
+      const tdMethod = document.createElement('td');
+      const badge = document.createElement('span');
+      badge.className = `badge ${ep.method}`;
+      badge.textContent = ep.method;
+      tdMethod.appendChild(badge);
+
+      const tdPath = document.createElement('td');
+      tdPath.textContent = ep.path;
+
+      const tdDesc = document.createElement('td');
+      tdDesc.textContent = ep.desc;
+
+      const tdAction = document.createElement('td');
+      tdAction.className = 'action';
+
+      const tryBtn = document.createElement('button');
+      tryBtn.className = 'btn';
+      tryBtn.textContent = 'Try';
+      tryBtn.setAttribute('aria-label', `Coba ${ep.method} ${ep.path}`);
+      tryBtn.addEventListener('click', () => tryEndpoint(ep));
+
+      tdAction.appendChild(tryBtn);
+
+      tr.appendChild(tdMethod);
+      tr.appendChild(tdPath);
+      tr.appendChild(tdDesc);
+      tr.appendChild(tdAction);
+
+      tbody.appendChild(tr);
+    });
+
+    // Try endpoint (mock responses + error handling)
+    function tryEndpoint(ep) {
+      const panel = document.getElementById('responsePanel');
+      panel.style.display = 'block';
+      panel.textContent = '⚡ Menjalankan ' + ep.method + ' ' + ep.path + ' ...';
+
+      // Validate API key
+      const key = document.getElementById('apiKeyInput').value;
+      if (!key || !key.startsWith('sk-')) {
+        panel.textContent = JSON.stringify({ success: false, message: 'API key invalid' }, null, 2);
+        toast('API key invalid');
+        return;
+      }
+
+      setTimeout(() => {
+        let res = { success: true, data: null, message: 'OK' };
+
+        if (ep.method === 'GET' && ep.path === '/api/users') {
+          res.data = users;
+
+        } else if (ep.method === 'POST' && ep.path === '/api/users') {
+          const newUser = { id: Date.now(), name: 'User Baru', email: 'new@example.com' };
+          users.push(newUser);
+          res.data = newUser; res.message = 'User ditambahkan';
+
+        } else if (ep.method === 'GET' && ep.path.includes('/api/users/{id}')) {
+          const user = users.find(u => u.id === 1);
+          res.data = user || null; res.message = user ? 'Detail user' : 'User tidak ditemukan';
+
+        } else if (ep.method === 'PUT' && ep.path.includes('/api/users/{id}')) {
+          const idx = users.findIndex(u => u.id === 1);
+          if (idx >= 0) { users[idx].name = 'Raka Updated'; res.data = users[idx]; res.message = 'User diupdate'; }
+          else { res.success = false; res.message = 'User tidak ditemukan'; }
+
+        } else if (ep.method === 'DELETE' && ep.path.includes('/api/users/{id}')) {
+          const before = users.length;
+          users = users.filter(u => u.id !== 1);
+          res.data = { deleted: before - users.length }; res.message = 'User dihapus';
+
+        } else {
+          res.success = false; res.message = 'Endpoint tidak dikenali';
+        }
+
+        panel.textContent = JSON.stringify(res, null, 2);
+        toast(res.success ? 'Berhasil' : 'Gagal');
+      }, 600);
+    }
+
+    // Tabs: JS / cURL
+    const tabJS = document.getElementById('tabJS');
+    const tabCurl = document.getElementById('tabCurl');
+    const jsSample = document.getElementById('jsSample');
+    const curlSample = document.getElementById('curlSample');
+
+    tabJS.addEventListener('click', () => {
+      tabJS.classList.add('active'); tabJS.setAttribute('aria-selected', 'true');
+      tabCurl.classList.remove('active'); tabCurl.setAttribute('aria-selected', 'false');
+      jsSample.style.display = 'block'; curlSample.style.display = 'none';
+    });
+
+    tabCurl.addEventListener('click', () => {
+      tabCurl.classList.add('active'); tabCurl.setAttribute('aria-selected', 'true');
+      tabJS.classList.remove('active'); tabJS.setAttribute('aria-selected', 'false');
+      curlSample.style.display = 'block'; jsSample.style.display = 'none';
+    });
   </script>
 </body>
 </html>
