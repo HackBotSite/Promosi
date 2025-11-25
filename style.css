@@ -578,13 +578,13 @@ footer {
   padding: 20px;
 }
 
-/* WhatsApp Floating */
 .wa-float {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background: #25D366; /* warna khas WhatsApp */
-  padding: 15px;
+  background: #25D366;
+  width: 60px;   /* lingkaran */
+  height: 60px;  /* lingkaran */
   border-radius: 50%;
   box-shadow: 0 2px 5px rgba(0,0,0,0.3);
   display: flex;
@@ -592,14 +592,22 @@ footer {
   align-items: center;
   z-index: 1000;
   transition: transform 0.2s ease;
+  animation: pulse 2s infinite;
 }
+.wa-float img {
+  width: 28px;
+  height: 28px;
+  max-width: 100%;
+  max-height: 100%;
+}
+
 .wa-float:hover {
   transform: scale(1.1);
   box-shadow: 0 4px 12px rgba(0,0,0,0.4);
 }
-.wa-float img {
-  width: 30px;
-  height: 30px;
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
 }
-
 
