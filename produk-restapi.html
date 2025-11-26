@@ -211,6 +211,38 @@
       .layout { grid-template-columns: 1fr; }
       aside.sidebar { position: relative; top: 0 }
     }
+    /* WhatsApp Floating */
+    .wa-float {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #25D366;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      transition: transform 0.2s ease;
+      animation: pulse 2s infinite;
+    }
+    .wa-float img {
+      width: 28px;
+      height: 28px;
+      max-width: 100%;
+      max-height: 100%;
+    }
+    .wa-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
   </style>
 </head>
 <body>
@@ -515,5 +547,15 @@ curl -X DELETE -H <span class="hl-str">"x-api-key: sk-demo-api-key-1234567890abc
       curlSample.style.display = 'block'; jsSample.style.display = 'none';
     });
   </script>
+  <!-- WhatsApp Floating -->
+  <a href="https://wa.me/6285717777189" target="_blank" class="wa-float">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+  </a>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 HB Digital Solutions</p>
+  </footer>
+
 </body>
 </html>
