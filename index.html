@@ -180,8 +180,8 @@
       padding: 30px;
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      max-width: 500px;         /* batas lebar */
-      width: 100%;              /* biar responsif */
+      max-width: 500px;
+      margin: 0 auto;
     }
     #pemesanan input,
     #pemesanan select,
@@ -324,20 +324,34 @@
   <!-- Pemesanan -->
   <section id="pemesanan" class="section">
     <h2>Pemesanan</h2>
-    <form>
-      <input type="text" placeholder="Nama"><br><br>
-      <input type="email" placeholder="Email"><br><br>
-      <input type="text" placeholder="Nomor WhatsApp"><br><br>
-      <select>
+    <form onsubmit="sendToWhatsApp(event)">
+      <input id="nama" type="text" placeholder="Nama"><br><br>
+      <input id="email" type="email" placeholder="Email"><br><br>
+      <input id="wa" type="text" placeholder="Nomor WhatsApp"><br><br>
+      <select id="layanan" required>
         <option>Pembuatan Website</option>
         <option>Editing</option>
         <option>Aplikasi</option>
         <option>RestAPI</option>
         <option>Panel VPS</option>
       </select><br><br>
-      <button type="submit">Kirim Pesanan</button>
+      <button type="submit" class="btn-pesan">Kirim Pesanan</button>
     </form>
   </section>
+
+  <script>
+  function sendToWhatsApp(e) {
+    e.preventDefault(); // cegah submit default
+    const nama = document.getElementById('nama').value;
+    const email = document.getElementById('email').value;
+    const wa = document.getElementById('wa').value;
+    const layanan = document.getElementById('layanan').value;
+
+    const pesan = `Halo, saya ${nama} (${email}, WA: ${wa}). Saya ingin memesan layanan ${layanan}.`;
+    const url = `https://wa.me/6285717777189?text=${encodeURIComponent(pesan)}`;
+    window.open(url, '_blank');
+  }
+  </script>
 
   <!-- Layanan -->
   <section id="layanan" class="section">
