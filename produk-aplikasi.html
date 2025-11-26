@@ -129,6 +129,38 @@
       opacity: 0; transition: 0.25s ease;
     }
     .toast.show { opacity: 1; }
+    /* WhatsApp Floating */
+    .wa-float {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #25D366;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      transition: transform 0.2s ease;
+      animation: pulse 2s infinite;
+    }
+    .wa-float img {
+      width: 28px;
+      height: 28px;
+      max-width: 100%;
+      max-height: 100%;
+    }
+    .wa-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
   </style>
 </head>
 <body>
@@ -172,10 +204,10 @@
     <section class="gallery" id="gallery">
       <h2>Contoh Hasil Aplikasi</h2>
       <div class="gallery-grid">
-        <img src="https://picsum.photos/400/250?random=61" alt="Aplikasi Android">
-        <img src="https://picsum.photos/400/250?random=62" alt="Aplikasi iOS">
-        <img src="https://picsum.photos/400/250?random=63" alt="Aplikasi PC Online">
-        <img src="https://picsum.photos/400/250?random=64" alt="Aplikasi PC Offline">
+        <img src="https://ik.imagekit.io/wamr3naeq/thb/android.png" alt="Aplikasi Android">
+        <img src="https://ik.imagekit.io/wamr3naeq/thb/appios.jpg" alt="Aplikasi iOS">
+        <img src="https://ik.imagekit.io/wamr3naeq/thb/1762233492371.jpg" alt="Aplikasi PC Online">
+        <img src="https://ik.imagekit.io/wamr3naeq/thb/1762233492371.jpg" alt="Aplikasi PC Offline">
       </div>
     </section>
 
@@ -217,27 +249,15 @@
       </div>
     </section>
 
-    <!-- WhatsApp Copy -->
-    <section class="whatsapp" id="contact">
-      <h2>Hubungi Kami</h2>
-      <input id="waNumber" type="text" value="+62 812-9876-5432" readonly>
-      <button class="btn" onclick="copyWA()">Copy WhatsApp Number</button>
-    </section>
-  </main>
+    <!-- WhatsApp Floating -->
+    <a href="https://wa.me/6285717777189" target="_blank" class="wa-float">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+    </a>
 
-  <!-- Toast -->
-  <div id="toast" class="toast">Nomor WhatsApp disalin!</div>
+    <!-- Footer -->
+    <footer>
+      <p>© 2025 HB Digital Solutions</p>
+    </footer>
 
-  <script>
-    function copyWA() {
-      const waInput = document.getElementById('waNumber');
-      waInput.select();
-      waInput.setSelectionRange(0, 99999);
-      document.execCommand('copy');
-      const toast = document.getElementById('toast');
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 2000);
-    }
-  </script>
 </body>
 </html>
