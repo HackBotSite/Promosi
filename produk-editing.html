@@ -143,6 +143,38 @@
       opacity: 0; transition: 0.25s ease;
     }
     .toast.show { opacity: 1; }
+    /* WhatsApp Floating */
+    .wa-float {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #25D366;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      transition: transform 0.2s ease;
+      animation: pulse 2s infinite;
+    }
+    .wa-float img {
+      width: 28px;
+      height: 28px;
+      max-width: 100%;
+      max-height: 100%;
+    }
+    .wa-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
   </style>
 </head>
 <body>
@@ -189,10 +221,10 @@
     <section class="gallery" id="gallery">
       <h2>Contoh Hasil Editing</h2>
       <div class="gallery-grid">
-        <img src="https://picsum.photos/400/250?random=41" alt="Contoh Banner">
-        <img src="https://picsum.photos/400/250?random=42" alt="Contoh Logo">
-        <img src="https://picsum.photos/400/250?random=43" alt="Contoh Poster">
-        <img src="https://picsum.photos/400/250?random=44" alt="Contoh Foto">
+        <img src="https://ik.imagekit.io/wamr3naeq/thb/Bitmap%20in%20banner.jpg" alt="Contoh Banner">
+        <img src="https://ik.imagekit.io/wamr3naeq/thb/smule%20akun%20official%20final%20copy.png" alt="Contoh Logo">
+        <img src="https://ik.imagekit.io/wamr3naeq/thb/HONDA%20IMORA%20copy.png" alt="Contoh Poster">
+        <img src="https://ik.imagekit.io/wamr3naeq/thb/cthfoto.png" alt="Contoh Foto">
       </div>
     </section>
 
@@ -201,19 +233,19 @@
       <h2>Portofolio Model Design</h2>
       <div class="portfolio-grid">
         <figure>
-          <img src="https://picsum.photos/400/250?random=51" alt="Kartu Undangan">
+          <img src="https://ik.imagekit.io/wamr3naeq/thb/Fajar&Kurnia.jpg" alt="Kartu Undangan">
           <figcaption>Kartu Undangan</figcaption>
         </figure>
         <figure>
-          <img src="https://picsum.photos/400/250?random=52" alt="Buku Yasin">
+          <img src="https://ik.imagekit.io/wamr3naeq/thb/yasin12.jpg" alt="Buku Yasin">
           <figcaption>Buku Yasin & Tahlil</figcaption>
         </figure>
         <figure>
-          <img src="https://picsum.photos/400/250?random=53" alt="ID Card">
+          <img src="https://ik.imagekit.io/wamr3naeq/thb/id1.jpg" alt="ID Card">
           <figcaption>ID Card</figcaption>
         </figure>
         <figure>
-          <img src="https://picsum.photos/400/250?random=54" alt="Poster Promosi">
+          <img src="https://ik.imagekit.io/wamr3naeq/thb/HONDA%20IMORA%20copy.png" alt="Poster Promosi">
           <figcaption>Poster Promosi</figcaption>
         </figure>
       </div>
@@ -223,17 +255,17 @@
     <section class="pricing" id="pricing">
       <div class="pricing-card">
         <h3>Basic</h3>
-        <div class="price">Rp 500rb</div>
+        <div class="price">Rp 75-125</div>
         <p>Desain sederhana untuk banner atau undangan.</p>
       </div>
       <div class="pricing-card">
         <h3>Standard</h3>
-        <div class="price">Rp 1jt</div>
+        <div class="price">Rp 125-200</div>
         <p>Paket desain lengkap dengan revisi terbatas.</p>
       </div>
       <div class="pricing-card">
         <h3>Premium</h3>
-        <div class="price">Rp 2jt</div>
+        <div class="price">Rp 200-350</div>
         <p>Paket desain custom dengan revisi unlimited & file master.</p>
       </div>
     </section>
@@ -257,27 +289,15 @@
       </div>
     </section>
 
-    <!-- WhatsApp Copy -->
-    <section class="whatsapp" id="contact">
-      <h2>Hubungi Kami</h2>
-      <input id="waNumber" type="text" value="+62 857 1777 7189" readonly>
-      <button class="btn" onclick="copyWA()">Copy WhatsApp Number</button>
-    </section>
-  </main>
+    <!-- WhatsApp Floating -->
+    <a href="https://wa.me/6285717777189" target="_blank" class="wa-float">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+    </a>
 
-  <!-- Toast -->
-  <div id="toast" class="toast">Nomor WhatsApp disalin!</div>
+    <!-- Footer -->
+    <footer>
+      <p>© 2025 HB Digital Solutions</p>
+    </footer>
 
-  <script>
-    function copyWA() {
-      const waInput = document.getElementById('waNumber');
-      waInput.select();
-      waInput.setSelectionRange(0, 99999);
-      document.execCommand('copy');
-      const toast = document.getElementById('toast');
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 2000);
-    }
-  </script>
 </body>
 </html>
