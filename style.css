@@ -611,3 +611,80 @@ footer {
   100% { transform: scale(1); }
 }
 
+/* Default desktop/tablet sudah kamu punya */
+
+/* Versi HP */
+@media (max-width: 768px) {
+  /* Navbar */
+  nav {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+  }
+  nav .menu {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  nav .menu a,
+  nav .dropbtn {
+    margin: 8px 0;
+  }
+
+  /* Hero slider */
+  .slides img {
+    border-radius: 0;
+  }
+  .hero-text-below h1 {
+    font-size: 1.6rem;
+  }
+  .hero-text-below p {
+    font-size: 0.95rem;
+  }
+
+  /* Produk grid */
+  .grid {
+    grid-template-columns: 1fr; /* satu kolom */
+  }
+  .card {
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  /* Form pemesanan */
+  #pemesanan form {
+    max-width: 100%;
+    width: 90%;
+    padding: 20px;
+  }
+  #pemesanan input,
+  #pemesanan select,
+  #pemesanan button {
+    font-size: 0.95rem;
+  }
+
+  /* Layanan */
+  #layanan ul {
+    padding-left: 20px;
+    font-size: 0.95rem;
+  }
+
+  /* Footer */
+  footer {
+    font-size: 0.85rem;
+    padding: 15px;
+  }
+
+  /* WhatsApp floating */
+  .wa-float {
+    width: 50px;
+    height: 50px;
+    bottom: 15px;
+    right: 15px;
+  }
+  .wa-float img {
+    width: 24px;
+    height: 24px;
+  }
+}
+
