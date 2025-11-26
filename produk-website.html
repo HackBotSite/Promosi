@@ -35,14 +35,10 @@
       display: flex; justify-content: space-between; align-items: center;
       padding: 12px 20px;
     }
-    .brand { display: flex; align-items: center; gap: 12px; }
-    .brand img { height: 42px; }
-    .brand .title { font-weight: 700; }
-    .brand .badge {
-      font-size: 12px; color: var(--accent);
-      border: 1px solid var(--accent);
-      padding: 2px 8px; border-radius: 999px;
-    }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: 0.3px }
+    .brand img { height: 42px; width: auto; filter: drop-shadow(0 2px 6px rgba(22,214,255,0.3)); }
+    .brand .title { font-weight: 700 }
+    .brand .badge { font-size: 12px; color: var(--accent); border: 1px dashed var(--accent); padding: 2px 8px; border-radius: 999px }
     nav .menu a {
       color: var(--text); text-decoration: none; margin-left: 20px;
     }
@@ -129,6 +125,38 @@
       opacity: 0; transition: 0.25s ease;
     }
     .toast.show { opacity: 1; }
+    /* WhatsApp Floating */
+    .wa-float {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #25D366;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      transition: transform 0.2s ease;
+      animation: pulse 2s infinite;
+    }
+    .wa-float img {
+      width: 28px;
+      height: 28px;
+      max-width: 100%;
+      max-height: 100%;
+    }
+    .wa-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
   </style>
 </head>
 <body>
@@ -219,11 +247,11 @@
     <a href="https://wa.me/6285717777189" target="_blank" class="wa-float">
       <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
     </a>
-  </main>
 
-  <!-- Footer -->
-  <footer>
-    <p>© 2025 HB Digital Solutions</p>
-  </footer>
+    <!-- Footer -->
+    <footer>
+      <p>© 2025 HB Digital Solutions</p>
+    </footer>
+
 </body>
 </html>
