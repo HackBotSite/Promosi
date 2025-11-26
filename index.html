@@ -164,7 +164,15 @@
     /* Section Pemesanan */
     #pemesanan {
       display: flex;
-      justify-content: center;
+      flex-direction: column;   /* susun vertikal */
+      align-items: center;      /* center horizontal */
+      margin-top: 60px;
+    }
+
+    #pemesanan h2 {
+      margin-bottom: 20px;      /* beri jarak ke box */
+      text-align: center;
+      color: var(--accent);
     }
 
     #pemesanan form {
@@ -172,15 +180,13 @@
       padding: 30px;
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      max-width: 500px;   /* batas lebar */
-      width: 100%;        /* biar responsif */
-      text-align: center;
+      max-width: 500px;         /* batas lebar */
+      width: 100%;              /* biar responsif */
     }
-
     #pemesanan input,
     #pemesanan select,
     #pemesanan button {
-      width: 100%;        /* isi penuh kotak form */
+      width: 100%;
       margin-bottom: 15px;
     }
     .hero-text-below {
@@ -206,6 +212,22 @@
       font-weight: 600;
       cursor: pointer;
       box-shadow: 0 0 12px var(--accent);
+    }
+    .btn-pesan {
+      display: inline-block;
+      padding: 12px 20px;
+      background: var(--accent);
+      border-radius: var(--radius);
+      color: #000;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      box-shadow: 0 0 12px var(--accent);
+      transition: transform 0.2s ease;
+    }
+    .btn-pesan:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 18px var(--accent);
     }
   </style>
 </head>
