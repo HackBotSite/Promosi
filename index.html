@@ -161,6 +161,52 @@
       width: 28px;
       height: 28px;
     }
+    /* Section Pemesanan */
+    #pemesanan {
+      display: flex;
+      justify-content: center;
+    }
+
+    #pemesanan form {
+      background: var(--card);
+      padding: 30px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      max-width: 500px;   /* batas lebar */
+      width: 100%;        /* biar responsif */
+      text-align: center;
+    }
+
+    #pemesanan input,
+    #pemesanan select,
+    #pemesanan button {
+      width: 100%;        /* isi penuh kotak form */
+      margin-bottom: 15px;
+    }
+    .hero-text-below {
+      text-align: center;
+      margin: 40px auto;
+      max-width: 800px;
+    }
+    .hero-text-below h1 {
+      font-size: 2.2rem;
+      background: linear-gradient(90deg, #9fe7ff, #16d6ff, #68f0ff);
+      -webkit-background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 12px rgba(22,214,255,0.6);
+    }
+    .hero-text-below p { color: var(--muted); margin-top: 10px; }
+    .hero-text-below button {
+      margin-top: 20px;
+      padding: 12px 20px;
+      background: var(--accent);
+      border: none;
+      border-radius: var(--radius);
+      color: #000;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 0 12px var(--accent);
+    }
   </style>
 </head>
 <body class="home">
@@ -199,15 +245,15 @@
         <button onclick="prevSlide()">&#10094;</button>
         <button onclick="nextSlide()">&#10095;</button>
       </div>
+    </div> <!-- tutup slider -->
+  </section> <!-- tutup hero -->
 
-      <!-- Hero Text overlay -->
-      <div class="hero-text">
-        <h1>Solusi Digital Elegan untuk Bisnis Anda</h1>
-        <p>Website, Aplikasi, Editing, RestAPI, dan Panel VPS – Semua dalam satu layanan premium.</p>
-        <button>Pesan Sekarang</button>
-      </div>
-    </div>
-  </section>
+  <!-- Hero Text di bawah slider -->
+  <div class="hero-text-below">
+    <h1>Solusi Digital Elegan untuk Bisnis Anda</h1>
+    <p>Website, Aplikasi, Editing, RestAPI, dan Panel VPS – Semua dalam satu layanan premium.</p>
+    <button>Pesan Sekarang</button>
+  </div>
 
   <!-- Produk Section -->
   <section id="produk" class="section">
