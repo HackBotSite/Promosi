@@ -476,7 +476,7 @@
 
       func main() {
         fetchAPI("https://api.teamhackbotsindo.my.id/api/anime-random")
-        fetchAPI("https://api.teamhackbotsindo.my.id/api/donghua-random")
+        fetchAPI("https://api.teamhackbotsindo.my.id/api/donghua")
         fetchAPI("https://api.teamhackbotsindo.my.id/api/waifu")
         fetchAPI("https://api.teamhackbotsindo.my.id/api/anime-nsfw")
       }
@@ -585,10 +585,10 @@
 
     // API Random Image
     const randomEndpoints = [
-      { no: 1, name: "Anime Random", method: "GET", desc: "Gambar anime acak", query: "apikey" },
-      { no: 2, name: "Donghua Random", method: "GET", desc: "Gambar donghua acak", query: "apikey" },
-      { no: 3, name: "Anime Waifu", method: "GET", desc: "Gambar waifu acak", query: "apikey" },
-      { no: 4, name: "Anime 18+", method: "GET", desc: "Gambar anime NSFW acak", query: "apikey" }
+      { no: 1, name: "Anime Random", method: "GET", desc: "Random", query: "apikey" },
+      { no: 2, name: "Donghua", method: "GET", desc: "Random", query: "apikey" },
+      { no: 3, name: "Anime Waifu", method: "GET", desc: "Random", query: "apikey" },
+      { no: 4, name: "Anime 18+", method: "GET", desc: "Random", query: "apikey" }
     ];
 
     const randomBody = document.getElementById('randomTableBody');
@@ -614,8 +614,8 @@
       let url = "";
       if (feature === "Anime Random") {
         url = "https://api.teamhackbotsindo.my.id/api/anime-random";
-      } else if (feature === "Donghua Random") {
-        url = "https://api.teamhackbotsindo.my.id/api/donghua-random";
+      } else if (feature === "Donghua") {
+        url = "https://api.teamhackbotsindo.my.id/api/donghua";
       } else if (feature === "Anime Waifu") {
         url = "https://api.teamhackbotsindo.my.id/api/waifu";
       } else if (feature === "Anime 18+") {
