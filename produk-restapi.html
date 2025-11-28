@@ -495,9 +495,10 @@ curl -X DELETE -H <span class="hl-str">"x-api-key: sk-demo-api-key-1234567890abc
   <div id="toast" class="toast" role="status" aria-live="polite">Disalin!</div>
 
   <script>
-    //API-DOA
+    //API-DOA + NIAT SHALAT
     const islamiEndpoints = [
-      { no: 1, name: "Doa", method: "GET", desc: "Random Doa", query: "apikey" }
+      { no: 1, name: "Doa", method: "GET", desc: "Random Doa", query: "apikey" },
+      { no: 2, name: "Niat Shalat", method: "GET", desc: "Niat shalat berdasarkan query", query: "apikey, shalat" }
     ];
 
     const islamiBody = document.getElementById('islamiTableBody');
@@ -514,12 +515,21 @@ curl -X DELETE -H <span class="hl-str">"x-api-key: sk-demo-api-key-1234567890abc
       islamiBody.appendChild(tr);
     });
 
+    // Fungsi Try untuk Islami
     function tryIslami(feature) {
-      const panel = document.getElementById('islamiResponsePanel');
+        const panel = document.getElementById('islamiResponsePanel');
       panel.style.display = 'block';
       panel.textContent = `⚡ Menjalankan ${feature}...`;
 
-      fetch("https://api.teamhackbotsindo.my.id/api/doa", {
+      let url = "";
+      if (feature === "Doa") {
+        url = "https://api.teamhackbotsindo.my.id/api/doa";
+      } else if (feature === "Niat Shalat") {
+        // Default contoh: isya (bisa diganti sesuai kebutuhan)
+        url = "https://api.teamhackbotsindo.my.id/api/niat-shalat?shalat=isya";
+      }
+
+      fetch(url, {
         headers: { "x-api-key": "sk-demo-api-key-1234567890abcdef" }
       })
         .then(res => res.json())
