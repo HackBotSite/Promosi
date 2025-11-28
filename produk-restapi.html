@@ -338,6 +338,65 @@
           </div>
 
           <div id="jsSample" role="tabpanel" aria-labelledby="tabJS" class="code">
+
+      <!-- Section Islami -->
+      <section class="card" id="islami" aria-labelledby="islami-title">
+        <div class="card-header" id="islami-title">API Islami</div>
+        <p>Endpoint utama: <code>https://api.teamhackbotsindo.my.id/api/islami</code></p>
+
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Islami">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsIslami" id="tabJSIslami">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyIslami" id="tabPyIslami">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goIslami" id="tabGoIslami">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsIslami" role="tabpanel" aria-labelledby="tabJSIslami" class="code">
+      <pre><code class="language-js">
+      fetch("https://api.teamhackbotsindo.my.id/api/islami")
+        .then(res => res.json())
+        .then(data => console.log(data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyIslami" role="tabpanel" aria-labelledby="tabPyIslami" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      url = "https://api.teamhackbotsindo.my.id/api/islami"
+      response = requests.get(url)
+      print(response.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goIslami" role="tabpanel" aria-labelledby="tabGoIslami" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        resp, err := http.Get("https://api.teamhackbotsindo.my.id/api/islami")
+        if err != nil {
+          panic(err)
+        }
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
 <pre><code><span class="hl-comm">// GET daftar user</span>
 <span class="hl-kw">fetch</span>(<span class="hl-str">'/api/users'</span>, {
   headers: { <span class="hl-str">'x-api-key'</span>: <span class="hl-str">'sk-demo-api-key-1234567890abcdef'</span> }
@@ -546,6 +605,26 @@ curl -X DELETE -H <span class="hl-str">"x-api-key: sk-demo-api-key-1234567890abc
       tabJS.classList.remove('active'); tabJS.setAttribute('aria-selected', 'false');
       curlSample.style.display = 'block'; jsSample.style.display = 'none';
     });
+    // Tabs Islami
+    const tabJSIslami = document.getElementById('tabJSIslami');
+    const tabPyIslami = document.getElementById('tabPyIslami');
+    const tabGoIslami = document.getElementById('tabGoIslami');
+
+    const jsIslami = document.getElementById('jsIslami');
+    const pyIslami = document.getElementById('pyIslami');
+    const goIslami = document.getElementById('goIslami');
+
+    function showIslami(tab) {
+      [tabJSIslami, tabPyIslami, tabGoIslami].forEach(btn => btn.classList.remove('active'));
+      [jsIslami, pyIslami, goIslami].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    tabJSIslami.addEventListener('click', () => showIslami(tabJSIslami));
+    tabPyIslami.addEventListener('click', () => showIslami(tabPyIslami));
+    tabGoIslami.addEventListener('click', () => showIslami(tabGoIslami));
   </script>
   <!-- WhatsApp Floating -->
   <a href="https://wa.me/6285717777189" target="_blank" class="wa-float">
