@@ -309,39 +309,9 @@
         <button class="btn" id="copyBtn" aria-live="polite">Copy API Key</button>
       </section>
 
-      <!-- Endpoint table -->
-      <section class="card" id="docs" aria-labelledby="docs-title">
-        <div class="card-header" id="docs-title">Dokumentasi API</div>
-        <table class="table" aria-describedby="docs-title">
-          <thead>
-            <tr>
-              <th>Method</th>
-              <th>Endpoint</th>
-              <th>Description</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody id="endpointTableBody">
-            <!-- Filled by JS -->
-          </tbody>
-        </table>
-        <div id="responsePanel" class="response" aria-live="polite" style="display:none"></div>
-      </section>
-
-      <!-- Code samples -->
-      <section class="card" id="code" aria-labelledby="code-title">
-        <div class="card-header" id="code-title">Contoh Kode</div>
-        <div class="tabs">
-          <div class="tab-list" role="tablist" aria-label="Contoh kode tabs">
-            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsSample" id="tabJS">JavaScript (Fetch)</button>
-            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="curlSample" id="tabCurl">cURL</button>
-          </div>
-
-          <div id="jsSample" role="tabpanel" aria-labelledby="tabJS" class="code">
-
       <!-- Section Islami -->
       <section class="card" id="islami" aria-labelledby="islami-title">
-        <div class="card-header" id="islami-title">Dokumentasi API — Islami</div>
+        <div class="card-header" id="islami-title">Dokumentasi API - islami</div>
         <table class="table" aria-describedby="islami-title">
           <thead>
             <tr>
@@ -416,63 +386,6 @@
         fmt.Println(string(body))
       }
       </code></pre>
-          </div>
-        </div>
-      </section>
-
-<pre><code><span class="hl-comm">// GET daftar user</span>
-<span class="hl-kw">fetch</span>(<span class="hl-str">'/api/users'</span>, {
-  headers: { <span class="hl-str">'x-api-key'</span>: <span class="hl-str">'sk-demo-api-key-1234567890abcdef'</span> }
-}).then(r =&gt; r.json()).then(console.log);
-
-<span class="hl-comm">// POST tambah user</span>
-<span class="hl-kw">fetch</span>(<span class="hl-str">'/api/users'</span>, {
-  method: <span class="hl-str">'POST'</span>,
-  headers: {
-    <span class="hl-str">'Content-Type'</span>: <span class="hl-str">'application/json'</span>,
-    <span class="hl-str">'x-api-key'</span>: <span class="hl-str">'sk-demo-api-key-1234567890abcdef'</span>
-  },
-  body: <span class="hl-str">JSON.stringify({ name: 'Raka', email: 'raka@example.com' })</span>
-}).then(r =&gt; r.json()).then(console.log);
-
-<span class="hl-comm">// GET detail user</span>
-<span class="hl-kw">fetch</span>(<span class="hl-str">'/api/users/123'</span>, { headers: { <span class="hl-str">'x-api-key'</span>: <span class="hl-str">'sk-demo-api-key-1234567890abcdef'</span> } })
-  .then(r =&gt; r.json()).then(console.log);
-
-<span class="hl-comm">// PUT update user</span>
-<span class="hl-kw">fetch</span>(<span class="hl-str">'/api/users/123'</span>, {
-  method: <span class="hl-str">'PUT'</span>,
-  headers: {
-    <span class="hl-str">'Content-Type'</span>: <span class="hl-str">'application/json'</span>,
-    <span class="hl-str">'x-api-key'</span>: <span class="hl-str">'sk-demo-api-key-1234567890abcdef'</span>
-  },
-  body: <span class="hl-str">JSON.stringify({ name: 'Raka Updated' })</span>
-}).then(r =&gt; r.json()).then(console.log);
-
-<span class="hl-comm">// DELETE user</span>
-<span class="hl-kw">fetch</span>(<span class="hl-str">'/api/users/123'</span>, {
-  method: <span class="hl-str">'DELETE'</span>,
-  headers: { <span class="hl-str">'x-api-key'</span>: <span class="hl-str">'sk-demo-api-key-1234567890abcdef'</span> }
-}).then(r =&gt; r.json()).then(console.log);</code></pre>
-          </div>
-
-          <div id="curlSample" role="tabpanel" aria-labelledby="tabCurl" class="code" style="display:none">
-<pre><code><span class="hl-comm"># GET daftar user</span>
-curl -H <span class="hl-str">"x-api-key: sk-demo-api-key-1234567890abcdef"</span> <span class="hl-str">"/api/users"</span>
-
-<span class="hl-comm"># POST tambah user</span>
-curl -X POST -H <span class="hl-str">"Content-Type: application/json"</span> -H <span class="hl-str">"x-api-key: sk-demo-api-key-1234567890abcdef"</span> \
--d <span class="hl-str">'{"name":"Raka","email":"raka@example.com"}'</span> <span class="hl-str">"/api/users"</span>
-
-<span class="hl-comm"># GET detail user</span>
-curl -H <span class="hl-str">"x-api-key: sk-demo-api-key-1234567890abcdef"</span> <span class="hl-str">"/api/users/123"</span>
-
-<span class="hl-comm"># PUT update user</span>
-curl -X PUT -H <span class="hl-str">"Content-Type: application/json"</span> -H <span class="hl-str">"x-api-key: sk-demo-api-key-1234567890abcdef"</span> \
--d <span class="hl-str">'{"name":"Raka Updated"}'</span> <span class="hl-str">"/api/users/123"</span>
-
-<span class="hl-comm"># DELETE user</span>
-curl -X DELETE -H <span class="hl-str">"x-api-key: sk-demo-api-key-1234567890abcdef"</span> <span class="hl-str">"/api/users/123"</span></code></pre>
           </div>
         </div>
       </section>
@@ -618,6 +531,7 @@ curl -X DELETE -H <span class="hl-str">"x-api-key: sk-demo-api-key-1234567890abc
         return;
       }
 
+      /*
       setTimeout(() => {
         let res = { success: true, data: null, message: 'OK' };
 
@@ -649,7 +563,7 @@ curl -X DELETE -H <span class="hl-str">"x-api-key: sk-demo-api-key-1234567890abc
 
         panel.textContent = JSON.stringify(res, null, 2);
         toast(res.success ? 'Berhasil' : 'Gagal');
-      }, 600);
+      }, 600);*/
     }
 
     // Tabs: JS / cURL
