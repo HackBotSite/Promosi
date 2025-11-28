@@ -305,7 +305,7 @@
 
       <!-- API Key box -->
       <section class="apikey" aria-label="API key">
-        <input id="apiKeyInput" type="text" value="sk-demo-api-key-1234567890abcdef" readonly aria-label="API key demo" />
+        <input id="apiKeyInput" type="text" value="Hacksbotsrg" readonly aria-label="API key demo" />
         <button class="btn" id="copyBtn" aria-live="polite">Copy API Key</button>
       </section>
 
@@ -344,7 +344,7 @@
           <div id="jsIslami" role="tabpanel" aria-labelledby="tabJSIslami" class="code">
       <pre><code class="language-js">
       fetch("https://api.teamhackbotsindo.my.id/api/doa", {
-        headers: { "x-api-key": "sk-demo-api-key-1234567890abcdef" }
+        headers: { "x-api-key": "Hacksbotsrg" }
       })
         .then(res => res.json())
         .then(data => console.log(data));
@@ -357,7 +357,7 @@
       import requests
 
       url = "https://api.teamhackbotsindo.my.id/api/doa"
-      headers = {"x-api-key": "sk-demo-api-key-1234567890abcdef"}
+      headers = {"x-api-key": "Hacksbotsrg"}
       response = requests.get(url, headers=headers)
       print(response.json())
       </code></pre>
@@ -377,7 +377,7 @@
       func main() {
         client := &http.Client{}
         req, _ := http.NewRequest("GET", "https://api.teamhackbotsindo.my.id/api/doa", nil)
-        req.Header.Set("x-api-key", "sk-demo-api-key-1234567890abcdef")
+        req.Header.Set("x-api-key", "Hacksbotsrg")
 
         resp, _ := client.Do(req)
         defer resp.Body.Close()
