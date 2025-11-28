@@ -305,7 +305,7 @@
 
       <!-- API Key box -->
       <section class="apikey" aria-label="API key">
-        <input id="apiKeyInput" type="text" value="Hacksbotsrg" readonly aria-label="API key demo" />
+        <input id="apiKeyInput" type="text" value="sk-demo-api-key-1234567890abcdef" readonly aria-label="API key demo" />
         <button class="btn" id="copyBtn" aria-live="polite">Copy API Key</button>
       </section>
 
@@ -344,7 +344,7 @@
           <div id="jsIslami" role="tabpanel" aria-labelledby="tabJSIslami" class="code">
       <pre><code class="language-js">
       fetch("https://api.teamhackbotsindo.my.id/api/doa", {
-        headers: { "x-api-key": "Hacksbotsrg" }
+        headers: { "x-api-key": "sk-demo-api-key-1234567890abcdef" }
       })
         .then(res => res.json())
         .then(data => console.log(data));
@@ -357,7 +357,7 @@
       import requests
 
       url = "https://api.teamhackbotsindo.my.id/api/doa"
-      headers = {"x-api-key": "Hacksbotsrg"}
+      headers = {"x-api-key": "sk-demo-api-key-1234567890abcdef"}
       response = requests.get(url, headers=headers)
       print(response.json())
       </code></pre>
@@ -377,7 +377,7 @@
       func main() {
         client := &http.Client{}
         req, _ := http.NewRequest("GET", "https://api.teamhackbotsindo.my.id/api/doa", nil)
-        req.Header.Set("x-api-key", "Hacksbotsrg")
+        req.Header.Set("x-api-key", "sk-demo-api-key-1234567890abcdef")
 
         resp, _ := client.Do(req)
         defer resp.Body.Close()
@@ -386,6 +386,63 @@
         fmt.Println(string(body))
       }
       </code></pre>
+          </div>
+        </div>
+      </section>
+
+<pre><code><span class="hl-comm">// GET daftar user</span>
+<span class="hl-kw">fetch</span>(<span class="hl-str">'/api/users'</span>, {
+  headers: { <span class="hl-str">'x-api-key'</span>: <span class="hl-str">'sk-demo-api-key-1234567890abcdef'</span> }
+}).then(r =&gt; r.json()).then(console.log);
+
+<span class="hl-comm">// POST tambah user</span>
+<span class="hl-kw">fetch</span>(<span class="hl-str">'/api/users'</span>, {
+  method: <span class="hl-str">'POST'</span>,
+  headers: {
+    <span class="hl-str">'Content-Type'</span>: <span class="hl-str">'application/json'</span>,
+    <span class="hl-str">'x-api-key'</span>: <span class="hl-str">'sk-demo-api-key-1234567890abcdef'</span>
+  },
+  body: <span class="hl-str">JSON.stringify({ name: 'Raka', email: 'raka@example.com' })</span>
+}).then(r =&gt; r.json()).then(console.log);
+
+<span class="hl-comm">// GET detail user</span>
+<span class="hl-kw">fetch</span>(<span class="hl-str">'/api/users/123'</span>, { headers: { <span class="hl-str">'x-api-key'</span>: <span class="hl-str">'sk-demo-api-key-1234567890abcdef'</span> } })
+  .then(r =&gt; r.json()).then(console.log);
+
+<span class="hl-comm">// PUT update user</span>
+<span class="hl-kw">fetch</span>(<span class="hl-str">'/api/users/123'</span>, {
+  method: <span class="hl-str">'PUT'</span>,
+  headers: {
+    <span class="hl-str">'Content-Type'</span>: <span class="hl-str">'application/json'</span>,
+    <span class="hl-str">'x-api-key'</span>: <span class="hl-str">'sk-demo-api-key-1234567890abcdef'</span>
+  },
+  body: <span class="hl-str">JSON.stringify({ name: 'Raka Updated' })</span>
+}).then(r =&gt; r.json()).then(console.log);
+
+<span class="hl-comm">// DELETE user</span>
+<span class="hl-kw">fetch</span>(<span class="hl-str">'/api/users/123'</span>, {
+  method: <span class="hl-str">'DELETE'</span>,
+  headers: { <span class="hl-str">'x-api-key'</span>: <span class="hl-str">'sk-demo-api-key-1234567890abcdef'</span> }
+}).then(r =&gt; r.json()).then(console.log);</code></pre>
+          </div>
+
+          <div id="curlSample" role="tabpanel" aria-labelledby="tabCurl" class="code" style="display:none">
+<pre><code><span class="hl-comm"># GET daftar user</span>
+curl -H <span class="hl-str">"x-api-key: sk-demo-api-key-1234567890abcdef"</span> <span class="hl-str">"/api/users"</span>
+
+<span class="hl-comm"># POST tambah user</span>
+curl -X POST -H <span class="hl-str">"Content-Type: application/json"</span> -H <span class="hl-str">"x-api-key: sk-demo-api-key-1234567890abcdef"</span> \
+-d <span class="hl-str">'{"name":"Raka","email":"raka@example.com"}'</span> <span class="hl-str">"/api/users"</span>
+
+<span class="hl-comm"># GET detail user</span>
+curl -H <span class="hl-str">"x-api-key: sk-demo-api-key-1234567890abcdef"</span> <span class="hl-str">"/api/users/123"</span>
+
+<span class="hl-comm"># PUT update user</span>
+curl -X PUT -H <span class="hl-str">"Content-Type: application/json"</span> -H <span class="hl-str">"x-api-key: sk-demo-api-key-1234567890abcdef"</span> \
+-d <span class="hl-str">'{"name":"Raka Updated"}'</span> <span class="hl-str">"/api/users/123"</span>
+
+<span class="hl-comm"># DELETE user</span>
+curl -X DELETE -H <span class="hl-str">"x-api-key: sk-demo-api-key-1234567890abcdef"</span> <span class="hl-str">"/api/users/123"</span></code></pre>
           </div>
         </div>
       </section>
@@ -443,12 +500,27 @@
       }
 
       fetch(url, {
-        headers: { "x-api-key": "hackbotsrg" }
+        headers: { "x-api-key": "sk-demo-api-key-1234567890abcdef" }
       })
         .then(res => res.json())
         .then(data => panel.textContent = JSON.stringify(data, null, 2))
         .catch(err => panel.textContent = "Error: " + err);
     }
+    // Data: endpoint list (mock)
+    const endpoints = [
+      { method: 'GET',    path: '/api/users',        desc: 'Mengambil daftar user' },
+      { method: 'POST',   path: '/api/users',        desc: 'Menambahkan user baru' },
+      { method: 'GET',    path: '/api/users/{id}',   desc: 'Mengambil detail user' },
+      { method: 'PUT',    path: '/api/users/{id}',   desc: 'Update data user' },
+      { method: 'DELETE', path: '/api/users/{id}',   desc: 'Hapus user' }
+    ];
+
+    // Mock store
+    let users = [
+      { id: 1, name: 'Raka',  email: 'raka@example.com' },
+      { id: 2, name: 'Dian',  email: 'dian@example.com' },
+      { id: 3, name: 'Sari',  email: 'sari@example.com' }
+    ];
 
     // Helpers
     const toastEl = document.getElementById('toast');
@@ -465,6 +537,91 @@
       document.execCommand('copy');
       toast('API key disalin');
     });
+
+    // Render endpoint table
+    const tbody = document.getElementById('endpointTableBody');
+    endpoints.forEach((ep, i) => {
+      const tr = document.createElement('tr');
+
+      const tdMethod = document.createElement('td');
+      const badge = document.createElement('span');
+      badge.className = `badge ${ep.method}`;
+      badge.textContent = ep.method;
+      tdMethod.appendChild(badge);
+
+      const tdPath = document.createElement('td');
+      tdPath.textContent = ep.path;
+
+      const tdDesc = document.createElement('td');
+      tdDesc.textContent = ep.desc;
+
+      const tdAction = document.createElement('td');
+      tdAction.className = 'action';
+
+      const tryBtn = document.createElement('button');
+      tryBtn.className = 'btn';
+      tryBtn.textContent = 'Try';
+      tryBtn.setAttribute('aria-label', `Coba ${ep.method} ${ep.path}`);
+      tryBtn.addEventListener('click', () => tryEndpoint(ep));
+
+      tdAction.appendChild(tryBtn);
+
+      tr.appendChild(tdMethod);
+      tr.appendChild(tdPath);
+      tr.appendChild(tdDesc);
+      tr.appendChild(tdAction);
+
+      tbody.appendChild(tr);
+    });
+
+    // Try endpoint (mock responses + error handling)
+    function tryEndpoint(ep) {
+      const panel = document.getElementById('responsePanel');
+      panel.style.display = 'block';
+      panel.textContent = '⚡ Menjalankan ' + ep.method + ' ' + ep.path + ' ...';
+
+      // Validate API key
+      const key = document.getElementById('apiKeyInput').value;
+      if (!key || !key.startsWith('sk-')) {
+        panel.textContent = JSON.stringify({ success: false, message: 'API key invalid' }, null, 2);
+        toast('API key invalid');
+        return;
+      }
+
+      /*
+      setTimeout(() => {
+        let res = { success: true, data: null, message: 'OK' };
+
+        if (ep.method === 'GET' && ep.path === '/api/users') {
+          res.data = users;
+
+        } else if (ep.method === 'POST' && ep.path === '/api/users') {
+          const newUser = { id: Date.now(), name: 'User Baru', email: 'new@example.com' };
+          users.push(newUser);
+          res.data = newUser; res.message = 'User ditambahkan';
+
+        } else if (ep.method === 'GET' && ep.path.includes('/api/users/{id}')) {
+          const user = users.find(u => u.id === 1);
+          res.data = user || null; res.message = user ? 'Detail user' : 'User tidak ditemukan';
+
+        } else if (ep.method === 'PUT' && ep.path.includes('/api/users/{id}')) {
+          const idx = users.findIndex(u => u.id === 1);
+          if (idx >= 0) { users[idx].name = 'Raka Updated'; res.data = users[idx]; res.message = 'User diupdate'; }
+          else { res.success = false; res.message = 'User tidak ditemukan'; }
+
+        } else if (ep.method === 'DELETE' && ep.path.includes('/api/users/{id}')) {
+          const before = users.length;
+          users = users.filter(u => u.id !== 1);
+          res.data = { deleted: before - users.length }; res.message = 'User dihapus';
+
+        } else {
+          res.success = false; res.message = 'Endpoint tidak dikenali';
+        }
+
+        panel.textContent = JSON.stringify(res, null, 2);
+        toast(res.success ? 'Berhasil' : 'Gagal');
+      }, 600);*/
+    }
 
     // Tabs: JS / cURL
     const tabJS = document.getElementById('tabJS');
