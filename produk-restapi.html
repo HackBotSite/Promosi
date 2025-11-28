@@ -183,7 +183,12 @@
       padding: 8px 12px; border-radius: 10px; border: 1px solid var(--border);
       background: #0c1426; color: var(--text); cursor: pointer;
     }
-    .tab-btn.active { border-color: var(--accent); color: var(--accent) }
+    .tab-btn.active {
+      background: rgba(22,214,255,0.15);
+      font-weight: bold;
+      border-color: var(--accent);
+      color: var(--accent);
+    }
     .code {
       background: #0c1426; border: 1px solid var(--border); border-radius: 12px;
       padding: 12px; overflow: auto; max-height: 300px; font-family: Consolas, Menlo, monospace; color: #cfe7ff;
@@ -466,23 +471,6 @@
       toast('API key disalin');
     });
 
-    // Tabs: JS / cURL
-    const tabJS = document.getElementById('tabJS');
-    const tabCurl = document.getElementById('tabCurl');
-    const jsSample = document.getElementById('jsSample');
-    const curlSample = document.getElementById('curlSample');
-
-    tabJS.addEventListener('click', () => {
-      tabJS.classList.add('active'); tabJS.setAttribute('aria-selected', 'true');
-      tabCurl.classList.remove('active'); tabCurl.setAttribute('aria-selected', 'false');
-      jsSample.style.display = 'block'; curlSample.style.display = 'none';
-    });
-
-    tabCurl.addEventListener('click', () => {
-      tabCurl.classList.add('active'); tabCurl.setAttribute('aria-selected', 'true');
-      tabJS.classList.remove('active'); tabJS.setAttribute('aria-selected', 'false');
-      curlSample.style.display = 'block'; jsSample.style.display = 'none';
-    });
     // Tabs Islami
     const tabJSIslami = document.getElementById('tabJSIslami');
     const tabPyIslami = document.getElementById('tabPyIslami');
