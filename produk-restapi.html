@@ -466,42 +466,6 @@
       toast('API key disalin');
     });
 
-    // Render endpoint table
-    const tbody = document.getElementById('endpointTableBody');
-    endpoints.forEach((ep, i) => {
-      const tr = document.createElement('tr');
-
-      const tdMethod = document.createElement('td');
-      const badge = document.createElement('span');
-      badge.className = `badge ${ep.method}`;
-      badge.textContent = ep.method;
-      tdMethod.appendChild(badge);
-
-      const tdPath = document.createElement('td');
-      tdPath.textContent = ep.path;
-
-      const tdDesc = document.createElement('td');
-      tdDesc.textContent = ep.desc;
-
-      const tdAction = document.createElement('td');
-      tdAction.className = 'action';
-
-      const tryBtn = document.createElement('button');
-      tryBtn.className = 'btn';
-      tryBtn.textContent = 'Try';
-      tryBtn.setAttribute('aria-label', `Coba ${ep.method} ${ep.path}`);
-      tryBtn.addEventListener('click', () => tryEndpoint(ep));
-
-      tdAction.appendChild(tryBtn);
-
-      tr.appendChild(tdMethod);
-      tr.appendChild(tdPath);
-      tr.appendChild(tdDesc);
-      tr.appendChild(tdAction);
-
-      tbody.appendChild(tr);
-    });
-
     // Tabs: JS / cURL
     const tabJS = document.getElementById('tabJS');
     const tabCurl = document.getElementById('tabCurl');
