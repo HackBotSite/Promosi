@@ -443,27 +443,12 @@
       }
 
       fetch(url, {
-        headers: { "x-api-key": "sk-demo-api-key-1234567890abcdef" }
+        headers: { "x-api-key": "hackbotsrg" }
       })
         .then(res => res.json())
         .then(data => panel.textContent = JSON.stringify(data, null, 2))
         .catch(err => panel.textContent = "Error: " + err);
     }
-    // Data: endpoint list (mock)
-    const endpoints = [
-      { method: 'GET',    path: '/api/users',        desc: 'Mengambil daftar user' },
-      { method: 'POST',   path: '/api/users',        desc: 'Menambahkan user baru' },
-      { method: 'GET',    path: '/api/users/{id}',   desc: 'Mengambil detail user' },
-      { method: 'PUT',    path: '/api/users/{id}',   desc: 'Update data user' },
-      { method: 'DELETE', path: '/api/users/{id}',   desc: 'Hapus user' }
-    ];
-
-    // Mock store
-    let users = [
-      { id: 1, name: 'Raka',  email: 'raka@example.com' },
-      { id: 2, name: 'Dian',  email: 'dian@example.com' },
-      { id: 3, name: 'Sari',  email: 'sari@example.com' }
-    ];
 
     // Helpers
     const toastEl = document.getElementById('toast');
@@ -480,91 +465,6 @@
       document.execCommand('copy');
       toast('API key disalin');
     });
-
-    // Render endpoint table
-    const tbody = document.getElementById('endpointTableBody');
-    endpoints.forEach((ep, i) => {
-      const tr = document.createElement('tr');
-
-      const tdMethod = document.createElement('td');
-      const badge = document.createElement('span');
-      badge.className = `badge ${ep.method}`;
-      badge.textContent = ep.method;
-      tdMethod.appendChild(badge);
-
-      const tdPath = document.createElement('td');
-      tdPath.textContent = ep.path;
-
-      const tdDesc = document.createElement('td');
-      tdDesc.textContent = ep.desc;
-
-      const tdAction = document.createElement('td');
-      tdAction.className = 'action';
-
-      const tryBtn = document.createElement('button');
-      tryBtn.className = 'btn';
-      tryBtn.textContent = 'Try';
-      tryBtn.setAttribute('aria-label', `Coba ${ep.method} ${ep.path}`);
-      tryBtn.addEventListener('click', () => tryEndpoint(ep));
-
-      tdAction.appendChild(tryBtn);
-
-      tr.appendChild(tdMethod);
-      tr.appendChild(tdPath);
-      tr.appendChild(tdDesc);
-      tr.appendChild(tdAction);
-
-      tbody.appendChild(tr);
-    });
-
-    // Try endpoint (mock responses + error handling)
-    function tryEndpoint(ep) {
-      const panel = document.getElementById('responsePanel');
-      panel.style.display = 'block';
-      panel.textContent = '⚡ Menjalankan ' + ep.method + ' ' + ep.path + ' ...';
-
-      // Validate API key
-      const key = document.getElementById('apiKeyInput').value;
-      if (!key || !key.startsWith('sk-')) {
-        panel.textContent = JSON.stringify({ success: false, message: 'API key invalid' }, null, 2);
-        toast('API key invalid');
-        return;
-      }
-
-      /*
-      setTimeout(() => {
-        let res = { success: true, data: null, message: 'OK' };
-
-        if (ep.method === 'GET' && ep.path === '/api/users') {
-          res.data = users;
-
-        } else if (ep.method === 'POST' && ep.path === '/api/users') {
-          const newUser = { id: Date.now(), name: 'User Baru', email: 'new@example.com' };
-          users.push(newUser);
-          res.data = newUser; res.message = 'User ditambahkan';
-
-        } else if (ep.method === 'GET' && ep.path.includes('/api/users/{id}')) {
-          const user = users.find(u => u.id === 1);
-          res.data = user || null; res.message = user ? 'Detail user' : 'User tidak ditemukan';
-
-        } else if (ep.method === 'PUT' && ep.path.includes('/api/users/{id}')) {
-          const idx = users.findIndex(u => u.id === 1);
-          if (idx >= 0) { users[idx].name = 'Raka Updated'; res.data = users[idx]; res.message = 'User diupdate'; }
-          else { res.success = false; res.message = 'User tidak ditemukan'; }
-
-        } else if (ep.method === 'DELETE' && ep.path.includes('/api/users/{id}')) {
-          const before = users.length;
-          users = users.filter(u => u.id !== 1);
-          res.data = { deleted: before - users.length }; res.message = 'User dihapus';
-
-        } else {
-          res.success = false; res.message = 'Endpoint tidak dikenali';
-        }
-
-        panel.textContent = JSON.stringify(res, null, 2);
-        toast(res.success ? 'Berhasil' : 'Gagal');
-      }, 600);*/
-    }
 
     // Tabs: JS / cURL
     const tabJS = document.getElementById('tabJS');
