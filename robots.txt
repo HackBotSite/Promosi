@@ -1,4 +1,21 @@
+# Izinkan semua crawler mengakses konten utama
 User-agent: *
 Allow: /
 
+# Blokir halaman sensitif atau tidak relevan untuk SEO
+Disallow: /admin/
+Disallow: /login/
+Disallow: /register/
+Disallow: /dashboard/
+Disallow: /config/
+Disallow: /private/
+Disallow: /tmp/
+Disallow: /test/
+
+# Blokir file tertentu (misalnya konfigurasi atau script internal)
+Disallow: /vercel.json
+Disallow: /robots.txt
+Disallow: /README.md
+
+# Sitemap untuk memandu crawler
 Sitemap: https://teamhackbotsrg.my.id/sitemap.xml
