@@ -341,9 +341,28 @@
 
       <!-- Section Islami -->
       <section class="card" id="islami" aria-labelledby="islami-title">
-        <div class="card-header" id="islami-title">API Islami</div>
-        <p>Endpoint utama: <code>https://api.teamhackbotsindo.my.id/api/islami</code></p>
+        <div class="card-header" id="islami-title">Dokumentasi API — Islami</div>
+        <table class="table" aria-describedby="islami-title">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Feature Name</th>
+              <th>Request Method</th>
+              <th>Description</th>
+              <th>Query Parameter</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="islamiTableBody">
+            <!-- Diisi lewat JS -->
+          </tbody>
+        </table>
+        <div id="islamiResponsePanel" class="response" aria-live="polite" style="display:none"></div>
+      </section>
 
+      <!-- Code samples Islami -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Islami</div>
         <div class="tabs">
           <div class="tab-list" role="tablist" aria-label="Contoh kode Islami">
             <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsIslami" id="tabJSIslami">JavaScript</button>
@@ -354,10 +373,11 @@
           <!-- JS -->
           <div id="jsIslami" role="tabpanel" aria-labelledby="tabJSIslami" class="code">
       <pre><code class="language-js">
-      fetch("https://api.teamhackbotsindo.my.id/api/islami")
+      fetch("https://api.teamhackbotsindo.my.id/api/doa", {
+        headers: { "x-api-key": "sk-demo-api-key-1234567890abcdef" }
+      })
         .then(res => res.json())
-        .then(data => console.log(data))
-        .catch(err => console.error(err));
+        .then(data => console.log(data));
       </code></pre>
           </div>
 
@@ -366,8 +386,9 @@
       <pre><code class="language-python">
       import requests
 
-      url = "https://api.teamhackbotsindo.my.id/api/islami"
-      response = requests.get(url)
+      url = "https://api.teamhackbotsindo.my.id/api/doa"
+      headers = {"x-api-key": "sk-demo-api-key-1234567890abcdef"}
+      response = requests.get(url, headers=headers)
       print(response.json())
       </code></pre>
           </div>
@@ -384,10 +405,11 @@
       )
 
       func main() {
-        resp, err := http.Get("https://api.teamhackbotsindo.my.id/api/islami")
-        if err != nil {
-          panic(err)
-        }
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", "https://api.teamhackbotsindo.my.id/api/doa", nil)
+        req.Header.Set("x-api-key", "sk-demo-api-key-1234567890abcdef")
+
+        resp, _ := client.Do(req)
         defer resp.Body.Close()
 
         body, _ := ioutil.ReadAll(resp.Body)
@@ -397,6 +419,7 @@
           </div>
         </div>
       </section>
+
 <pre><code><span class="hl-comm">// GET daftar user</span>
 <span class="hl-kw">fetch</span>(<span class="hl-str">'/api/users'</span>, {
   headers: { <span class="hl-str">'x-api-key'</span>: <span class="hl-str">'sk-demo-api-key-1234567890abcdef'</span> }
@@ -472,6 +495,37 @@ curl -X DELETE -H <span class="hl-str">"x-api-key: sk-demo-api-key-1234567890abc
   <div id="toast" class="toast" role="status" aria-live="polite">Disalin!</div>
 
   <script>
+    //API-DOA
+    const islamiEndpoints = [
+      { no: 1, name: "Doa", method: "GET", desc: "Random Doa", query: "apikey" }
+    ];
+
+    const islamiBody = document.getElementById('islamiTableBody');
+    islamiEndpoints.forEach(ep => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${ep.no}</td>
+        <td>${ep.name}</td>
+        <td><span class="badge GET">${ep.method}</span></td>
+        <td>${ep.desc}</td>
+        <td>${ep.query}</td>
+        <td><button class="btn" onclick="tryIslami('${ep.name}')">Try</button></td>
+      `;
+      islamiBody.appendChild(tr);
+    });
+
+    function tryIslami(feature) {
+      const panel = document.getElementById('islamiResponsePanel');
+      panel.style.display = 'block';
+      panel.textContent = `⚡ Menjalankan ${feature}...`;
+
+      fetch("https://api.teamhackbotsindo.my.id/api/doa", {
+        headers: { "x-api-key": "sk-demo-api-key-1234567890abcdef" }
+      })
+        .then(res => res.json())
+        .then(data => panel.textContent = JSON.stringify(data, null, 2))
+        .catch(err => panel.textContent = "Error: " + err);
+    }
     // Data: endpoint list (mock)
     const endpoints = [
       { method: 'GET',    path: '/api/users',        desc: 'Mengambil daftar user' },
