@@ -399,38 +399,30 @@
       
       <!-- Section Shalat -->
       <section class="card" id="shalat" aria-labelledby="shalat-title">
-        <div class="card-header" id="shalat-title">Dokumentasi API — Shalat</div>
-        <table class="table" aria-describedby="shalat-title">
-          <thead>
-            <tr>
-              <th>No</th>
-              <th>Feature Name</th>
-              <th>Request Method</th>
-              <th>Description</th>
-              <th>Query Parameter</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody id="shalatTableBody">
-            <!-- Diisi lewat JS -->
-          </tbody>
-        </table>
-        <!-- Dropdown pilihan shalat -->
-          <label for="shalatSelect">Pilih Shalat:</label>
-          <select id="shalatSelect">
-            <option value="subuh">Subuh</option>
-            <option value="dzuhur">Dzuhur</option>
-            <option value="ashar">Ashar</option>
-            <option value="magrib">Magrib</option>
-            <option value="isya">Isya</option>
-            <option value="duha">Duha</option>
-            <option value="tahajud">Tahajud</option>
-            <option value="witir">Witir</option>
-            <option value="hajat">Hajat</option>
-            <option value="istikharah">Istikharah</option>
-            <option value="taubat">Taubat</option>
-          </select>
-        <div id="shalatResponsePanel" class="response" aria-live="polite" style="display:none"></div>
+        <div class="card-header" id="shalat-title" style="display: flex; align-items: center; justify-content: space-between;">
+          <span>Dokumentasi API — Shalat</span>
+          <label for="shalatSelect" style="display: flex; align-items: center; gap: 8px;">
+            Pilih Shalat:
+            <select id="shalatSelect" style="padding: 6px 10px; border-radius: 8px; background: #0c1426; color: #eaf2ff; border: 1px solid #1d2740;">
+              <option value="subuh">Subuh</option>
+              <option value="dzuhur">Dzuhur</option>
+              <option value="ashar">Ashar</option>
+              <option value="magrib">Magrib</option>
+              <option value="isya">Isya</option>
+              <option value="duha">Duha</option>
+              <option value="tahajud">Tahajud</option>
+              <option value="witir">Witir</option>
+              <option value="hajat">Hajat</option>
+              <option value="istikharah">Istikharah</option>
+              <option value="taubat">Taubat</option>
+            </select>
+          </label>
+        </div>
+
+        <div style="padding: 16px;">
+          <button class="btn" onclick="tryShalat()">Try</button>
+          <div id="shalatResponsePanel" class="response" aria-live="polite" style="display:none; margin-top: 16px;"></div>
+        </div>
       </section>
 
       <!-- Code samples Shalat -->
