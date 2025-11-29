@@ -572,12 +572,15 @@
 
     // Copy API key
     document.getElementById('copyBtn').addEventListener('click', () => {
-      const apiKey = document.getElementById('apiKeyInput').value;
+      const apiKey = document.getElementById('apiKeyInput').value.trim();
+      if (!apiKey) {
+        toast('API key belum diisi!');
+        return;
+      }
       navigator.clipboard.writeText(apiKey).then(() => {
         toast('API key disalin: ' + apiKey);
       });
     });
-
 
     // Tabs Islami
     const tabJSIslami = document.getElementById('tabJSIslami');
