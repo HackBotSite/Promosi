@@ -310,9 +310,15 @@
 
       <!-- API Key box -->
       <section class="apikey" aria-label="API key">
-        <input id="apiKeyInput" type="text" value="Hacksbotsrg" readonly aria-label="API key demo" />
+        <select id="apiKeyInput" aria-label="Pilih API key">
+          <option value="Hacksbotsrg">Hacksbotsrg</option>
+          <option value="TenantBKey">TenantBKey</option>
+          <option value="TenantCKey">TenantCKey</option>
+        </select>
         <button class="btn" id="copyBtn" aria-live="polite">Copy API Key</button>
       </section>
+
+      <p>API key aktif: <span id="activeKey"></span></p>
 
       <!-- Section Islami -->
       <section class="card" id="islami" aria-labelledby="islami-title">
@@ -348,8 +354,8 @@
           <!-- JS -->
           <div id="jsIslami" role="tabpanel" aria-labelledby="tabJSIslami" class="code">
       <pre><code class="language-js">
-      fetch("https://api.teamhackbotsindo.my.id/api/doa", {
-        headers: { "x-api-key": "Hacksbotsrg" }
+      fetch(url, {
+        headers: { "x-api-key": apiKey }
       })
         .then(res => res.json())
         .then(data => console.log(data));
@@ -362,7 +368,7 @@
       import requests
 
       url = "https://api.teamhackbotsindo.my.id/api/doa"
-      headers = {"x-api-key": "Hacksbotsrg"}
+      headers = { "x-api-key": apiKey }
       response = requests.get(url, headers=headers)
       print(response.json())
       </code></pre>
@@ -429,7 +435,7 @@
           <div id="jsRandom" role="tabpanel" aria-labelledby="tabJSRandom" class="code">
       <pre><code class="language-js">
       fetch("https://api.teamhackbotsindo.my.id/api/anime-random", {
-        headers: { "x-api-key": "Hacksbotsrg" }
+        headers: { "x-api-key": apiKey }
       })
         .then(res => res.json())
         .then(data => console.log("Anime Random:", data));
@@ -443,7 +449,7 @@
       <pre><code class="language-python">
       import requests
 
-      headers = {"x-api-key": "Hacksbotsrg"}
+      headers = { "x-api-key": apiKey }
       resp = requests.get("https://api.teamhackbotsindo.my.id/api/anime-random", headers=headers)
       print("Anime Random:", resp.json())
 
@@ -530,6 +536,8 @@
       panel.style.display = 'block';
       panel.textContent = `⚡ Menjalankan ${feature}...`;
 
+      const apiKey = document.getElementById('apiKeyInput').value;
+
       let url = "";
       if (feature === "Doa") {
         url = "https://api.teamhackbotsindo.my.id/api/doa";
@@ -539,7 +547,7 @@
       }
 
       fetch(url, {
-        headers: { "x-api-key": "Hacksbotsrg" }
+        headers: { "x-api-key": apiKey }
       })
         .then(res => res.json())
         .then(data => panel.textContent = JSON.stringify(data, null, 2))
@@ -554,13 +562,26 @@
       setTimeout(() => toastEl.classList.remove('show'), 1800);
     }
 
+    // Update tampilan API key aktif
+    const apiKeySelect = document.getElementById('apiKeyInput');
+    const activeKeySpan = document.getElementById('activeKey');
+
+    // Set default saat halaman load
+    activeKeySpan.textContent = apiKeySelect.value;
+
+    // Update saat user ganti pilihan
+    apiKeySelect.addEventListener('change', () => {
+      activeKeySpan.textContent = apiKeySelect.value;
+    });
+
     // Copy API key
     document.getElementById('copyBtn').addEventListener('click', () => {
-      const input = document.getElementById('apiKeyInput');
-      input.select(); input.setSelectionRange(0, 99999);
-      document.execCommand('copy');
-      toast('API key disalin');
+      const apiKey = document.getElementById('apiKeyInput').value;
+      navigator.clipboard.writeText(apiKey).then(() => {
+        toast('API key disalin: ' + apiKey);
+      });
     });
+
 
     // Tabs Islami
     const tabJSIslami = document.getElementById('tabJSIslami');
@@ -611,6 +632,8 @@
       panel.style.display = 'block';
       panel.textContent = `⚡ Menjalankan ${feature}...`;
 
+      const apiKey = document.getElementById('apiKeyInput').value;
+
       let url = "";
       if (feature === "Anime Random") {
         url = "https://api.teamhackbotsindo.my.id/api/anime-random";
@@ -623,7 +646,7 @@
       }
 
       fetch(url, {
-        headers: { "x-api-key": "Hacksbotsrg" }
+        headers: { "x-api-key": apiKey }
       })
         .then(res => res.json())
         .then(data => panel.textContent = JSON.stringify(data, null, 2))
