@@ -310,11 +310,7 @@
 
       <!-- API Key box -->
       <section class="apikey" aria-label="API key">
-        <select id="apiKeyInput" aria-label="Pilih API key">
-          <option value="Hacksbotsrg">Hacksbotsrg</option>
-          <option value="TenantBKey">TenantBKey</option>
-          <option value="TenantCKey">TenantCKey</option>
-        </select>
+        <input id="apiKeyInput" type="text" placeholder="Masukkan API key kamu" aria-label="API key manual" />
         <button class="btn" id="copyBtn" aria-live="polite">Copy API Key</button>
       </section>
 
@@ -563,15 +559,15 @@
     }
 
     // Update tampilan API key aktif
-    const apiKeySelect = document.getElementById('apiKeyInput');
+    const apiKeyInput = document.getElementById('apiKeyInput');
     const activeKeySpan = document.getElementById('activeKey');
 
     // Set default saat halaman load
-    activeKeySpan.textContent = apiKeySelect.value;
+    activeKeySpan.textContent = apiKeyInput.value;
 
-    // Update saat user ganti pilihan
-    apiKeySelect.addEventListener('change', () => {
-      activeKeySpan.textContent = apiKeySelect.value;
+    // Update saat user mengetik
+    apiKeyInput.addEventListener('input', () => {
+      activeKeySpan.textContent = apiKeyInput.value;
     });
 
     // Copy API key
