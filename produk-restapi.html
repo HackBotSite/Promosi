@@ -563,7 +563,7 @@
     const activeKeySpan = document.getElementById('activeKey');
 
     // Set default saat halaman load
-    activeKeySpan.textContent = apiKeyInput.value;
+    activeKeySpan.textContent = apiKeyInput.value || "- belum diisi -";
 
     // Update saat user mengetik
     apiKeyInput.addEventListener('input', () => {
@@ -674,11 +674,6 @@
   <a href="https://wa.me/6285717777189" target="_blank" class="wa-float">
     <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
   </a>
-
-  <!-- Footer -->
-  <footer>
-    <p>© 2025 HB Digital Solutions</p>
-  </footer>
 
 </body>
 </html>
