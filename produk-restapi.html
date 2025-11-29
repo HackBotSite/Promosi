@@ -415,6 +415,21 @@
             <!-- Diisi lewat JS -->
           </tbody>
         </table>
+        <!-- Dropdown pilihan shalat -->
+          <label for="shalatSelect">Pilih Shalat:</label>
+          <select id="shalatSelect">
+            <option value="subuh">Subuh</option>
+            <option value="dzuhur">Dzuhur</option>
+            <option value="ashar">Ashar</option>
+            <option value="magrib">Magrib</option>
+            <option value="isya">Isya</option>
+            <option value="duha">Duha</option>
+            <option value="tahajud">Tahajud</option>
+            <option value="witir">Witir</option>
+            <option value="hajat">Hajat</option>
+            <option value="istikharah">Istikharah</option>
+            <option value="taubat">Taubat</option>
+          </select>
         <div id="shalatResponsePanel" class="response" aria-live="polite" style="display:none"></div>
       </section>
 
@@ -609,26 +624,30 @@
       islamiBody.appendChild(tr);
     });
 
-    // Fungsi Try untuk Islami
+    // Fungsi Try untuk Islami dengan dropdown shalat
     function tryIslami(feature) {
-        const panel = document.getElementById('islamiResponsePanel');
+      const panel = document.getElementById('islamiResponsePanel');
       panel.style.display = 'block';
       panel.textContent = `⚡ Menjalankan ${feature}...`;
 
       const apiKey = document.getElementById('apiKeyInput').value;
-
       let url = "";
+
       if (feature === "Doa") {
         url = "https://api.teamhackbotsindo.my.id/api/doa";
       } else if (feature === "Niat Shalat") {
-        // Default contoh: isya (bisa diganti sesuai kebutuhan)
-        url = "https://api.teamhackbotsindo.my.id/api/niat-shalat?shalat=isya";
+        // Ambil pilihan dari dropdown
+        const selectedShalat = document.getElementById('shalatSelect').value;
+        url = `https://api.teamhackbotsindo.my.id/api/niat-shalat?shalat=${selectedShalat}`;
       }
 
       fetch(url, {
         headers: { "x-api-key": apiKey }
       })
-        .then(res => res.json())
+        .then(res => {
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          return res.json();
+        })
         .then(data => panel.textContent = JSON.stringify(data, null, 2))
         .catch(err => panel.textContent = "Error: " + err);
     }
