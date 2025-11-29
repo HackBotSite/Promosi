@@ -438,7 +438,8 @@
           <!-- JS -->
           <div id="jsShalat" role="tabpanel" aria-labelledby="tabJSShalat" class="code">
       <pre><code class="language-js">
-      const url = "https://api.teamhackbotsindo.my.id/api/niat-shalat?shalat=isya";
+      const selected = "isya"; // bisa diganti sesuai dropdown
+      const url = `https://api.teamhackbotsindo.my.id/api/niat-shalat?shalat=${selected}`;
 
       fetch(url, {
         headers: { "x-api-key": apiKey }
@@ -453,7 +454,8 @@
       <pre><code class="language-python">
       import requests
 
-      url = "https://api.teamhackbotsindo.my.id/api/niat-shalat?shalat=dzuhur"
+      selected = "dzuhur"  # bisa diganti sesuai dropdown
+      url = f"https://api.teamhackbotsindo.my.id/api/niat-shalat?shalat={selected}"
       headers = { "x-api-key": apiKey }
       response = requests.get(url, headers=headers)
       print(response.json())
@@ -472,9 +474,12 @@
       )
 
       func main() {
+        selected := "magrib"
+        url := "https://api.teamhackbotsindo.my.id/api/niat-shalat?shalat=" + selected
+
         client := &http.Client{}
-        req, _ := http.NewRequest("GET", "https://api.teamhackbotsindo.my.id/api/niat-shalat?shalat=magrib", nil)
-        req.Header.Set("x-api-key", apiKey )
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
 
         resp, _ := client.Do(req)
         defer resp.Body.Close()
@@ -697,6 +702,78 @@
     tabPyIslami.addEventListener('click', () => showIslami(tabPyIslami));
     tabGoIslami.addEventListener('click', () => showIslami(tabGoIslami));
 
+    // Tabs Shalat
+    const tabJSShalat = document.getElementById('tabJSShalat');
+    const tabPyShalat = document.getElementById('tabPyShalat');
+    const tabGoShalat = document.getElementById('tabGoShalat');
+
+    const jsShalat = document.getElementById('jsShalat');
+    const pyShalat = document.getElementById('pyShalat');
+    const goShalat = document.getElementById('goShalat');
+
+    function showShalat(tab) {
+      [tabJSShalat, tabPyShalat, tabGoShalat].forEach(btn => btn.classList.remove('active'));
+      [jsShalat, pyShalat, goShalat].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    tabJSShalat.addEventListener('click', () => showShalat(tabJSShalat));
+    tabPyShalat.addEventListener('click', () => showShalat(tabPyShalat));
+    tabGoShalat.addEventListener('click', () => showShalat(tabGoShalat));
+
+    // Ambil elemen dropdown
+    const shalatSelect = document.getElementById('shalatSelect');
+
+    // Update code sample saat dropdown berubah
+    shalatSelect.addEventListener('change', () => {
+      const selected = shalatSelect.value;
+
+      // Update isi code sample JS
+      document.querySelector('#jsShalat code').textContent =
+    `const url = "https://api.teamhackbotsindo.my.id/api/niat-shalat?shalat=${selected}";
+
+    fetch(url, {
+      headers: { "x-api-key": apiKey }
+    })
+      .then(res => res.json())
+      .then(data => console.log(data));`;
+
+      // Update isi code sample Python
+      document.querySelector('#pyShalat code').textContent =
+    `import requests
+
+    url = "https://api.teamhackbotsindo.my.id/api/niat-shalat?shalat=${selected}"
+    headers = { "x-api-key": apiKey }
+    response = requests.get(url, headers=headers)
+    print(response.json())`;
+
+      // Update isi code sample Golang
+      document.querySelector('#goShalat code').textContent =
+    `package main
+
+    import (
+      "fmt"
+      "net/http"
+      "io/ioutil"
+    )
+
+    func main() {
+      url := "https://api.teamhackbotsindo.my.id/api/niat-shalat?shalat=${selected}"
+
+      client := &http.Client{}
+      req, _ := http.NewRequest("GET", url, nil)
+      req.Header.Set("x-api-key", apiKey)
+
+      resp, _ := client.Do(req)
+      defer resp.Body.Close()
+
+      body, _ := ioutil.ReadAll(resp.Body)
+      fmt.Println(string(body))
+    }`;
+    });
+
     // API Random Image
     const randomEndpoints = [
       { no: 1, name: "Anime Random", method: "GET", desc: "Random", query: "apikey" },
@@ -718,6 +795,28 @@
       `;
       randomBody.appendChild(tr);
     });
+
+    // Fungsi Try Niat-Shalat
+    function tryShalat() {
+      const panel = document.getElementById('shalatResponsePanel');
+      panel.style.display = 'block';
+      panel.textContent = "⚡ Menjalankan Niat Shalat...";
+
+      const apiKey = document.getElementById('apiKeyInput').value;
+      const selectedShalat = document.getElementById('shalatSelect').value;
+
+      const url = `https://api.teamhackbotsindo.my.id/api/niat-shalat?shalat=${selectedShalat}`;
+
+      fetch(url, {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => {
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          return res.json();
+        })
+        .then(data => panel.textContent = JSON.stringify(data, null, 2))
+        .catch(err => panel.textContent = "Error: " + err);
+    }
 
     // Fungsi Try untuk Random Image
     function tryRandom(feature) {
