@@ -384,7 +384,7 @@
       func main() {
         client := &http.Client{}
         req, _ := http.NewRequest("GET", "https://api.teamhackbotsindo.my.id/api/doa", nil)
-        req.Header.Set("x-api-key", apiKey }
+        req.Header.Set("x-api-key", apiKey )
 
         resp, _ := client.Do(req)
         defer resp.Body.Close()
@@ -431,7 +431,7 @@
           <!-- JS -->
           <div id="jsShalat" role="tabpanel" aria-labelledby="tabJSShalat" class="code">
       <pre><code class="language-js">
-      const url = "https://api.teamhackbotsindo.my.id/api/shalat?shalat=isya";
+      const url = "https://api.teamhackbotsindo.my.id/api/niat-shalat?shalat=isya";
 
       fetch(url, {
         headers: { "x-api-key": apiKey }
@@ -446,7 +446,7 @@
       <pre><code class="language-python">
       import requests
 
-      url = "https://api.teamhackbotsindo.my.id/api/shalat?shalat=dzuhur"
+      url = "https://api.teamhackbotsindo.my.id/api/niat-shalat?shalat=dzuhur"
       headers = { "x-api-key": apiKey }
       response = requests.get(url, headers=headers)
       print(response.json())
@@ -466,8 +466,8 @@
 
       func main() {
         client := &http.Client{}
-        req, _ := http.NewRequest("GET", "https://api.teamhackbotsindo.my.id/api/shalat?shalat=magrib", nil)
-        req.Header.Set("x-api-key", apiKey)
+        req, _ := http.NewRequest("GET", "https://api.teamhackbotsindo.my.id/api/niat-shalat?shalat=magrib", nil)
+        req.Header.Set("x-api-key", apiKey )
 
         resp, _ := client.Do(req)
         defer resp.Body.Close()
@@ -550,7 +550,7 @@
       func fetchAPI(url string) {
         client := &http.Client{}
         req, _ := http.NewRequest("GET", url, nil)
-        req.Header.Set("x-api-key", apiKey }
+        req.Header.Set("x-api-key", apiKey )
 
         resp, _ := client.Do(req)
         defer resp.Body.Close()
