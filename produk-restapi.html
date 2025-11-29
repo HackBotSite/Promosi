@@ -384,7 +384,90 @@
       func main() {
         client := &http.Client{}
         req, _ := http.NewRequest("GET", "https://api.teamhackbotsindo.my.id/api/doa", nil)
-        req.Header.Set("x-api-key", apikey)
+        req.Header.Set("x-api-key", apiKey }
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Section Shalat -->
+      <section class="card" id="shalat" aria-labelledby="shalat-title">
+        <div class="card-header" id="shalat-title">Dokumentasi API — Shalat</div>
+        <table class="table" aria-describedby="shalat-title">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Feature Name</th>
+              <th>Request Method</th>
+              <th>Description</th>
+              <th>Query Parameter</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="shalatTableBody">
+            <!-- Diisi lewat JS -->
+          </tbody>
+        </table>
+        <div id="shalatResponsePanel" class="response" aria-live="polite" style="display:none"></div>
+      </section>
+
+      <!-- Code samples Shalat -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Shalat</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Shalat">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsShalat" id="tabJSShalat">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyShalat" id="tabPyShalat">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goShalat" id="tabGoShalat">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsShalat" role="tabpanel" aria-labelledby="tabJSShalat" class="code">
+      <pre><code class="language-js">
+      const url = "https://api.teamhackbotsindo.my.id/api/shalat?shalat=isya";
+
+      fetch(url, {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log(data));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyShalat" role="tabpanel" aria-labelledby="tabPyShalat" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      url = "https://api.teamhackbotsindo.my.id/api/shalat?shalat=dzuhur"
+      headers = { "x-api-key": apiKey }
+      response = requests.get(url, headers=headers)
+      print(response.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goShalat" role="tabpanel" aria-labelledby="tabGoShalat" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", "https://api.teamhackbotsindo.my.id/api/shalat?shalat=magrib", nil)
+        req.Header.Set("x-api-key", apiKey)
 
         resp, _ := client.Do(req)
         defer resp.Body.Close()
@@ -467,7 +550,7 @@
       func fetchAPI(url string) {
         client := &http.Client{}
         req, _ := http.NewRequest("GET", url, nil)
-        req.Header.Set("x-api-key", apikey)
+        req.Header.Set("x-api-key", apiKey }
 
         resp, _ := client.Do(req)
         defer resp.Body.Close()
@@ -506,7 +589,7 @@
 
   <script>
 
-    //API-DOA + NIAT SHALAT
+    //API-ISLAMI
     const islamiEndpoints = [
       { no: 1, name: "Doa", method: "GET", desc: "Random Doa", query: "apikey" },
       { no: 2, name: "Niat Shalat", method: "GET", desc: "Niat shalat berdasarkan query", query: "apikey, shalat" }
