@@ -431,7 +431,6 @@
           <div id="jsRandom" role="tabpanel" aria-labelledby="tabJSRandom" class="code">
       <pre><code class="language-js">
       fetch("https://api.teamhackbotsindo.my.id/api/anime-random", {
-        apikey = "YOUR APIKEY"
         headers: { "x-api-key": apiKey }
       })
         .then(res => res.json())
@@ -445,7 +444,6 @@
           <div id="pyRandom" role="tabpanel" aria-labelledby="tabPyRandom" class="code" style="display:none">
       <pre><code class="language-python">
       import requests
-      apikey = "YOUR APIKEY"
 
       headers = { "x-api-key": apiKey }
       resp = requests.get("https://api.teamhackbotsindo.my.id/api/anime-random", headers=headers)
@@ -469,7 +467,7 @@
       func fetchAPI(url string) {
         client := &http.Client{}
         req, _ := http.NewRequest("GET", url, nil)
-        req.Header.Set("x-api-key", "YOUR APIKEY")
+        req.Header.Set("x-api-key", apikey)
 
         resp, _ := client.Do(req)
         defer resp.Body.Close()
