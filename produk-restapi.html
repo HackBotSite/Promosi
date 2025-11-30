@@ -277,14 +277,6 @@
       <h2>Bots API</h2>
       <ul class="nav-list">
         <li><a class="active" href="#home">Dashboard</a></li>
-        <li><a href="#docs">Endpoint</a></li>
-        <li><a href="#code">Contoh Kode</a></li>
-        <li><a href="#status">Status</a></li>
-        <li><a href="#changelog">Changelog</a></li>
-      </ul>
-
-      <h2>All Feature</h2>
-      <ul class="nav-list">
         <li><a href="#islami">Islami</a></li>
         <li><a href="#downloader">Downloader</a></li>
         <li><a href="#information">Information</a></li>
@@ -335,6 +327,49 @@
           </tbody>
         </table>
         <div id="islamiResponsePanel" class="response" aria-live="polite" style="display:none"></div>
+      </section>
+
+      <section class="card" id="query-islami" aria-labelledby="query-islami-title">
+        <div class="card-header" id="query-islami-title">Set Query</div>
+
+        <!-- Pilih Shalat -->
+        <div style="padding: 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+          <label for="shalatSelectIslami" style="display:flex; align-items:center; gap:8px;">
+            Pilih Shalat:
+            <select id="shalatSelectIslami" style="padding:6px 10px; border-radius:8px; background:#0c1426; color:#eaf2ff; border:1px solid #1d2740;">
+              <option value="subuh">Subuh</option>
+              <option value="dzuhur">Dzuhur</option>
+              <option value="ashar">Ashar</option>
+              <option value="magrib">Magrib</option>
+              <option value="isya">Isya</option>
+              <option value="duha">Duha</option>
+              <option value="tahajud">Tahajud</option>
+              <option value="witir">Witir</option>
+              <option value="hajat">Hajat</option>
+              <option value="istikharah">Istikharah</option>
+              <option value="taubat">Taubat</option>
+            </select>
+          </label>
+          <button class="btn" onclick="tryIslami('Niat Shalat')">Try</button>
+        </div>
+
+        <!-- Pilih Bahasa -->
+        <div style="padding:12px; display:flex; gap:10px; flex-wrap:wrap;">
+          <input id="translateText" type="text" placeholder="Masukkan teks untuk diterjemahkan"
+                 style="flex:1; padding:6px 10px; border-radius:8px; background:#0c1426; color:#eaf2ff; border:1px solid #1d2740;">
+          <select id="translateLang" style="padding:6px 10px; border-radius:8px; background:#0c1426; color:#eaf2ff; border:1px solid #1d2740;">
+            <option value="en">English</option>
+            <option value="id">Indonesia</option>
+            <option value="ar">Arabic</option>
+            <option value="fr">French</option>
+            <option value="ja">Japanese</option>
+            <option value="zh-cn">Chinese (Simplified)</option>
+            <option value="ru">Russian</option>
+          </select>
+          <button class="btn" onclick="tryTranslate()">Try</button>
+        </div>
+
+        <div id="translateResponsePanel" class="response" aria-live="polite" style="display:none; margin-top:16px;"></div>
       </section>
 
       <!-- Code samples Islami -->
@@ -395,34 +430,6 @@
       }
       </code></pre>
           </div>
-        </div>
-      </section>
-      
-      <!-- Section Shalat -->
-      <section class="card" id="shalat" aria-labelledby="shalat-title">
-        <div class="card-header" id="shalat-title" style="display: flex; align-items: center; justify-content: space-between;">
-          <span>Dokumentasi API — Shalat</span>
-          <label for="shalatSelect" style="display: flex; align-items: center; gap: 8px;">
-            Pilih Shalat:
-            <select id="shalatSelect" style="padding: 6px 10px; border-radius: 8px; background: #0c1426; color: #eaf2ff; border: 1px solid #1d2740;">
-              <option value="subuh">Subuh</option>
-              <option value="dzuhur">Dzuhur</option>
-              <option value="ashar">Ashar</option>
-              <option value="magrib">Magrib</option>
-              <option value="isya">Isya</option>
-              <option value="duha">Duha</option>
-              <option value="tahajud">Tahajud</option>
-              <option value="witir">Witir</option>
-              <option value="hajat">Hajat</option>
-              <option value="istikharah">Istikharah</option>
-              <option value="taubat">Taubat</option>
-            </select>
-          </label>
-        </div>
-
-        <div style="padding: 16px;">
-          <button class="btn" onclick="tryShalat()">Try</button>
-          <div id="shalatResponsePanel" class="response" aria-live="polite" style="display:none; margin-top: 16px;"></div>
         </div>
       </section>
 
@@ -583,6 +590,138 @@
         </div>
       </section>
 
+      <!-- Section Information -->
+      <section class="card" id="information" aria-labelledby="information-title">
+        <div class="card-header" id="information-title">Dokumentasi API — Information</div>
+        <table class="table" aria-describedby="information-title">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Feature Name</th>
+              <th>Request Method</th>
+              <th>Description</th>
+              <th>Query Parameter</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="informationTableBody">
+            <!-- Diisi lewat JS -->
+          </tbody>
+        </table>
+        <div id="informationResponsePanel" class="response" aria-live="polite" style="display:none"></div>
+      </section>
+
+      <!-- Code samples Information -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Information</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Information">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsInfo" id="tabJSInfo">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyInfo" id="tabPyInfo">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goInfo" id="tabGoInfo">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsInfo" role="tabpanel" aria-labelledby="tabJSInfo" class="code">
+      <pre><code class="language-js">
+      // Translate
+      fetch("https://api.teamhackbotsindo.my.id/api/translate?text=selamat%20pagi&to=en", {
+        headers: { 
+          "x-api-key": apiKey,
+          "Origin": "https://teamhackbotsindo.my.id"
+        }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Translate:", data));
+
+      // Kodepos
+      fetch("https://api.teamhackbotsindo.my.id/api/kodepos?daerah=ciomas", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Kodepos:", data));
+
+      // Info Gempa
+      fetch("https://api.teamhackbotsindo.my.id/api/gempa", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Info Gempa:", data));
+
+      // Cord Lagu
+      fetch("https://api.teamhackbotsindo.my.id/api/cord-lagu?judul=melukis%20senja", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Cord Lagu:", data));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyInfo" role="tabpanel" aria-labelledby="tabPyInfo" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      headers = { 
+        "x-api-key": apiKey,
+        "Origin": "https://teamhackbotsindo.my.id"
+      }
+
+      # Translate
+      resp = requests.get("https://api.teamhackbotsindo.my.id/api/translate?text=selamat%20pagi&to=en", headers=headers)
+      print("Translate:", resp.json())
+
+      # Kodepos
+      resp = requests.get("https://api.teamhackbotsindo.my.id/api/kodepos?daerah=ciomas", headers={"x-api-key": apiKey})
+      print("Kodepos:", resp.json())
+
+      # Info Gempa
+      resp = requests.get("https://api.teamhackbotsindo.my.id/api/gempa", headers={"x-api-key": apiKey})
+      print("Info Gempa:", resp.json())
+
+      # Cord Lagu
+      resp = requests.get("https://api.teamhackbotsindo.my.id/api/cord-lagu?judul=melukis%20senja", headers={"x-api-key": apiKey})
+      print("Cord Lagu:", resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goInfo" role="tabpanel" aria-labelledby="tabGoInfo" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func fetchAPI(url string, withOrigin bool) {
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+        if withOrigin {
+          req.Header.Set("Origin", "https://teamhackbotsindo.my.id")
+        }
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(url, ":", string(body))
+      }
+
+      func main() {
+        fetchAPI("https://api.teamhackbotsindo.my.id/api/translate?text=selamat%20pagi&to=en", true)
+        fetchAPI("https://api.teamhackbotsindo.my.id/api/kodepos?daerah=ciomas", false)
+        fetchAPI("https://api.teamhackbotsindo.my.id/api/gempa", false)
+        fetchAPI("https://api.teamhackbotsindo.my.id/api/cord-lagu?judul=melukis%20senja", false)
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
       <!-- Footer -->
       <footer aria-label="Footer">
         <div class="footer-inner">
@@ -601,6 +740,88 @@
   <div id="toast" class="toast" role="status" aria-live="polite">Disalin!</div>
 
   <script>
+
+    // API-Information
+    const informationEndpoints = [
+      { no: 1, name: "Translate", method: "GET", desc: "Terjemahkan teks ke bahasa lain", query: "apikey, text, to" },
+      { no: 2, name: "Kodepos", method: "GET", desc: "Cari kodepos berdasarkan daerah", query: "apikey, daerah" },
+      { no: 3, name: "Info Gempa", method: "GET", desc: "Informasi gempa terbaru dari BMKG", query: "apikey" },
+      { no: 4, name: "Cord Lagu", method: "GET", desc: "Chord lagu berdasarkan judul", query: "apikey, judul" }
+    ];
+
+    const infoBody = document.getElementById('informationTableBody');
+    informationEndpoints.forEach(ep => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${ep.no}</td>
+        <td>${ep.name}</td>
+        <td><span class="badge GET">${ep.method}</span></td>
+        <td>${ep.desc}</td>
+        <td>${ep.query}</td>
+        <td><button class="btn" onclick="tryInformation('${ep.name}')">Try</button></td>
+      `;
+      infoBody.appendChild(tr);
+    });
+
+    // Fungsi Try untuk Information (final, fleksibel + validasi)
+    function tryInformation(feature) {
+      const panel = document.getElementById('informationResponsePanel');
+      panel.style.display = 'block';
+      panel.textContent = `⚡ Menjalankan ${feature}...`;
+
+      const apiKey = document.getElementById('apiKeyInput').value.trim();
+      if (!apiKey) {
+        panel.textContent = "Error: API key belum diisi.";
+        return;
+      }
+
+      let url = "";
+      let headers = { "x-api-key": apiKey };
+
+      if (feature === "Translate") {
+        // Ambil input jika tersedia; fallback ke contoh
+        const textEl = document.getElementById('translateText');
+        const langEl = document.getElementById('translateLang');
+        const text = textEl?.value?.trim() || "selamat pagi";
+        const lang = langEl?.value || "en";
+
+        url = `https://api.teamhackbotsindo.my.id/api/translate?text=${encodeURIComponent(text)}&to=${lang}`;
+        headers.Origin = "https://teamhackbotsindo.my.id"; // jika diperlukan oleh server
+      } else if (feature === "Kodepos") {
+        url = `https://api.teamhackbotsindo.my.id/api/kodepos?daerah=ciomas`;
+      } else if (feature === "Info Gempa") {
+        url = `https://api.teamhackbotsindo.my.id/api/gempa`;
+      } else if (feature === "Cord Lagu") {
+        url = `https://api.teamhackbotsindo.my.id/api/cord-lagu?judul=melukis%20senja`;
+      } else {
+        panel.textContent = "Error: Fitur tidak dikenal.";
+        return;
+      }
+
+      fetch(url, { headers })
+        .then(res => {
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          return res.json();
+        })
+        .then(data => panel.textContent = JSON.stringify(data, null, 2))
+        .catch(err => panel.textContent = "Error: " + err);
+    }
+
+    function tryTranslate() {
+      const panel = document.getElementById('translateResponsePanel');
+      panel.style.display = 'block';
+      panel.textContent = "⚡ Menjalankan Translate...";
+
+      const apiKey = document.getElementById('apiKeyInput').value;
+      const text = document.getElementById('translateText').value || "selamat pagi";
+      const lang = document.getElementById('translateLang').value;
+      const url = `https://api.teamhackbotsindo.my.id/api/translate?text=${encodeURIComponent(text)}&to=${lang}`;
+
+      fetch(url, { headers: { "x-api-key": apiKey, "Origin": "https://teamhackbotsindo.my.id" } })
+        .then(res => res.json())
+        .then(data => panel.textContent = JSON.stringify(data, null, 2))
+        .catch(err => panel.textContent = "Error: " + err);
+    }
 
     //API-ISLAMI
     const islamiEndpoints = [
@@ -865,6 +1086,110 @@
     tabJSRandom.addEventListener('click', () => showRandom(tabJSRandom));
     tabPyRandom.addEventListener('click', () => showRandom(tabPyRandom));
     tabGoRandom.addEventListener('click', () => showRandom(tabGoRandom));
+
+        // Tabs Information
+    const tabJSInfo = document.getElementById('tabJSInfo');
+    const tabPyInfo = document.getElementById('tabPyInfo');
+    const tabGoInfo = document.getElementById('tabGoInfo');
+
+    const jsInfo = document.getElementById('jsInfo');
+    const pyInfo = document.getElementById('pyInfo');
+    const goInfo = document.getElementById('goInfo');
+
+    function showInfo(tab) {
+      [tabJSInfo, tabPyInfo, tabGoInfo].forEach(btn => btn.classList.remove('active'));
+      [jsInfo, pyInfo, goInfo].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    tabJSInfo.addEventListener('click', () => showInfo(tabJSInfo));
+    tabPyInfo.addEventListener('click', () => showInfo(tabPyInfo));
+    tabGoInfo.addEventListener('click', () => showInfo(tabGoInfo));
+
+    //DOC NAV
+    document.addEventListener('DOMContentLoaded', () => {
+      // Kumpulkan link sidebar
+      const navLinks = Array.from(document.querySelectorAll('.sidebar .nav-list a'));
+
+      // Buat map href -> section yang ada
+      const linkMap = navLinks.reduce((acc, link) => {
+        const href = link.getAttribute('href'); // "#information" dll.
+        const id = href && href.startsWith('#') ? href.slice(1) : null;
+        const section = id ? document.getElementById(id) : null;
+        if (section) acc[href] = { link, section };
+        return acc;
+      }, {});
+
+      // Hanya sections yang benar-benar ada
+      const sections = Object.values(linkMap).map(x => x.section);
+
+      // Toggle active saat klik
+      navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          navLinks.forEach(el => el.classList.remove('active'));
+          link.classList.add('active');
+        });
+      });
+
+      // Set active berdasar hash saat load
+      const initialHash = window.location.hash;
+      if (initialHash && linkMap[initialHash]) {
+        navLinks.forEach(el => el.classList.remove('active'));
+        linkMap[initialHash].link.classList.add('active');
+      }
+
+      // Scrollspy
+      const OFFSET = 130; // sesuaikan dengan tinggi navbar
+      window.addEventListener('scroll', () => {
+        let currentId = '';
+        const scrollPos = window.scrollY;
+
+        sections.forEach(section => {
+          const top = section.offsetTop - OFFSET;
+          if (scrollPos >= top) currentId = section.id;
+        });
+
+        if (currentId) {
+          navLinks.forEach(el => el.classList.remove('active'));
+          const href = '#' + currentId;
+          if (linkMap[href]) linkMap[href].link.classList.add('active');
+        }
+      }, { passive: true });
+    });
+
+    // Helpers
+    const toastEl = document.getElementById('toast');
+    function toast(msg) {
+      toastEl.textContent = msg;
+      toastEl.classList.add('show');
+      setTimeout(() => toastEl.classList.remove('show'), 1800);
+    }
+
+    // Update tampilan API key aktif
+    const apiKeyInput = document.getElementById('apiKeyInput');
+    const activeKeySpan = document.getElementById('activeKey');
+
+    // Set default saat halaman load
+    activeKeySpan.textContent = apiKeyInput.value || "- belum diisi -";
+
+    // Update saat user mengetik
+    apiKeyInput.addEventListener('input', () => {
+      activeKeySpan.textContent = apiKeyInput.value;
+    });
+
+    // Copy API key
+    document.getElementById('copyBtn').addEventListener('click', () => {
+      const apiKey = document.getElementById('apiKeyInput').value.trim();
+      if (!apiKey) {
+        toast('API key belum diisi!');
+        return;
+      }
+      navigator.clipboard.writeText(apiKey).then(() => {
+        toast('API key disalin: ' + apiKey);
+      });
+    });
 
   </script>
   <!-- WhatsApp Floating -->
