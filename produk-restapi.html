@@ -868,38 +868,6 @@
         .catch(err => panel.textContent = "Error: " + err);
     }
 
-    // Helpers
-    const toastEl = document.getElementById('toast');
-    function toast(msg) {
-      toastEl.textContent = msg;
-      toastEl.classList.add('show');
-      setTimeout(() => toastEl.classList.remove('show'), 1800);
-    }
-
-    // Update tampilan API key aktif
-    const apiKeyInput = document.getElementById('apiKeyInput');
-    const activeKeySpan = document.getElementById('activeKey');
-
-    // Set default saat halaman load
-    activeKeySpan.textContent = apiKeyInput.value || "- belum diisi -";
-
-    // Update saat user mengetik
-    apiKeyInput.addEventListener('input', () => {
-      activeKeySpan.textContent = apiKeyInput.value;
-    });
-
-    // Copy API key
-    document.getElementById('copyBtn').addEventListener('click', () => {
-      const apiKey = document.getElementById('apiKeyInput').value.trim();
-      if (!apiKey) {
-        toast('API key belum diisi!');
-        return;
-      }
-      navigator.clipboard.writeText(apiKey).then(() => {
-        toast('API key disalin: ' + apiKey);
-      });
-    });
-
     // Tabs Islami
     const tabJSIslami = document.getElementById('tabJSIslami');
     const tabPyIslami = document.getElementById('tabPyIslami');
@@ -1132,6 +1100,38 @@
           if (linkMap[href]) linkMap[href].link.classList.add('active');
         }
       }, { passive: true });
+    });
+
+    // Helpers
+    const toastEl = document.getElementById('toast');
+    function toast(msg) {
+      toastEl.textContent = msg;
+      toastEl.classList.add('show');
+      setTimeout(() => toastEl.classList.remove('show'), 1800);
+    }
+
+    // Update tampilan API key aktif
+    const apiKeyInput = document.getElementById('apiKeyInput');
+    const activeKeySpan = document.getElementById('activeKey');
+
+    // Set default saat halaman load
+    activeKeySpan.textContent = apiKeyInput.value || "- belum diisi -";
+
+    // Update saat user mengetik
+    apiKeyInput.addEventListener('input', () => {
+      activeKeySpan.textContent = apiKeyInput.value;
+    });
+
+    // Copy API key
+    document.getElementById('copyBtn').addEventListener('click', () => {
+      const apiKey = document.getElementById('apiKeyInput').value.trim();
+      if (!apiKey) {
+        toast('API key belum diisi!');
+        return;
+      }
+      navigator.clipboard.writeText(apiKey).then(() => {
+        toast('API key disalin: ' + apiKey);
+      });
     });
 
   </script>
