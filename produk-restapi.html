@@ -291,37 +291,6 @@
       </ul>
     </aside>
 
-    <script>
-      // Toggle active saat klik
-      document.querySelectorAll('.sidebar .nav-list a').forEach(link => {
-        link.addEventListener('click', function() {
-          document.querySelectorAll('.sidebar .nav-list a').forEach(el => el.classList.remove('active'));
-          this.classList.add('active');
-        });
-      });
-
-      // Scrollspy: auto highlight sesuai section yang terlihat
-      const sections = document.querySelectorAll('main section');
-      const navLinks = document.querySelectorAll('.sidebar .nav-list a');
-
-      window.addEventListener('scroll', () => {
-        let current = "";
-        sections.forEach(section => {
-          const sectionTop = section.offsetTop - 130; // offset navbar
-          if (pageYOffset >= sectionTop) {
-            current = section.getAttribute("id");
-          }
-        });
-
-        navLinks.forEach(link => {
-          link.classList.remove("active");
-          if (link.getAttribute("href") === "#" + current) {
-            link.classList.add("active");
-          }
-        });
-      });
-    </script>
-
     <!-- Main content -->
     <main>
 
@@ -1139,6 +1108,61 @@
     tabJSInfo.addEventListener('click', () => showInfo(tabJSInfo));
     tabPyInfo.addEventListener('click', () => showInfo(tabPyInfo));
     tabGoInfo.addEventListener('click', () => showInfo(tabGoInfo));
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Kumpulkan link sidebar
+    const navLinks = Array.from(document.querySelectorAll('.sidebar .nav-list a'));
+
+    // Buat map href -> section yang ada
+    const linkMap = navLinks.reduce((acc, link) => {
+      const href = link.getAttribute('href'); // "#information" dll.
+      const id = href && href.startsWith('#') ? href.slice(1) : null;
+      const section = id ? document.getElementById(id) : null;
+      if (section) acc[href] = { link, section };
+      return acc;
+    }, {});
+
+    // Hanya sections yang benar-benar ada
+    const sections = Object.values(linkMap).map(x => x.section);
+
+    // Toggle active saat klik
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.forEach(el => el.classList.remove('active'));
+        link.classList.add('active');
+      });
+    });
+
+    // Set active berdasar hash saat load
+    const initialHash = window.location.hash;
+    if (initialHash && linkMap[initialHash]) {
+      navLinks.forEach(el => el.classList.remove('active'));
+      linkMap[initialHash].link.classList.add('active');
+    }
+
+    // Scrollspy: auto highlight sesuai section yang terlihat
+    const OFFSET = 130; // kompensasi tinggi navbar
+    window.addEventListener('scroll', () => {
+      let currentId = '';
+      const scrollPos = window.scrollY;
+
+      sections.forEach(section => {
+        const top = section.offsetTop - OFFSET;
+        if (scrollPos >= top) {
+          currentId = section.id;
+        }
+      });
+
+      // Update active jika ditemukan
+      if (currentId) {
+        navLinks.forEach(el => el.classList.remove('active'));
+        const href = '#' + currentId;
+        if (linkMap[href]) {
+          linkMap[href].link.classList.add('active');
+        }
+      }
+    }, { passive: true });
+  });
 
   </script>
   <!-- WhatsApp Floating -->
