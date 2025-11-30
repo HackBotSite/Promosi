@@ -256,14 +256,16 @@
   <nav aria-label="Top navigation">
     <div class="nav-inner">
       <div class="brand">
-        <img src="https://ik.imagekit.io/wamr3naeq/thb/hbds.png" alt="Logo HB Digital">
+        <img src="https://ik.imagekit.io/wamr3naeq/thb/hbds.png" alt="Logo Hacksbots Digital Solution">
         <span class="title">Hacksbots Digital Solution</span>
         <span class="badge">REST API</span>
       </div>
-      <div class="menu">
-        <a href="#beranda">Beranda</a>
+      <div class="menu" role="menubar">
+        <a role="menuitem" href="#beranda">Beranda</a>
         <div class="dropdown">
-          <button class="dropbtn">Layanan <span class="arrow">▼</span></button>
+          <button class="dropbtn" aria-haspopup="true" aria-expanded="false">
+            Layanan <span class="arrow">▼</span>
+          </button>
           <div class="dropdown-content">
             <a href="produk-website.html">Jasa Pembuatan Website</a>
             <a href="produk-editing.html">Jasa Editing / Design</a>
@@ -272,8 +274,8 @@
             <a href="produk-restapi.html">Rest API</a>
           </div>
         </div>
-        <a href="tentang.html">Tentang</a>
-        <a href="#bantuan">Bantuan</a>
+        <a role="menuitem" href="#code">Tentang</a>
+        <a role="menuitem" href="#contact">Bantuan</a>
       </div>
     </div>
   </nav>
