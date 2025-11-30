@@ -39,7 +39,7 @@
         linear-gradient(180deg, var(--bg), var(--bg-2) 35%, var(--bg));
     }
 
-    /* Navbar premium */
+     /* Navbar premium */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 50;
       backdrop-filter: saturate(1.3) blur(10px);
@@ -54,10 +54,28 @@
     .brand img { height: 42px; width: auto; filter: drop-shadow(0 2px 6px rgba(22,214,255,0.3)); }
     .brand .title { font-weight: 700 }
     .brand .badge { font-size: 12px; color: var(--accent); border: 1px dashed var(--accent); padding: 2px 8px; border-radius: 999px }
-
-    .menu { display: flex; gap: 18px; align-items: center }
-    .menu a { color: var(--text); text-decoration: none; padding: 8px 10px; border-radius: 8px; transition: 0.2s ease }
-    .menu a:hover { background: rgba(88,180,255,0.12); color: var(--accent) }
+    nav .menu a {
+      color: var(--text); text-decoration: none; margin-left: 20px;
+    }
+    nav .menu a:hover {
+      color: var(--accent);
+      text-shadow: 0 0 8px var(--accent);
+    }
+    .dropdown { display: inline-block; position: relative; }
+    .dropbtn {
+      background: none; border: none; color: var(--text);
+      font: inherit; cursor: pointer; margin-left: 20px;
+    }
+    .dropdown-content {
+      display: none; position: absolute; background: var(--card);
+      min-width: 220px; box-shadow: var(--shadow); border-radius: var(--radius);
+      z-index: 1000; padding: 10px;
+    }
+    .dropdown-content a {
+      display: block; padding: 8px 12px; color: var(--text); text-decoration: none;
+    }
+    .dropdown-content a:hover { background: var(--bg-2); color: var(--accent); }
+    .dropdown:hover .dropdown-content { display: block; }
 
     /* Layout: sidebar + content */
     .layout {
