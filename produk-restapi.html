@@ -855,14 +855,11 @@
       if (feature === "Doa") {
         url = "https://api.teamhackbotsindo.my.id/api/doa";
       } else if (feature === "Niat Shalat") {
-        // Ambil pilihan dari dropdown
-        const selectedShalat = document.getElementById('shalatSelect').value;
+        const selectedShalat = document.getElementById('shalatSelectIslami').value;
         url = `https://api.teamhackbotsindo.my.id/api/niat-shalat?shalat=${selectedShalat}`;
       }
 
-      fetch(url, {
-        headers: { "x-api-key": apiKey }
-      })
+      fetch(url, { headers: { "x-api-key": apiKey } })
         .then(res => {
           if (!res.ok) throw new Error(`HTTP ${res.status}`);
           return res.json();
@@ -870,38 +867,6 @@
         .then(data => panel.textContent = JSON.stringify(data, null, 2))
         .catch(err => panel.textContent = "Error: " + err);
     }
-
-    // Helpers
-    const toastEl = document.getElementById('toast');
-    function toast(msg) {
-      toastEl.textContent = msg;
-      toastEl.classList.add('show');
-      setTimeout(() => toastEl.classList.remove('show'), 1800);
-    }
-
-    // Update tampilan API key aktif
-    const apiKeyInput = document.getElementById('apiKeyInput');
-    const activeKeySpan = document.getElementById('activeKey');
-
-    // Set default saat halaman load
-    activeKeySpan.textContent = apiKeyInput.value || "- belum diisi -";
-
-    // Update saat user mengetik
-    apiKeyInput.addEventListener('input', () => {
-      activeKeySpan.textContent = apiKeyInput.value;
-    });
-
-    // Copy API key
-    document.getElementById('copyBtn').addEventListener('click', () => {
-      const apiKey = document.getElementById('apiKeyInput').value.trim();
-      if (!apiKey) {
-        toast('API key belum diisi!');
-        return;
-      }
-      navigator.clipboard.writeText(apiKey).then(() => {
-        toast('API key disalin: ' + apiKey);
-      });
-    });
 
     // Tabs Islami
     const tabJSIslami = document.getElementById('tabJSIslami');
@@ -945,8 +910,8 @@
     tabPyShalat.addEventListener('click', () => showShalat(tabPyShalat));
     tabGoShalat.addEventListener('click', () => showShalat(tabGoShalat));
 
-    // Ambil elemen dropdown
-    const shalatSelect = document.getElementById('shalatSelect');
+    // Ambil elemen dropdown (ID harus sama dengan di HTML)
+    const shalatSelect = document.getElementById('shalatSelectIslami');
 
     // Update code sample saat dropdown berubah
     shalatSelect.addEventListener('change', () => {
@@ -1018,28 +983,6 @@
       randomBody.appendChild(tr);
     });
 
-    // Fungsi Try Niat-Shalat
-    function tryShalat() {
-      const panel = document.getElementById('shalatResponsePanel');
-      panel.style.display = 'block';
-      panel.textContent = "⚡ Menjalankan Niat Shalat...";
-
-      const apiKey = document.getElementById('apiKeyInput').value;
-      const selectedShalat = document.getElementById('shalatSelect').value;
-
-      const url = `https://api.teamhackbotsindo.my.id/api/niat-shalat?shalat=${selectedShalat}`;
-
-      fetch(url, {
-        headers: { "x-api-key": apiKey }
-      })
-        .then(res => {
-          if (!res.ok) throw new Error(`HTTP ${res.status}`);
-          return res.json();
-        })
-        .then(data => panel.textContent = JSON.stringify(data, null, 2))
-        .catch(err => panel.textContent = "Error: " + err);
-    }
-
     // Fungsi Try untuk Random Image
     function tryRandom(feature) {
       const panel = document.getElementById('randomResponsePanel');
@@ -1087,7 +1030,7 @@
     tabPyRandom.addEventListener('click', () => showRandom(tabPyRandom));
     tabGoRandom.addEventListener('click', () => showRandom(tabGoRandom));
 
-        // Tabs Information
+    // Tabs Information
     const tabJSInfo = document.getElementById('tabJSInfo');
     const tabPyInfo = document.getElementById('tabPyInfo');
     const tabGoInfo = document.getElementById('tabGoInfo');
@@ -1109,23 +1052,18 @@
     tabGoInfo.addEventListener('click', () => showInfo(tabGoInfo));
 
     //DOC NAV
+    // Scrollspy untuk sidebar
     document.addEventListener('DOMContentLoaded', () => {
-      // Kumpulkan link sidebar
       const navLinks = Array.from(document.querySelectorAll('.sidebar .nav-list a'));
-
-      // Buat map href -> section yang ada
       const linkMap = navLinks.reduce((acc, link) => {
-        const href = link.getAttribute('href'); // "#information" dll.
+        const href = link.getAttribute('href');
         const id = href && href.startsWith('#') ? href.slice(1) : null;
         const section = id ? document.getElementById(id) : null;
         if (section) acc[href] = { link, section };
         return acc;
       }, {});
-
-      // Hanya sections yang benar-benar ada
       const sections = Object.values(linkMap).map(x => x.section);
 
-      // Toggle active saat klik
       navLinks.forEach(link => {
         link.addEventListener('click', () => {
           navLinks.forEach(el => el.classList.remove('active'));
@@ -1133,30 +1071,43 @@
         });
       });
 
-      // Set active berdasar hash saat load
       const initialHash = window.location.hash;
       if (initialHash && linkMap[initialHash]) {
         navLinks.forEach(el => el.classList.remove('active'));
         linkMap[initialHash].link.classList.add('active');
       }
 
-      // Scrollspy
-      const OFFSET = 130; // sesuaikan dengan tinggi navbar
+      const OFFSET = 130;
       window.addEventListener('scroll', () => {
         let currentId = '';
         const scrollPos = window.scrollY;
-
         sections.forEach(section => {
           const top = section.offsetTop - OFFSET;
           if (scrollPos >= top) currentId = section.id;
         });
-
         if (currentId) {
           navLinks.forEach(el => el.classList.remove('active'));
           const href = '#' + currentId;
           if (linkMap[href]) linkMap[href].link.classList.add('active');
         }
       }, { passive: true });
+    });
+
+    // Isi tabel Random Image setelah DOM siap
+    document.addEventListener('DOMContentLoaded', () => {
+      const randomBody = document.getElementById('randomTableBody');
+      randomEndpoints.forEach(ep => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${ep.no}</td>
+          <td>${ep.name}</td>
+          <td><span class="badge GET">${ep.method}</span></td>
+          <td>${ep.desc}</td>
+          <td>${ep.query}</td>
+          <td><button class="btn" onclick="tryRandom('${ep.name}')">Try</button></td>
+        `;
+        randomBody.appendChild(tr);
+      });
     });
 
     // Helpers
