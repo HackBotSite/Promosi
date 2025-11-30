@@ -969,20 +969,6 @@
       { no: 4, name: "Anime 18+", method: "GET", desc: "Random", query: "apikey" }
     ];
 
-    const randomBody = document.getElementById('randomTableBody');
-    randomEndpoints.forEach(ep => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${ep.no}</td>
-        <td>${ep.name}</td>
-        <td><span class="badge GET">${ep.method}</span></td>
-        <td>${ep.desc}</td>
-        <td>${ep.query}</td>
-        <td><button class="btn" onclick="tryRandom('${ep.name}')">Try</button></td>
-      `;
-      randomBody.appendChild(tr);
-    });
-
     // Fungsi Try untuk Random Image
     function tryRandom(feature) {
       const panel = document.getElementById('randomResponsePanel');
