@@ -326,26 +326,32 @@
             <!-- Diisi lewat JS -->
           </tbody>
         </table>
-
-        <!-- Dropdown khusus untuk Niat Shalat -->
-        <div style="margin-top:16px;">
-          <label for="shalatSelectIslami">Pilih Shalat:</label>
-          <select id="shalatSelectIslami">
-            <option value="subuh">Subuh</option>
-            <option value="dzuhur">Dzuhur</option>
-            <option value="ashar">Ashar</option>
-            <option value="magrib">Magrib</option>
-            <option value="isya">Isya</option>
-            <option value="duha">Duha</option>
-            <option value="tahajud">Tahajud</option>
-            <option value="witir">Witir</option>
-            <option value="hajat">Hajat</option>
-            <option value="istikharah">Istikharah</option>
-            <option value="taubat">Taubat</option>
-          </select>
-        </div>
-
         <div id="islamiResponsePanel" class="response" aria-live="polite" style="display:none"></div>
+      </section>
+
+      <section class="card" id="query-islami" aria-labelledby="query-islami-title">
+        <div class="card-header" id="query-islami-title">Set Query</div>
+
+        <!-- Pilih Shalat -->
+        <div style="padding: 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+          <label for="shalatSelectIslami" style="display:flex; align-items:center; gap:8px;">
+            Pilih Shalat:
+            <select id="shalatSelectIslami" style="padding:6px 10px; border-radius:8px; background:#0c1426; color:#eaf2ff; border:1px solid #1d2740;">
+              <option value="subuh">Subuh</option>
+              <option value="dzuhur">Dzuhur</option>
+              <option value="ashar">Ashar</option>
+              <option value="magrib">Magrib</option>
+              <option value="isya">Isya</option>
+              <option value="duha">Duha</option>
+              <option value="tahajud">Tahajud</option>
+              <option value="witir">Witir</option>
+              <option value="hajat">Hajat</option>
+              <option value="istikharah">Istikharah</option>
+              <option value="taubat">Taubat</option>
+            </select>
+          </label>
+          <button class="btn" onclick="tryIslami('Niat Shalat')">Try</button>
+        </div>
 
         <!-- Pilih Bahasa -->
         <div style="padding:12px; display:flex; gap:10px; flex-wrap:wrap;">
@@ -362,6 +368,7 @@
           </select>
           <button class="btn" onclick="tryTranslate()">Try</button>
         </div>
+
         <div id="translateResponsePanel" class="response" aria-live="polite" style="display:none; margin-top:16px;"></div>
       </section>
 
