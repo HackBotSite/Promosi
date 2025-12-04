@@ -101,6 +101,22 @@
       max-height: calc(100vh - 90px); /* tinggi maksimal sesuai viewport */
       overflow-y: auto;               /* aktifkan scroll vertikal */
     }
+    
+    /* Scrollbar styling */
+    aside.sidebar::-webkit-scrollbar {
+      width: 8px;
+    }
+    aside.sidebar::-webkit-scrollbar-track {
+      background: #0e1627;
+      border-radius: 10px;
+    }
+    aside.sidebar::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 10px;
+    }
+    aside.sidebar::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-2);
+    }
 
     .sidebar h2 {
       margin: 0 0 14px; font-size: 1rem; color: var(--muted); font-weight: 700; letter-spacing: 0.4px
