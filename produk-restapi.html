@@ -79,18 +79,17 @@
 
     /* Layout: sidebar + content */
     .layout {
-      margin-left: 280px; /* beri ruang agar tidak tertutup sidebar */
-      padding: 110px 20px 30px;
-      max-width: 1200px;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 20px;
+      padding: 110px 20px 30px; /* offset navbar */
+      max-width: 1200px; margin: 0 auto;
     }
 
     /* Sidebar (responsive + sticky) */
     aside.sidebar {
-      position: fixed;   /* tempel di layar */
-      top: 90px;         /* offset dari navbar */
-      left: 0;           /* sisi kiri layar */
-      width: 260px;      /* lebar sidebar */
-      height: calc(100vh - 90px); /* penuh layar minus navbar */
+      position: sticky; top: 90px;
+      align-self: start;
       background: linear-gradient(180deg, rgba(17,26,46,0.9), rgba(13,20,36,0.9));
       border: 1px solid var(--border);
       border-radius: var(--radius);
@@ -301,27 +300,27 @@
     </div>
   </nav>
 
-  <!-- Sidebar -->
-  <aside class="sidebar" aria-label="Sidebar navigation">
-    <h2>Bots API</h2>
-    <ul class="nav-list">
-      <li><a class="active" href="#home">Dashboard</a></li>
-      <li><a href="#islami">Islami</a></li>
-      <li><a href="#downloader">Downloader</a></li>
-      <li><a href="#information">Information</a></li>
-      <li><a href="#anime">Anime / Manga</a></li>
-      <li><a href="#education">Education</a></li>
-      <li><a href="#primbon">Primbon</a></li>
-      <li><a href="#news">News</a></li>
-      <li><a href="#game">Game</a></li>
-      <li><a href="#meme">Meme</a></li>
-      <li><a href="#entertainment">Entertainment</a></li>
-      <li><a href="#random">Random Image</a></li>
-    </ul>
-  </aside>
-
   <!-- Layout -->
   <div class="layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar" aria-label="Sidebar navigation">
+      <h2>Bots API</h2>
+      <ul class="nav-list">
+        <li><a class="active" href="#home">Dashboard</a></li>
+        <li><a href="#islami">Islami</a></li>
+        <li><a href="#downloader">Downloader</a></li>
+        <li><a href="#information">Information</a></li>
+        <li><a href="#anime">Anime / Manga</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#primbon">Primbon</a></li>
+        <li><a href="#news">News</a></li>
+        <li><a href="#game">Game</a></li>
+        <li><a href="#meme">Meme</a></li>
+        <li><a href="#entertainment">Entertainment</a></li>
+        <li><a href="#random">Random Image</a></li>
+      </ul>
+    </aside>
 
     <!-- Main content -->
     <main>
