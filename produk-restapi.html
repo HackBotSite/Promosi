@@ -661,9 +661,79 @@
             <!-- Diisi lewat JS -->
           </tbody>
         </table>
+
+        <!-- Input pencarian Youtube List -->
+        <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:16px;">
+          <input id="ytQuery" type="text" placeholder="Masukkan kata kunci (contoh: peterpan)"
+                 style="flex:1; min-width:240px; padding:8px 10px; border-radius:8px; background:#0c1426; color:#eaf2ff; border:1px solid #1d2740;">
+          <button class="btn" id="btnYtSearch">Cari</button>
+        </div>
+
         <div id="downloaderResponsePanel" class="response" aria-live="polite" style="display:none"></div>
+        <div id="ytList" style="display:grid; gap:12px; margin-top:12px;"></div>
       </section>
 
+      <!-- Code samples Downloader -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Downloader</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Downloader">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsDownloader" id="tabJSDownloader">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyDownloader" id="tabPyDownloader">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goDownloader" id="tabGoDownloader">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsDownloader" role="tabpanel" aria-labelledby="tabJSDownloader" class="code">
+      <pre><code class="language-js">
+      // Youtube List
+      fetch("/api/youtube-list?query=peterpan", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Youtube List:", data));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyDownloader" role="tabpanel" aria-labelledby="tabPyDownloader" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      headers = { "x-api-key": apiKey }
+
+      # Youtube List
+      resp = requests.get("http://localhost:3000/api/youtube-list?query=peterpan", headers=headers)
+      print("Youtube List:", resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goDownloader" role="tabpanel" aria-labelledby="tabGoDownloader" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", "http://localhost:3000/api/youtube-list?query=peterpan", nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println("Youtube List:", string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
 
       <!-- Section Information -->
       <section class="card" id="information" aria-labelledby="information-title">
@@ -845,35 +915,47 @@
       panel.style.display = 'block';
       panel.textContent = `⚡ Menjalankan ${feature}...`;
 
-      const apiKey = document.getElementById('apiKeyInput')?.value || "";
       let url = "";
-
       switch (feature) {
         case "Youtube List":
-          url = `https://api.teamhackbotsindo.my.id/api/youtube-list?query=example`;
+          const q = document.getElementById("ytQuery")?.value || "peterpan";
+          url = `/api/youtube-list?query=${encodeURIComponent(q)}`;
           break;
-        case "Youtube Video":
-          url = `https://api.teamhackbotsindo.my.id/api/youtube-video?query=example`;
-          break;
-        case "Youtube Audio":
-          url = `https://api.teamhackbotsindo.my.id/api/youtube-audio?query=example`;
-          break;
-        case "Smule Profile":
-          url = `https://api.teamhackbotsindo.my.id/api/smule-profile?id=example`;
-          break;
-        case "Smule Audio / Video":
-          url = `https://api.teamhackbotsindo.my.id/api/smule-media?link=example`;
-          break;
-        case "Facebook":
-          url = `https://api.teamhackbotsindo.my.id/api/facebook?link=example`;
-          break;
+        default:
+          panel.textContent = "Fitur belum diimplementasikan.";
+          return;
       }
 
-      fetch(url, { headers: { "x-api-key": apiKey } })
-        .then(res => res.json())
-        .then(data => panel.textContent = JSON.stringify(data, null, 2))
-        .catch(err => panel.textContent = "Error: " + err);
+      fetch(url, { headers: { "x-api-key": document.getElementById('apiKeyInput')?.value || "" } })
+        .then(res => {
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          return res.json();
+        })
+        .then(data => {
+          panel.textContent = `Ditemukan ${data.total} hasil untuk "${data.query}"`;
+          const listEl = document.getElementById('ytList');
+          listEl.innerHTML = data.results.map(item => `
+            <div style="display:flex; gap:12px; align-items:flex-start; border:1px solid #1d2740; border-radius:12px; padding:10px; background:#0c1426;">
+              <img src="${item.thumbnails.medium || item.thumbnails.default || ''}" alt="Thumbnail"
+                   style="width:120px; height:68px; object-fit:cover; border-radius:8px; border:1px solid #1d2740;">
+              <div style="flex:1;">
+                <div style="font-weight:700; color:#eaf2ff; margin-bottom:4px;">${item.title}</div>
+                <div style="color:#a9b7d9; font-size:13px; margin-bottom:8px;">
+                  Channel: ${item.channelTitle} • ${new Date(item.publishedAt).toLocaleDateString('id-ID')}
+                </div>
+                <a href="${item.url}" target="_blank" rel="noopener"
+                   style="color:#16d6ff; text-decoration:none; font-weight:600;">Buka di YouTube →</a>
+              </div>
+            </div>
+          `).join('');
+        })
+        .catch(err => {
+          panel.textContent = `Error: ${String(err)}`;
+        });
     }
+
+    // Tombol Cari langsung trigger Youtube List
+    document.getElementById('btnYtSearch').addEventListener('click', () => tryDownloader("Youtube List"));
 
     // API-Information
     const informationEndpoints = [
