@@ -88,14 +88,20 @@
 
     /* Sidebar (responsive + sticky) */
     aside.sidebar {
-      position: sticky; top: 90px;
+      position: sticky;
+      top: 90px;
       align-self: start;
       background: linear-gradient(180deg, rgba(17,26,46,0.9), rgba(13,20,36,0.9));
       border: 1px solid var(--border);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       padding: 18px;
+
+      /* Tambahan untuk scrollbar */
+      max-height: calc(100vh - 90px); /* tinggi maksimal sesuai viewport */
+      overflow-y: auto;               /* aktifkan scroll vertikal */
     }
+
     .sidebar h2 {
       margin: 0 0 14px; font-size: 1rem; color: var(--muted); font-weight: 700; letter-spacing: 0.4px
     }
