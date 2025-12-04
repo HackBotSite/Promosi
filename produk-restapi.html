@@ -643,6 +643,28 @@
         </div>
       </section>
 
+      <!-- Section Downloader -->
+      <section class="card" id="downloader" aria-labelledby="downloader-title">
+        <div class="card-header" id="downloader-title">Dokumentasi API — Downloader</div>
+        <table class="table" aria-describedby="downloader-title">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Feature Name</th>
+              <th>Request Method</th>
+              <th>Description</th>
+              <th>Query Parameter</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="downloaderTableBody">
+            <!-- Diisi lewat JS -->
+          </tbody>
+        </table>
+        <div id="downloaderResponsePanel" class="response" aria-live="polite" style="display:none"></div>
+      </section>
+
+
       <!-- Section Information -->
       <section class="card" id="information" aria-labelledby="information-title">
         <div class="card-header" id="information-title">Dokumentasi API — Information</div>
@@ -793,6 +815,65 @@
   <div id="toast" class="toast" role="status" aria-live="polite">Disalin!</div>
 
   <script>
+
+    //API DOWNLOADER
+    const downloaderEndpoints = [
+      { no: 1, name: "Youtube List", method: "GET", desc: "Pencarian video berdasarkan kata kunci", query: "apikey, query" },
+      { no: 2, name: "Youtube Video", method: "GET", desc: "Detail video YouTube", query: "apikey, query" },
+      { no: 3, name: "Youtube Audio", method: "GET", desc: "Download audio dari YouTube", query: "apikey, query" },
+      { no: 4, name: "Smule Profile", method: "GET", desc: "Profil pengguna Smule", query: "apikey, id" },
+      { no: 5, name: "Smule Audio / Video", method: "GET", desc: "Download media dari Smule", query: "apikey, link" },
+      { no: 6, name: "Facebook", method: "GET", desc: "Download video dari Facebook", query: "apikey, link" }
+    ];
+
+    const downloaderBody = document.getElementById('downloaderTableBody');
+    downloaderEndpoints.forEach(ep => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${ep.no}</td>
+        <td>${ep.name}</td>
+        <td><span class="badge ${ep.method}">${ep.method}</span></td>
+        <td>${ep.desc}</td>
+        <td>${ep.query}</td>
+        <td><button class="btn" onclick="tryDownloader('${ep.name}')">Try</button></td>
+      `;
+      downloaderBody.appendChild(tr);
+    });
+
+    function tryDownloader(feature) {
+      const panel = document.getElementById('downloaderResponsePanel');
+      panel.style.display = 'block';
+      panel.textContent = `⚡ Menjalankan ${feature}...`;
+
+      const apiKey = document.getElementById('apiKeyInput')?.value || "";
+      let url = "";
+
+      switch (feature) {
+        case "Youtube List":
+          url = `https://api.teamhackbotsindo.my.id/api/youtube-list?query=example`;
+          break;
+        case "Youtube Video":
+          url = `https://api.teamhackbotsindo.my.id/api/youtube-video?query=example`;
+          break;
+        case "Youtube Audio":
+          url = `https://api.teamhackbotsindo.my.id/api/youtube-audio?query=example`;
+          break;
+        case "Smule Profile":
+          url = `https://api.teamhackbotsindo.my.id/api/smule-profile?id=example`;
+          break;
+        case "Smule Audio / Video":
+          url = `https://api.teamhackbotsindo.my.id/api/smule-media?link=example`;
+          break;
+        case "Facebook":
+          url = `https://api.teamhackbotsindo.my.id/api/facebook?link=example`;
+          break;
+      }
+
+      fetch(url, { headers: { "x-api-key": apiKey } })
+        .then(res => res.json())
+        .then(data => panel.textContent = JSON.stringify(data, null, 2))
+        .catch(err => panel.textContent = "Error: " + err);
+    }
 
     // API-Information
     const informationEndpoints = [
