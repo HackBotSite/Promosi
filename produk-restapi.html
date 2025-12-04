@@ -568,7 +568,7 @@
       <pre><code class="language-js">
       // Jadwal Shalat Jakarta
       const apiKey = "YOUR_API_KEY";
-      fetch("https://api.teamhackbotsindo.my.id/api/jadwal-shalat?city=jakarta", {
+      fetch("https://api2.teamhackbotsindo.my.id/api/jadwal-shalat?city=jakarta", {
         headers: { "x-api-key": apiKey }
       })
         .then(res => res.json())
@@ -583,7 +583,7 @@
       import requests
 
       apiKey = "YOUR_API_KEY"
-      url = "https://api.teamhackbotsindo.my.id/api/jadwal-shalat?city=jakarta"
+      url = "https://api2.teamhackbotsindo.my.id/api/jadwal-shalat?city=jakarta"
       resp = requests.get(url, headers={"x-api-key": apiKey})
       print(resp.json())
       </code></pre>
@@ -602,7 +602,7 @@
 
       func main() {
         apiKey := "YOUR_API_KEY"
-        url := "https://api.teamhackbotsindo.my.id/api/jadwal-shalat?city=jakarta"
+        url := "https://api2.teamhackbotsindo.my.id/api/jadwal-shalat?city=jakarta"
 
         client := &http.Client{}
         req, _ := http.NewRequest("GET", url, nil)
@@ -1406,7 +1406,7 @@
         const selectedShalat = document.getElementById('shalatSelectIslami').value;
         url = `https://api.teamhackbotsindo.my.id/api/niat-shalat?shalat=${selectedShalat}`;
       } else if (feature === "Jadwal Shalat") {
-          url = "https://api.teamhackbotsindo.my.id/api/jadwal-shalat?city=jakarta";
+          url = "https://api2.teamhackbotsindo.my.id/api/jadwal-shalat?city=jakarta";
         }
 
       fetch(url, { headers: { "x-api-key": apiKey } })
