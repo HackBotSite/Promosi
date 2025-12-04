@@ -553,6 +553,72 @@
         </div>
       </section>
 
+      <!-- Tabs Jadwal Shalat -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Jadwal Shalat</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Jadwal Shalat">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsJadwalShalat" id="tabJSJadwalShalat">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyJadwalShalat" id="tabPyJadwalShalat">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goJadwalShalat" id="tabGoJadwalShalat">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsJadwalShalat" role="tabpanel" aria-labelledby="tabJSJadwalShalat" class="code">
+      <pre><code class="language-js">
+      // Jadwal Shalat Jakarta
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api.teamhackbotsindo.my.id/api/jadwal-shalat?city=jakarta", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Jadwal Shalat:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyJadwalShalat" role="tabpanel" aria-labelledby="tabPyJadwalShalat" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      url = "https://api.teamhackbotsindo.my.id/api/jadwal-shalat?city=jakarta"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goJadwalShalat" role="tabpanel" aria-labelledby="tabGoJadwalShalat" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        url := "https://api.teamhackbotsindo.my.id/api/jadwal-shalat?city=jakarta"
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
       <!-- Section Random Image -->
       <section class="card" id="random" aria-labelledby="random-title">
         <div class="card-header" id="random-title">Dokumentasi API — Random Image</div>
@@ -1307,7 +1373,8 @@
     //API-ISLAMI
     const islamiEndpoints = [
       { no: 1, name: "Doa", method: "GET", desc: "Random Doa", query: "apikey" },
-      { no: 2, name: "Niat Shalat", method: "GET", desc: "Niat shalat berdasarkan query", query: "apikey, shalat" }
+      { no: 2, name: "Niat Shalat", method: "GET", desc: "Niat shalat berdasarkan query", query: "apikey, shalat" },
+      { no: 3, name: "Jadwal Shalat", method: "GET", desc: "Jadwal shalat berdasarkan query", query: "apikey, kota" }
     ];
 
     const islamiBody = document.getElementById('islamiTableBody');
@@ -1338,7 +1405,9 @@
       } else if (feature === "Niat Shalat") {
         const selectedShalat = document.getElementById('shalatSelectIslami').value;
         url = `https://api.teamhackbotsindo.my.id/api/niat-shalat?shalat=${selectedShalat}`;
-      }
+      } else if (feature === "Jadwal Shalat") {
+          url = "https://api.teamhackbotsindo.my.id/api/jadwal-shalat?city=jakarta";
+        }
 
       fetch(url, { headers: { "x-api-key": apiKey } })
         .then(res => {
@@ -1441,6 +1510,27 @@
       fmt.Println(string(body))
     }`;
     });
+
+    // Tabs Jadwal Shalat
+    const tabJSJadwalShalat = document.getElementById('tabJSJadwalShalat');
+    const tabPyJadwalShalat = document.getElementById('tabPyJadwalShalat');
+    const tabGoJadwalShalat = document.getElementById('tabGoJadwalShalat');
+
+    const jsJadwalShalat = document.getElementById('jsJadwalShalat');
+    const pyJadwalShalat = document.getElementById('pyJadwalShalat');
+    const goJadwalShalat = document.getElementById('goJadwalShalat');
+
+    function showJadwalShalat(tab) {
+      [tabJSJadwalShalat, tabPyJadwalShalat, tabGoJadwalShalat].forEach(btn => btn.classList.remove('active'));
+      [jsJadwalShalat, pyJadwalShalat, goJadwalShalat].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    tabJSJadwalShalat.addEventListener('click', () => showJadwalShalat(tabJSJadwalShalat));
+    tabPyJadwalShalat.addEventListener('click', () => showJadwalShalat(tabPyJadwalShalat));
+    tabGoJadwalShalat.addEventListener('click', () => showJadwalShalat(tabGoJadwalShalat));
 
     // API Random Image
     const randomEndpoints = [
