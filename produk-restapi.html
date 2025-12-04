@@ -601,7 +601,7 @@
       <pre><code class="language-python">
       import requests
 
-      headers = { "x-api-key": apiKey }
+      headers = "YOUR_API_KEY";
       resp = requests.get("https://api.teamhackbotsindo.my.id/api/anime-random", headers=headers)
       print("Anime Random:", resp.json())
 
@@ -661,55 +661,47 @@
             <!-- Diisi lewat JS -->
           </tbody>
         </table>
-
-        <!-- Input pencarian Youtube List -->
-        <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:16px;">
-          <input id="ytQuery" type="text" placeholder="Masukkan kata kunci (contoh: peterpan)"
-                 style="flex:1; min-width:240px; padding:8px 10px; border-radius:8px; background:#0c1426; color:#eaf2ff; border:1px solid #1d2740;">
-          <button class="btn" id="btnYtSearch">Cari</button>
-        </div>
-
-        <div id="downloaderResponsePanel" class="response" aria-live="polite" style="display:none"></div>
-        <div id="ytList" style="display:grid; gap:12px; margin-top:12px;"></div>
+        <div id="downloaderResponsePanel" class="response" style="display:none"></div>
       </section>
 
-      <!-- Code samples Downloader -->
+      <!-- Tabs Youtube List -->
       <section class="card">
-        <div class="card-header">Contoh Kode — Downloader</div>
+        <div class="card-header">Contoh Kode — Youtube List</div>
         <div class="tabs">
-          <div class="tab-list" role="tablist" aria-label="Contoh kode Downloader">
-            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsDownloader" id="tabJSDownloader">JavaScript</button>
-            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyDownloader" id="tabPyDownloader">Python</button>
-            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goDownloader" id="tabGoDownloader">Golang</button>
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Youtube List">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsYoutube" id="tabJSYoutube">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyYoutube" id="tabPyYoutube">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goYoutube" id="tabGoYoutube">Golang</button>
           </div>
 
           <!-- JS -->
-          <div id="jsDownloader" role="tabpanel" aria-labelledby="tabJSDownloader" class="code">
+          <div id="jsYoutube" role="tabpanel" aria-labelledby="tabJSYoutube" class="code">
       <pre><code class="language-js">
       // Youtube List
-      fetch("/api/youtube-list?query=peterpan", {
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api.teamhackbotsindo.my.id/api/youtube-list?query=peterpan", {
         headers: { "x-api-key": apiKey }
       })
         .then(res => res.json())
-        .then(data => console.log("Youtube List:", data));
+        .then(data => console.log("Youtube List:", data))
+        .catch(err => console.error(err));
       </code></pre>
           </div>
 
           <!-- Python -->
-          <div id="pyDownloader" role="tabpanel" aria-labelledby="tabPyDownloader" class="code" style="display:none">
+          <div id="pyYoutube" role="tabpanel" aria-labelledby="tabPyYoutube" class="code" style="display:none">
       <pre><code class="language-python">
       import requests
 
-      headers = { "x-api-key": apiKey }
-
-      # Youtube List
-      resp = requests.get("http://localhost:3000/api/youtube-list?query=peterpan", headers=headers)
-      print("Youtube List:", resp.json())
+      apiKey = "YOUR_API_KEY"
+      url = "https://api.teamhackbotsindo.my.id/api/youtube-list?query=peterpan"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
       </code></pre>
           </div>
 
           <!-- Golang -->
-          <div id="goDownloader" role="tabpanel" aria-labelledby="tabGoDownloader" class="code" style="display:none">
+          <div id="goYoutube" role="tabpanel" aria-labelledby="tabGoYoutube" class="code" style="display:none">
       <pre><code class="language-go">
       package main
 
@@ -720,15 +712,18 @@
       )
 
       func main() {
+        apiKey := "YOUR_API_KEY"
+        url := "https://api.teamhackbotsindo.my.id/api/youtube-list?query=peterpan"
+
         client := &http.Client{}
-        req, _ := http.NewRequest("GET", "http://localhost:3000/api/youtube-list?query=peterpan", nil)
+        req, _ := http.NewRequest("GET", url, nil)
         req.Header.Set("x-api-key", apiKey)
 
         resp, _ := client.Do(req)
         defer resp.Body.Close()
 
         body, _ := ioutil.ReadAll(resp.Body)
-        fmt.Println("Youtube List:", string(body))
+        fmt.Println(string(body))
       }
       </code></pre>
           </div>
@@ -920,13 +915,13 @@
 
       switch (feature) {
         case "Youtube List":
-          url = `https://api.teamhackbotsindo.my.id/api/youtube-list?query=example`;
+          url = `https://api.teamhackbotsindo.my.id/api/youtube-list?query=peterpan`;
           break;
         case "Youtube Video":
-          url = `https://api.teamhackbotsindo.my.id/api/youtube-video?query=example`;
+          url = `https://api.teamhackbotsindo.my.id/api/youtube-video?query=abc123`;
           break;
         case "Youtube Audio":
-          url = `https://api.teamhackbotsindo.my.id/api/youtube-audio?query=example`;
+          url = `https://api.teamhackbotsindo.my.id/api/youtube-audio?query=abc123`;
           break;
         case "Smule Profile":
           url = `https://api.teamhackbotsindo.my.id/api/smule-profile?id=example`;
@@ -944,6 +939,27 @@
         .then(data => panel.textContent = JSON.stringify(data, null, 2))
         .catch(err => panel.textContent = "Error: " + err);
     }
+
+    // TAB YOUTUBE LIST
+    const tabJSYoutube = document.getElementById('tabJSYoutube');
+    const tabPyYoutube = document.getElementById('tabPyYoutube');
+    const tabGoYoutube = document.getElementById('tabGoYoutube');
+
+    const jsYoutube = document.getElementById('jsYoutube');
+    const pyYoutube = document.getElementById('pyYoutube');
+    const goYoutube = document.getElementById('goYoutube');
+
+    function showYoutube(tab) {
+      [tabJSYoutube, tabPyYoutube, tabGoYoutube].forEach(btn => btn.classList.remove('active'));
+      [jsYoutube, pyYoutube, goYoutube].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    tabJSYoutube.addEventListener('click', () => showYoutube(tabJSYoutube));
+    tabPyYoutube.addEventListener('click', () => showYoutube(tabPyYoutube));
+    tabGoYoutube.addEventListener('click', () => showYoutube(tabGoYoutube));
 
     // API-Information
     const informationEndpoints = [
