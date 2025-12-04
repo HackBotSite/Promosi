@@ -915,47 +915,35 @@
       panel.style.display = 'block';
       panel.textContent = `⚡ Menjalankan ${feature}...`;
 
+      const apiKey = document.getElementById('apiKeyInput')?.value || "";
       let url = "";
+
       switch (feature) {
         case "Youtube List":
-          const q = document.getElementById("ytQuery")?.value || "peterpan";
-          url = `/api/youtube-list?query=${encodeURIComponent(q)}`;
+          url = `https://api.teamhackbotsindo.my.id/api/youtube-list?query=example`;
           break;
-        default:
-          panel.textContent = "Fitur belum diimplementasikan.";
-          return;
+        case "Youtube Video":
+          url = `https://api.teamhackbotsindo.my.id/api/youtube-video?query=example`;
+          break;
+        case "Youtube Audio":
+          url = `https://api.teamhackbotsindo.my.id/api/youtube-audio?query=example`;
+          break;
+        case "Smule Profile":
+          url = `https://api.teamhackbotsindo.my.id/api/smule-profile?id=example`;
+          break;
+        case "Smule Audio / Video":
+          url = `https://api.teamhackbotsindo.my.id/api/smule-media?link=example`;
+          break;
+        case "Facebook":
+          url = `https://api.teamhackbotsindo.my.id/api/facebook?link=example`;
+          break;
       }
 
-      fetch(url, { headers: { "x-api-key": document.getElementById('apiKeyInput')?.value || "" } })
-        .then(res => {
-          if (!res.ok) throw new Error(`HTTP ${res.status}`);
-          return res.json();
-        })
-        .then(data => {
-          panel.textContent = `Ditemukan ${data.total} hasil untuk "${data.query}"`;
-          const listEl = document.getElementById('ytList');
-          listEl.innerHTML = data.results.map(item => `
-            <div style="display:flex; gap:12px; align-items:flex-start; border:1px solid #1d2740; border-radius:12px; padding:10px; background:#0c1426;">
-              <img src="${item.thumbnails.medium || item.thumbnails.default || ''}" alt="Thumbnail"
-                   style="width:120px; height:68px; object-fit:cover; border-radius:8px; border:1px solid #1d2740;">
-              <div style="flex:1;">
-                <div style="font-weight:700; color:#eaf2ff; margin-bottom:4px;">${item.title}</div>
-                <div style="color:#a9b7d9; font-size:13px; margin-bottom:8px;">
-                  Channel: ${item.channelTitle} • ${new Date(item.publishedAt).toLocaleDateString('id-ID')}
-                </div>
-                <a href="${item.url}" target="_blank" rel="noopener"
-                   style="color:#16d6ff; text-decoration:none; font-weight:600;">Buka di YouTube →</a>
-              </div>
-            </div>
-          `).join('');
-        })
-        .catch(err => {
-          panel.textContent = `Error: ${String(err)}`;
-        });
+      fetch(url, { headers: { "x-api-key": apiKey } })
+        .then(res => res.json())
+        .then(data => panel.textContent = JSON.stringify(data, null, 2))
+        .catch(err => panel.textContent = "Error: " + err);
     }
-
-    // Tombol Cari langsung trigger Youtube List
-    document.getElementById('btnYtSearch').addEventListener('click', () => tryDownloader("Youtube List"));
 
     // API-Information
     const informationEndpoints = [
