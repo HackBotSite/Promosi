@@ -5,18 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>REST API Showcase — HB Digital</title>
 
-  <!-- Font -->
+  <!-- Font & base -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --bg: #0b1220;
+      --bg: #0b1220;              /* biru tua */
       --bg-2: #0e1627;
       --card: #111a2e;
       --text: #eaf2ff;
       --muted: #a9b7d9;
-      --accent: #16d6ff;
+      --accent: #16d6ff;          /* cyan/neon */
       --accent-2: #68f0ff;
       --yellow: #ffcf5a;
       --red: #ff6b6b;
@@ -28,7 +28,7 @@
     }
 
     * { box-sizing: border-box }
-    html, body { height: 100%; }
+    html, body { height: 100% }
     body {
       margin: 0;
       font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
@@ -37,10 +37,9 @@
         radial-gradient(1200px 400px at 10% -10%, rgba(22,214,255,0.12), transparent 60%),
         radial-gradient(800px 300px at 90% -20%, rgba(104,240,255,0.10), transparent 70%),
         linear-gradient(180deg, var(--bg), var(--bg-2) 35%, var(--bg));
-      overflow-x: hidden;
     }
 
-    /* Navbar */
+     /* Navbar premium */
     nav {
       position: static;
       width: 100%;
@@ -51,10 +50,10 @@
       display: flex; align-items: center; justify-content: space-between;
       padding: 12px 20px; max-width: 1200px; margin: 0 auto;
     }
-    .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: 0.3px; }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: 0.3px }
     .brand img { height: 42px; width: auto; filter: drop-shadow(0 2px 6px rgba(22,214,255,0.3)); }
-    .brand .title { font-weight: 700; }
-    .brand .badge { font-size: 12px; color: var(--accent); border: 1px dashed var(--accent); padding: 2px 8px; border-radius: 999px; }
+    .brand .title { font-weight: 700 }
+    .brand .badge { font-size: 12px; color: var(--accent); border: 1px dashed var(--accent); padding: 2px 8px; border-radius: 999px }
     nav .menu a {
       color: var(--text); text-decoration: none; margin-left: 20px;
     }
@@ -83,12 +82,12 @@
       display: grid;
       grid-template-columns: 260px 1fr;
       gap: 20px;
-      padding: 30px 20px;
+      padding: 30px 20px; /* tidak perlu offset 110px */
       max-width: 1200px;
       margin: 0 auto;
     }
 
-    /* Sidebar */
+    /* Sidebar (responsive + sticky) */
     aside.sidebar {
       position: sticky;
       top: 90px;
@@ -98,35 +97,44 @@
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       padding: 18px;
-      max-height: calc(100vh - 90px);
-      overflow-y: auto;
+
+      /* Tambahan untuk scrollbar */
+      max-height: calc(100vh - 90px); /* tinggi maksimal sesuai viewport */
+      overflow-y: auto;               /* aktifkan scroll vertikal */
     }
-    aside.sidebar::-webkit-scrollbar { width: 8px; }
-    aside.sidebar::-webkit-scrollbar-track { background: #0e1627; border-radius: 10px; }
-    aside.sidebar::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
-    aside.sidebar::-webkit-scrollbar-thumb:hover { background: var(--accent-2); }
+
+    /* Scrollbar styling */
+    aside.sidebar::-webkit-scrollbar {
+      width: 8px;
+    }
+    aside.sidebar::-webkit-scrollbar-track {
+      background: #0e1627;
+      border-radius: 10px;
+    }
+    aside.sidebar::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 10px;
+    }
+    aside.sidebar::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-2);
+    }
 
     .sidebar h2 {
-      margin: 0 0 14px; font-size: 1rem; color: var(--muted); font-weight: 700; letter-spacing: 0.4px;
+      margin: 0 0 14px; font-size: 1rem; color: var(--muted); font-weight: 700; letter-spacing: 0.4px
     }
-    .nav-list { list-style: none; padding: 0; margin: 0; }
-    .nav-list li { margin-bottom: 8px; }
+    .nav-list { list-style: none; padding: 0; margin: 0 }
+    .nav-list li { margin-bottom: 8px }
     .nav-list a {
       display: flex; align-items: center; gap: 10px;
       color: var(--text); text-decoration: none; padding: 10px 12px; border-radius: 10px;
       border: 1px solid transparent; transition: 0.2s ease;
     }
-    .nav-list a:hover { border-color: var(--border); background: rgba(90,168,255,0.08); color: var(--accent); }
-    .nav-list a.active { background: rgba(22,214,255,0.12); border-color: var(--accent); color: var(--accent); }
+    .nav-list a:hover { border-color: var(--border); background: rgba(90,168,255,0.08); color: var(--accent) }
+    .nav-list a.active { background: rgba(22,214,255,0.12); border-color: var(--accent); color: var(--accent) }
 
-    /* Content */
-    main { display: grid; gap: 20px; }
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 20px;
+    /* Content wrapper */
+    main {
+      display: grid; gap: 20px;
     }
 
     /* Hero section */
@@ -317,6 +325,7 @@
 
   <!-- Layout -->
   <div class="layout">
+
     <!-- Sidebar -->
     <aside class="sidebar" aria-label="Sidebar navigation">
       <h2>Bots API</h2>
