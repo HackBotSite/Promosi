@@ -232,9 +232,16 @@
 
     /* Responsive */
     @media (max-width: 960px){
-      .layout { grid-template-columns: 1fr; }
-      aside.sidebar { position: relative; top: 0 }
+      .layout { margin-left: 280px; }
+      aside.sidebar {
+        position: fixed;   /* tetap fixed */
+        top: 90px;
+        left: 0;
+        width: 260px;
+        height: calc(100vh - 90px);
+      }
     }
+
     /* WhatsApp Floating */
     .wa-float {
       position: fixed;
