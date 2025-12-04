@@ -730,6 +730,72 @@
         </div>
       </section>
 
+      <!-- Tabs Youtube Video -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Youtube Video</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Youtube Video">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsYoutubeVideo" id="tabJSYoutubeVideo">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyYoutubeVideo" id="tabPyYoutubeVideo">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goYoutubeVideo" id="tabGoYoutubeVideo">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsYoutubeVideo" role="tabpanel" aria-labelledby="tabJSYoutubeVideo" class="code">
+      <pre><code class="language-js">
+      // Youtube Video
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api.teamhackbotsindo.my.id/api/youtube-video?link=https://youtu.be/igaeQ2fJRxE?si=lFgNyMiAgXVJHti3", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Youtube Video:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyYoutubeVideo" role="tabpanel" aria-labelledby="tabPyYoutubeVideo" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      url = "https://api.teamhackbotsindo.my.id/api/youtube-video?link=https://youtu.be/igaeQ2fJRxE?si=lFgNyMiAgXVJHti3"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goYoutubeVideo" role="tabpanel" aria-labelledby="tabGoYoutubeVideo" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        url := "https://api.teamhackbotsindo.my.id/api/youtube-video?link=https://youtu.be/igaeQ2fJRxE?si=lFgNyMiAgXVJHti3"
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
       <!-- Section Information -->
       <section class="card" id="information" aria-labelledby="information-title">
         <div class="card-header" id="information-title">Dokumentasi API — Information</div>
@@ -918,7 +984,7 @@
           url = `https://api.teamhackbotsindo.my.id/api/youtube-list?query=peterpan`;
           break;
         case "Youtube Video":
-          url = `https://api.teamhackbotsindo.my.id/api/youtube-video?query=abc123`;
+          url = `https://api.teamhackbotsindo.my.id/api/youtube-video?link=https://youtu.be/igaeQ2fJRxE?si=lFgNyMiAgXVJHti3`; // pakai link
           break;
         case "Youtube Audio":
           url = `https://api.teamhackbotsindo.my.id/api/youtube-audio?query=abc123`;
@@ -960,6 +1026,27 @@
     tabJSYoutube.addEventListener('click', () => showYoutube(tabJSYoutube));
     tabPyYoutube.addEventListener('click', () => showYoutube(tabPyYoutube));
     tabGoYoutube.addEventListener('click', () => showYoutube(tabGoYoutube));
+
+    // TAB YOUTUBE VIDEO
+    const tabJSYoutubeVideo = document.getElementById('tabJSYoutubeVideo');
+    const tabPyYoutubeVideo = document.getElementById('tabPyYoutubeVideo');
+    const tabGoYoutubeVideo = document.getElementById('tabGoYoutubeVideo');
+
+    const jsYoutubeVideo = document.getElementById('jsYoutubeVideo');
+    const pyYoutubeVideo = document.getElementById('pyYoutubeVideo');
+    const goYoutubeVideo = document.getElementById('goYoutubeVideo');
+
+    function showYoutubeVideo(tab) {
+      [tabJSYoutubeVideo, tabPyYoutubeVideo, tabGoYoutubeVideo].forEach(btn => btn.classList.remove('active'));
+      [jsYoutubeVideo, pyYoutubeVideo, goYoutubeVideo].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    tabJSYoutubeVideo.addEventListener('click', () => showYoutubeVideo(tabJSYoutubeVideo));
+    tabPyYoutubeVideo.addEventListener('click', () => showYoutubeVideo(tabPyYoutubeVideo));
+    tabGoYoutubeVideo.addEventListener('click', () => showYoutubeVideo(tabGoYoutubeVideo));
 
     // API-Information
     const informationEndpoints = [
