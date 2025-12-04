@@ -83,19 +83,23 @@
       grid-template-columns: 260px 1fr;
       gap: 20px;
       padding: 110px 20px 30px; /* offset navbar */
-      max-width: 1200px; margin: 0 auto;
+      /*max-width: 1200px; margin: 0 auto; */
     }
 
     /* Sidebar (responsive + sticky) */
     aside.sidebar {
-      position: sticky; top: 90px;
-      align-self: start;
+      position: fixed;   /* tempel ke layar */
+      top: 90px;         /* offset dari navbar */
+      left: 0;           /* sisi kiri layar */
+      width: 260px;      /* lebar sidebar */
+      height: calc(100vh - 90px); /* penuh layar minus navbar */
       background: linear-gradient(180deg, rgba(17,26,46,0.9), rgba(13,20,36,0.9));
       border: 1px solid var(--border);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       padding: 18px;
     }
+
     .sidebar h2 {
       margin: 0 0 14px; font-size: 1rem; color: var(--muted); font-weight: 700; letter-spacing: 0.4px
     }
@@ -300,10 +304,7 @@
     </div>
   </nav>
 
-  <!-- Layout -->
-  <div class="layout">
-
-    <!-- Sidebar -->
+  <!-- Sidebar -->
     <aside class="sidebar" aria-label="Sidebar navigation">
       <h2>Bots API</h2>
       <ul class="nav-list">
@@ -321,6 +322,9 @@
         <li><a href="#random">Random Image</a></li>
       </ul>
     </aside>
+
+  <!-- Layout -->
+  <div class="layout">
 
     <!-- Main content -->
     <main>
