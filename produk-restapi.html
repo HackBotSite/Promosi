@@ -1204,16 +1204,23 @@
 
       fetch(url, { headers: { "x-api-key": apiKey } })
         .then(async res => {
-          const raw = await res.text(); // baca body sekali
+          const raw = await res.text();
           try {
-            return JSON.parse(raw);     // coba parse JSON
+            return JSON.parse(raw);
           } catch {
             return { error: "Response bukan JSON", raw: raw.slice(0,200) };
           }
         })
         .then(data => {
           if (data.result?.downloadAudioUrl) {
-            panel.innerHTML = `Link audio: <a href="${data.result.downloadAudioUrl}" target="_blank">${data.result.downloadAudioUrl}</a>`;
+            // tampilkan metadata + link audio
+            panel.innerHTML = `
+              <p><strong>Judul:</strong> ${data.result.title || "-"}</p>
+              <p><strong>Uploader:</strong> ${data.result.uploader || "-"}</p>
+              <p><strong>Durasi:</strong> ${data.result.duration || "-"}</p>
+              <p><img src="${data.result.thumbnail || ""}" alt="Thumbnail" style="max-width:200px"></p>
+              <p><strong>Link audio:</strong> <a href="${data.result.downloadAudioUrl}" target="_blank">${data.result.downloadAudioUrl}</a></p>
+            `;
           } else {
             panel.textContent = JSON.stringify(data, null, 2);
           }
