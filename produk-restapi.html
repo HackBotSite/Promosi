@@ -1203,7 +1203,14 @@
       }
 
       fetch(url, { headers: { "x-api-key": apiKey } })
-        .then(res => res.json())
+        .then(async res => {
+          try {
+            return await res.json();
+          } catch {
+            const text = await res.text();
+            return { error: "Response bukan JSON", raw: text.slice(0,200) };
+          }
+        })
         .then(data => panel.textContent = JSON.stringify(data, null, 2))
         .catch(err => panel.textContent = "Error: " + err);
     }
