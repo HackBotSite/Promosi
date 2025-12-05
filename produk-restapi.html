@@ -1446,10 +1446,9 @@
         })
         .then(data => {
           const r = data.result || {};
-          // Panel output
           let html = `
             <p><strong>Judul:</strong> ${r.title || "-"}</p>
-            <p><strong>Alt:</strong> ${r.alt || "-"}</p>
+            <p><strong>Alt (deskripsi):</strong> ${r.alt || "-"}</p>
             <p><strong>Uploader:</strong> ${r.uploader || "-"}</p>
             <p><strong>Durasi:</strong> ${r.duration || "-"}</p>
             <p><img src="${r.thumbnail || ""}" alt="${r.alt || "Thumbnail"}" style="max-width:200px"></p>
