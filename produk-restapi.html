@@ -1204,14 +1204,21 @@
 
       fetch(url, { headers: { "x-api-key": apiKey } })
         .then(async res => {
+          const raw = await res.text(); // baca body sekali
           try {
-            return await res.json();
+            return JSON.parse(raw);     // coba parse JSON
           } catch {
-            const text = await res.text();
-            return { error: "Response bukan JSON", raw: text.slice(0,200) };
+            return { error: "Response bukan JSON", raw: raw.slice(0,200) };
           }
         })
-        .then(data => panel.textContent = JSON.stringify(data, null, 2))
+        .then(data => {
+          if (data.result?.downloadAudioUrl) {
+            // tampilkan sebagai hyperlink agar bisa diklik
+            panel.innerHTML = `Link audio: <a href="${data.result.downloadAudioUrl}" target="_blank">${data.result.downloadAudioUrl}</a>`;
+          } else {
+            panel.textContent = JSON.stringify(data, null, 2);
+          }
+        })
         .catch(err => panel.textContent = "Error: " + err);
     }
 
