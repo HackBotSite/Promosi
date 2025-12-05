@@ -1213,7 +1213,6 @@
         })
         .then(data => {
           if (data.result?.downloadAudioUrl) {
-            // tampilkan sebagai hyperlink agar bisa diklik
             panel.innerHTML = `Link audio: <a href="${data.result.downloadAudioUrl}" target="_blank">${data.result.downloadAudioUrl}</a>`;
           } else {
             panel.textContent = JSON.stringify(data, null, 2);
