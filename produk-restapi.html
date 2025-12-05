@@ -1358,13 +1358,22 @@
           }
         })
         .then(data => {
-          if (data.result?.downloadAudioUrl) {
+          if (data.result?.downloadAudioUrl && data.result?.downloadVideoUrl) {
             panel.innerHTML = `
               <p><strong>Judul:</strong> ${data.result.title || "-"}</p>
               <p><strong>Uploader:</strong> ${data.result.uploader || "-"}</p>
               <p><strong>Durasi:</strong> ${data.result.duration || "-"}</p>
               <p><img src="${data.result.thumbnail || ""}" alt="Thumbnail" style="max-width:200px"></p>
-              <p><strong>Link audio:</strong> <a href="${data.result.downloadAudioUrl}" target="_blank">${data.result.downloadAudioUrl}</a></p>
+              <p><strong>Link audio (mp3):</strong> <a href="${data.result.downloadAudioUrl}" target="_blank">${data.result.downloadAudioUrl}</a></p>
+              <p><strong>Link video (mp4):</strong> <a href="${data.result.downloadVideoUrl}" target="_blank">${data.result.downloadVideoUrl}</a></p>
+            `;
+          } else if (data.result?.downloadAudioUrl) {
+            panel.innerHTML = `
+              <p><strong>Judul:</strong> ${data.result.title || "-"}</p>
+              <p><strong>Uploader:</strong> ${data.result.uploader || "-"}</p>
+              <p><strong>Durasi:</strong> ${data.result.duration || "-"}</p>
+              <p><img src="${data.result.thumbnail || ""}" alt="Thumbnail" style="max-width:200px"></p>
+              <p><strong>Link audio (mp3):</strong> <a href="${data.result.downloadAudioUrl}" target="_blank">${data.result.downloadAudioUrl}</a></p>
             `;
           } else if (data.result?.downloadVideoUrl) {
             panel.innerHTML = `
@@ -1372,7 +1381,7 @@
               <p><strong>Uploader:</strong> ${data.result.uploader || "-"}</p>
               <p><strong>Durasi:</strong> ${data.result.duration || "-"}</p>
               <p><img src="${data.result.thumbnail || ""}" alt="Thumbnail" style="max-width:200px"></p>
-              <p><strong>Link video:</strong> <a href="${data.result.downloadVideoUrl}" target="_blank">${data.result.downloadVideoUrl}</a></p>
+              <p><strong>Link video (mp4):</strong> <a href="${data.result.downloadVideoUrl}" target="_blank">${data.result.downloadVideoUrl}</a></p>
             `;
           } else {
             panel.textContent = JSON.stringify(data, null, 2);
