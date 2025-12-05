@@ -994,6 +994,93 @@
         </div>
       </section>
 
+      <!-- Section Smule Video -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Smule Audio / Video</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Smule Audio / Video">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsSmuleVideo" id="tabJSSmuleVideo">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pySmuleVideo" id="tabPySmuleVideo">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goSmuleVideo" id="tabGoSmuleVideo">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsSmuleVideo" role="tabpanel" aria-labelledby="tabJSSmuleVideo" class="code">
+      <pre><code class="language-js">
+      // Smule Audio / Video
+      const apiKey = "YOUR_API_KEY";
+      const link = "https://www.smule.com/sing-recording/2857539585_5092417239";
+
+      fetch(`https://api2.teamhackbotsindo.my.id/api/smule-video?link=${link}`, {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => {
+          console.log("Judul:", data.result.title);
+          console.log("Video mp4:", data.result.downloadVideoUrl);
+          console.log("Audio mp3:", data.result.downloadAudioUrl);
+        })
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pySmuleVideo" role="tabpanel" aria-labelledby="tabPySmuleVideo" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      link = "https://www.smule.com/sing-recording/2857539585_5092417239"
+
+      url = f"https://api2.teamhackbotsindo.my.id/api/smule-video?link={link}"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      data = resp.json()
+
+      print("Judul:", data["result"]["title"])
+      print("Video mp4:", data["result"].get("downloadVideoUrl"))
+      print("Audio mp3:", data["result"].get("downloadAudioUrl"))
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goSmuleVideo" role="tabpanel" aria-labelledby="tabGoSmuleVideo" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+        "encoding/json"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        link := "https://www.smule.com/sing-recording/2857539585_5092417239"
+        url := fmt.Sprintf("https://api2.teamhackbotsindo.my.id/api/smule-video?link=%s", link)
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+
+        var data map[string]interface{}
+        json.Unmarshal(body, &data)
+
+        result := data["result"].(map[string]interface{})
+        fmt.Println("Judul:", result["title"])
+        fmt.Println("Video mp4:", result["downloadVideoUrl"])
+        fmt.Println("Audio mp3:", result["downloadAudioUrl"])
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
       <!-- Section Facebook Video -->
       <section class="card">
         <div class="card-header">Contoh Kode — Facebook Video</div>
@@ -1473,6 +1560,27 @@
     tabJSSmuleProfile.addEventListener('click', () => showSmuleProfile(tabJSSmuleProfile));
     tabPySmuleProfile.addEventListener('click', () => showSmuleProfile(tabPySmuleProfile));
     tabGoSmuleProfile.addEventListener('click', () => showSmuleProfile(tabGoSmuleProfile));
+
+    // TAB SMULE VIDEO
+    const tabJSSmuleVideo = document.getElementById('tabJSSmuleVideo');
+    const tabPySmuleVideo = document.getElementById('tabPySmuleVideo');
+    const tabGoSmuleVideo = document.getElementById('tabGoSmuleVideo');
+
+    const jsSmuleVideo = document.getElementById('jsSmuleVideo');
+    const pySmuleVideo = document.getElementById('pySmuleVideo');
+    const goSmuleVideo = document.getElementById('goSmuleVideo');
+
+    function showSmuleVideo(tab) {
+      [tabJSSmuleVideo, tabPySmuleVideo, tabGoSmuleVideo].forEach(btn => btn.classList.remove('active'));
+      [jsSmuleVideo, pySmuleVideo, goSmuleVideo].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    tabJSSmuleVideo.addEventListener('click', () => showSmuleVideo(tabJSSmuleVideo));
+    tabPySmuleVideo.addEventListener('click', () => showSmuleVideo(tabPySmuleVideo));
+    tabGoSmuleVideo.addEventListener('click', () => showSmuleVideo(tabGoSmuleVideo));
 
     //  TAB TIKTOK VIDEO 
     const tabJSTikTokVideo = document.getElementById('tabJSTikTokVideo');
