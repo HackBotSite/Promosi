@@ -994,6 +994,77 @@
         </div>
       </section>
 
+      <!-- Section Facebook Video -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Facebook Video</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Facebook Video">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsFacebookVideo" id="tabJSFacebookVideo">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyFacebookVideo" id="tabPyFacebookVideo">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goFacebookVideo" id="tabGoFacebookVideo">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsFacebookVideo" role="tabpanel" aria-labelledby="tabJSFacebookVideo" class="code">
+      <pre><code class="language-js">
+      // Facebook Video
+      const apiKey = "YOUR_API_KEY";
+      const link = "https://www.facebook.com/share/r/17px4C4PmR/";
+
+      fetch(`https://api2.teamhackbotsindo.my.id/api/facebook-video?link=${encodeURIComponent(link)}`, {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Facebook Video:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyFacebookVideo" role="tabpanel" aria-labelledby="tabPyFacebookVideo" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      link = "https://www.facebook.com/share/r/17px4C4PmR/"
+      url = f"https://api2.teamhackbotsindo.my.id/api/facebook-video?link={link}"
+
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goFacebookVideo" role="tabpanel" aria-labelledby="tabGoFacebookVideo" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        link := "https://www.facebook.com/share/r/17px4C4PmR/"
+        url := "https://api2.teamhackbotsindo.my.id/api/facebook-video?link=" + link
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
       <!-- Section Information -->
       <section class="card" id="information" aria-labelledby="information-title">
         <div class="card-header" id="information-title">Dokumentasi API — Information</div>
@@ -1152,7 +1223,8 @@
       { no: 3, name: "Youtube Audio", method: "GET", desc: "Download audio dari YouTube", query: "apikey, link" },
       { no: 4, name: "Smule Profile", method: "GET", desc: "Profil pengguna Smule", query: "apikey, handle" },
       { no: 5, name: "Smule Audio / Video", method: "GET", desc: "Download media dari Smule", query: "apikey, link" },
-      { no: 6, name: "Facebook", method: "GET", desc: "Download video dari Facebook", query: "apikey, link" }
+      { no: 6, name: "Facebook", method: "GET", desc: "Download video dari Facebook", query: "apikey, link" },
+      { no: 7, name: "Tiktok", method: "GET", desc: "Download video dari Tiktok", query: "apikey, link" }
     ];
 
     const downloaderBody = document.getElementById('downloaderTableBody');
@@ -1198,7 +1270,10 @@
           url = `https://api.teamhackbotsindo.my.id/api/smule-media?link=example`;
           break;
         case "Facebook":
-          url = `https://api.teamhackbotsindo.my.id/api/facebook?link=example`;
+          url = `https://api2.teamhackbotsindo.my.id/api/facebook-video?link=https://www.facebook.com/share/r/17px4C4PmR/`;
+          break;
+        case "Tiktok":
+          url = `https://api2.teamhackbotsindo.my.id/api/tiktok-video?link=https://www.tiktok.com/@tiktok/video/7232384225691880746`;
           break;
       }
 
@@ -1213,13 +1288,20 @@
         })
         .then(data => {
           if (data.result?.downloadAudioUrl) {
-            // tampilkan metadata + link audio
             panel.innerHTML = `
               <p><strong>Judul:</strong> ${data.result.title || "-"}</p>
               <p><strong>Uploader:</strong> ${data.result.uploader || "-"}</p>
               <p><strong>Durasi:</strong> ${data.result.duration || "-"}</p>
               <p><img src="${data.result.thumbnail || ""}" alt="Thumbnail" style="max-width:200px"></p>
               <p><strong>Link audio:</strong> <a href="${data.result.downloadAudioUrl}" target="_blank">${data.result.downloadAudioUrl}</a></p>
+            `;
+          } else if (data.result?.downloadVideoUrl) {
+            panel.innerHTML = `
+              <p><strong>Judul:</strong> ${data.result.title || "-"}</p>
+              <p><strong>Uploader:</strong> ${data.result.uploader || "-"}</p>
+              <p><strong>Durasi:</strong> ${data.result.duration || "-"}</p>
+              <p><img src="${data.result.thumbnail || ""}" alt="Thumbnail" style="max-width:200px"></p>
+              <p><strong>Link video:</strong> <a href="${data.result.downloadVideoUrl}" target="_blank">${data.result.downloadVideoUrl}</a></p>
             `;
           } else {
             panel.textContent = JSON.stringify(data, null, 2);
