@@ -553,72 +553,6 @@
         </div>
       </section>
 
-      <!-- Tabs Jadwal Shalat -->
-      <section class="card">
-        <div class="card-header">Contoh Kode — Jadwal Shalat</div>
-        <div class="tabs">
-          <div class="tab-list" role="tablist" aria-label="Contoh kode Jadwal Shalat">
-            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsJadwalShalat" id="tabJSJadwalShalat">JavaScript</button>
-            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyJadwalShalat" id="tabPyJadwalShalat">Python</button>
-            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goJadwalShalat" id="tabGoJadwalShalat">Golang</button>
-          </div>
-
-          <!-- JS -->
-          <div id="jsJadwalShalat" role="tabpanel" aria-labelledby="tabJSJadwalShalat" class="code">
-      <pre><code class="language-js">
-      // Jadwal Shalat Jakarta
-      const apiKey = "YOUR_API_KEY";
-      fetch("https://api2.teamhackbotsindo.my.id/api/jadwal-shalat?city=jakarta", {
-        headers: { "x-api-key": apiKey }
-      })
-        .then(res => res.json())
-        .then(data => console.log("Jadwal Shalat:", data))
-        .catch(err => console.error(err));
-      </code></pre>
-          </div>
-
-          <!-- Python -->
-          <div id="pyJadwalShalat" role="tabpanel" aria-labelledby="tabPyJadwalShalat" class="code" style="display:none">
-      <pre><code class="language-python">
-      import requests
-
-      apiKey = "YOUR_API_KEY"
-      url = "https://api2.teamhackbotsindo.my.id/api/jadwal-shalat?city=jakarta"
-      resp = requests.get(url, headers={"x-api-key": apiKey})
-      print(resp.json())
-      </code></pre>
-          </div>
-
-          <!-- Golang -->
-          <div id="goJadwalShalat" role="tabpanel" aria-labelledby="tabGoJadwalShalat" class="code" style="display:none">
-      <pre><code class="language-go">
-      package main
-
-      import (
-        "fmt"
-        "net/http"
-        "io/ioutil"
-      )
-
-      func main() {
-        apiKey := "YOUR_API_KEY"
-        url := "https://api2.teamhackbotsindo.my.id/api/jadwal-shalat?city=jakarta"
-
-        client := &http.Client{}
-        req, _ := http.NewRequest("GET", url, nil)
-        req.Header.Set("x-api-key", apiKey)
-
-        resp, _ := client.Do(req)
-        defer resp.Body.Close()
-
-        body, _ := ioutil.ReadAll(resp.Body)
-        fmt.Println(string(body))
-      }
-      </code></pre>
-          </div>
-        </div>
-      </section>
-
       <!-- Section Random Image -->
       <section class="card" id="random" aria-labelledby="random-title">
         <div class="card-header" id="random-title">Dokumentasi API — Random Image</div>
@@ -745,7 +679,7 @@
       <pre><code class="language-js">
       // Youtube List
       const apiKey = "YOUR_API_KEY";
-      fetch("https://api.teamhackbotsindo.my.id/api/youtube-list?query=peterpan", {
+      fetch("https://api2.teamhackbotsindo.my.id/api/youtube-list?query=peterpan", {
         headers: { "x-api-key": apiKey }
       })
         .then(res => res.json())
@@ -760,7 +694,7 @@
       import requests
 
       apiKey = "YOUR_API_KEY"
-      url = "https://api.teamhackbotsindo.my.id/api/youtube-list?query=peterpan"
+      url = "https://api2.teamhackbotsindo.my.id/api/youtube-list?query=peterpan"
       resp = requests.get(url, headers={"x-api-key": apiKey})
       print(resp.json())
       </code></pre>
@@ -779,7 +713,7 @@
 
       func main() {
         apiKey := "YOUR_API_KEY"
-        url := "https://api.teamhackbotsindo.my.id/api/youtube-list?query=peterpan"
+        url := "https://api2.teamhackbotsindo.my.id/api/youtube-list?query=peterpan"
 
         client := &http.Client{}
         req, _ := http.NewRequest("GET", url, nil)
@@ -811,7 +745,7 @@
       <pre><code class="language-js">
       // Youtube Video
       const apiKey = "YOUR_API_KEY";
-      fetch("https://api.teamhackbotsindo.my.id/api/youtube-video?link=https://youtu.be/igaeQ2fJRxE?si=lFgNyMiAgXVJHti3", {
+      fetch("https://api2.teamhackbotsindo.my.id/api/youtube-video?link=https://youtu.be/igaeQ2fJRxE?si=lFgNyMiAgXVJHti3", {
         headers: { "x-api-key": apiKey }
       })
         .then(res => res.json())
@@ -826,7 +760,7 @@
       import requests
 
       apiKey = "YOUR_API_KEY"
-      url = "https://api.teamhackbotsindo.my.id/api/youtube-video?link=https://youtu.be/igaeQ2fJRxE?si=lFgNyMiAgXVJHti3"
+      url = "https://api2.teamhackbotsindo.my.id/api/youtube-video?link=https://youtu.be/igaeQ2fJRxE?si=lFgNyMiAgXVJHti3"
       resp = requests.get(url, headers={"x-api-key": apiKey})
       print(resp.json())
       </code></pre>
@@ -845,7 +779,7 @@
 
       func main() {
         apiKey := "YOUR_API_KEY"
-        url := "https://api.teamhackbotsindo.my.id/api/youtube-video?link=https://youtu.be/igaeQ2fJRxE?si=lFgNyMiAgXVJHti3"
+        url := "https://api2.teamhackbotsindo.my.id/api/youtube-video?link=https://youtu.be/igaeQ2fJRxE?si=lFgNyMiAgXVJHti3"
 
         client := &http.Client{}
         req, _ := http.NewRequest("GET", url, nil)
@@ -877,7 +811,7 @@
       <pre><code class="language-js">
       // Youtube Audio
       const apiKey = "YOUR_API_KEY";
-      fetch("https://api.teamhackbotsindo.my.id/api/youtube-audio?link=https://youtu.be/igaeQ2fJRxE?si=lFgNyMiAgXVJHti3", {
+      fetch("https://api2.teamhackbotsindo.my.id/api/youtube-audio?link=https://youtu.be/igaeQ2fJRxE?si=lFgNyMiAgXVJHti3", {
         headers: { "x-api-key": apiKey }
       })
         .then(res => res.json())
@@ -892,7 +826,7 @@
       import requests
 
       apiKey = "YOUR_API_KEY"
-      url = "https://api.teamhackbotsindo.my.id/api/youtube-audio?link=https://youtu.be/igaeQ2fJRxE?si=lFgNyMiAgXVJHti3"
+      url = "https://api2.teamhackbotsindo.my.id/api/youtube-audio?link=https://youtu.be/igaeQ2fJRxE?si=lFgNyMiAgXVJHti3"
       resp = requests.get(url, headers={"x-api-key": apiKey})
       print(resp.json())
       </code></pre>
@@ -911,73 +845,7 @@
 
       func main() {
         apiKey := "YOUR_API_KEY"
-        url := "https://api.teamhackbotsindo.my.id/api/youtube-audio?link=https://youtu.be/igaeQ2fJRxE?si=lFgNyMiAgXVJHti3"
-
-        client := &http.Client{}
-        req, _ := http.NewRequest("GET", url, nil)
-        req.Header.Set("x-api-key", apiKey)
-
-        resp, _ := client.Do(req)
-        defer resp.Body.Close()
-
-        body, _ := ioutil.ReadAll(resp.Body)
-        fmt.Println(string(body))
-      }
-      </code></pre>
-          </div>
-        </div>
-      </section>
-
-      <!-- Section Smule Profile -->
-      <section class="card">
-        <div class="card-header">Contoh Kode — Smule Profile</div>
-        <div class="tabs">
-          <div class="tab-list" role="tablist" aria-label="Contoh kode Smule Profile">
-            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsSmuleProfile" id="tabJSSmuleProfile">JavaScript</button>
-            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pySmuleProfile" id="tabPySmuleProfile">Python</button>
-            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goSmuleProfile" id="tabGoSmuleProfile">Golang</button>
-          </div>
-
-          <!-- JS -->
-          <div id="jsSmuleProfile" role="tabpanel" aria-labelledby="tabJSSmuleProfile" class="code">
-      <pre><code class="language-js">
-      // Smule Profile
-      const apiKey = "YOUR_API_KEY";
-      fetch("https://api.teamhackbotsindo.my.id/api/smule-profile?handle=AgnesMo", {
-        headers: { "x-api-key": apiKey }
-      })
-        .then(res => res.json())
-        .then(data => console.log("Smule Profile:", data))
-        .catch(err => console.error(err));
-      </code></pre>
-          </div>
-
-          <!-- Python -->
-          <div id="pySmuleProfile" role="tabpanel" aria-labelledby="tabPySmuleProfile" class="code" style="display:none">
-      <pre><code class="language-python">
-      import requests
-
-      apiKey = "YOUR_API_KEY"
-      url = "https://api.teamhackbotsindo.my.id/api/smule-profile?handle=AgnesMo"
-      resp = requests.get(url, headers={"x-api-key": apiKey})
-      print(resp.json())
-      </code></pre>
-          </div>
-
-          <!-- Golang -->
-          <div id="goSmuleProfile" role="tabpanel" aria-labelledby="tabGoSmuleProfile" class="code" style="display:none">
-      <pre><code class="language-go">
-      package main
-
-      import (
-        "fmt"
-        "net/http"
-        "io/ioutil"
-      )
-
-      func main() {
-        apiKey := "YOUR_API_KEY"
-        url := "https://api.teamhackbotsindo.my.id/api/smule-profile?handle=AgnesMo"
+        url := "https://api2.teamhackbotsindo.my.id/api/youtube-audio?link=https://youtu.be/igaeQ2fJRxE?si=lFgNyMiAgXVJHti3"
 
         client := &http.Client{}
         req, _ := http.NewRequest("GET", url, nil)
@@ -1179,16 +1047,16 @@
 
       switch (feature) {
         case "Youtube List":
-          url = `https://api.teamhackbotsindo.my.id/api/youtube-list?query=peterpan`;
+          url = `https://api2.teamhackbotsindo.my.id/api/youtube-list?query=peterpan`;
           break;
         case "Youtube Video":
-          url = `https://api.teamhackbotsindo.my.id/api/youtube-video?link=https://youtu.be/igaeQ2fJRxE?si=lFgNyMiAgXVJHti3`; // pakai link
+          url = `https://api2.teamhackbotsindo.my.id/api/youtube-video?link=https://youtu.be/igaeQ2fJRxE?si=lFgNyMiAgXVJHti3`; // pakai link
           break;
         case "Youtube Audio":
-          url = `https://api.teamhackbotsindo.my.id/api/youtube-audio?link=https://youtu.be/igaeQ2fJRxE?si=lFgNyMiAgXVJHti3`;
+          url = `https://api2.teamhackbotsindo.my.id/api/youtube-audio?link=https://youtu.be/igaeQ2fJRxE?si=lFgNyMiAgXVJHti3`;
           break;
         case "Smule Profile":
-          url = `https://api.teamhackbotsindo.my.id/api/smule-profile?handle=rg_line`;
+          url = `https://api.teamhackbotsindo.my.id/api/smule-profile?id=example`;
           break;
         case "Smule Audio / Video":
           url = `https://api.teamhackbotsindo.my.id/api/smule-media?link=example`;
@@ -1266,27 +1134,6 @@
     tabJSYoutubeAudio.addEventListener('click', () => showYoutubeAudio(tabJSYoutubeAudio));
     tabPyYoutubeAudio.addEventListener('click', () => showYoutubeAudio(tabPyYoutubeAudio));
     tabGoYoutubeAudio.addEventListener('click', () => showYoutubeAudio(tabGoYoutubeAudio));
-
-    // TAB SMULE PROFILE
-    const tabJSSmuleProfile = document.getElementById('tabJSSmuleProfile');
-    const tabPySmuleProfile = document.getElementById('tabPySmuleProfile');
-    const tabGoSmuleProfile = document.getElementById('tabGoSmuleProfile');
-
-    const jsSmuleProfile = document.getElementById('jsSmuleProfile');
-    const pySmuleProfile = document.getElementById('pySmuleProfile');
-    const goSmuleProfile = document.getElementById('goSmuleProfile');
-
-    function showSmuleProfile(tab) {
-      [tabJSSmuleProfile, tabPySmuleProfile, tabGoSmuleProfile].forEach(btn => btn.classList.remove('active'));
-      [jsSmuleProfile, pySmuleProfile, goSmuleProfile].forEach(panel => panel.style.display = 'none');
-
-      tab.classList.add('active');
-      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    }
-
-    tabJSSmuleProfile.addEventListener('click', () => showSmuleProfile(tabJSSmuleProfile));
-    tabPySmuleProfile.addEventListener('click', () => showSmuleProfile(tabPySmuleProfile));
-    tabGoSmuleProfile.addEventListener('click', () => showSmuleProfile(tabGoSmuleProfile));
 
     // API-Information
     const informationEndpoints = [
@@ -1373,8 +1220,7 @@
     //API-ISLAMI
     const islamiEndpoints = [
       { no: 1, name: "Doa", method: "GET", desc: "Random Doa", query: "apikey" },
-      { no: 2, name: "Niat Shalat", method: "GET", desc: "Niat shalat berdasarkan query", query: "apikey, shalat" },
-      { no: 3, name: "Jadwal Shalat", method: "GET", desc: "Jadwal shalat berdasarkan query", query: "apikey, kota" }
+      { no: 2, name: "Niat Shalat", method: "GET", desc: "Niat shalat berdasarkan query", query: "apikey, shalat" }
     ];
 
     const islamiBody = document.getElementById('islamiTableBody');
@@ -1405,9 +1251,7 @@
       } else if (feature === "Niat Shalat") {
         const selectedShalat = document.getElementById('shalatSelectIslami').value;
         url = `https://api.teamhackbotsindo.my.id/api/niat-shalat?shalat=${selectedShalat}`;
-      } else if (feature === "Jadwal Shalat") {
-          url = "https://api2.teamhackbotsindo.my.id/api/jadwal-shalat?city=jakarta";
-        }
+      }
 
       fetch(url, { headers: { "x-api-key": apiKey } })
         .then(res => {
@@ -1510,27 +1354,6 @@
       fmt.Println(string(body))
     }`;
     });
-
-    // Tabs Jadwal Shalat
-    const tabJSJadwalShalat = document.getElementById('tabJSJadwalShalat');
-    const tabPyJadwalShalat = document.getElementById('tabPyJadwalShalat');
-    const tabGoJadwalShalat = document.getElementById('tabGoJadwalShalat');
-
-    const jsJadwalShalat = document.getElementById('jsJadwalShalat');
-    const pyJadwalShalat = document.getElementById('pyJadwalShalat');
-    const goJadwalShalat = document.getElementById('goJadwalShalat');
-
-    function showJadwalShalat(tab) {
-      [tabJSJadwalShalat, tabPyJadwalShalat, tabGoJadwalShalat].forEach(btn => btn.classList.remove('active'));
-      [jsJadwalShalat, pyJadwalShalat, goJadwalShalat].forEach(panel => panel.style.display = 'none');
-
-      tab.classList.add('active');
-      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    }
-
-    tabJSJadwalShalat.addEventListener('click', () => showJadwalShalat(tabJSJadwalShalat));
-    tabPyJadwalShalat.addEventListener('click', () => showJadwalShalat(tabPyJadwalShalat));
-    tabGoJadwalShalat.addEventListener('click', () => showJadwalShalat(tabGoJadwalShalat));
 
     // API Random Image
     const randomEndpoints = [
