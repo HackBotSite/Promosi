@@ -1065,6 +1065,77 @@
         </div>
       </section>
 
+      <!-- Section TikTok Video -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — TikTok Video</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode TikTok Video">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsTikTokVideo" id="tabJSTikTokVideo">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyTikTokVideo" id="tabPyTikTokVideo">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goTikTokVideo" id="tabGoTikTokVideo">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsTikTokVideo" role="tabpanel" aria-labelledby="tabJSTikTokVideo" class="code">
+      <pre><code class="language-js">
+      // TikTok Video
+      const apiKey = "YOUR_API_KEY";
+      const link = "https://www.tiktok.com/@username/video/1234567890";
+
+      fetch(`https://api2.teamhackbotsindo.my.id/api/tiktok-video?link=${encodeURIComponent(link)}`, {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("TikTok Video:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyTikTokVideo" role="tabpanel" aria-labelledby="tabPyTikTokVideo" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      link = "https://www.tiktok.com/@username/video/1234567890"
+      url = f"https://api2.teamhackbotsindo.my.id/api/tiktok-video?link={link}"
+
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goTikTokVideo" role="tabpanel" aria-labelledby="tabGoTikTokVideo" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        link := "https://www.tiktok.com/@username/video/1234567890"
+        url := "https://api2.teamhackbotsindo.my.id/api/tiktok-video?link=" + link
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
       <!-- Section Information -->
       <section class="card" id="information" aria-labelledby="information-title">
         <div class="card-header" id="information-title">Dokumentasi API — Information</div>
@@ -1393,6 +1464,27 @@
     tabJSSmuleProfile.addEventListener('click', () => showSmuleProfile(tabJSSmuleProfile));
     tabPySmuleProfile.addEventListener('click', () => showSmuleProfile(tabPySmuleProfile));
     tabGoSmuleProfile.addEventListener('click', () => showSmuleProfile(tabGoSmuleProfile));
+
+    //  TAB TIKTOK VIDEO 
+    const tabJSTikTokVideo = document.getElementById('tabJSTikTokVideo');
+    const tabPyTikTokVideo = document.getElementById('tabPyTikTokVideo');
+    const tabGoTikTokVideo = document.getElementById('tabGoTikTokVideo');
+
+    const jsTikTokVideo = document.getElementById('jsTikTokVideo');
+    const pyTikTokVideo = document.getElementById('pyTikTokVideo');
+    const goTikTokVideo = document.getElementById('goTikTokVideo');
+
+    function showTikTokVideo(tab) {
+      [tabJSTikTokVideo, tabPyTikTokVideo, tabGoTikTokVideo].forEach(btn => btn.classList.remove('active'));
+      [jsTikTokVideo, pyTikTokVideo, goTikTokVideo].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    tabJSTikTokVideo.addEventListener('click', () => showTikTokVideo(tabJSTikTokVideo));
+    tabPyTikTokVideo.addEventListener('click', () => showTikTokVideo(tabPyTikTokVideo));
+    tabGoTikTokVideo.addEventListener('click', () => showTikTokVideo(tabGoTikTokVideo));
 
     // API-Information
     const informationEndpoints = [
