@@ -1445,34 +1445,24 @@
           }
         })
         .then(data => {
-          if (data.result?.downloadAudioUrl && data.result?.downloadVideoUrl) {
-            panel.innerHTML = `
-              <p><strong>Judul:</strong> ${data.result.title || "-"}</p>
-              <p><strong>Uploader:</strong> ${data.result.uploader || "-"}</p>
-              <p><strong>Durasi:</strong> ${data.result.duration || "-"}</p>
-              <p><img src="${data.result.thumbnail || ""}" alt="Thumbnail" style="max-width:200px"></p>
-              <p><strong>Link audio (mp3):</strong> <a href="${data.result.downloadAudioUrl}" target="_blank">${data.result.downloadAudioUrl}</a></p>
-              <p><strong>Link video (mp4):</strong> <a href="${data.result.downloadVideoUrl}" target="_blank">${data.result.downloadVideoUrl}</a></p>
-            `;
-          } else if (data.result?.downloadAudioUrl) {
-            panel.innerHTML = `
-              <p><strong>Judul:</strong> ${data.result.title || "-"}</p>
-              <p><strong>Uploader:</strong> ${data.result.uploader || "-"}</p>
-              <p><strong>Durasi:</strong> ${data.result.duration || "-"}</p>
-              <p><img src="${data.result.thumbnail || ""}" alt="Thumbnail" style="max-width:200px"></p>
-              <p><strong>Link audio (mp3):</strong> <a href="${data.result.downloadAudioUrl}" target="_blank">${data.result.downloadAudioUrl}</a></p>
-            `;
-          } else if (data.result?.downloadVideoUrl) {
-            panel.innerHTML = `
-              <p><strong>Judul:</strong> ${data.result.title || "-"}</p>
-              <p><strong>Uploader:</strong> ${data.result.uploader || "-"}</p>
-              <p><strong>Durasi:</strong> ${data.result.duration || "-"}</p>
-              <p><img src="${data.result.thumbnail || ""}" alt="Thumbnail" style="max-width:200px"></p>
-              <p><strong>Link video (mp4):</strong> <a href="${data.result.downloadVideoUrl}" target="_blank">${data.result.downloadVideoUrl}</a></p>
-            `;
-          } else {
-            panel.textContent = JSON.stringify(data, null, 2);
+          const r = data.result || {};
+          // Panel output
+          let html = `
+            <p><strong>Judul:</strong> ${r.title || "-"}</p>
+            <p><strong>Alt:</strong> ${r.alt || "-"}</p>
+            <p><strong>Uploader:</strong> ${r.uploader || "-"}</p>
+            <p><strong>Durasi:</strong> ${r.duration || "-"}</p>
+            <p><img src="${r.thumbnail || ""}" alt="${r.alt || "Thumbnail"}" style="max-width:200px"></p>
+          `;
+
+          if (r.downloadAudioUrl) {
+            html += `<p><strong>Link audio (mp3/m4a):</strong> <a href="${r.downloadAudioUrl}" target="_blank">${r.downloadAudioUrl}</a></p>`;
           }
+          if (r.downloadVideoUrl) {
+            html += `<p><strong>Link video (mp4):</strong> <a href="${r.downloadVideoUrl}" target="_blank">${r.downloadVideoUrl}</a></p>`;
+          }
+
+          panel.innerHTML = html;
         })
         .catch(err => panel.textContent = "Error: " + err);
     }
