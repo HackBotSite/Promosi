@@ -745,7 +745,7 @@
       <pre><code class="language-js">
       // Youtube List
       const apiKey = "YOUR_API_KEY";
-      fetch("https://api2.teamhackbotsindo.my.id/api/youtube-list?query=peterpan", {
+      fetch("https://api.teamhackbotsindo.my.id/api/youtube-list?query=peterpan", {
         headers: { "x-api-key": apiKey }
       })
         .then(res => res.json())
@@ -928,6 +928,72 @@
         </div>
       </section>
 
+      <!-- Section Smule Profile -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Smule Profile</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Smule Profile">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsSmuleProfile" id="tabJSSmuleProfile">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pySmuleProfile" id="tabPySmuleProfile">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goSmuleProfile" id="tabGoSmuleProfile">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsSmuleProfile" role="tabpanel" aria-labelledby="tabJSSmuleProfile" class="code">
+      <pre><code class="language-js">
+      // Smule Profile
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api.teamhackbotsindo.my.id/api/smule-profile?handle=AgnesMo", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Smule Profile:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pySmuleProfile" role="tabpanel" aria-labelledby="tabPySmuleProfile" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      url = "https://api.teamhackbotsindo.my.id/api/smule-profile?handle=AgnesMo"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goSmuleProfile" role="tabpanel" aria-labelledby="tabGoSmuleProfile" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        url := "https://api.teamhackbotsindo.my.id/api/smule-profile?handle=AgnesMo"
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
       <!-- Section Information -->
       <section class="card" id="information" aria-labelledby="information-title">
         <div class="card-header" id="information-title">Dokumentasi API — Information</div>
@@ -1079,12 +1145,12 @@
 
   <script>
 
-    //API DOWNLOADER
+    // API DOWNLOADER
     const downloaderEndpoints = [
       { no: 1, name: "Youtube List", method: "GET", desc: "Pencarian video berdasarkan kata kunci", query: "apikey, query" },
       { no: 2, name: "Youtube Video", method: "GET", desc: "Download video YouTube", query: "apikey, link" },
-      { no: 3, name: "Youtube Audio", method: "GET", desc: "Download audio dari YouTube", query: "apikey, query" },
-      { no: 4, name: "Smule Profile", method: "GET", desc: "Profil pengguna Smule", query: "apikey, id" },
+      { no: 3, name: "Youtube Audio", method: "GET", desc: "Download audio dari YouTube", query: "apikey, link" },
+      { no: 4, name: "Smule Profile", method: "GET", desc: "Profil pengguna Smule", query: "apikey, handle" },
       { no: 5, name: "Smule Audio / Video", method: "GET", desc: "Download media dari Smule", query: "apikey, link" },
       { no: 6, name: "Facebook", method: "GET", desc: "Download video dari Facebook", query: "apikey, link" }
     ];
@@ -1109,20 +1175,24 @@
       panel.textContent = `⚡ Menjalankan ${feature}...`;
 
       const apiKey = document.getElementById('apiKeyInput')?.value || "";
-      let url = "";
+      if (!apiKey) {
+        panel.textContent = "Error: API key wajib diisi!";
+        return;
+      }
 
+      let url = "";
       switch (feature) {
         case "Youtube List":
           url = `https://api2.teamhackbotsindo.my.id/api/youtube-list?query=peterpan`;
           break;
         case "Youtube Video":
-          url = `https://api2.teamhackbotsindo.my.id/api/youtube-video?link=https://youtu.be/igaeQ2fJRxE?si=lFgNyMiAgXVJHti3`; // pakai link
+          url = `https://api2.teamhackbotsindo.my.id/api/youtube-video?link=https://youtu.be/igaeQ2fJRxE`;
           break;
         case "Youtube Audio":
-          url = `https://api2.teamhackbotsindo.my.id/api/youtube-audio?link=https://youtu.be/igaeQ2fJRxE?si=lFgNyMiAgXVJHti3`;
+          url = `https://api2.teamhackbotsindo.my.id/api/youtube-audio?link=https://youtu.be/igaeQ2fJRxE`;
           break;
         case "Smule Profile":
-          url = `https://api.teamhackbotsindo.my.id/api/smule-profile?id=example`;
+          url = `https://api.teamhackbotsindo.my.id/api/smule-profile?handle=rg_line`;
           break;
         case "Smule Audio / Video":
           url = `https://api.teamhackbotsindo.my.id/api/smule-media?link=example`;
@@ -1200,6 +1270,27 @@
     tabJSYoutubeAudio.addEventListener('click', () => showYoutubeAudio(tabJSYoutubeAudio));
     tabPyYoutubeAudio.addEventListener('click', () => showYoutubeAudio(tabPyYoutubeAudio));
     tabGoYoutubeAudio.addEventListener('click', () => showYoutubeAudio(tabGoYoutubeAudio));
+
+    // TAB SMULE PROFILE
+    const tabJSSmuleProfile = document.getElementById('tabJSSmuleProfile');
+    const tabPySmuleProfile = document.getElementById('tabPySmuleProfile');
+    const tabGoSmuleProfile = document.getElementById('tabGoSmuleProfile');
+
+    const jsSmuleProfile = document.getElementById('jsSmuleProfile');
+    const pySmuleProfile = document.getElementById('pySmuleProfile');
+    const goSmuleProfile = document.getElementById('goSmuleProfile');
+
+    function showSmuleProfile(tab) {
+      [tabJSSmuleProfile, tabPySmuleProfile, tabGoSmuleProfile].forEach(btn => btn.classList.remove('active'));
+      [jsSmuleProfile, pySmuleProfile, goSmuleProfile].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    tabJSSmuleProfile.addEventListener('click', () => showSmuleProfile(tabJSSmuleProfile));
+    tabPySmuleProfile.addEventListener('click', () => showSmuleProfile(tabPySmuleProfile));
+    tabGoSmuleProfile.addEventListener('click', () => showSmuleProfile(tabGoSmuleProfile));
 
     // API-Information
     const informationEndpoints = [
@@ -1287,7 +1378,7 @@
     const islamiEndpoints = [
       { no: 1, name: "Doa", method: "GET", desc: "Random Doa", query: "apikey" },
       { no: 2, name: "Niat Shalat", method: "GET", desc: "Niat shalat berdasarkan query", query: "apikey, shalat" },
-      { no: 3, name: "Jadwal Shalat", method: "GET", desc: "Jadwal shalat berdasarkan query", query: "apikey, kota" }
+      { no: 3, name: "Jadwal Shalat", method: "GET", desc: "Jadwal shalat berdasarkan query", query: "apikey, city" }
     ];
 
     const islamiBody = document.getElementById('islamiTableBody');
@@ -1304,7 +1395,7 @@
       islamiBody.appendChild(tr);
     });
 
-    // Fungsi Try untuk Islami dengan dropdown shalat
+    // Fungsi Try untuk Islami (contoh baku)
     function tryIslami(feature) {
       const panel = document.getElementById('islamiResponsePanel');
       panel.style.display = 'block';
@@ -1319,8 +1410,9 @@
         const selectedShalat = document.getElementById('shalatSelectIslami').value;
         url = `https://api.teamhackbotsindo.my.id/api/niat-shalat?shalat=${selectedShalat}`;
       } else if (feature === "Jadwal Shalat") {
-          url = "https://api2.teamhackbotsindo.my.id/api/jadwal-shalat?city=jakarta";
-        }
+        // contoh baku: default city Jakarta
+        url = "https://api2.teamhackbotsindo.my.id/api/jadwal-shalat?city=jakarta";
+      }
 
       fetch(url, { headers: { "x-api-key": apiKey } })
         .then(res => {
