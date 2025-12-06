@@ -255,6 +255,21 @@
     @media (max-width: 960px){
       .layout { grid-template-columns: 1fr; }
       aside.sidebar { position: relative; top: 0 }
+      .action {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .action select,
+      .action input,
+      .action .btn {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+
+      .action .btn:last-child {
+        margin-bottom: 0;
+      }
     }
     /* WhatsApp Floating */
     .wa-float {
