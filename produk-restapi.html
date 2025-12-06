@@ -252,9 +252,38 @@
     .links a:hover { color: var(--accent) }
 
     /* Responsive */
-    @media (max-width: 960px){
-      .layout { grid-template-columns: 1fr; }
-      aside.sidebar { position: relative; top: 0 }
+    @media (max-width: 768px) {
+      .table thead {
+        display: none; /* sembunyikan header */
+      }
+      .table, .table tbody, .table tr, .table td {
+        display: block;
+        width: 100%;
+      }
+      .table tr {
+        margin-bottom: 15px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 10px;
+      }
+      .table td {
+        border: none;
+        padding: 6px 0;
+        position: relative;
+        padding-left: 120px; /* ruang untuk label */
+      }
+      .table td::before {
+        content: attr(data-label); /* ambil label dari atribut */
+        position: absolute;
+        left: 10px;
+        top: 6px;
+        font-weight: bold;
+        color: var(--muted);
+      }
+      .table td:last-child {
+        text-align: left;
+        padding-left: 10px; /* tombol Try full width */
+      }
       .action {
         flex-direction: column;
         align-items: stretch;
@@ -1700,12 +1729,12 @@
     islamiEndpoints.forEach(ep => {
       const tr = document.createElement('tr');
       tr.innerHTML = `
-        <td>${ep.no}</td>
-        <td>${ep.name}</td>
-        <td><span class="badge GET">${ep.method}</span></td>
-        <td>${ep.desc}</td>
-        <td>${ep.query}</td>
-        <td><button class="btn" onclick="tryIslami('${ep.name}')">Try</button></td>
+        <td data-label="No">${ep.no}</td>
+        <td data-label="Feature Name">${ep.name}</td>
+        <td data-label="Request Method"><span class="badge GET">${ep.method}</span></td>
+        <td data-label="Description">${ep.desc}</td>
+        <td data-label="Query Parameter">${ep.query}</td>
+        <td data-label="Action"><button class="btn" onclick="tryIslami('${ep.name}')">Try</button></td>
       `;
       islamiBody.appendChild(tr);
     });
