@@ -255,10 +255,13 @@
     @media (max-width: 768px) {
       .table-wrapper {
         overflow-x: auto;   /* aktifkan scroll horizontal */
+        -webkit-overflow-scrolling: touch;
       }
 
       .table {
         min-width: 600px;   /* pastikan tabel punya lebar minimum */
+        border-collapse: collapse;
+        width: 100%;
       }
       .action {
         flex-direction: column;
@@ -384,21 +387,25 @@
       <!-- Section Islami -->
       <section class="card" id="islami" aria-labelledby="islami-title">
         <div class="card-header" id="islami-title">Dokumentasi API — Islami</div>
-        <table class="table" aria-describedby="islami-title">
-          <thead>
-            <tr>
-              <th>No</th>
-              <th>Feature Name</th>
-              <th>Request Method</th>
-              <th>Description</th>
-              <th>Query Parameter</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody id="islamiTableBody">
-            <!-- Diisi lewat JS -->
-          </tbody>
-        </table>
+  
+        <div class="table-wrapper">
+          <table class="table" aria-describedby="islami-title">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Feature Name</th>
+                <th>Request Method</th>
+                <th>Description</th>
+                <th>Query Parameter</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="islamiTableBody">
+              <!-- Diisi lewat JS -->
+            </tbody>
+          </table>
+        </div>
+  
         <div id="islamiResponsePanel" class="response" aria-live="polite" style="display:none"></div>
       </section>
 
