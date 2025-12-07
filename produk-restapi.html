@@ -354,6 +354,7 @@
       <ul class="nav-list">
         <li><a class="active" href="#home">Dashboard</a></li>
         <li><a href="#islami">Islami</a></li>
+        <li><a href="#loginqr">Login Line</a></li>
         <li><a href="#downloader">Downloader</a></li>
         <li><a href="#information">Information</a></li>
         <li><a href="#anime">Anime / Manga</a></li>
@@ -1390,6 +1391,102 @@
         </div>
       </section>
 
+      <!-- Section Login QR LINE -->
+      <section class="card" id="loginqr" aria-labelledby="loginqr-title">
+        <div class="card-header" id="loginqr-title">Dokumentasi API — Login QR LINE</div>
+
+        <div class="table-wrapper">
+          <table class="table" aria-describedby="loginqr-title">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Feature Name</th>
+                <th>Request Method</th>
+                <th>Description</th>
+                <th>Query Parameter</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="loginqrTableBody">
+              <!-- Diisi lewat JS -->
+            </tbody>
+          </table>
+        </div>
+        <div id="loginqrResponsePanel" class="response" aria-live="polite" style="display:none"></div>
+      </section>
+
+      <!-- Code samples Login QR LINE -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Login QR LINE</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Login QR LINE">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsLoginqr" id="tabJSLoginqr">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyLoginqr" id="tabPyLoginqr">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goLoginqr" id="tabGoLoginqr">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsLoginqr" role="tabpanel" aria-labelledby="tabJSLoginqr" class="code">
+      <pre><code class="language-js">
+      // Login QR LINE
+      fetch("https://api2.teamhackbotsindo.my.id/api/loginqr-line", {
+        method: "POST",
+        headers: { "x-api-key": apiKey, "Content-Type": "application/json" },
+        body: JSON.stringify({ appname: "DESKTOPWIN\t9.2.0.3403\tWINDOWS\t10.0.0-NT-x64" })
+      })
+        .then(res => res.json())
+        .then(data => {
+          console.log("Login QR LINE:", data);
+          // tampilkan QR image di halaman
+          const img = document.createElement("img");
+          img.src = data.result.qrImage;
+          document.body.appendChild(img);
+        });
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyLoginqr" role="tabpanel" aria-labelledby="tabPyLoginqr" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      headers = { "x-api-key": apiKey, "Content-Type": "application/json" }
+      payload = { "appname": "DESKTOPWIN\t9.2.0.3403\tWINDOWS\t10.0.0-NT-x64" }
+
+      resp = requests.post("https://api2.teamhackbotsindo.my.id/api/loginqr-line", headers=headers, json=payload)
+      print("Login QR LINE:", resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goLoginqr" role="tabpanel" aria-labelledby="tabGoLoginqr" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "bytes"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        client := &http.Client{}
+        body := []byte(`{"appname":"DESKTOPWIN\t9.2.0.3403\tWINDOWS\t10.0.0-NT-x64"}`)
+        req, _ := http.NewRequest("POST", "https://api2.teamhackbotsindo.my.id/api/loginqr-line", bytes.NewBuffer(body))
+        req.Header.Set("x-api-key", apiKey)
+        req.Header.Set("Content-Type", "application/json")
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+        b, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println("Login QR LINE:", string(b))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
       <!-- Footer -->
       <footer aria-label="Footer">
         <div class="footer-inner">
@@ -1408,6 +1505,74 @@
   <div id="toast" class="toast" role="status" aria-live="polite">Disalin!</div>
 
   <script>
+
+    // API-LoginQR
+    const loginqrEndpoints = [
+      { no: 1, name: "Login QR LINE", method: "POST", desc: "Login LINE via QR code, menghasilkan link login, gambar QR, token & E2EE", query: "apikey, appname, userAgent" },
+      { no: 2, name: "Login Email LINE", method: "POST", desc: "Login LINE via Email, menghasilkan Pin Code, token & E2EE", query: "apikey, appname, userAgent" }
+    ];
+
+    const loginqrBody = document.getElementById('loginqrTableBody');
+    loginqrEndpoints.forEach(ep => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${ep.no}</td>
+        <td>${ep.name}</td>
+        <td><span class="badge POST">${ep.method}</span></td>
+        <td>${ep.desc}</td>
+        <td>${ep.query}</td>
+        <td><button class="btn" onclick="tryLoginqr('${ep.name}')">Try</button></td>
+      `;
+      loginqrBody.appendChild(tr);
+    });
+
+    function tryLoginqr(feature) {
+      const panel = document.getElementById('loginqrResponsePanel');
+      panel.style.display = 'block';
+      panel.textContent = `⚡ Menjalankan ${feature}...`;
+
+      const apiKey = document.getElementById('apiKeyInput').value.trim();
+      if (!apiKey) {
+        panel.textContent = "Error: API key belum diisi.";
+        return;
+      }
+
+      let url = "";
+      let payload = { appname: "DESKTOPWIN\t9.2.0.3403\tWINDOWS\t10.0.0-NT-x64" };
+
+      if (feature === "Login QR LINE") {
+        url = "https://api2.teamhackbotsindo.my.id/api/loginqr-line";
+      } else if (feature === "Login Email LINE") {
+        url = "https://api2.teamhackbotsindo.my.id/api/loginemail-line";
+        // untuk login email biasanya butuh email & password
+        payload.email = document.getElementById("emailInput")?.value || "user@example.com";
+        payload.password = document.getElementById("passwordInput")?.value || "yourpassword";
+      } else {
+        panel.textContent = "Error: Fitur tidak dikenal.";
+        return;
+      }
+
+      fetch(url, {
+        method: "POST",
+        headers: { "x-api-key": apiKey, "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      })
+        .then(res => {
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          return res.json();
+        })
+        .then(data => {
+          panel.textContent = JSON.stringify(data, null, 2);
+          if (data.result && data.result.qrImage) {
+            const img = document.createElement("img");
+            img.src = data.result.qrImage;
+            img.alt = "QR Login LINE";
+            img.style.maxWidth = "200px";
+            panel.appendChild(img);
+          }
+        })
+        .catch(err => panel.textContent = "Error: " + err);
+    }
 
     // API DOWNLOADER
     const downloaderEndpoints = [
