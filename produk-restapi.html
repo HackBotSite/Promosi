@@ -1775,12 +1775,11 @@
           }
         })
         .then(data => {
-          const articles = data.result || [];
+          const articles = data.result?.data || [];
           if (!articles.length) {
             panel.textContent = "Tidak ada berita ditemukan.";
             return;
           }
-
           let html = "<ul>";
           articles.forEach(a => {
             html += `
@@ -1793,7 +1792,6 @@
             `;
           });
           html += "</ul>";
-
           panel.innerHTML = html;
         })
         .catch(err => panel.textContent = "Error: " + err);
