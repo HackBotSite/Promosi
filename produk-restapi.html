@@ -360,7 +360,6 @@
         <li><a href="#information">Information</a></li>
         <li><a href="#anime">Anime / Manga</a></li>
         <li><a href="#education">Education</a></li>
-        <li><a href="#primbon">Primbon</a></li>
         <li><a href="#news">News</a></li>
         <li><a href="#game">Game</a></li>
         <li><a href="#meme">Meme</a></li>
@@ -1852,7 +1851,7 @@
     }
 
     // API-Primbon
-    const newsEndpoints = [
+    const primbonEndpoints = [
       { no: 1, name: "Arti Nama", method: "GET", desc: "Arti nama", query: ["apikey", "nama"] },
       { no: 2, name: "Arti Mimpi", method: "GET", desc: "Mimpi tafsir", query: ["apikey", "query"] },
       { no: 3, name: "Zodiak", method: "GET", desc: "Zodiak", query: ["apikey"] },
@@ -1918,8 +1917,6 @@
             panel.textContent = "Error: " + data.error;
             return;
           }
-
-          // tampilkan hasil primbon
           panel.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
         })
         .catch(err => panel.textContent = "Error: " + err);
