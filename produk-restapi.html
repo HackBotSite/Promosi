@@ -211,9 +211,18 @@
 
     /* Response panel */
     .response {
-      margin-top: 14px; background: #0c1426; border: 1px solid var(--border);
-      border-radius: 12px; padding: 12px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-      color: #cfe7ff; white-space: pre-wrap; word-break: break-word;
+      margin-top: 14px;
+      background: #0c1426;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      color: #cfe7ff;
+      white-space: pre-wrap;
+      word-break: break-word;
+      overflow-x: auto;       /* ⬅️ scroll horizontal hanya kalau perlu */
+      max-width: 100%;        /* ⬅️ biar gak keluar dari container */
+      box-sizing: border-box; /* ⬅️ pastikan padding dihitung dalam lebar */
     }
 
     /* Tabs for code samples */
