@@ -2501,24 +2501,33 @@
 
       const apiKey = document.getElementById('apiKeyInput').value;
       let url = "";
+      switch (feature) {
+        case "Doa":
+          url = `https://api.teamhackbotsindo.my.id/api/doa`;
+          break;
 
-      if (feature === "Doa") {
-        url = "https://api.teamhackbotsindo.my.id/api/doa";
-      } else if (feature === "Niat Shalat") {
-        const selectedShalat = document.getElementById('shalatSelectIslami').value;
-        url = `https://api.teamhackbotsindo.my.id/api/niat-shalat?shalat=${selectedShalat}`;
-      } else if (feature === "Jadwal Shalat") {
-        // contoh baku: default city Jakarta
-        url = "https://api2.teamhackbotsindo.my.id/api/jadwal-shalat?city=jakarta";
-      } else if (feature === "Qur'an Surah") {
-        url = `https://api2.teamhackbotsindo.my.id/api/quran-surah?apikey=${apiKey}`;
-      } else if (feature === "Qur'an Detail") {
-        const nomor = document.getElementById('surahSelectQuran').value || 1;
-        url = `https://api2.teamhackbotsindo.my.id/api/quran-detail?apikey=${apiKey}&nomor=1`;
-      } else if (feature === "Kisah Nabi") {
-        const nomor = document.getElementById('nabiSelectIslami').value || 1;
-        url = `https://api2.teamhackbotsindo.my.id/api/kisah-nabi?apikey=${apiKey}&nomor=25`;
+        case "Niat Shalat":
+          const selectedShalat = document.getElementById('shalatSelectIslami').value;
+          url = `https://api.teamhackbotsindo.my.id/api/niat-shalat?shalat=${selectedShalat}`;
+          break;
+
+        case "Jadwal Shalat":
+          url = `https://api2.teamhackbotsindo.my.id/api/jadwal-shalat?city=jakarta`;
+          break;
+
+        case "Qur'an Surah":
+          url = `https://api2.teamhackbotsindo.my.id/api/quran-surah?apikey=${apiKey}`;
+          break;
+
+        case "Qur'an Detail":
+          url = `https://api2.teamhackbotsindo.my.id/api/quran-detail?apikey=${apiKey}&nomor=1`;
+          break;
+
+        case "Kisah Nabi":
+          url = `https://api2.teamhackbotsindo.my.id/api/kisah-nabi?apikey=${apiKey}&nomor=25`;
+          break;
       }
+
 
       fetch(url, { headers: { "x-api-key": apiKey } })
         .then(res => {
