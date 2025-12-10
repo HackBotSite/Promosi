@@ -2488,7 +2488,7 @@
         <td><span class="badge GET">${ep.method}</span></td>
         <td>${ep.desc}</td>
         <td>${ep.query}</td>
-        <td><button class="btn" onclick="tryIslami('${ep.name}')">Try</button></td>
+        <td><button class="btn" onclick="tryIslami('${ep.name.replace(/'/g, "\\'")}')">Try</button></td>
       `;
       islamiBody.appendChild(tr);
     });
