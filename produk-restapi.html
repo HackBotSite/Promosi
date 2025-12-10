@@ -656,6 +656,138 @@
         </div>
       </section>
 
+      <!-- Tabs Qur'an Surah -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Qur'an Surah</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Qur'an Surah">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsQuranSurah" id="tabJSQuranSurah">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyQuranSurah" id="tabPyQuranSurah">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goQuranSurah" id="tabGoQuranSurah">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsQuranSurah" role="tabpanel" aria-labelledby="tabJSQuranSurah" class="code">
+      <pre><code class="language-js">
+      // Daftar Surah
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api2.teamhackbotsindo.my.id/api/quran-surah", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Qur'an Surah:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyQuranSurah" role="tabpanel" aria-labelledby="tabPyQuranSurah" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      url = "https://api2.teamhackbotsindo.my.id/api/quran-surah"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goQuranSurah" role="tabpanel" aria-labelledby="tabGoQuranSurah" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        url := "https://api2.teamhackbotsindo.my.id/api/quran-surah"
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tabs Kisah Nabi -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Kisah Nabi</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Kisah Nabi">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsKisahNabi" id="tabJSKisahNabi">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyKisahNabi" id="tabPyKisahNabi">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goKisahNabi" id="tabGoKisahNabi">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsKisahNabi" role="tabpanel" aria-labelledby="tabJSKisahNabi" class="code">
+      <pre><code class="language-js">
+      // Kisah Nabi (contoh: id=1 untuk Nabi Adam)
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api2.teamhackbotsindo.my.id/api/kisah-nabi?nomor=1", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Kisah Nabi:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyKisahNabi" role="tabpanel" aria-labelledby="tabPyKisahNabi" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      url = "https://api2.teamhackbotsindo.my.id/api/kisah-nabi?nomor=1"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goKisahNabi" role="tabpanel" aria-labelledby="tabGoKisahNabi" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        url := "https://api2.teamhackbotsindo.my.id/api/kisah-nabi?nomor=1"
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
       <!-- Section Random Image -->
       <section class="card" id="random" aria-labelledby="random-title">
         <div class="card-header" id="random-title">Dokumentasi API — Random Image</div>
@@ -2337,11 +2469,14 @@
         .catch(err => panel.textContent = "Error: " + err);
     }
 
-    //API-ISLAMI
+    // API-ISLAMI
     const islamiEndpoints = [
-      { no: 1, name: "Doa", method: "GET", desc: "Random Doa", query: "apikey" },
-      { no: 2, name: "Niat Shalat", method: "GET", desc: "Niat shalat berdasarkan query", query: "apikey, shalat" },
-      { no: 3, name: "Jadwal Shalat", method: "GET", desc: "Jadwal shalat berdasarkan query", query: "apikey, city" }
+      { no: 1, name: "Doa", method: "GET", desc: "Ambil doa secara acak", query: "apikey" },
+      { no: 2, name: "Niat Shalat", method: "GET", desc: "Niat shalat berdasarkan nama shalat", query: "apikey, shalat" },
+      { no: 3, name: "Jadwal Shalat", method: "GET", desc: "Jadwal shalat berdasarkan kota", query: "apikey, city" },
+      { no: 4, name: "Qur'an Surah", method: "GET", desc: "Daftar semua surah dalam Al-Qur'an", query: "apikey" },
+      { no: 5, name: "Qur'an Detail", method: "GET", desc: "Detail surah berdasarkan nomor", query: "apikey, nomor" },
+      { no: 6, name: "Kisah Nabi", method: "GET", desc: "Kisah nabi berdasarkan nomor", query: "apikey, nomor" }
     ];
 
     const islamiBody = document.getElementById('islamiTableBody');
@@ -2375,6 +2510,11 @@
       } else if (feature === "Jadwal Shalat") {
         // contoh baku: default city Jakarta
         url = "https://api2.teamhackbotsindo.my.id/api/jadwal-shalat?city=jakarta";
+      } else if (feature === "Qur'an Surah") {
+        url = `https://api2.teamhackbotsindo.my.id/api/quran-surah?apikey=${apiKey}`;
+      } else if (feature === "Qur'an Detail") {
+        const nomor = document.getElementById('surahSelectQuran').value || 1;
+        url = `https://api2.teamhackbotsindo.my.id/api/quran-detail?apikey=${apiKey}&nomor=1`;
       }
 
       fetch(url, { headers: { "x-api-key": apiKey } })
@@ -2499,6 +2639,48 @@
     tabJSJadwalShalat.addEventListener('click', () => showJadwalShalat(tabJSJadwalShalat));
     tabPyJadwalShalat.addEventListener('click', () => showJadwalShalat(tabPyJadwalShalat));
     tabGoJadwalShalat.addEventListener('click', () => showJadwalShalat(tabGoJadwalShalat));
+
+    // Tabs Qur'an (JS/Py/Go)
+    const tabJSQuran   = document.getElementById('tabJSQuranSurah');
+    const tabPyQuran   = document.getElementById('tabPyQuranSurah');
+    const tabGoQuran   = document.getElementById('tabGoQuranSurah');
+
+    const jsQuran      = document.getElementById('jsQuranSurah');
+    const pyQuran      = document.getElementById('pyQuranSurah');
+    const goQuran      = document.getElementById('goQuranSurah');
+
+    function showQuran(tab) {
+      [tabJSQuran, tabPyQuran, tabGoQuran].forEach(btn => btn.classList.remove('active'));
+      [jsQuran, pyQuran, goQuran].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    tabJSQuran.addEventListener('click', () => showQuran(tabJSQuran));
+    tabPyQuran.addEventListener('click', () => showQuran(tabPyQuran));
+    tabGoQuran.addEventListener('click', () => showQuran(tabGoQuran));
+
+    // Tabs Kisah Nabi
+    const tabJSKisahNabi = document.getElementById('tabJSKisahNabi');
+    const tabPyKisahNabi = document.getElementById('tabPyKisahNabi');
+    const tabGoKisahNabi = document.getElementById('tabGoKisahNabi');
+
+    const jsKisahNabi = document.getElementById('jsKisahNabi');
+    const pyKisahNabi = document.getElementById('pyKisahNabi');
+    const goKisahNabi = document.getElementById('goKisahNabi');
+
+    function showKisahNabi(tab) {
+      [tabJSKisahNabi, tabPyKisahNabi, tabGoKisahNabi].forEach(btn => btn.classList.remove('active'));
+      [jsKisahNabi, pyKisahNabi, goKisahNabi].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    tabJSKisahNabi.addEventListener('click', () => showKisahNabi(tabJSKisahNabi));
+    tabPyKisahNabi.addEventListener('click', () => showKisahNabi(tabPyKisahNabi));
+    tabGoKisahNabi.addEventListener('click', () => showKisahNabi(tabGoKisahNabi));
 
     // API Random Image
     const randomEndpoints = [
