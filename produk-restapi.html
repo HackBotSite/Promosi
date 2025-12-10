@@ -737,7 +737,7 @@
       <pre><code class="language-js">
       // Kisah Nabi (contoh: id=1 untuk Nabi Adam)
       const apiKey = "YOUR_API_KEY";
-      fetch("https://api2.teamhackbotsindo.my.id/api/kisah-nabi?nomor=1", {
+      fetch("https://api2.teamhackbotsindo.my.id/api/kisah-nabi?nomor=25", {
         headers: { "x-api-key": apiKey }
       })
         .then(res => res.json())
@@ -752,7 +752,7 @@
       import requests
 
       apiKey = "YOUR_API_KEY"
-      url = "https://api2.teamhackbotsindo.my.id/api/kisah-nabi?nomor=1"
+      url = "https://api2.teamhackbotsindo.my.id/api/kisah-nabi?nomor=25"
       resp = requests.get(url, headers={"x-api-key": apiKey})
       print(resp.json())
       </code></pre>
@@ -771,7 +771,7 @@
 
       func main() {
         apiKey := "YOUR_API_KEY"
-        url := "https://api2.teamhackbotsindo.my.id/api/kisah-nabi?nomor=1"
+        url := "https://api2.teamhackbotsindo.my.id/api/kisah-nabi?nomor=25"
 
         client := &http.Client{}
         req, _ := http.NewRequest("GET", url, nil)
@@ -2515,6 +2515,9 @@
       } else if (feature === "Qur'an Detail") {
         const nomor = document.getElementById('surahSelectQuran').value || 1;
         url = `https://api2.teamhackbotsindo.my.id/api/quran-detail?apikey=${apiKey}&nomor=1`;
+      } else if (feature === "Kisah Nabi") {
+        const nomor = document.getElementById('nabiSelectIslami').value || 1;
+        url = `https://api2.teamhackbotsindo.my.id/api/kisah-nabi?apikey=${apiKey}&nomor=25`;
       }
 
       fetch(url, { headers: { "x-api-key": apiKey } })
