@@ -1,75 +1,2966 @@
-import dns from "dns";
-dns.setDefaultResultOrder("ipv4first");
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>REST API Showcase — HB Digital</title>
 
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
+  <!-- Font & base -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-const usageCounters = {};
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-export async function randomName(req, res) {
-  try {
-    // --- Load apikeys.json dari folder api ---
-    let apikeys = {};
-    try {
-      const filePath = path.join(__dirname, "..", "api", "apikeys.json");
-      apikeys = JSON.parse(fs.readFileSync(filePath, "utf-8"));
-    } catch {
-      return res.status(500).json({ error: "Config API key tidak ditemukan" });
+  <style>
+    :root{
+      --bg: #0b1220;              /* biru tua */
+      --bg-2: #0e1627;
+      --card: #111a2e;
+      --text: #eaf2ff;
+      --muted: #a9b7d9;
+      --accent: #16d6ff;          /* cyan/neon */
+      --accent-2: #68f0ff;
+      --yellow: #ffcf5a;
+      --red: #ff6b6b;
+      --green: #43d39e;
+      --blue: #5aa8ff;
+      --border: #1d2740;
+      --shadow: 0 10px 30px rgba(0,0,0,0.35);
+      --radius: 14px;
     }
 
-    // --- Validasi API key ---
-    const clientKey = req.headers["x-api-key"] || req.query.apikey;
-    if (!clientKey || !apikeys[clientKey]) {
-      return res.status(401).json({ error: "API key tidak valid" });
+    * { box-sizing: border-box }
+    html, body { height: 100% }
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 400px at 10% -10%, rgba(22,214,255,0.12), transparent 60%),
+        radial-gradient(800px 300px at 90% -20%, rgba(104,240,255,0.10), transparent 70%),
+        linear-gradient(180deg, var(--bg), var(--bg-2) 35%, var(--bg));
     }
 
-    const { plan = "basic", quota = 100 } = apikeys[clientKey];
-    const today = new Date();
-    const isoDate = today.toISOString().split("T")[0];
-    const usageId = `${clientKey}-${isoDate}`;
-    usageCounters[usageId] = (usageCounters[usageId] || 0) + 1;
+     /* Navbar premium */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+      backdrop-filter: saturate(1.3) blur(10px);
+      background: rgba(10,16,30,0.65);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 20px; max-width: 1200px; margin: 0 auto;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: 0.3px }
+    .brand img { height: 42px; width: auto; filter: drop-shadow(0 2px 6px rgba(22,214,255,0.3)); }
+    .brand .title { font-weight: 700 }
+    .brand .badge { font-size: 12px; color: var(--accent); border: 1px dashed var(--accent); padding: 2px 8px; border-radius: 999px }
+    nav .menu a {
+      color: var(--text); text-decoration: none; margin-left: 20px;
+    }
+    nav .menu a:hover {
+      color: var(--accent);
+      text-shadow: 0 0 8px var(--accent);
+    }
+    .dropdown { display: inline-block; position: relative; }
+    .dropbtn {
+      background: none; border: none; color: var(--text);
+      font: inherit; cursor: pointer; margin-left: 20px;
+    }
+    .dropdown-content {
+      display: none; position: absolute; background: var(--card);
+      min-width: 220px; box-shadow: var(--shadow); border-radius: var(--radius);
+      z-index: 1000; padding: 10px;
+    }
+    .dropdown-content a {
+      display: block; padding: 8px 12px; color: var(--text); text-decoration: none;
+    }
+    .dropdown-content a:hover { background: var(--bg-2); color: var(--accent); }
+    .dropdown:hover .dropdown-content { display: block; }
 
-    if (quota !== "unlimited" && usageCounters[usageId] > quota) {
-      return res.status(429).json({
-        error: "Quota exceeded",
-        tenant: clientKey,
-        plan,
-        quota,
-        used: usageCounters[usageId]
-      });
+    /* Layout: sidebar + content */
+    .layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 20px;
+      padding: 110px 20px 30px; /* offset navbar */
+      max-width: 1200px; margin: 0 auto;
     }
 
-    // --- Load randomname.json dari folder api2 ---
-    const filePath = path.join(__dirname, "randomname.json");
-    const nameData = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+    /* Sidebar (responsive + sticky) */
+    aside.sidebar {
+      position: sticky;
+      top: 90px;
+      align-self: start;
+      background: linear-gradient(180deg, rgba(17,26,46,0.9), rgba(13,20,36,0.9));
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px;
 
-    // --- Fungsi ambil random item dari array ---
-    const pickRandom = arr => arr[Math.floor(Math.random() * arr.length)];
+      /* Tambahan untuk scrollbar */
+      max-height: calc(100vh - 90px); /* tinggi maksimal sesuai viewport */
+      overflow-y: auto;               /* aktifkan scroll vertikal */
+    }
 
-    const result = {
-      thai_names: [pickRandom(nameData.thai_names)],
-      arab_names: [pickRandom(nameData.arab_names)],
-      chinese_names: [pickRandom(nameData.chinese_names)],
-      european_names: [pickRandom(nameData.european_names)]
-    };
+    /* Scrollbar styling */
+    aside.sidebar::-webkit-scrollbar {
+      width: 8px;
+    }
+    aside.sidebar::-webkit-scrollbar-track {
+      background: #0e1627;
+      border-radius: 10px;
+    }
+    aside.sidebar::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 10px;
+    }
+    aside.sidebar::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-2);
+    }
 
-    return res.json({
-      feature: "Random Name",
-      tenant: clientKey,
-      plan,
-      quota,
-      used: usageCounters[usageId],
-      date: isoDate,
-      status: "success",
-      message: "Nama acak berhasil diambil",
-      result
+    .sidebar h2 {
+      margin: 0 0 14px; font-size: 1rem; color: var(--muted); font-weight: 700; letter-spacing: 0.4px
+    }
+    .nav-list { list-style: none; padding: 0; margin: 0 }
+    .nav-list li { margin-bottom: 8px }
+    .nav-list a {
+      display: flex; align-items: center; gap: 10px;
+      color: var(--text); text-decoration: none; padding: 10px 12px; border-radius: 10px;
+      border: 1px solid transparent; transition: 0.2s ease;
+    }
+    .nav-list a:hover { border-color: var(--border); background: rgba(90,168,255,0.08); color: var(--accent) }
+    .nav-list a.active { background: rgba(22,214,255,0.12); border-color: var(--accent); color: var(--accent) }
+
+    /* Content wrapper */
+    main {
+      display: grid; gap: 20px;
+    }
+
+    /* Hero section */
+    .hero {
+      background: linear-gradient(180deg, rgba(17,26,46,0.85), rgba(13,20,36,0.7));
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 28px;
+      position: relative; overflow: hidden;
+    }
+    .hero::after {
+      content: ""; position: absolute; inset: -2px;
+      background: radial-gradient(600px 180px at 20% 0%, rgba(22,214,255,0.15), transparent 70%);
+      pointer-events: none;
+    }
+    .hero h1 {
+      margin: 0 0 8px; font-size: clamp(28px, 4vw, 40px);
+      background: linear-gradient(90deg, #9fe7ff, #16d6ff 50%, #68f0ff);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      letter-spacing: 0.6px; font-weight: 800;
+    }
+    .hero p { margin: 0; color: var(--muted) }
+
+    /* API key box */
+    .apikey {
+      display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+      background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 16px;
+    }
+    .apikey input {
+      flex: 1; min-width: 220px; padding: 12px; border-radius: 10px;
+      border: 1px solid var(--border); background: #0c1426; color: var(--text);
+      font-family: monospace;
+    }
+    .btn {
+      padding: 10px 14px; border-radius: 10px; border: 1px solid var(--accent);
+      background: linear-gradient(180deg, rgba(22,214,255,0.15), rgba(22,214,255,0.08));
+      color: var(--text); cursor: pointer; transition: transform 0.12s ease, box-shadow 0.2s ease;
+    }
+    .btn:hover { box-shadow: 0 6px 12px rgba(22,214,255,0.2) }
+    .btn:active { transform: translateY(1px) }
+
+    /* Toast */
+    .toast {
+      position: fixed; bottom: 20px; right: 20px; z-index: 60;
+      background: #0e1628; color: var(--text); border: 1px solid var(--accent);
+      padding: 10px 14px; border-radius: 12px; box-shadow: var(--shadow);
+      opacity: 0; transform: translateY(10px); transition: 0.25s ease;
+    }
+    .toast.show { opacity: 1; transform: translateY(0) }
+
+    /* Endpoint table */
+    .card {
+      background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+      box-shadow: var(--shadow); overflow: hidden;
+    }
+    .card-header { padding: 16px 18px; border-bottom: 1px solid var(--border); font-weight: 700 }
+    .table {
+      width: 100%; border-collapse: collapse;
+    }
+    .table th, .table td {
+      padding: 12px 14px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: middle;
+    }
+    .table th { color: var(--muted); font-weight: 700 }
+    .badge {
+      display: inline-block; padding: 4px 8px; border-radius: 999px; font-size: 12px; font-weight: 700;
+    }
+    .GET { background: rgba(67,211,158,0.18); color: var(--green); border: 1px solid rgba(67,211,158,0.4) }
+    .POST { background: rgba(90,168,255,0.18); color: var(--blue); border: 1px solid rgba(90,168,255,0.4) }
+    .PUT { background: rgba(255,207,90,0.18); color: var(--yellow); border: 1px solid rgba(255,207,90,0.4) }
+    .DELETE { background: rgba(255,107,107,0.18); color: var(--red); border: 1px solid rgba(255,107,107,0.4) }
+
+    .action { display: flex; gap: 8px; align-items: center; flex-wrap: wrap }
+
+    /* Response panel */
+    .response {
+      margin-top: 14px;
+      background: #0c1426;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      color: #cfe7ff;
+      white-space: pre-wrap;
+      word-break: break-word;
+      overflow-x: auto;       /* ⬅️ scroll horizontal hanya kalau perlu */
+      max-width: 100%;        /* ⬅️ biar gak keluar dari container */
+      box-sizing: border-box; /* ⬅️ pastikan padding dihitung dalam lebar */
+    }
+
+    /* Tabs for code samples */
+    .tabs { margin-top: 16px; }
+    .tab-list { display: flex; gap: 8px; margin-bottom: 10px }
+    .tab-btn {
+      padding: 8px 12px; border-radius: 10px; border: 1px solid var(--border);
+      background: #0c1426; color: var(--text); cursor: pointer;
+    }
+    .tab-btn.active {
+      background: rgba(22,214,255,0.15);
+      font-weight: bold;
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .code {
+      background: #0c1426; border: 1px solid var(--border); border-radius: 12px;
+      padding: 12px; overflow: auto; max-height: 300px; font-family: Consolas, Menlo, monospace; color: #cfe7ff;
+    }
+    .hl-kw { color: #68f0ff }
+    .hl-str { color: #9fe7ff }
+    .hl-comm { color: #7aa1c7 }
+
+    /* Footer */
+    footer {
+      margin-top: 20px;
+      background: rgba(10,16,30,0.6); border-top: 1px solid var(--border);
+      backdrop-filter: blur(6px); color: var(--muted);
+    }
+    .footer-inner {
+      max-width: 1200px; margin: 0 auto; padding: 18px 20px;
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .links { display: flex; gap: 14px }
+    .links a { color: var(--muted); text-decoration: none }
+    .links a:hover { color: var(--accent) }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .table-wrapper {
+        overflow-x: auto;   /* aktifkan scroll horizontal */
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .table {
+        min-width: 600px;   /* pastikan tabel punya lebar minimum */
+        border-collapse: collapse;
+        width: 100%;
+      }
+      .action {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .action select,
+      .action input,
+      .action .btn {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+
+      .action .btn:last-child {
+        margin-bottom: 0;
+      }
+    }
+    /* WhatsApp Floating */
+    .wa-float {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #25D366;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      transition: transform 0.2s ease;
+      animation: pulse 2s infinite;
+    }
+    .wa-float img {
+      width: 28px;
+      height: 28px;
+      max-width: 100%;
+      max-height: 100%;
+    }
+    .wa-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav aria-label="Top navigation">
+    <div class="nav-inner">
+      <div class="brand">
+        <a href="index.html#beranda">
+          <img src="https://ik.imagekit.io/wamr3naeq/thb/hbds.png" alt="Logo Hacksbots Digital Solution">
+        </a>
+        <span class="title">Hacksbots Digital Solution</span>
+        <span class="badge">REST API</span>
+      </div>
+      <div class="menu" role="menubar">
+        <a role="menuitem" href="index.html#beranda">Beranda</a>
+        <div class="dropdown">
+          <button class="dropbtn" aria-haspopup="true" aria-expanded="false">
+            Layanan <span class="arrow">▼</span>
+          </button>
+          <div class="dropdown-content">
+            <a href="produk-website.html">Jasa Pembuatan Website</a>
+            <a href="produk-editing.html">Jasa Editing / Design</a>
+            <a href="produk-aplikasi.html">Jasa Pembuatan Aplikasi Android & PC</a>
+            <a href="produk-vps.html">Jasa Penyedia Panel & VPS</a>
+            <a href="produk-restapi.html">Rest API</a>
+          </div>
+        </div>
+        <a role="menuitem" href="tentang.html">Tentang</a>
+        <a role="menuitem" href="#contact">Bantuan</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Layout -->
+  <div class="layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar" aria-label="Sidebar navigation">
+      <h2>Bots API</h2>
+      <ul class="nav-list">
+        <li><a class="active" href="#home">Dashboard</a></li>
+        <li><a href="#islami">Islami</a></li>
+        <li><a href="#loginqr">Login Line</a></li>
+        <li><a href="#primbon">Primbon</a></li>
+        <li><a href="#downloader">Downloader</a></li>
+        <li><a href="#information">Information</a></li>
+        <li><a href="#anime">Anime / Manga</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#news">News</a></li>
+        <li><a href="#game">Game</a></li>
+        <li><a href="#meme">Meme</a></li>
+        <li><a href="#entertainment">Entertainment</a></li>
+        <li><a href="#random">Random</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main content -->
+    <main>
+
+      <!-- Hero -->
+      <section class="hero" id="home" aria-labelledby="hero-title">
+        <h1 id="hero-title">REST API Showcase</h1>
+        <p>API premium dengan desain elegan, interaksi halus, dan dokumentasi yang ramah developer.</p>
+      </section>
+
+      <!-- API Key box -->
+      <section class="apikey" aria-label="API key">
+        <input id="apiKeyInput" type="text" placeholder="Masukkan API key kamu" aria-label="API key manual" />
+        <button class="btn" id="copyBtn" aria-live="polite">Copy API Key</button>
+      </section>
+
+      <p>API key aktif: <span id="activeKey"></span></p>
+
+      <!-- Section Islami -->
+      <section class="card" id="islami" aria-labelledby="islami-title">
+        <div class="card-header" id="islami-title">Dokumentasi API — Islami</div>
+  
+        <div class="table-wrapper">
+          <table class="table" aria-describedby="islami-title">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Feature Name</th>
+                <th>Request Method</th>
+                <th>Description</th>
+                <th>Query Parameter</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="islamiTableBody">
+              <!-- Diisi lewat JS -->
+            </tbody>
+          </table>
+        </div>
+  
+        <div id="islamiResponsePanel" class="response" aria-live="polite" style="display:none"></div>
+      </section>
+
+      <section class="card" id="query-islami" aria-labelledby="query-islami-title">
+        <div class="card-header" id="query-islami-title">Set Query</div>
+
+        <!-- Pilih Shalat -->
+        <div style="padding: 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+          <label for="shalatSelectIslami" style="display:flex; align-items:center; gap:8px;">
+            Pilih Shalat:
+            <select id="shalatSelectIslami" style="padding:6px 10px; border-radius:8px; background:#0c1426; color:#eaf2ff; border:1px solid #1d2740;">
+              <option value="subuh">Subuh</option>
+              <option value="dzuhur">Dzuhur</option>
+              <option value="ashar">Ashar</option>
+              <option value="magrib">Magrib</option>
+              <option value="isya">Isya</option>
+              <option value="duha">Duha</option>
+              <option value="tahajud">Tahajud</option>
+              <option value="witir">Witir</option>
+              <option value="hajat">Hajat</option>
+              <option value="istikharah">Istikharah</option>
+              <option value="taubat">Taubat</option>
+            </select>
+          </label>
+          <button class="btn" onclick="tryIslami('Niat Shalat')">Try</button>
+        </div>
+
+        <!-- Pilih Bahasa -->
+        <div style="padding:12px; display:flex; gap:10px; flex-wrap:wrap;">
+          <input id="translateText" type="text" placeholder="Masukkan teks untuk diterjemahkan"
+                 style="flex:1; padding:6px 10px; border-radius:8px; background:#0c1426; color:#eaf2ff; border:1px solid #1d2740;">
+          <select id="translateLang" style="padding:6px 10px; border-radius:8px; background:#0c1426; color:#eaf2ff; border:1px solid #1d2740;">
+            <option value="en">English</option>
+            <option value="id">Indonesia</option>
+            <option value="ar">Arabic</option>
+            <option value="fr">French</option>
+            <option value="ja">Japanese</option>
+            <option value="zh-cn">Chinese (Simplified)</option>
+            <option value="ru">Russian</option>
+          </select>
+          <button class="btn" onclick="tryTranslate()">Try</button>
+        </div>
+
+        <div id="translateResponsePanel" class="response" aria-live="polite" style="display:none; margin-top:16px;"></div>
+      </section>
+
+      <!-- Code samples Islami -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Islami</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Islami">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsIslami" id="tabJSIslami">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyIslami" id="tabPyIslami">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goIslami" id="tabGoIslami">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsIslami" role="tabpanel" aria-labelledby="tabJSIslami" class="code">
+      <pre><code class="language-js">
+      const url = `https://api.teamhackbotsindo.my.id/api/doa`;
+      fetch(url, {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log(data));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyIslami" role="tabpanel" aria-labelledby="tabPyIslami" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      url = "https://api.teamhackbotsindo.my.id/api/doa"
+      headers = { "x-api-key": apiKey }
+      response = requests.get(url, headers=headers)
+      print(response.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goIslami" role="tabpanel" aria-labelledby="tabGoIslami" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", "https://api.teamhackbotsindo.my.id/api/doa", nil)
+        req.Header.Set("x-api-key", apiKey )
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Code samples Shalat -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Shalat</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Shalat">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsShalat" id="tabJSShalat">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyShalat" id="tabPyShalat">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goShalat" id="tabGoShalat">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsShalat" role="tabpanel" aria-labelledby="tabJSShalat" class="code">
+      <pre><code class="language-js">
+      const selected = "isya"; // bisa diganti sesuai dropdown
+      const url = `https://api.teamhackbotsindo.my.id/api/niat-shalat?shalat=${selected}`;
+
+      fetch(url, {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log(data));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyShalat" role="tabpanel" aria-labelledby="tabPyShalat" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      selected = "dzuhur"  # bisa diganti sesuai dropdown
+      url = f"https://api.teamhackbotsindo.my.id/api/niat-shalat?shalat={selected}"
+      headers = { "x-api-key": apiKey }
+      response = requests.get(url, headers=headers)
+      print(response.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goShalat" role="tabpanel" aria-labelledby="tabGoShalat" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        selected := "magrib"
+        url := "https://api.teamhackbotsindo.my.id/api/niat-shalat?shalat=" + selected
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tabs Jadwal Shalat -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Jadwal Shalat</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Jadwal Shalat">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsJadwalShalat" id="tabJSJadwalShalat">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyJadwalShalat" id="tabPyJadwalShalat">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goJadwalShalat" id="tabGoJadwalShalat">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsJadwalShalat" role="tabpanel" aria-labelledby="tabJSJadwalShalat" class="code">
+      <pre><code class="language-js">
+      // Jadwal Shalat Jakarta
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api2.teamhackbotsindo.my.id/api/jadwal-shalat?city=jakarta", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Jadwal Shalat:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyJadwalShalat" role="tabpanel" aria-labelledby="tabPyJadwalShalat" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      url = "https://api2.teamhackbotsindo.my.id/api/jadwal-shalat?city=jakarta"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goJadwalShalat" role="tabpanel" aria-labelledby="tabGoJadwalShalat" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        url := "https://api2.teamhackbotsindo.my.id/api/jadwal-shalat?city=jakarta"
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tabs Qur'an Surah -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Qur'an Surah</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Qur'an Surah">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsQuranSurah" id="tabJSQuranSurah">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyQuranSurah" id="tabPyQuranSurah">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goQuranSurah" id="tabGoQuranSurah">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsQuranSurah" role="tabpanel" aria-labelledby="tabJSQuranSurah" class="code">
+      <pre><code class="language-js">
+      // Daftar Surah
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api2.teamhackbotsindo.my.id/api/quran-surah", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Qur'an Surah:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyQuranSurah" role="tabpanel" aria-labelledby="tabPyQuranSurah" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      url = "https://api2.teamhackbotsindo.my.id/api/quran-surah"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goQuranSurah" role="tabpanel" aria-labelledby="tabGoQuranSurah" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        url := "https://api2.teamhackbotsindo.my.id/api/quran-surah"
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tabs Kisah Nabi -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Kisah Nabi</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Kisah Nabi">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsKisahNabi" id="tabJSKisahNabi">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyKisahNabi" id="tabPyKisahNabi">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goKisahNabi" id="tabGoKisahNabi">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsKisahNabi" role="tabpanel" aria-labelledby="tabJSKisahNabi" class="code">
+      <pre><code class="language-js">
+      // Kisah Nabi (contoh: id=1 untuk Nabi Adam)
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api2.teamhackbotsindo.my.id/api/kisah-nabi?nomor=25", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Kisah Nabi:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyKisahNabi" role="tabpanel" aria-labelledby="tabPyKisahNabi" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      url = "https://api2.teamhackbotsindo.my.id/api/kisah-nabi?nomor=25"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goKisahNabi" role="tabpanel" aria-labelledby="tabGoKisahNabi" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        url := "https://api2.teamhackbotsindo.my.id/api/kisah-nabi?nomor=25"
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section Random -->
+      <section class="card" id="random" aria-labelledby="random-title">
+        <div class="card-header" id="random-title">Dokumentasi API — Random</div>
+
+        <div class="table-wrapper">
+          <table class="table" aria-describedby="random-title">
+            <thead>
+                <tr>
+                <th>No</th>
+                <th>Feature Name</th>
+                <th>Request Method</th>
+                <th>Description</th>
+                <th>Query Parameter</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="randomTableBody">
+              <!-- Diisi lewat JS -->
+            </tbody>
+          </table>
+        </div>
+        <div id="randomResponsePanel" class="response" aria-live="polite" style="display:none"></div>
+      </section>
+
+      <!-- Code samples Random Image -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Random Image</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Random Image">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsRandom" id="tabJSRandom">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyRandom" id="tabPyRandom">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goRandom" id="tabGoRandom">Golang</button>
+          </div>
+          <!-- JS -->
+          <div id="jsRandom" role="tabpanel" aria-labelledby="tabJSRandom" class="code">
+      <pre><code class="language-js">
+      fetch("https://api.teamhackbotsindo.my.id/api/anime-random", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Anime Random:", data));
+
+      // dst untuk Donghua, Waifu, Anime 18+
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyRandom" role="tabpanel" aria-labelledby="tabPyRandom" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      headers = "YOUR_API_KEY";
+      resp = requests.get("https://api.teamhackbotsindo.my.id/api/anime-random", headers=headers)
+      print("Anime Random:", resp.json())
+
+      # dst untuk Donghua, Waifu, Anime 18+
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goRandom" role="tabpanel" aria-labelledby="tabGoRandom" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func fetchAPI(url string) {
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey )
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(url, ":", string(body))
+      }
+
+      func main() {
+        fetchAPI("https://api.teamhackbotsindo.my.id/api/anime-random")
+        fetchAPI("https://api.teamhackbotsindo.my.id/api/donghua")
+        fetchAPI("https://api.teamhackbotsindo.my.id/api/waifu")
+        fetchAPI("https://api.teamhackbotsindo.my.id/api/anime-nsfw")
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tabs Random Nama -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Random Nama</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Random Nama">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsRandomName" id="tabJSRandomName">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyRandomName" id="tabPyRandomName">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goRandomName" id="tabGoRandomName">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsRandomName" role="tabpanel" aria-labelledby="tabJSRandomName" class="code">
+      <pre><code class="language-js">
+      // Random Nama
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api2.teamhackbotsindo.my.id/api/random-name", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Random Nama:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyRandomName" role="tabpanel" aria-labelledby="tabPyRandomName" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      url = "https://api2.teamhackbotsindo.my.id/api/random-name"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goRandomName" role="tabpanel" aria-labelledby="tabGoRandomName" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        url := "https://api2.teamhackbotsindo.my.id/api/random-name"
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section Downloader -->
+      <section class="card" id="downloader" aria-labelledby="downloader-title">
+        <div class="card-header" id="downloader-title">Dokumentasi API — Downloader</div>
+  
+        <div class="table-wrapper">
+          <table class="table" aria-describedby="downloader-title">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Feature Name</th>
+                <th>Request Method</th>
+                <th>Description</th>
+                <th>Query Parameter</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="downloaderTableBody">
+              <!-- Diisi lewat JS -->
+            </tbody>
+          </table>
+        </div>
+        <div id="downloaderResponsePanel" class="response" style="display:none"></div>
+      </section>
+
+      <!-- Tabs Youtube List -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Youtube List</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Youtube List">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsYoutube" id="tabJSYoutube">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyYoutube" id="tabPyYoutube">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goYoutube" id="tabGoYoutube">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsYoutube" role="tabpanel" aria-labelledby="tabJSYoutube" class="code">
+      <pre><code class="language-js">
+      // Youtube List
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api.teamhackbotsindo.my.id/api/youtube-list?query=peterpan", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Youtube List:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyYoutube" role="tabpanel" aria-labelledby="tabPyYoutube" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      url = "https://api2.teamhackbotsindo.my.id/api/youtube-list?query=peterpan"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goYoutube" role="tabpanel" aria-labelledby="tabGoYoutube" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        url := "https://api2.teamhackbotsindo.my.id/api/youtube-list?query=peterpan"
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tabs Youtube Video -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Youtube Video</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Youtube Video">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsYoutubeVideo" id="tabJSYoutubeVideo">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyYoutubeVideo" id="tabPyYoutubeVideo">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goYoutubeVideo" id="tabGoYoutubeVideo">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsYoutubeVideo" role="tabpanel" aria-labelledby="tabJSYoutubeVideo" class="code">
+      <pre><code class="language-js">
+      // Youtube Video
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api2.teamhackbotsindo.my.id/api/youtube-video?link=https://youtu.be/igaeQ2fJRxE?si=lFgNyMiAgXVJHti3", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Youtube Video:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyYoutubeVideo" role="tabpanel" aria-labelledby="tabPyYoutubeVideo" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      url = "https://api2.teamhackbotsindo.my.id/api/youtube-video?link=https://youtu.be/igaeQ2fJRxE?si=lFgNyMiAgXVJHti3"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goYoutubeVideo" role="tabpanel" aria-labelledby="tabGoYoutubeVideo" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        url := "https://api2.teamhackbotsindo.my.id/api/youtube-video?link=https://youtu.be/igaeQ2fJRxE?si=lFgNyMiAgXVJHti3"
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tabs Youtube Audio -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Youtube Audio</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Youtube Audio">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsYoutubeAudio" id="tabJSYoutubeAudio">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyYoutubeAudio" id="tabPyYoutubeAudio">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goYoutubeAudio" id="tabGoYoutubeAudio">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsYoutubeAudio" role="tabpanel" aria-labelledby="tabJSYoutubeAudio" class="code">
+      <pre><code class="language-js">
+      // Youtube Audio
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api2.teamhackbotsindo.my.id/api/youtube-audio?link=https://youtu.be/igaeQ2fJRxE?si=lFgNyMiAgXVJHti3", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Youtube Audio:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyYoutubeAudio" role="tabpanel" aria-labelledby="tabPyYoutubeAudio" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      url = "https://api2.teamhackbotsindo.my.id/api/youtube-audio?link=https://youtu.be/igaeQ2fJRxE?si=lFgNyMiAgXVJHti3"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goYoutubeAudio" role="tabpanel" aria-labelledby="tabGoYoutubeAudio" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        url := "https://api2.teamhackbotsindo.my.id/api/youtube-audio?link=https://youtu.be/igaeQ2fJRxE?si=lFgNyMiAgXVJHti3"
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section Smule Profile -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Smule Profile</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Smule Profile">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsSmuleProfile" id="tabJSSmuleProfile">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pySmuleProfile" id="tabPySmuleProfile">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goSmuleProfile" id="tabGoSmuleProfile">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsSmuleProfile" role="tabpanel" aria-labelledby="tabJSSmuleProfile" class="code">
+      <pre><code class="language-js">
+      // Smule Profile
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api2.teamhackbotsindo.my.id/api/smule-profile?handle=AgnesMo", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Smule Profile:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pySmuleProfile" role="tabpanel" aria-labelledby="tabPySmuleProfile" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      url = "https://api2.teamhackbotsindo.my.id/api/smule-profile?handle=AgnesMo"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goSmuleProfile" role="tabpanel" aria-labelledby="tabGoSmuleProfile" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        url := "https://api2.teamhackbotsindo.my.id/api/smule-profile?handle=AgnesMo"
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section Smule Video -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Smule Audio / Video</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Smule Audio / Video">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsSmuleVideo" id="tabJSSmuleVideo">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pySmuleVideo" id="tabPySmuleVideo">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goSmuleVideo" id="tabGoSmuleVideo">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsSmuleVideo" role="tabpanel" aria-labelledby="tabJSSmuleVideo" class="code">
+      <pre><code class="language-js">
+      // Smule Audio / Video
+      const apiKey = "YOUR_API_KEY";
+      const link = "https://www.smule.com/sing-recording/2857539585_5092417239";
+
+      fetch(`https://api2.teamhackbotsindo.my.id/api/smule-video?link=${link}`, {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => {
+          console.log("Judul:", data.result.title);
+          console.log("Video mp4:", data.result.downloadVideoUrl);
+          console.log("Audio mp3:", data.result.downloadAudioUrl);
+        })
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pySmuleVideo" role="tabpanel" aria-labelledby="tabPySmuleVideo" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      link = "https://www.smule.com/sing-recording/2857539585_5092417239"
+
+      url = f"https://api2.teamhackbotsindo.my.id/api/smule-video?link={link}"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      data = resp.json()
+
+      print("Judul:", data["result"]["title"])
+      print("Video mp4:", data["result"].get("downloadVideoUrl"))
+      print("Audio mp3:", data["result"].get("downloadAudioUrl"))
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goSmuleVideo" role="tabpanel" aria-labelledby="tabGoSmuleVideo" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+        "encoding/json"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        link := "https://www.smule.com/sing-recording/2857539585_5092417239"
+        url := fmt.Sprintf("https://api2.teamhackbotsindo.my.id/api/smule-video?link=%s", link)
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+
+        var data map[string]interface{}
+        json.Unmarshal(body, &data)
+
+        result := data["result"].(map[string]interface{})
+        fmt.Println("Judul:", result["title"])
+        fmt.Println("Video mp4:", result["downloadVideoUrl"])
+        fmt.Println("Audio mp3:", result["downloadAudioUrl"])
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section Facebook Video -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Facebook Video</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Facebook Video">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsFacebookVideo" id="tabJSFacebookVideo">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyFacebookVideo" id="tabPyFacebookVideo">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goFacebookVideo" id="tabGoFacebookVideo">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsFacebookVideo" role="tabpanel" aria-labelledby="tabJSFacebookVideo" class="code">
+      <pre><code class="language-js">
+      // Facebook Video
+      const apiKey = "YOUR_API_KEY";
+      const link = "https://www.facebook.com/share/r/17px4C4PmR/";
+
+      fetch(`https://api2.teamhackbotsindo.my.id/api/facebook-video?link=${encodeURIComponent(link)}`, {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Facebook Video:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyFacebookVideo" role="tabpanel" aria-labelledby="tabPyFacebookVideo" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      link = "https://www.facebook.com/share/r/17px4C4PmR/"
+      url = f"https://api2.teamhackbotsindo.my.id/api/facebook-video?link={link}"
+
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goFacebookVideo" role="tabpanel" aria-labelledby="tabGoFacebookVideo" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        link := "https://www.facebook.com/share/r/17px4C4PmR/"
+        url := "https://api2.teamhackbotsindo.my.id/api/facebook-video?link=" + link
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section TikTok Video -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — TikTok Video</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode TikTok Video">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsTikTokVideo" id="tabJSTikTokVideo">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyTikTokVideo" id="tabPyTikTokVideo">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goTikTokVideo" id="tabGoTikTokVideo">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsTikTokVideo" role="tabpanel" aria-labelledby="tabJSTikTokVideo" class="code">
+      <pre><code class="language-js">
+      // TikTok Video
+      const apiKey = "YOUR_API_KEY";
+      const link = "https://www.tiktok.com/@username/video/1234567890";
+
+      fetch(`https://api2.teamhackbotsindo.my.id/api/tiktok-video?link=${encodeURIComponent(link)}`, {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("TikTok Video:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyTikTokVideo" role="tabpanel" aria-labelledby="tabPyTikTokVideo" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      link = "https://www.tiktok.com/@username/video/1234567890"
+      url = f"https://api2.teamhackbotsindo.my.id/api/tiktok-video?link={link}"
+
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goTikTokVideo" role="tabpanel" aria-labelledby="tabGoTikTokVideo" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        link := "https://www.tiktok.com/@username/video/1234567890"
+        url := "https://api2.teamhackbotsindo.my.id/api/tiktok-video?link=" + link
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section Information -->
+      <section class="card" id="information" aria-labelledby="information-title">
+        <div class="card-header" id="information-title">Dokumentasi API — Information</div>
+  
+        <div class="table-wrapper">
+          <table class="table" aria-describedby="information-title">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Feature Name</th>
+                <th>Request Method</th>
+                <th>Description</th>
+                <th>Query Parameter</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="informationTableBody">
+              <!-- Diisi lewat JS -->
+            </tbody>
+          </table>
+        </div>
+        <div id="informationResponsePanel" class="response" aria-live="polite" style="display:none"></div>
+      </section>
+
+      <!-- Code samples Information -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Information</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Information">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsInfo" id="tabJSInfo">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyInfo" id="tabPyInfo">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goInfo" id="tabGoInfo">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsInfo" role="tabpanel" aria-labelledby="tabJSInfo" class="code">
+      <pre><code class="language-js">
+      // Translate
+      fetch("https://api.teamhackbotsindo.my.id/api/translate?text=selamat%20pagi&to=en", {
+        headers: { 
+          "x-api-key": apiKey,
+          "Origin": "https://teamhackbotsindo.my.id"
+        }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Translate:", data));
+
+      // Kodepos
+      fetch("https://api.teamhackbotsindo.my.id/api/kodepos?daerah=ciomas", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Kodepos:", data));
+
+      // Info Gempa
+      fetch("https://api.teamhackbotsindo.my.id/api/gempa", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Info Gempa:", data));
+
+      // Cord Lagu
+      fetch("https://api.teamhackbotsindo.my.id/api/cord-lagu?judul=melukis%20senja", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Cord Lagu:", data));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyInfo" role="tabpanel" aria-labelledby="tabPyInfo" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      headers = { 
+        "x-api-key": apiKey,
+        "Origin": "https://teamhackbotsindo.my.id"
+      }
+
+      # Translate
+      resp = requests.get("https://api.teamhackbotsindo.my.id/api/translate?text=selamat%20pagi&to=en", headers=headers)
+      print("Translate:", resp.json())
+
+      # Kodepos
+      resp = requests.get("https://api.teamhackbotsindo.my.id/api/kodepos?daerah=ciomas", headers={"x-api-key": apiKey})
+      print("Kodepos:", resp.json())
+
+      # Info Gempa
+      resp = requests.get("https://api.teamhackbotsindo.my.id/api/gempa", headers={"x-api-key": apiKey})
+      print("Info Gempa:", resp.json())
+
+      # Cord Lagu
+      resp = requests.get("https://api.teamhackbotsindo.my.id/api/cord-lagu?judul=melukis%20senja", headers={"x-api-key": apiKey})
+      print("Cord Lagu:", resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goInfo" role="tabpanel" aria-labelledby="tabGoInfo" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func fetchAPI(url string, withOrigin bool) {
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+        if withOrigin {
+          req.Header.Set("Origin", "https://teamhackbotsindo.my.id")
+        }
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(url, ":", string(body))
+      }
+
+      func main() {
+        fetchAPI("https://api.teamhackbotsindo.my.id/api/translate?text=selamat%20pagi&to=en", true)
+        fetchAPI("https://api.teamhackbotsindo.my.id/api/kodepos?daerah=ciomas", false)
+        fetchAPI("https://api.teamhackbotsindo.my.id/api/gempa", false)
+        fetchAPI("https://api.teamhackbotsindo.my.id/api/cord-lagu?judul=melukis%20senja", false)
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section News -->
+      <section class="card" id="news" aria-labelledby="news-title">
+        <div class="card-header" id="news-title">Dokumentasi API — News</div>
+
+        <div class="table-wrapper">
+          <table class="table" aria-describedby="news-title">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Feature Name</th>
+                <th>Request Method</th>
+                <th>Description</th>
+                <th>Query Parameter</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="newsTableBody">
+              <!-- Diisi lewat JS -->
+            </tbody>
+          </table>
+        </div>
+        <div id="newsResponsePanel" class="response" aria-live="polite" style="display:none"></div>
+      </section>
+
+      <!-- Code samples News -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — News</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode News">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsNews" id="tabJSNews">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyNews" id="tabPyNews">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goNews" id="tabGoNews">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsNews" role="tabpanel" aria-labelledby="tabJSNews" class="code">
+      <pre><code class="language-js">
+      // CNN Indonesia
+      fetch("https://api2.teamhackbotsindo.my.id/api/news-cnn", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("CNN:", data));
+
+      // Detik News
+      fetch("https://api2.teamhackbotsindo.my.id/api/news-detik", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Detik:", data));
+
+      // Liputan 6
+      fetch("https://api2.teamhackbotsindo.my.id/api/news-liputan6", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Liputan 6:", data));
+
+      // Kompas
+      fetch("https://api2.teamhackbotsindo.my.id/api/news-kompas", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Kompas:", data));
+
+      // Republika
+      fetch("https://api2.teamhackbotsindo.my.id/api/news-republika", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Republika:", data));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyNews" role="tabpanel" aria-labelledby="tabPyNews" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      headers = { "x-api-key": apiKey }
+
+      # CNN Indonesia
+      resp = requests.get("https://api2.teamhackbotsindo.my.id/api/news-cnn", headers=headers)
+      print("CNN:", resp.json())
+
+      # Detik News
+      resp = requests.get("https://api2.teamhackbotsindo.my.id/api/news-detik", headers=headers)
+      print("Detik:", resp.json())
+
+      # Liputan 6
+      resp = requests.get("https://api2.teamhackbotsindo.my.id/api/news-liputan6", headers=headers)
+      print("Liputan6:", resp.json())
+
+      # Kompas
+      resp = requests.get("https://api2.teamhackbotsindo.my.id/api/news-kompas", headers=headers)
+      print("Kompas:", resp.json())
+
+      # Republika
+      resp = requests.get("https://api2.teamhackbotsindo.my.id/api/news-republika", headers=headers)
+      print("Republika:", resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goNews" role="tabpanel" aria-labelledby="tabGoNews" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func fetchAPI(url string) {
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(url, ":", string(body))
+      }
+
+      func main() {
+        fetchAPI("https://api2.teamhackbotsindo.my.id/api/news-cnn")
+        fetchAPI("https://api2.teamhackbotsindo.my.id/api/news-detik")
+        fetchAPI("https://api2.teamhackbotsindo.my.id/api/news-liputan6")
+        fetchAPI("https://api2.teamhackbotsindo.my.id/api/news-kompas")
+        fetchAPI("https://api2.teamhackbotsindo.my.id/api/news-republika")
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section Primbon -->
+      <section class="card" id="primbon" aria-labelledby="primbon-title">
+        <div class="card-header" id="primbon-title">Dokumentasi API — Primbon</div>
+
+        <div class="table-wrapper">
+          <table class="table" aria-describedby="primbon-title">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Feature Name</th>
+                <th>Request Method</th>
+                <th>Description</th>
+                <th>Query Parameter</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="primbonTableBody">
+              <!-- Diisi lewat JS -->
+            </tbody>
+          </table>
+        </div>
+        <div id="primbonResponsePanel" class="response" aria-live="polite" style="display:none"></div>
+      </section>
+
+      <!-- Section Primbon Jodoh -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Primbon Jodoh</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Primbon Jodoh">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsPrimbonJodoh" id="tabJSPrimbonJodoh">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyPrimbonJodoh" id="tabPyPrimbonJodoh">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goPrimbonJodoh" id="tabGoPrimbonJodoh">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsPrimbonJodoh" role="tabpanel" aria-labelledby="tabJSPrimbonJodoh" class="code">
+      <pre><code class="language-js">
+      // Arti Nama
+      fetch("https://api2.teamhackbotsindo.my.id/api/primbon-artinama?nama=Thousand", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Arti Nama:", data));
+
+      // Arti Mimpi
+      fetch("https://api2.teamhackbotsindo.my.id/api/primbon-artimimpi?query=ular", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Arti Mimpi:", data));
+
+      // Zodiak
+      fetch("https://api2.teamhackbotsindo.my.id/api/primbon-zodiak?sign=scorpio", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Zodiak:", data));
+
+      // Weton
+      fetch("https://api2.teamhackbotsindo.my.id/api/primbon-weton", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Weton:", data));
+
+      // Jodoh
+      fetch("https://api2.teamhackbotsindo.my.id/api/primbon-jodoh?nama1=ridwan&tanggal1=07-03-1986&nama2=nia%20putri&tanggal2=08-03-1997", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Jodoh:", data));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyPrimbonJodoh" role="tabpanel" aria-labelledby="tabPyPrimbonJodoh" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      headers = { "x-api-key": apiKey }
+
+      # Arti Nama
+      resp = requests.get("https://api2.teamhackbotsindo.my.id/api/primbon-artinama?nama=Thousand", headers=headers)
+      print("Arti Nama:", resp.json())
+
+      # Arti Mimpi
+      resp = requests.get("https://api2.teamhackbotsindo.my.id/api/primbon-artimimpi?query=ular", headers=headers)
+      print("Arti Mimpi:", resp.json())
+
+      # Zodiak
+      resp = requests.get("https://api2.teamhackbotsindo.my.id/api/primbon-zodiak?sign=scorpio", headers=headers)
+      print("Zodiak:", resp.json())
+
+      # Weton
+      resp = requests.get("https://api2.teamhackbotsindo.my.id/api/primbon-weton", headers=headers)
+      print("Weton:", resp.json())
+
+      # Jodoh
+      resp = requests.get("https://api2.teamhackbotsindo.my.id/api/primbon-jodoh?nama1=ridwan&tanggal1=07-03-1986&nama2=nia%20putri&tanggal2=08-03-1997", headers=headers)
+      print("Jodoh:", resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goPrimbonJodoh" role="tabpanel" aria-labelledby="tabGoPrimbonJodoh" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func fetchAPI(url string) {
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(url, ":", string(body))
+      }
+
+      func main() {
+        fetchAPI("https://api2.teamhackbotsindo.my.id/api/primbon-artinama?nama=Thousand")
+        fetchAPI("https://api2.teamhackbotsindo.my.id/api/primbon-artimimpi?query=ular")
+        fetchAPI("https://api2.teamhackbotsindo.my.id/api/primbon-zodiak?sign=scorpio")
+        fetchAPI("https://api2.teamhackbotsindo.my.id/api/primbon-weton")
+        fetchAPI("https://api2.teamhackbotsindo.my.id/api/primbon-jodoh?nama1=ridwan&tanggal1=07-03-1986&nama2=nia%20putri&tanggal2=08-03-1997")
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section Login QR LINE -->
+      <section class="card" id="loginqr" aria-labelledby="loginqr-title">
+        <div class="card-header" id="loginqr-title">Dokumentasi API — Login QR LINE</div>
+
+        <div class="table-wrapper">
+          <table class="table" aria-describedby="loginqr-title">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Feature Name</th>
+                <th>Request Method</th>
+                <th>Description</th>
+                <th>Query Parameter</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="loginqrTableBody">
+              <!-- Diisi lewat JS -->
+            </tbody>
+          </table>
+        </div>
+        <div id="loginqrResponsePanel" class="response" aria-live="polite" style="display:none"></div>
+      </section>
+
+      <!-- Code samples Login QR LINE -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Login QR LINE</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Login QR LINE">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsLoginqr" id="tabJSLoginqr">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyLoginqr" id="tabPyLoginqr">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goLoginqr" id="tabGoLoginqr">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsLoginqr" role="tabpanel" aria-labelledby="tabJSLoginqr" class="code">
+      <pre><code class="language-js">
+      // Login QR LINE
+      fetch("https://api2.teamhackbotsindo.my.id/api/loginqr-line", {
+        method: "POST",
+        headers: { "x-api-key": apiKey, "Content-Type": "application/json" },
+        body: JSON.stringify({ appname: "DESKTOPWIN\t9.2.0.3403\tWINDOWS\t10.0.0-NT-x64" })
+      })
+        .then(res => res.json())
+        .then(data => {
+          console.log("Login QR LINE:", data);
+          // tampilkan QR image di halaman
+          const img = document.createElement("img");
+          img.src = data.result.qrImage;
+          document.body.appendChild(img);
+        });
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyLoginqr" role="tabpanel" aria-labelledby="tabPyLoginqr" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      headers = { "x-api-key": apiKey, "Content-Type": "application/json" }
+      payload = { "appname": "DESKTOPWIN\t9.2.0.3403\tWINDOWS\t10.0.0-NT-x64" }
+
+      resp = requests.post("https://api2.teamhackbotsindo.my.id/api/loginqr-line", headers=headers, json=payload)
+      print("Login QR LINE:", resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goLoginqr" role="tabpanel" aria-labelledby="tabGoLoginqr" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "bytes"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        client := &http.Client{}
+        body := []byte(`{"appname":"DESKTOPWIN\t9.2.0.3403\tWINDOWS\t10.0.0-NT-x64"}`)
+        req, _ := http.NewRequest("POST", "https://api2.teamhackbotsindo.my.id/api/loginqr-line", bytes.NewBuffer(body))
+        req.Header.Set("x-api-key", apiKey)
+        req.Header.Set("Content-Type", "application/json")
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+        b, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println("Login QR LINE:", string(b))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer aria-label="Footer">
+        <div class="footer-inner">
+          <div>© 2025 HB Digital Solutions — REST API Showcase</div>
+          <div class="links">
+            <a href="#" aria-label="GitHub">GitHub</a>
+            <a href="#" aria-label="External site">Website</a>
+          </div>
+        </div>
+      </footer>
+
+    </main>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="toast" role="status" aria-live="polite">Disalin!</div>
+
+  <script>
+
+    // API-LoginQR
+    const loginqrEndpoints = [
+      { no: 1, name: "Login QR LINE", method: "POST", desc: "Login LINE via QR code, menghasilkan link login, gambar QR, token & E2EE", query: "apikey, appname, userAgent" },
+      { no: 2, name: "Login Email LINE", method: "POST", desc: "Login LINE via Email, menghasilkan Pin Code, token & E2EE", query: "apikey, appname, userAgent" }
+    ];
+
+    const loginqrBody = document.getElementById('loginqrTableBody');
+    loginqrEndpoints.forEach(ep => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${ep.no}</td>
+        <td>${ep.name}</td>
+        <td><span class="badge POST">${ep.method}</span></td>
+        <td>${ep.desc}</td>
+        <td>${ep.query}</td>
+        <td><button class="btn" onclick="tryLoginqr('${ep.name}')">Try</button></td>
+      `;
+      loginqrBody.appendChild(tr);
     });
-  } catch (err) {
-    console.error("Internal error random-name:", err);
-    return res.status(500).json({ error: "Internal Server Error", detail: err.message });
-  }
-}
+
+    function tryLoginqr(feature) {
+      const panel = document.getElementById('loginqrResponsePanel');
+      panel.style.display = 'block';
+      panel.textContent = `⚡ Menjalankan ${feature}...`;
+
+      const apiKey = document.getElementById('apiKeyInput').value.trim();
+      if (!apiKey) {
+        panel.textContent = "Error: API key belum diisi.";
+        return;
+      }
+
+      let url = "";
+      let payload = { appname: "DESKTOPWIN\t9.2.0.3403\tWINDOWS\t10.0.0-NT-x64" };
+
+      if (feature === "Login QR LINE") {
+        url = "https://api2.teamhackbotsindo.my.id/api/loginqr-line";
+      } else if (feature === "Login Email LINE") {
+        url = "https://api2.teamhackbotsindo.my.id/api/loginemail-line";
+        // untuk login email biasanya butuh email & password
+        payload.email = document.getElementById("emailInput")?.value || "user@example.com";
+        payload.password = document.getElementById("passwordInput")?.value || "yourpassword";
+      } else {
+        panel.textContent = "Error: Fitur tidak dikenal.";
+        return;
+      }
+
+      fetch(url, {
+        method: "POST",
+        headers: { "x-api-key": apiKey, "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      })
+        .then(res => {
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          return res.json();
+        })
+        .then(data => {
+          panel.textContent = JSON.stringify(data, null, 2);
+          if (data.result && data.result.qrImage) {
+            const img = document.createElement("img");
+            img.src = data.result.qrImage;
+            img.alt = "QR Login LINE";
+            img.style.maxWidth = "200px";
+            panel.appendChild(img);
+          }
+        })
+        .catch(err => panel.textContent = "Error: " + err);
+    }
+
+    // API-Primbon
+    const primbonEndpoints = [
+      { no: 1, name: "Arti Nama", method: "GET", desc: "Arti nama", query: ["apikey", "nama"] },
+      { no: 2, name: "Arti Mimpi", method: "GET", desc: "Mimpi tafsir", query: ["apikey", "query"] },
+      { no: 3, name: "Zodiak", method: "GET", desc: "Zodiak", query: ["apikey"] },
+      { no: 4, name: "Weton", method: "GET", desc: "Weton", query: ["apikey"] },
+      { no: 5, name: "Jodoh", method: "GET", desc: "Calculate jodoh", query: ["apikey"] }
+    ];
+
+    const primbonBody = document.getElementById('primbonTableBody');
+    primbonEndpoints.forEach(ep => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${ep.no}</td>
+        <td>${ep.name}</td>
+        <td><span class="badge ${ep.method}">${ep.method}</span></td>
+        <td>${ep.desc}</td>
+        <td>${Array.isArray(ep.query) ? ep.query.join(", ") : ep.query}</td>
+        <td><button class="btn" onclick="tryPrimbon('${ep.name}')">Try</button></td>
+      `;
+      primbonBody.appendChild(tr);
+    });
+
+    function tryPrimbon(feature) {
+      const panel = document.getElementById('primbonResponsePanel');
+      panel.style.display = 'block';
+      panel.textContent = `⚡ Menjalankan ${feature}...`;
+
+      const apiKey = document.getElementById('apiKeyInput')?.value || "";
+      if (!apiKey) {
+        panel.textContent = "Error: API key wajib diisi!";
+        return;
+      }
+
+      let url = "";
+      switch (feature) {
+        case "Arti Nama":
+          url = `https://api2.teamhackbotsindo.my.id/api/primbon-artinama?apikey=${apiKey}&nama=Aminah`;
+          break;
+        case "Arti Mimpi":
+          url = `https://api2.teamhackbotsindo.my.id/api/primbon-artimimpi?apikey=${apiKey}&query=ular`;
+          break;
+        case "Zodiak":
+          url = `https://api2.teamhackbotsindo.my.id/api/primbon-zodiak?apikey=${apiKey}&sign=scorpio`;
+          break;
+        case "Weton":
+          url = `https://api2.teamhackbotsindo.my.id/api/primbon-weton?apikey=${apiKey}`;
+          break;
+        case "Jodoh":
+          url = `https://api2.teamhackbotsindo.my.id/api/primbon-jodoh?apikey=${apiKey}&nama1=ridwan&tanggal1=07-03-1986&nama2=nia%20putri&tanggal2=08-03-1997`;
+          break;
+      }
+
+      fetch(url, { headers: { "x-api-key": apiKey } })
+        .then(async res => {
+          const raw = await res.text();
+          try {
+            return JSON.parse(raw);
+          } catch {
+            return { error: "Response bukan JSON", raw: raw.slice(0,200) };
+          }
+        })
+        .then(data => {
+          if (data.error) {
+            panel.textContent = "Error: " + data.error;
+            return;
+          }
+          panel.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+        })
+        .catch(err => panel.textContent = "Error: " + err);
+    }
+
+    // TAB PRIMBON JODOH LIST
+    const tabJSPrimbonJodoh = document.getElementById('tabJSPrimbonJodoh');
+    const tabPyPrimbonJodoh = document.getElementById('tabPyPrimbonJodoh');
+    const tabGoPrimbonJodoh = document.getElementById('tabGoPrimbonJodoh');
+
+    const jsPrimbonJodoh = document.getElementById('jsPrimbonJodoh');
+    const pyPrimbonJodoh = document.getElementById('pyPrimbonJodoh');
+    const goPrimbonJodoh = document.getElementById('goPrimbonJodoh');
+
+    function showPrimbonJodoh(tab) {
+      [tabJSPrimbonJodoh, tabPyPrimbonJodoh, tabGoPrimbonJodoh].forEach(btn => btn.classList.remove('active'));
+      [jsPrimbonJodoh, pyPrimbonJodoh, goPrimbonJodoh].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    tabJSPrimbonJodoh.addEventListener('click', () => showPrimbonJodoh(tabJSPrimbonJodoh));
+    tabPyPrimbonJodoh.addEventListener('click', () => showPrimbonJodoh(tabPyPrimbonJodoh));
+    tabGoPrimbonJodoh.addEventListener('click', () => showPrimbonJodoh(tabGoPrimbonJodoh));
+
+    // API-News
+    const newsEndpoints = [
+      { no: 1, name: "CNN Indonesia", method: "GET", desc: "News Info from CNN Indonesia", query: ["apikey", "link"] },
+      { no: 2, name: "Detik News", method: "GET", desc: "News Info from detik.com", query: ["apikey", "link"] },
+      { no: 3, name: "Liputan 6", method: "GET", desc: "News Info from Liputan 6", query: ["apikey", "link"] },
+      { no: 4, name: "Kompas", method: "GET", desc: "News Info from Kompas", query: ["apikey", "link"] },
+      { no: 5, name: "Republika", method: "GET", desc: "News Info from Republika", query: ["apikey", "link"] }
+    ];
+
+    const newsBody = document.getElementById('newsTableBody');
+    newsEndpoints.forEach(ep => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${ep.no}</td>
+        <td>${ep.name}</td>
+        <td><span class="badge ${ep.method}">${ep.method}</span></td>
+        <td>${ep.desc}</td>
+        <td>${Array.isArray(ep.query) ? ep.query.join(", ") : ep.query}</td>
+        <td><button class="btn" onclick="tryNews('${ep.name}')">Try</button></td>
+      `;
+      newsBody.appendChild(tr);
+    });
+
+    function tryNews(feature) {
+      const panel = document.getElementById('newsResponsePanel');
+      panel.style.display = 'block';
+      panel.textContent = `⚡ Menjalankan ${feature}...`;
+
+      const apiKey = document.getElementById('apiKeyInput')?.value || "";
+      if (!apiKey) {
+        panel.textContent = "Error: API key wajib diisi!";
+        return;
+      }
+
+      let url = "";
+      switch (feature) {
+        case "CNN Indonesia":
+          url = `https://api2.teamhackbotsindo.my.id/api/news-cnn?apikey=${apiKey}`;
+          break;
+        case "Detik News":
+          url = `https://api2.teamhackbotsindo.my.id/api/news-detik?apikey=${apiKey}`;
+          break;
+        case "Liputan 6":
+          url = `https://api2.teamhackbotsindo.my.id/api/news-liputan6?apikey=${apiKey}`;
+          break;
+        case "Kompas":
+          url = `https://api2.teamhackbotsindo.my.id/api/news-kompas?apikey=${apiKey}`;
+          break;
+        case "Republika":
+          url = `https://api2.teamhackbotsindo.my.id/api/news-republika?apikey=${apiKey}`;
+          break;
+      }
+
+      fetch(url, { headers: { "x-api-key": apiKey } })
+        .then(async res => {
+          const raw = await res.text();
+          try {
+            return JSON.parse(raw);
+          } catch {
+            return { error: "Response bukan JSON", raw: raw.slice(0,200) };
+          }
+        })
+        .then(data => {
+          const articles = data.result?.data || [];
+          if (!articles.length) {
+            panel.textContent = "Tidak ada berita ditemukan.";
+            return;
+          }
+          let html = "<ul>";
+          articles.forEach(a => {
+            html += `
+              <li>
+                <p><strong>${a.title || "-"}</strong></p>
+                <p>${a.description || ""}</p>
+                ${a.thumbnail ? `<img src="${a.thumbnail}" style="max-width:200px">` : ""}
+                ${a.link ? `<p><a href="${a.link}" target="_blank">Baca selengkapnya</a></p>` : ""}
+              </li>
+            `;
+          });
+          html += "</ul>";
+          panel.innerHTML = html;
+        })
+        .catch(err => panel.textContent = "Error: " + err);
+    }
+
+    // API DOWNLOADER
+    const downloaderEndpoints = [
+      { no: 1, name: "Youtube List", method: "GET", desc: "Pencarian video berdasarkan kata kunci", query: "apikey, query" },
+      { no: 2, name: "Youtube Video", method: "GET", desc: "Download video YouTube", query: "apikey, link" },
+      { no: 3, name: "Youtube Audio", method: "GET", desc: "Download audio dari YouTube", query: "apikey, link" },
+      { no: 4, name: "Smule Profile", method: "GET", desc: "Profil pengguna Smule", query: "apikey, handle" },
+      { no: 5, name: "Smule Audio / Video", method: "GET", desc: "Download media dari Smule", query: "apikey, link" },
+      { no: 6, name: "Facebook", method: "GET", desc: "Download video dari Facebook", query: "apikey, link" },
+      { no: 7, name: "Tiktok", method: "GET", desc: "Download video dari Tiktok", query: "apikey, link" }
+    ];
+
+    const downloaderBody = document.getElementById('downloaderTableBody');
+    downloaderEndpoints.forEach(ep => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${ep.no}</td>
+        <td>${ep.name}</td>
+        <td><span class="badge ${ep.method}">${ep.method}</span></td>
+        <td>${ep.desc}</td>
+        <td>${ep.query}</td>
+        <td><button class="btn" onclick="tryDownloader('${ep.name}')">Try</button></td>
+      `;
+      downloaderBody.appendChild(tr);
+    });
+
+    function tryDownloader(feature) {
+      const panel = document.getElementById('downloaderResponsePanel');
+      panel.style.display = 'block';
+      panel.textContent = `⚡ Menjalankan ${feature}...`;
+
+      const apiKey = document.getElementById('apiKeyInput')?.value || "";
+      if (!apiKey) {
+        panel.textContent = "Error: API key wajib diisi!";
+        return;
+      }
+
+      let url = "";
+      switch (feature) {
+        case "Youtube List":
+          url = `https://api2.teamhackbotsindo.my.id/api/youtube-list?query=peterpan`;
+          break;
+        case "Youtube Video":
+          url = `https://api2.teamhackbotsindo.my.id/api/youtube-video?link=https://youtu.be/igaeQ2fJRxE`;
+          break;
+        case "Youtube Audio":
+          url = `https://api2.teamhackbotsindo.my.id/api/youtube-audio?link=https://www.youtube.com/watch?v=igaeQ2fJRxE`;
+          break;
+        case "Smule Profile":
+          url = `https://api.teamhackbotsindo.my.id/api/smule-profile?handle=rg_line`;
+          break;
+        case "Smule Audio / Video":
+          url = `https://api2.teamhackbotsindo.my.id/api/smule-video?link=https://www.smule.com/c/1179964428_5144275013`;
+          break;
+        case "Facebook":
+          url = `https://api2.teamhackbotsindo.my.id/api/facebook-video?link=https://www.facebook.com/share/r/17px4C4PmR/`;
+          break;
+        case "Tiktok":
+          url = `https://api2.teamhackbotsindo.my.id/api/tiktok-video?link=https://www.tiktok.com/@tiktok/video/7232384225691880746`;
+          break;
+      }
+
+      fetch(url, { headers: { "x-api-key": apiKey } })
+        .then(async res => {
+          const raw = await res.text();
+          try {
+            return JSON.parse(raw);
+          } catch {
+            return { error: "Response bukan JSON", raw: raw.slice(0,200) };
+          }
+        })
+        .then(data => {
+          const r = data.result || {};
+          let html = `
+            <p><strong>Title:</strong> ${r.title || "-"}</p>
+            <p><strong>Deskripsi:</strong> ${r.alt || "-"}</p>
+            <p><strong>Uploader:</strong> ${r.uploader || "-"}</p>
+            <p><strong>Durasi:</strong> ${r.duration || "-"}</p>
+            <p><img src="${r.thumbnail || ""}" alt="${r.alt || "Thumbnail"}" style="max-width:200px"></p>
+          `;
+
+          if (r.downloadAudioUrl) {
+            html += `<p><strong>Link audio (mp3/m4a):</strong> <a href="${r.downloadAudioUrl}" target="_blank">${r.downloadAudioUrl}</a></p>`;
+          }
+          if (r.downloadVideoUrl) {
+            html += `<p><strong>Link video (mp4):</strong> <a href="${r.downloadVideoUrl}" target="_blank">${r.downloadVideoUrl}</a></p>`;
+          }
+
+          panel.innerHTML = html;
+        })
+        .catch(err => panel.textContent = "Error: " + err);
+    }
+
+    // TAB YOUTUBE LIST
+    const tabJSYoutube = document.getElementById('tabJSYoutube');
+    const tabPyYoutube = document.getElementById('tabPyYoutube');
+    const tabGoYoutube = document.getElementById('tabGoYoutube');
+
+    const jsYoutube = document.getElementById('jsYoutube');
+    const pyYoutube = document.getElementById('pyYoutube');
+    const goYoutube = document.getElementById('goYoutube');
+
+    function showYoutube(tab) {
+      [tabJSYoutube, tabPyYoutube, tabGoYoutube].forEach(btn => btn.classList.remove('active'));
+      [jsYoutube, pyYoutube, goYoutube].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    tabJSYoutube.addEventListener('click', () => showYoutube(tabJSYoutube));
+    tabPyYoutube.addEventListener('click', () => showYoutube(tabPyYoutube));
+    tabGoYoutube.addEventListener('click', () => showYoutube(tabGoYoutube));
+
+    // TAB YOUTUBE VIDEO
+    const tabJSYoutubeVideo = document.getElementById('tabJSYoutubeVideo');
+    const tabPyYoutubeVideo = document.getElementById('tabPyYoutubeVideo');
+    const tabGoYoutubeVideo = document.getElementById('tabGoYoutubeVideo');
+
+    const jsYoutubeVideo = document.getElementById('jsYoutubeVideo');
+    const pyYoutubeVideo = document.getElementById('pyYoutubeVideo');
+    const goYoutubeVideo = document.getElementById('goYoutubeVideo');
+
+    function showYoutubeVideo(tab) {
+      [tabJSYoutubeVideo, tabPyYoutubeVideo, tabGoYoutubeVideo].forEach(btn => btn.classList.remove('active'));
+      [jsYoutubeVideo, pyYoutubeVideo, goYoutubeVideo].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    tabJSYoutubeVideo.addEventListener('click', () => showYoutubeVideo(tabJSYoutubeVideo));
+    tabPyYoutubeVideo.addEventListener('click', () => showYoutubeVideo(tabPyYoutubeVideo));
+    tabGoYoutubeVideo.addEventListener('click', () => showYoutubeVideo(tabGoYoutubeVideo));
+
+    // TAB YOUTUBE AUDIO
+    const tabJSYoutubeAudio = document.getElementById('tabJSYoutubeAudio');
+    const tabPyYoutubeAudio = document.getElementById('tabPyYoutubeAudio');
+    const tabGoYoutubeAudio = document.getElementById('tabGoYoutubeAudio');
+
+    const jsYoutubeAudio = document.getElementById('jsYoutubeAudio');
+    const pyYoutubeAudio = document.getElementById('pyYoutubeAudio');
+    const goYoutubeAudio = document.getElementById('goYoutubeAudio');
+
+    function showYoutubeAudio(tab) {
+      [tabJSYoutubeAudio, tabPyYoutubeAudio, tabGoYoutubeAudio].forEach(btn => btn.classList.remove('active'));
+      [jsYoutubeAudio, pyYoutubeAudio, goYoutubeAudio].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    tabJSYoutubeAudio.addEventListener('click', () => showYoutubeAudio(tabJSYoutubeAudio));
+    tabPyYoutubeAudio.addEventListener('click', () => showYoutubeAudio(tabPyYoutubeAudio));
+    tabGoYoutubeAudio.addEventListener('click', () => showYoutubeAudio(tabGoYoutubeAudio));
+
+    // TAB SMULE PROFILE
+    const tabJSSmuleProfile = document.getElementById('tabJSSmuleProfile');
+    const tabPySmuleProfile = document.getElementById('tabPySmuleProfile');
+    const tabGoSmuleProfile = document.getElementById('tabGoSmuleProfile');
+
+    const jsSmuleProfile = document.getElementById('jsSmuleProfile');
+    const pySmuleProfile = document.getElementById('pySmuleProfile');
+    const goSmuleProfile = document.getElementById('goSmuleProfile');
+
+    function showSmuleProfile(tab) {
+      [tabJSSmuleProfile, tabPySmuleProfile, tabGoSmuleProfile].forEach(btn => btn.classList.remove('active'));
+      [jsSmuleProfile, pySmuleProfile, goSmuleProfile].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    tabJSSmuleProfile.addEventListener('click', () => showSmuleProfile(tabJSSmuleProfile));
+    tabPySmuleProfile.addEventListener('click', () => showSmuleProfile(tabPySmuleProfile));
+    tabGoSmuleProfile.addEventListener('click', () => showSmuleProfile(tabGoSmuleProfile));
+
+    // TAB SMULE VIDEO
+    const tabJSSmuleVideo = document.getElementById('tabJSSmuleVideo');
+    const tabPySmuleVideo = document.getElementById('tabPySmuleVideo');
+    const tabGoSmuleVideo = document.getElementById('tabGoSmuleVideo');
+
+    const jsSmuleVideo = document.getElementById('jsSmuleVideo');
+    const pySmuleVideo = document.getElementById('pySmuleVideo');
+    const goSmuleVideo = document.getElementById('goSmuleVideo');
+
+    function showSmuleVideo(tab) {
+      [tabJSSmuleVideo, tabPySmuleVideo, tabGoSmuleVideo].forEach(btn => btn.classList.remove('active'));
+      [jsSmuleVideo, pySmuleVideo, goSmuleVideo].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    tabJSSmuleVideo.addEventListener('click', () => showSmuleVideo(tabJSSmuleVideo));
+    tabPySmuleVideo.addEventListener('click', () => showSmuleVideo(tabPySmuleVideo));
+    tabGoSmuleVideo.addEventListener('click', () => showSmuleVideo(tabGoSmuleVideo));
+
+    //  TAB TIKTOK VIDEO 
+    const tabJSTikTokVideo = document.getElementById('tabJSTikTokVideo');
+    const tabPyTikTokVideo = document.getElementById('tabPyTikTokVideo');
+    const tabGoTikTokVideo = document.getElementById('tabGoTikTokVideo');
+
+    const jsTikTokVideo = document.getElementById('jsTikTokVideo');
+    const pyTikTokVideo = document.getElementById('pyTikTokVideo');
+    const goTikTokVideo = document.getElementById('goTikTokVideo');
+
+    function showTikTokVideo(tab) {
+      [tabJSTikTokVideo, tabPyTikTokVideo, tabGoTikTokVideo].forEach(btn => btn.classList.remove('active'));
+      [jsTikTokVideo, pyTikTokVideo, goTikTokVideo].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    tabJSTikTokVideo.addEventListener('click', () => showTikTokVideo(tabJSTikTokVideo));
+    tabPyTikTokVideo.addEventListener('click', () => showTikTokVideo(tabPyTikTokVideo));
+    tabGoTikTokVideo.addEventListener('click', () => showTikTokVideo(tabGoTikTokVideo));
+
+    // API-Information
+    const informationEndpoints = [
+      { no: 1, name: "Translate", method: "GET", desc: "Terjemahkan teks ke bahasa lain", query: "apikey, text, to" },
+      { no: 2, name: "Kodepos", method: "GET", desc: "Cari kodepos berdasarkan daerah", query: "apikey, daerah" },
+      { no: 3, name: "Info Gempa", method: "GET", desc: "Informasi gempa terbaru dari BMKG", query: "apikey" },
+      { no: 4, name: "Cord Lagu", method: "GET", desc: "Chord lagu berdasarkan judul", query: "apikey, judul" }
+    ];
+
+    const infoBody = document.getElementById('informationTableBody');
+    informationEndpoints.forEach(ep => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${ep.no}</td>
+        <td>${ep.name}</td>
+        <td><span class="badge GET">${ep.method}</span></td>
+        <td>${ep.desc}</td>
+        <td>${ep.query}</td>
+        <td><button class="btn" onclick="tryInformation('${ep.name}')">Try</button></td>
+      `;
+      infoBody.appendChild(tr);
+    });
+
+    // Fungsi Try untuk Information (final, fleksibel + validasi)
+    function tryInformation(feature) {
+      const panel = document.getElementById('informationResponsePanel');
+      panel.style.display = 'block';
+      panel.textContent = `⚡ Menjalankan ${feature}...`;
+
+      const apiKey = document.getElementById('apiKeyInput').value.trim();
+      if (!apiKey) {
+        panel.textContent = "Error: API key belum diisi.";
+        return;
+      }
+
+      let url = "";
+      let headers = { "x-api-key": apiKey };
+
+      if (feature === "Translate") {
+        // Ambil input jika tersedia; fallback ke contoh
+        const textEl = document.getElementById('translateText');
+        const langEl = document.getElementById('translateLang');
+        const text = textEl?.value?.trim() || "selamat pagi";
+        const lang = langEl?.value || "en";
+
+        url = `https://api.teamhackbotsindo.my.id/api/translate?text=${encodeURIComponent(text)}&to=${lang}`;
+        headers.Origin = "https://teamhackbotsindo.my.id"; // jika diperlukan oleh server
+      } else if (feature === "Kodepos") {
+        url = `https://api.teamhackbotsindo.my.id/api/kodepos?daerah=ciomas`;
+      } else if (feature === "Info Gempa") {
+        url = `https://api.teamhackbotsindo.my.id/api/gempa`;
+      } else if (feature === "Cord Lagu") {
+        url = `https://api.teamhackbotsindo.my.id/api/cord-lagu?judul=melukis%20senja`;
+      } else {
+        panel.textContent = "Error: Fitur tidak dikenal.";
+        return;
+      }
+
+      fetch(url, { headers })
+        .then(res => {
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          return res.json();
+        })
+        .then(data => panel.textContent = JSON.stringify(data, null, 2))
+        .catch(err => panel.textContent = "Error: " + err);
+    }
+
+    function tryTranslate() {
+      const panel = document.getElementById('translateResponsePanel');
+      panel.style.display = 'block';
+      panel.textContent = "⚡ Menjalankan Translate...";
+
+      const apiKey = document.getElementById('apiKeyInput').value;
+      const text = document.getElementById('translateText').value || "selamat pagi";
+      const lang = document.getElementById('translateLang').value;
+      const url = `https://api.teamhackbotsindo.my.id/api/translate?text=${encodeURIComponent(text)}&to=${lang}`;
+
+      fetch(url, { headers: { "x-api-key": apiKey, "Origin": "https://teamhackbotsindo.my.id" } })
+        .then(res => res.json())
+        .then(data => panel.textContent = JSON.stringify(data, null, 2))
+        .catch(err => panel.textContent = "Error: " + err);
+    }
+
+    // API-ISLAMI
+    const islamiEndpoints = [
+      { no: 1, name: "Doa", method: "GET", desc: "Ambil doa secara acak", query: "apikey" },
+      { no: 2, name: "Niat Shalat", method: "GET", desc: "Niat shalat berdasarkan nama shalat", query: "apikey, shalat" },
+      { no: 3, name: "Jadwal Shalat", method: "GET", desc: "Jadwal shalat berdasarkan kota", query: "apikey, city" },
+      { no: 4, name: "Qur'an Surah", method: "GET", desc: "Daftar semua surah dalam Al-Qur'an", query: "apikey" },
+      { no: 5, name: "Qur'an Detail", method: "GET", desc: "Detail surah berdasarkan nomor", query: "apikey, nomor" },
+      { no: 6, name: "Kisah Nabi", method: "GET", desc: "Kisah nabi berdasarkan nomor", query: "apikey, nomor" }
+    ];
+
+    const islamiBody = document.getElementById('islamiTableBody');
+    islamiEndpoints.forEach(ep => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${ep.no}</td>
+        <td>${ep.name}</td>
+        <td><span class="badge GET">${ep.method}</span></td>
+        <td>${ep.desc}</td>
+        <td>${ep.query}</td>
+        <td><button class="btn" onclick="tryIslami('${ep.name.replace(/'/g, "\\'")}')">Try</button></td>
+      `;
+      islamiBody.appendChild(tr);
+    });
+
+    // Fungsi Try untuk Islami (contoh baku)
+    function tryIslami(feature) {
+      const panel = document.getElementById('islamiResponsePanel');
+      panel.style.display = 'block';
+      panel.textContent = `⚡ Menjalankan ${feature}...`;
+
+      const apiKey = document.getElementById('apiKeyInput').value;
+      let url = "";
+      switch (feature) {
+        case "Doa":
+          url = `https://api.teamhackbotsindo.my.id/api/doa`;
+          break;
+
+        case "Niat Shalat":
+          const selectedShalat = document.getElementById('shalatSelectIslami').value;
+          url = `https://api.teamhackbotsindo.my.id/api/niat-shalat?shalat=${selectedShalat}`;
+          break;
+
+        case "Jadwal Shalat":
+          url = `https://api2.teamhackbotsindo.my.id/api/jadwal-shalat?city=jakarta`;
+          break;
+
+        case "Qur'an Surah":
+          url = `https://api2.teamhackbotsindo.my.id/api/quran-surah`;
+          break;
+
+        case "Qur'an Detail":
+          url = `https://api2.teamhackbotsindo.my.id/api/quran-detail?apikey=${apiKey}&nomor=1`;
+          break;
+
+        case "Kisah Nabi":
+          url = `https://api2.teamhackbotsindo.my.id/api/kisah-nabi?apikey=${apiKey}&nomor=25`;
+          break;
+      }
+
+
+      fetch(url, { headers: { "x-api-key": apiKey } })
+        .then(res => res.text())
+        .then(text => {
+          try {
+            const data = JSON.parse(text);
+            panel.textContent = JSON.stringify(data, null, 2);
+          } catch {
+            panel.textContent = "⚠️ Response bukan JSON:\n" + text.slice(0,200);
+          }
+        })
+        .catch(err => panel.textContent = "Error: " + err);
+    }
+
+    // Tabs Islami
+    const tabJSIslami = document.getElementById('tabJSIslami');
+    const tabPyIslami = document.getElementById('tabPyIslami');
+    const tabGoIslami = document.getElementById('tabGoIslami');
+
+    const jsIslami = document.getElementById('jsIslami');
+    const pyIslami = document.getElementById('pyIslami');
+    const goIslami = document.getElementById('goIslami');
+
+    function showIslami(tab) {
+      [tabJSIslami, tabPyIslami, tabGoIslami].forEach(btn => btn.classList.remove('active'));
+      [jsIslami, pyIslami, goIslami].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    tabJSIslami.addEventListener('click', () => showIslami(tabJSIslami));
+    tabPyIslami.addEventListener('click', () => showIslami(tabPyIslami));
+    tabGoIslami.addEventListener('click', () => showIslami(tabGoIslami));
+
+    // Tabs Shalat
+    const tabJSShalat = document.getElementById('tabJSShalat');
+    const tabPyShalat = document.getElementById('tabPyShalat');
+    const tabGoShalat = document.getElementById('tabGoShalat');
+
+    const jsShalat = document.getElementById('jsShalat');
+    const pyShalat = document.getElementById('pyShalat');
+    const goShalat = document.getElementById('goShalat');
+
+    function showShalat(tab) {
+      [tabJSShalat, tabPyShalat, tabGoShalat].forEach(btn => btn.classList.remove('active'));
+      [jsShalat, pyShalat, goShalat].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    tabJSShalat.addEventListener('click', () => showShalat(tabJSShalat));
+    tabPyShalat.addEventListener('click', () => showShalat(tabPyShalat));
+    tabGoShalat.addEventListener('click', () => showShalat(tabGoShalat));
+
+    // Ambil elemen dropdown (ID harus sama dengan di HTML)
+    const shalatSelect = document.getElementById('shalatSelectIslami');
+
+    // Update code sample saat dropdown berubah
+    shalatSelect.addEventListener('change', () => {
+      const selected = shalatSelect.value;
+
+      // Update isi code sample JS
+      document.querySelector('#jsShalat code').textContent =
+    `const url = "https://api.teamhackbotsindo.my.id/api/niat-shalat?shalat=${selected}";
+
+    fetch(url, {
+      headers: { "x-api-key": apiKey }
+    })
+      .then(res => res.json())
+      .then(data => console.log(data));`;
+
+      // Update isi code sample Python
+      document.querySelector('#pyShalat code').textContent =
+    `import requests
+
+    url = "https://api.teamhackbotsindo.my.id/api/niat-shalat?shalat=${selected}"
+    headers = { "x-api-key": apiKey }
+    response = requests.get(url, headers=headers)
+    print(response.json())`;
+
+      // Update isi code sample Golang
+      document.querySelector('#goShalat code').textContent =
+    `package main
+
+    import (
+      "fmt"
+      "net/http"
+      "io/ioutil"
+    )
+
+    func main() {
+      url := "https://api.teamhackbotsindo.my.id/api/niat-shalat?shalat=${selected}"
+
+      client := &http.Client{}
+      req, _ := http.NewRequest("GET", url, nil)
+      req.Header.Set("x-api-key", apiKey)
+
+      resp, _ := client.Do(req)
+      defer resp.Body.Close()
+
+      body, _ := ioutil.ReadAll(resp.Body)
+      fmt.Println(string(body))
+    }`;
+    });
+
+    // Tabs Jadwal Shalat
+    const tabJSJadwalShalat = document.getElementById('tabJSJadwalShalat');
+    const tabPyJadwalShalat = document.getElementById('tabPyJadwalShalat');
+    const tabGoJadwalShalat = document.getElementById('tabGoJadwalShalat');
+
+    const jsJadwalShalat = document.getElementById('jsJadwalShalat');
+    const pyJadwalShalat = document.getElementById('pyJadwalShalat');
+    const goJadwalShalat = document.getElementById('goJadwalShalat');
+
+    function showJadwalShalat(tab) {
+      [tabJSJadwalShalat, tabPyJadwalShalat, tabGoJadwalShalat].forEach(btn => btn.classList.remove('active'));
+      [jsJadwalShalat, pyJadwalShalat, goJadwalShalat].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    tabJSJadwalShalat.addEventListener('click', () => showJadwalShalat(tabJSJadwalShalat));
+    tabPyJadwalShalat.addEventListener('click', () => showJadwalShalat(tabPyJadwalShalat));
+    tabGoJadwalShalat.addEventListener('click', () => showJadwalShalat(tabGoJadwalShalat));
+
+    // Tabs Qur'an (JS/Py/Go)
+    const tabJSQuran   = document.getElementById('tabJSQuranSurah');
+    const tabPyQuran   = document.getElementById('tabPyQuranSurah');
+    const tabGoQuran   = document.getElementById('tabGoQuranSurah');
+
+    const jsQuran      = document.getElementById('jsQuranSurah');
+    const pyQuran      = document.getElementById('pyQuranSurah');
+    const goQuran      = document.getElementById('goQuranSurah');
+
+    function showQuran(tab) {
+      [tabJSQuran, tabPyQuran, tabGoQuran].forEach(btn => btn.classList.remove('active'));
+      [jsQuran, pyQuran, goQuran].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    tabJSQuran.addEventListener('click', () => showQuran(tabJSQuran));
+    tabPyQuran.addEventListener('click', () => showQuran(tabPyQuran));
+    tabGoQuran.addEventListener('click', () => showQuran(tabGoQuran));
+
+    // Tabs Kisah Nabi
+    const tabJSKisahNabi = document.getElementById('tabJSKisahNabi');
+    const tabPyKisahNabi = document.getElementById('tabPyKisahNabi');
+    const tabGoKisahNabi = document.getElementById('tabGoKisahNabi');
+
+    const jsKisahNabi = document.getElementById('jsKisahNabi');
+    const pyKisahNabi = document.getElementById('pyKisahNabi');
+    const goKisahNabi = document.getElementById('goKisahNabi');
+
+    function showKisahNabi(tab) {
+      [tabJSKisahNabi, tabPyKisahNabi, tabGoKisahNabi].forEach(btn => btn.classList.remove('active'));
+      [jsKisahNabi, pyKisahNabi, goKisahNabi].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    tabJSKisahNabi.addEventListener('click', () => showKisahNabi(tabJSKisahNabi));
+    tabPyKisahNabi.addEventListener('click', () => showKisahNabi(tabPyKisahNabi));
+    tabGoKisahNabi.addEventListener('click', () => showKisahNabi(tabGoKisahNabi));
+
+    // API Random Image
+    const randomEndpoints = [
+      { no: 1, name: "Anime Random", method: "GET", desc: "Random", query: "apikey" },
+      { no: 2, name: "Donghua", method: "GET", desc: "Random", query: "apikey" },
+      { no: 3, name: "Anime Waifu", method: "GET", desc: "Random", query: "apikey" },
+      { no: 4, name: "Anime 18+", method: "GET", desc: "Random", query: "apikey" },
+      { no: 5, name: "Random Nama", method: "GET", desc: "Random", query: "apikey" }
+    ];
+
+    // Fungsi Try untuk Random Image
+    function tryRandom(feature) {
+      const panel = document.getElementById('randomResponsePanel');
+      panel.style.display = 'block';
+      panel.textContent = `⚡ Menjalankan ${feature}...`;
+
+      const apiKey = document.getElementById('apiKeyInput').value;
+
+      let url = "";
+      if (feature === "Anime Random") {
+        url = "https://api.teamhackbotsindo.my.id/api/anime-random";
+      } else if (feature === "Donghua") {
+        url = "https://api.teamhackbotsindo.my.id/api/donghua";
+      } else if (feature === "Anime Waifu") {
+        url = "https://api.teamhackbotsindo.my.id/api/waifu";
+      } else if (feature === "Anime 18+") {
+        url = "https://api.teamhackbotsindo.my.id/api/anime-nsfw";
+      } else if (feature === "Random Nama") {
+        url = "https://api2.teamhackbotsindo.my.id/api/random-name";
+      }
+
+      fetch(url, {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => panel.textContent = JSON.stringify(data, null, 2))
+        .catch(err => panel.textContent = "Error: " + err);
+    }
+    //TAB RANDOM IMAGE
+    const tabJSRandom = document.getElementById('tabJSRandom');
+    const tabPyRandom = document.getElementById('tabPyRandom');
+    const tabGoRandom = document.getElementById('tabGoRandom');
+
+    const jsRandom = document.getElementById('jsRandom');
+    const pyRandom = document.getElementById('pyRandom');
+    const goRandom = document.getElementById('goRandom');
+
+    function showRandom(tab) {
+      [tabJSRandom, tabPyRandom, tabGoRandom].forEach(btn => btn.classList.remove('active'));
+      [jsRandom, pyRandom, goRandom].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    tabJSRandom.addEventListener('click', () => showRandom(tabJSRandom));
+    tabPyRandom.addEventListener('click', () => showRandom(tabPyRandom));
+    tabGoRandom.addEventListener('click', () => showRandom(tabGoRandom));
+
+    // TAB RANDOM NAMA
+    const tabJSRandomName = document.getElementById('tabJSRandomName');
+    const tabPyRandomName = document.getElementById('tabPyRandomName');
+    const tabGoRandomName = document.getElementById('tabGoRandomName');
+
+    const jsRandomName = document.getElementById('jsRandomName');
+    const pyRandomName = document.getElementById('pyRandomName');
+    const goRandomName = document.getElementById('goRandomName');
+
+    function showRandomName(tab) {
+      [tabJSRandomName, tabPyRandomName, tabGoRandomName].forEach(btn => btn.classList.remove('active'));
+      [jsRandomName, pyRandomName, goRandomName].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    tabJSRandomName.addEventListener('click', () => showRandomName(tabJSRandomName));
+    tabPyRandomName.addEventListener('click', () => showRandomName(tabPyRandomName));
+    tabGoRandomName.addEventListener('click', () => showRandomName(tabGoRandomName));
+
+    // Tabs Information
+    const tabJSInfo = document.getElementById('tabJSInfo');
+    const tabPyInfo = document.getElementById('tabPyInfo');
+    const tabGoInfo = document.getElementById('tabGoInfo');
+
+    const jsInfo = document.getElementById('jsInfo');
+    const pyInfo = document.getElementById('pyInfo');
+    const goInfo = document.getElementById('goInfo');
+
+    function showInfo(tab) {
+      [tabJSInfo, tabPyInfo, tabGoInfo].forEach(btn => btn.classList.remove('active'));
+      [jsInfo, pyInfo, goInfo].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    tabJSInfo.addEventListener('click', () => showInfo(tabJSInfo));
+    tabPyInfo.addEventListener('click', () => showInfo(tabPyInfo));
+    tabGoInfo.addEventListener('click', () => showInfo(tabGoInfo));
+
+    //DOC NAV
+    // Scrollspy untuk sidebar
+    document.addEventListener('DOMContentLoaded', () => {
+      const navLinks = Array.from(document.querySelectorAll('.sidebar .nav-list a'));
+      const linkMap = navLinks.reduce((acc, link) => {
+        const href = link.getAttribute('href');
+        const id = href && href.startsWith('#') ? href.slice(1) : null;
+        const section = id ? document.getElementById(id) : null;
+        if (section) acc[href] = { link, section };
+        return acc;
+      }, {});
+      const sections = Object.values(linkMap).map(x => x.section);
+
+      navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          navLinks.forEach(el => el.classList.remove('active'));
+          link.classList.add('active');
+        });
+      });
+
+      const initialHash = window.location.hash;
+      if (initialHash && linkMap[initialHash]) {
+        navLinks.forEach(el => el.classList.remove('active'));
+        linkMap[initialHash].link.classList.add('active');
+      }
+
+      const OFFSET = 130;
+      window.addEventListener('scroll', () => {
+        let currentId = '';
+        const scrollPos = window.scrollY;
+        sections.forEach(section => {
+          const top = section.offsetTop - OFFSET;
+          if (scrollPos >= top) currentId = section.id;
+        });
+        if (currentId) {
+          navLinks.forEach(el => el.classList.remove('active'));
+          const href = '#' + currentId;
+          if (linkMap[href]) linkMap[href].link.classList.add('active');
+        }
+      }, { passive: true });
+    });
+
+    // Isi tabel Random Image setelah DOM siap
+    document.addEventListener('DOMContentLoaded', () => {
+      const randomBody = document.getElementById('randomTableBody');
+      randomEndpoints.forEach(ep => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${ep.no}</td>
+          <td>${ep.name}</td>
+          <td><span class="badge GET">${ep.method}</span></td>
+          <td>${ep.desc}</td>
+          <td>${ep.query}</td>
+          <td><button class="btn" onclick="tryRandom('${ep.name}')">Try</button></td>
+        `;
+        randomBody.appendChild(tr);
+      });
+    });
+
+    // Helpers
+    const toastEl = document.getElementById('toast');
+    function toast(msg) {
+      toastEl.textContent = msg;
+      toastEl.classList.add('show');
+      setTimeout(() => toastEl.classList.remove('show'), 1800);
+    }
+
+    // Update tampilan API key aktif
+    const apiKeyInput = document.getElementById('apiKeyInput');
+    const activeKeySpan = document.getElementById('activeKey');
+
+    // Set default saat halaman load
+    activeKeySpan.textContent = apiKeyInput.value || "- belum diisi -";
+
+    // Update saat user mengetik
+    apiKeyInput.addEventListener('input', () => {
+      activeKeySpan.textContent = apiKeyInput.value;
+    });
+
+    // Copy API key
+    document.getElementById('copyBtn').addEventListener('click', () => {
+      const apiKey = document.getElementById('apiKeyInput').value.trim();
+      if (!apiKey) {
+        toast('API key belum diisi!');
+        return;
+      }
+      navigator.clipboard.writeText(apiKey).then(() => {
+        toast('API key disalin: ' + apiKey);
+      });
+    });
+
+  </script>
+  <!-- WhatsApp Floating -->
+  <a href="https://wa.me/6285717777189" target="_blank" class="wa-float">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+  </a>
+
+</body>
+</html>
