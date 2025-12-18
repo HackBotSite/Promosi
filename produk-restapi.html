@@ -1971,6 +1971,84 @@
         </div>
       </section>
 
+      <!-- Code samples Login Email LINE -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Login Email LINE</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Login Email LINE">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsLoginEmail" id="tabJSLoginEmail">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyLoginEmail" id="tabPyLoginEmail">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goLoginEmail" id="tabGoLoginEmail">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsLoginEmail" role="tabpanel" aria-labelledby="tabJSLoginEmail" class="code">
+      <pre><code class="language-js">
+      // Login Email LINE
+      fetch("https://api2.teamhackbotsindo.my.id/api/line-email", {
+        method: "POST",
+        headers: { "x-api-key": apiKey, "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: "user@example.com",
+          password: "yourpassword",
+          appname: "DESKTOPWIN\t9.2.0.3403\tWINDOWS\t10.0.0-NT-x64"
+        })
+      })
+        .then(res => res.json())
+        .then(data => {
+          console.log("Login Email LINE:", data);
+          // tampilkan hasil token di halaman
+          document.body.innerHTML += "&lt;pre&gt;" + JSON.stringify(data, null, 2) + "&lt;/pre&gt;";
+        });
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyLoginEmail" role="tabpanel" aria-labelledby="tabPyLoginEmail" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      headers = { "x-api-key": apiKey, "Content-Type": "application/json" }
+      payload = {
+        "email": "user@example.com",
+        "password": "yourpassword",
+        "appname": "DESKTOPWIN\t9.2.0.3403\tWINDOWS\t10.0.0-NT-x64"
+      }
+
+      resp = requests.post("https://api2.teamhackbotsindo.my.id/api/line-email", headers=headers, json=payload)
+      print("Login Email LINE:", resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goLoginEmail" role="tabpanel" aria-labelledby="tabGoLoginEmail" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "bytes"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        client := &http.Client{}
+        body := []byte(`{"email":"user@example.com","password":"yourpassword","appname":"DESKTOPWIN\t9.2.0.3403\tWINDOWS\t10.0.0-NT-x64"}`)
+        req, _ := http.NewRequest("POST", "https://api2.teamhackbotsindo.my.id/api/line-email", bytes.NewBuffer(body))
+        req.Header.Set("x-api-key", apiKey)
+        req.Header.Set("Content-Type", "application/json")
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+        b, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println("Login Email LINE:", string(b))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
       <!-- Footer -->
       <footer aria-label="Footer">
         <div class="footer-inner">
@@ -2027,7 +2105,7 @@
       if (feature === "Login QR LINE") {
         url = "https://api2.teamhackbotsindo.my.id/api/loginqr-line";
       } else if (feature === "Login Email LINE") {
-        url = "https://api2.teamhackbotsindo.my.id/api/loginemail-line";
+        url = "https://api2.teamhackbotsindo.my.id/api/line-email";
         // untuk login email biasanya butuh email & password
         payload.email = document.getElementById("emailInput")?.value || "user@example.com";
         payload.password = document.getElementById("passwordInput")?.value || "yourpassword";
@@ -2057,6 +2135,31 @@
         })
         .catch(err => panel.textContent = "Error: " + err);
     }
+
+    // Ambil elemen tab
+    const tabJSLoginEmail = document.getElementById('tabJSLoginEmail');
+    const tabPyLoginEmail = document.getElementById('tabPyLoginEmail');
+    const tabGoLoginEmail = document.getElementById('tabGoLoginEmail');
+
+    // Ambil panel
+    const jsLoginEmail = document.getElementById('jsLoginEmail');
+    const pyLoginEmail = document.getElementById('pyLoginEmail');
+    const goLoginEmail = document.getElementById('goLoginEmail');
+
+    function showLoginEmail(tab) {
+      // reset semua tab & panel
+      [tabJSLoginEmail, tabPyLoginEmail, tabGoLoginEmail].forEach(btn => btn.classList.remove('active'));
+      [jsLoginEmail, pyLoginEmail, goLoginEmail].forEach(panel => panel.style.display = 'none');
+
+      // aktifkan tab & panel sesuai klik
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    // Event listener
+    tabJSLoginEmail.addEventListener('click', () => showLoginEmail(tabJSLoginEmail));
+    tabPyLoginEmail.addEventListener('click', () => showLoginEmail(tabPyLoginEmail));
+    tabGoLoginEmail.addEventListener('click', () => showLoginEmail(tabGoLoginEmail));
 
     // API-Primbon
     const primbonEndpoints = [
