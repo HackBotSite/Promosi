@@ -2125,12 +2125,23 @@
         })
         .then(data => {
           panel.textContent = JSON.stringify(data, null, 2);
+
+          // Tampilkan QR jika ada
           if (data.result && data.result.qrImage) {
             const img = document.createElement("img");
             img.src = data.result.qrImage;
             img.alt = "QR Login LINE";
             img.style.maxWidth = "200px";
             panel.appendChild(img);
+          }
+
+          // Tampilkan PIN jika ada
+          if (data.result && data.result.pinCode) {
+            const pin = document.createElement("div");
+            pin.textContent = `🔐 PIN Code: ${data.result.pinCode}`;
+            pin.style.fontWeight = "bold";
+            pin.style.marginTop = "10px";
+            panel.appendChild(pin);
           }
         })
         .catch(err => panel.textContent = "Error: " + err);
