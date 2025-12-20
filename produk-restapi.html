@@ -2142,9 +2142,10 @@
           }
 
           // Tampilkan PIN jika ada
-          if (data.result && data.result.pinCode) {
+          if (data.result && (data.result.pinCode || data.result.pin)) {
+            const pinValue = data.result.pinCode || data.result.pin;
             const pin = document.createElement("div");
-            pin.textContent = `🔐 PIN Code: ${data.result.pinCode}`;
+            pin.textContent = `🔐 PIN Code: ${pinValue}`;
             pin.style.fontWeight = "bold";
             pin.style.marginTop = "10px";
             pin.style.color = "#d63384";
