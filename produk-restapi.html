@@ -2124,7 +2124,12 @@
           return res.json();
         })
         .then(data => {
-          panel.textContent = JSON.stringify(data, null, 2);
+          panel.innerHTML = ""; // kosongkan panel dulu
+
+          const pre = document.createElement("pre");
+          pre.textContent = JSON.stringify(data, null, 2);
+          panel.appendChild(pre);
+
 
           // Tampilkan QR jika ada
           if (data.result && data.result.qrImage) {
@@ -2132,6 +2137,7 @@
             img.src = data.result.qrImage;
             img.alt = "QR Login LINE";
             img.style.maxWidth = "200px";
+            img.style.marginTop = "10px";
             panel.appendChild(img);
           }
 
@@ -2141,6 +2147,7 @@
             pin.textContent = `🔐 PIN Code: ${data.result.pinCode}`;
             pin.style.fontWeight = "bold";
             pin.style.marginTop = "10px";
+            pin.style.color = "#d63384";
             panel.appendChild(pin);
           }
         })
