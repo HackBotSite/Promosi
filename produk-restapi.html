@@ -1912,7 +1912,7 @@
           <!-- JS -->
           <div id="jsLoginqr" role="tabpanel" aria-labelledby="tabJSLoginqr" class="code">
       <pre><code class="language-js">
-      // Login QR LINE
+      // Tahap 1: ambil QR image
       fetch("https://api2.teamhackbotsindo.my.id/api/loginqr-line", {
         method: "POST",
         headers: { "x-api-key": apiKey, "Content-Type": "application/json" },
@@ -1920,25 +1920,55 @@
       })
         .then(res => res.json())
         .then(data => {
-          console.log("Login QR LINE:", data);
-          // tampilkan QR image di halaman
+          console.log("Step 1:", data);
           const img = document.createElement("img");
           img.src = data.result.qrImage;
           document.body.appendChild(img);
         });
+
+      // Tahap 2: polling untuk ambil token
+      setInterval(() => {
+        fetch("https://api2.teamhackbotsindo.my.id/api/loginqr-line", {
+          method: "POST",
+          headers: { "x-api-key": apiKey, "Content-Type": "application/json" }
+        })
+          .then(res => res.json())
+          .then(data => {
+            if (data.step === "token") {
+              console.log("AuthToken:", data.result.authToken);
+              console.log("RefreshToken:", data.result.refreshToken);
+            } else {
+              console.log("Status:", data.status || "pending");
+            }
+          });
+      }, 5000);
       </code></pre>
           </div>
 
           <!-- Python -->
           <div id="pyLoginqr" role="tabpanel" aria-labelledby="tabPyLoginqr" class="code" style="display:none">
       <pre><code class="language-python">
-      import requests
+      import requests, time
 
       headers = { "x-api-key": apiKey, "Content-Type": "application/json" }
       payload = { "appname": "DESKTOPWIN\t9.2.0.3403\tWINDOWS\t10.0.0-NT-x64" }
 
+      # Tahap 1: ambil QR
       resp = requests.post("https://api2.teamhackbotsindo.my.id/api/loginqr-line", headers=headers, json=payload)
-      print("Login QR LINE:", resp.json())
+      print("Step 1:", resp.json())
+
+      # Tahap 2: polling untuk token
+      while True:
+          r = requests.post("https://api2.teamhackbotsindo.my.id/api/loginqr-line", headers=headers)
+          data = r.json()
+          if data.get("step") == "token":
+              print("AuthToken:", data["result"]["authToken"])
+              print("RefreshToken:", data["result"]["refreshToken"])
+              break
+          else:
+              print("Status:", data.get("status"))
+          time.sleep(5)
+
       </code></pre>
           </div>
 
@@ -1952,6 +1982,7 @@
         "bytes"
         "net/http"
         "io/ioutil"
+        "time"
       )
 
       func main() {
@@ -1964,7 +1995,20 @@
         resp, _ := client.Do(req)
         defer resp.Body.Close()
         b, _ := ioutil.ReadAll(resp.Body)
-        fmt.Println("Login QR LINE:", string(b))
+        fmt.Println("Step 1:", string(b))
+
+        // Tahap 2: polling untuk token
+        for {
+          req2, _ := http.NewRequest("POST", "https://api2.teamhackbotsindo.my.id/api/loginqr-line", nil)
+          req2.Header.Set("x-api-key", apiKey)
+          req2.Header.Set("Content-Type", "application/json")
+
+          resp2, _ := client.Do(req2)
+          defer resp2.Body.Close()
+          b2, _ := ioutil.ReadAll(resp2.Body)
+          fmt.Println("Result:", string(b2))
+          time.Sleep(5 * time.Second)
+        }
       }
       </code></pre>
           </div>
