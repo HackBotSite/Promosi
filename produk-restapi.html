@@ -1876,11 +1876,11 @@
       </section>
 
       <!-- Section Login QR LINE -->
-      <section class="card" id="loginqr" aria-labelledby="loginqr-title">
-        <div class="card-header" id="loginqr-title">Dokumentasi API — Login QR LINE</div>
+      <section class="card" id="Loginqr" aria-labelledby="Loginqr-title">
+        <div class="card-header" id="Loginqr-title">Dokumentasi API — Login QR LINE</div>
 
         <div class="table-wrapper">
-          <table class="table" aria-describedby="loginqr-title">
+          <table class="table" aria-describedby="Loginqr-title">
             <thead>
               <tr>
                 <th>No</th>
@@ -1891,12 +1891,12 @@
                 <th>Action</th>
               </tr>
             </thead>
-            <tbody id="loginqrTableBody">
+            <tbody id="LoginqrTableBody">
               <!-- Diisi lewat JS -->
             </tbody>
           </table>
         </div>
-        <div id="loginqrResponsePanel" class="response" aria-live="polite" style="display:none"></div>
+        <div id="LoginqrResponsePanel" class="response" aria-live="polite" style="display:none"></div>
       </section>
 
       <!-- Code samples Login QR LINE -->
@@ -2293,6 +2293,32 @@
       })
       .catch(err => panel.textContent = "Error: " + err);
     }
+
+    // Ambil elemen tab Login QR
+    const tabJSLoginqr = document.getElementById('tabJSLoginqr');
+    const tabPyLoginqr = document.getElementById('tabPyLoginqr');
+    const tabGoLoginqr = document.getElementById('tabGoLoginqr');
+
+    // Ambil panel Login QR
+    const jsLoginqr = document.getElementById('jsLoginqr');
+    const pyLoginqr = document.getElementById('pyLoginqr');
+    const goLoginqr = document.getElementById('goLoginqr');
+
+    function showLoginqr(tab) {
+      // reset semua tab & panel
+      [tabJSLoginqr, tabPyLoginqr, tabGoLoginqr].forEach(btn => btn.classList.remove('active'));
+      [jsLoginqr, pyLoginqr, goLoginqr].forEach(panel => panel.style.display = 'none');
+
+      // aktifkan tab & panel sesuai klik
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    // Event listener
+    tabJSLoginqr.addEventListener('click', () => showLoginqr(tabJSLoginqr));
+    tabPyLoginqr.addEventListener('click', () => showLoginqr(tabPyLoginqr));
+    tabGoLoginqr.addEventListener('click', () => showLoginqr(tabGoLoginqr));
+
 
     // Ambil elemen tab V2
     const tabJSLoginEmailV2 = document.getElementById('tabJSLoginEmailV2');
