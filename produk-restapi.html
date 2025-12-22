@@ -2168,61 +2168,73 @@
     });
 
     function tryLoginqr(feature) {
-        const panel = document.getElementById('loginqrResponsePanel');
-        panel.style.display = 'block';
+      const panel = document.getElementById('loginqrResponsePanel');
+      panel.style.display = 'block';
+
+      const apiKey = document.getElementById('apiKeyInput').value.trim();
+      if (!apiKey) {
+        panel.textContent = "Error: API key belum diisi.";
+        return;
+      }
+
+      let url = "";
+      let payload = { appname: "DESKTOPWIN\t9.2.0.3403\tWINDOWS\t10.0.0-NT-x64" };
+
+      if (feature === "Login QR LINE") {
+        url = "https://api2.teamhackbotsindo.my.id/api/loginqr-line";
+        panel.innerHTML = `⚡ Menjalankan ${feature}, QR Request...<br>
+          <div style="font-weight:bold;color:#0d6efd;margin-top:10px">📲 Scan QR di aplikasi LINE</div>`;
+      } else if (feature === "Login Email LINE V2") {
+        url = "https://api2.teamhackbotsindo.my.id/api/line-email-v2";
+        payload.email = document.getElementById("emailInputV2")?.value || "drakestep9@gmail.com";
+        payload.password = document.getElementById("passwordInputV2")?.value || "Maxtea123";
         panel.innerHTML = `⚡ Menjalankan ${feature}, PIN Request...<br>
-            <div style="font-weight:bold;color:#d63384;margin-top:10px">🔐 PIN Code: 123456</div>`;
+          <div style="font-weight:bold;color:#d63384;margin-top:10px">🔐 PIN Code: 123456</div>`;
+      } else if (feature === "Login Email LINE V3") {
+        url = "https://api2.teamhackbotsindo.my.id/api/line-email-v3";
+        payload.email = document.getElementById("emailInputV3")?.value || "drakestep9@gmail.com";
+        payload.password = document.getElementById("passwordInputV3")?.value || "Maxtea123";
+        panel.innerHTML = `⚡ Menjalankan ${feature}, PIN Request...<br>
+          <div style="font-weight:bold;color:#d63384;margin-top:10px">🔐 PIN Code: 123456</div>`;
+      } else {
+        panel.textContent = "Error: Fitur tidak dikenal.";
+        return;
+      }
 
-        const apiKey = document.getElementById('apiKeyInput').value.trim();
-        if (!apiKey) {
-            panel.textContent = "Error: API key belum diisi.";
-            return;
-        }
-
-        let url = "";
-        let payload = { appname: "DESKTOPWIN\t9.2.0.3403\tWINDOWS\t10.0.0-NT-x64" };
-
-        if (feature === "Login QR LINE") {
-            url = "https://api2.teamhackbotsindo.my.id/api/loginqr-line";
-        } else if (feature === "Login Email LINE V2") {
-            url = "https://api2.teamhackbotsindo.my.id/api/line-email-v2";
-            payload.email = document.getElementById("emailInputV2")?.value || "drakestep9@gmail.com";
-            payload.password = document.getElementById("passwordInputV2")?.value || "Maxtea123";
-        } else if (feature === "Login Email LINE V3") {
-            url = "https://api2.teamhackbotsindo.my.id/api/line-email-v3";
-            payload.email = document.getElementById("emailInputV3")?.value || "drakestep9@gmail.com";
-            payload.password = document.getElementById("passwordInputV3")?.value || "Maxtea123";
-        } else {
-            panel.textContent = "Error: Fitur tidak dikenal.";
-            return;
-        }
-
-        fetch(url, {
-            method: "POST",
-            headers: { "x-api-key": apiKey, "Content-Type": "application/json" },
-            body: JSON.stringify(payload)
+      fetch(url, {
+        method: "POST",
+        headers: { "x-api-key": apiKey, "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      })
+        .then(res => {
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          return res.json();
         })
-            .then(res => {
-                if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                return res.json();
-            })
-            .then(data => {
-                // jangan kosongkan panel agar PIN manual tetap tampil
-                const pre = document.createElement("pre");
-                pre.textContent = JSON.stringify(data, null, 2);
-                panel.appendChild(pre);
+        .then(data => {
+          const pre = document.createElement("pre");
+          pre.textContent = JSON.stringify(data, null, 2);
+          panel.appendChild(pre);
 
-                // Tampilkan QR jika ada
-                if (data.result && data.result.qrImage) {
-                    const img = document.createElement("img");
-                    img.src = data.result.qrImage;
-                    img.alt = "QR Login LINE";
-                    img.style.maxWidth = "200px";
-                    img.style.marginTop = "10px";
-                    panel.appendChild(img);
-                }
-            })
-            .catch(err => panel.textContent = "Error: " + err);
+          // QR khusus untuk Login QR LINE
+          if (data.result && data.result.qrImage) {
+            const img = document.createElement("img");
+            img.src = data.result.qrImage;
+            img.alt = "QR Login LINE";
+            img.style.maxWidth = "200px";
+            img.style.marginTop = "10px";
+            panel.appendChild(img);
+          }
+          if (data.result && data.result.url) {
+            const link = document.createElement("a");
+            link.href = data.result.url;
+            link.textContent = "Link Login LINE";
+            link.target = "_blank";
+            link.style.display = "block";
+            link.style.marginTop = "10px";
+            panel.appendChild(link);
+          }
+        })
+        .catch(err => panel.textContent = "Error: " + err);
     }
 
     // Ambil elemen tab V2
