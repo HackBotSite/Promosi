@@ -2211,6 +2211,7 @@
         return res.json();
       })
       .then(data => {
+        console.log("DATA:", data);
         panel.innerHTML = panel.innerHTML.split('<pre')[0];
         const pre = document.createElement("pre");
         pre.textContent = JSON.stringify(data, null, 2);
