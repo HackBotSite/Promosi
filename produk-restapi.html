@@ -2718,7 +2718,7 @@
           let html = "";
 
           if (data.results && Array.isArray(data.results)) {
-            // Youtube List
+            // Youtube List case
             html = "<h4>Hasil Pencarian:</h4><ul>";
             data.results.forEach(item => {
               html += `
@@ -2758,11 +2758,12 @@
                 `).join("")}
               </ul>
             `;
-          } else if ((feature === "Smule Audio / Video" || feature === "Youtube Video" || feature === "Youtube Audio") && data.result) {
-            // Media download (video/audio)
-            const r = data.result;
+          } else {
+            // Default case (Video/Audio/Smule/etc.)
+            const r = data.result || {};
             html = `
               <p><strong>Title:</strong> ${r.title || "-"}</p>
+              <p><strong>Deskripsi:</strong> ${r.description || "-"}</p>
               <p><strong>Uploader:</strong> ${r.uploader || "-"}</p>
               <p><strong>Durasi:</strong> ${r.duration || "-"}</p>
               <p><img src="${r.thumbnail || ""}" alt="${r.title || "Thumbnail"}" style="max-width:200px"></p>
@@ -2773,8 +2774,6 @@
             if (r.downloadVideoUrl) {
               html += `<p><strong>Link video:</strong> <a href="${r.downloadVideoUrl}" target="_blank">${r.downloadVideoUrl}</a></p>`;
             }
-          } else {
-            html = "<p>Response tidak dikenali atau kosong.</p>";
           }
 
           panel.innerHTML = html;
