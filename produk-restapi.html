@@ -2025,23 +2025,39 @@
             <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goLoginEmailV2" id="tabGoLoginEmailV2">Golang</button>
           </div>
 
-          <!-- JS -->
+          <!-- JavaScript -->
           <div id="jsLoginEmailV2" role="tabpanel" aria-labelledby="tabJSLoginEmailV2" class="code">
       <pre><code class="language-js">
-      // Login Email LINE V2
+      // Login Email LINE V2 — Tahap 1 (PIN)
       fetch("https://api2.teamhackbotsindo.my.id/api/line-email-v2", {
         method: "POST",
         headers: { "x-api-key": apiKey, "Content-Type": "application/json" },
         body: JSON.stringify({
           email: "user@example.com",
           password: "yourpassword",
-          appname: "DESKTOPWIN\t9.2.0.3403\tWINDOWS\t10.0.0-NT-x64"
+          appname: "DESKTOPWIN\t9.2.0.3403\tWINDOWS\t10.0.0-NT-x64",
+          step: "pin"
         })
       })
         .then(res => res.json())
         .then(data => {
-          console.log("Login Email LINE:", data);
-          // tampilkan hasil token di halaman
+          console.log("PIN Response:", data);
+          document.body.innerHTML += "&lt;pre&gt;" + JSON.stringify(data, null, 2) + "&lt;/pre&gt;";
+          // Setelah PIN diverifikasi di aplikasi LINE, jalankan tahap 2:
+          return fetch("https://api2.teamhackbotsindo.my.id/api/line-email-v2", {
+            method: "POST",
+            headers: { "x-api-key": apiKey, "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: "user@example.com",
+              password: "yourpassword",
+              appname: "DESKTOPWIN\t9.2.0.3403\tWINDOWS\t10.0.0-NT-x64",
+              step: "token"
+            })
+          });
+        })
+        .then(res => res.json())
+        .then(data => {
+          console.log("Token Response:", data);
           document.body.innerHTML += "&lt;pre&gt;" + JSON.stringify(data, null, 2) + "&lt;/pre&gt;";
         });
       </code></pre>
@@ -2053,14 +2069,21 @@
       import requests
 
       headers = { "x-api-key": apiKey, "Content-Type": "application/json" }
-      payload = {
+      payload_pin = {
         "email": "user@example.com",
         "password": "yourpassword",
-        "appname": "DESKTOPWIN\t9.2.0.3403\tWINDOWS\t10.0.0-NT-x64"
+        "appname": "DESKTOPWIN\t9.2.0.3403\tWINDOWS\t10.0.0-NT-x64",
+        "step": "pin"
       }
 
-      resp = requests.post("https://api2.teamhackbotsindo.my.id/api/line-email-v2", headers=headers, json=payload)
-      print("Login Email LINE:", resp.json())
+      # Tahap 1: ambil PIN
+      resp = requests.post("https://api2.teamhackbotsindo.my.id/api/line-email-v2", headers=headers, json=payload_pin)
+      print("PIN Response:", resp.json())
+
+      # Setelah PIN diverifikasi di aplikasi LINE, jalankan tahap 2
+      payload_token = { **payload_pin, "step": "token" }
+      resp2 = requests.post("https://api2.teamhackbotsindo.my.id/api/line-email-v2", headers=headers, json=payload_token)
+      print("Token Response:", resp2.json())
       </code></pre>
           </div>
 
@@ -2078,15 +2101,26 @@
 
       func main() {
         client := &http.Client{}
-        body := []byte(`{"email":"user@example.com","password":"yourpassword","appname":"DESKTOPWIN\t9.2.0.3403\tWINDOWS\t10.0.0-NT-x64"}`)
-        req, _ := http.NewRequest("POST", "https://api2.teamhackbotsindo.my.id/api/line-email-v2", bytes.NewBuffer(body))
-        req.Header.Set("x-api-key", apiKey)
-        req.Header.Set("Content-Type", "application/json")
 
-        resp, _ := client.Do(req)
-        defer resp.Body.Close()
-        b, _ := ioutil.ReadAll(resp.Body)
-        fmt.Println("Login Email LINE:", string(b))
+        // Tahap 1: ambil PIN
+        bodyPin := []byte(`{"email":"user@example.com","password":"yourpassword","appname":"DESKTOPWIN\t9.2.0.3403\tWINDOWS\t10.0.0-NT-x64","step":"pin"}`)
+        reqPin, _ := http.NewRequest("POST", "https://api2.teamhackbotsindo.my.id/api/line-email-v2", bytes.NewBuffer(bodyPin))
+        reqPin.Header.Set("x-api-key", apiKey)
+        reqPin.Header.Set("Content-Type", "application/json")
+        respPin, _ := client.Do(reqPin)
+        defer respPin.Body.Close()
+        bPin, _ := ioutil.ReadAll(respPin.Body)
+        fmt.Println("PIN Response:", string(bPin))
+
+        // Tahap 2: ambil Token
+        bodyToken := []byte(`{"email":"user@example.com","password":"yourpassword","appname":"DESKTOPWIN\t9.2.0.3403\tWINDOWS\t10.0.0-NT-x64","step":"token"}`)
+        reqToken, _ := http.NewRequest("POST", "https://api2.teamhackbotsindo.my.id/api/line-email-v2", bytes.NewBuffer(bodyToken))
+        reqToken.Header.Set("x-api-key", apiKey)
+        reqToken.Header.Set("Content-Type", "application/json")
+        respToken, _ := client.Do(reqToken)
+        defer respToken.Body.Close()
+        bToken, _ := ioutil.ReadAll(respToken.Body)
+        fmt.Println("Token Response:", string(bToken))
       }
       </code></pre>
           </div>
