@@ -2718,7 +2718,7 @@
           let html = "";
 
           if (data.results && Array.isArray(data.results)) {
-            // Youtube List case
+            // Youtube List
             html = "<h4>Hasil Pencarian:</h4><ul>";
             data.results.forEach(item => {
               html += `
@@ -2733,24 +2733,8 @@
               `;
             });
             html += "</ul>";
-          } else {
-            // Default case (Video/Audio/Smule/etc.)
-            const r = data.result || {};
-            html = `
-              <p><strong>Title:</strong> ${r.title || "-"}</p>
-              <p><strong>Deskripsi:</strong> ${r.description || "-"}</p>
-              <p><strong>Uploader:</strong> ${r.uploader || "-"}</p>
-              <p><strong>Durasi:</strong> ${r.duration || "-"}</p>
-              <p><img src="${r.thumbnail || ""}" alt="${r.title || "Thumbnail"}" style="max-width:200px"></p>
-            `;
-            if (r.downloadAudioUrl) {
-              html += `<p><strong>Link audio:</strong> <a href="${r.downloadAudioUrl}" target="_blank">${r.downloadAudioUrl}</a></p>`;
-            }
-            if (r.downloadVideoUrl) {
-              html += `<p><strong>Link video:</strong> <a href="${r.downloadVideoUrl}" target="_blank">${r.downloadVideoUrl}</a></p>`;
-            }
           } else if (feature === "Smule Profile" && data.result) {
-            // Smule Profile case
+            // Smule Profile
             const r = data.result;
             html = `
               <p><img src="${r.avatar}" style="max-width:100px;border-radius:50%"></p>
@@ -2775,7 +2759,7 @@
               </ul>
             `;
           } else if ((feature === "Smule Audio / Video" || feature === "Youtube Video" || feature === "Youtube Audio") && data.result) {
-            // Media download case
+            // Media download (video/audio)
             const r = data.result;
             html = `
               <p><strong>Title:</strong> ${r.title || "-"}</p>
