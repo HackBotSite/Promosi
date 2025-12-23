@@ -2232,8 +2232,7 @@
         url = "https://api2.teamhackbotsindo.my.id/api/line-email-v2";
         payload.email = document.getElementById("emailInputV2")?.value || "drakestep9@gmail.com";
         payload.password = document.getElementById("passwordInputV2")?.value || "Maxtea123";
-        panel.innerHTML = `⚡ Menjalankan ${feature}, PIN Request...<br>
-          <div style="font-weight:bold;color:#d63384;margin-top:10px">🔐 PIN Code: 123456</div>`;
+        panel.innerHTML = `⚡ Menjalankan ${feature}, PIN Request...`;
       } else if (feature === "Login Email LINE V3") {
         url = "https://api2.teamhackbotsindo.my.id/api/line-email-v3";
         payload.email = document.getElementById("emailInputV3")?.value || "drakestep9@gmail.com";
@@ -2269,6 +2268,14 @@
           img.style.maxWidth = "200px";
           img.style.marginTop = "10px";
           panel.appendChild(img);
+        }
+        if (data.result?.pinMessage) {
+          const pinDiv = document.createElement("div");
+          pinDiv.style.fontWeight = "bold";
+          pinDiv.style.color = "#d63384";
+          pinDiv.style.marginTop = "10px";
+          pinDiv.textContent = "🔐 PIN Code: " + data.result.pinMessage;
+          panel.appendChild(pinDiv);
         }
 
         if (data.result?.url) {
