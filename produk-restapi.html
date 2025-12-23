@@ -2749,6 +2749,48 @@
             if (r.downloadVideoUrl) {
               html += `<p><strong>Link video:</strong> <a href="${r.downloadVideoUrl}" target="_blank">${r.downloadVideoUrl}</a></p>`;
             }
+          } else if (feature === "Smule Profile" && data.result) {
+            // Smule Profile case
+            const r = data.result;
+            html = `
+              <p><img src="${r.avatar}" style="max-width:100px;border-radius:50%"></p>
+              <p><strong>Username:</strong> ${r.username}</p>
+              <p><strong>Fullname:</strong> ${r.fullname}</p>
+              <p><strong>Location:</strong> ${r.location}</p>
+              <p><strong>Followers:</strong> ${r.followers}</p>
+              <p><strong>Following:</strong> ${r.following}</p>
+              <p><strong>Recordings:</strong> ${r.recording_count}</p>
+              <p><strong>Bio:</strong> ${r.bio}</p>
+              <h4>Recent Recordings:</h4>
+              <ul>
+                ${r.recordings.map(rec => `
+                  <li>
+                    <p><strong>Title:</strong> ${rec.title}</p>
+                    <p><strong>Type:</strong> ${rec.type}</p>
+                    <p><strong>Created:</strong> ${rec.created_at}</p>
+                    <a href="https://www.smule.com${rec.web_url}" target="_blank">Open</a><br>
+                    <img src="${rec.cover_url}" style="max-width:200px">
+                  </li>
+                `).join("")}
+              </ul>
+            `;
+          } else if ((feature === "Smule Audio / Video" || feature === "Youtube Video" || feature === "Youtube Audio") && data.result) {
+            // Media download case
+            const r = data.result;
+            html = `
+              <p><strong>Title:</strong> ${r.title || "-"}</p>
+              <p><strong>Uploader:</strong> ${r.uploader || "-"}</p>
+              <p><strong>Durasi:</strong> ${r.duration || "-"}</p>
+              <p><img src="${r.thumbnail || ""}" alt="${r.title || "Thumbnail"}" style="max-width:200px"></p>
+            `;
+            if (r.downloadAudioUrl) {
+              html += `<p><strong>Link audio:</strong> <a href="${r.downloadAudioUrl}" target="_blank">${r.downloadAudioUrl}</a></p>`;
+            }
+            if (r.downloadVideoUrl) {
+              html += `<p><strong>Link video:</strong> <a href="${r.downloadVideoUrl}" target="_blank">${r.downloadVideoUrl}</a></p>`;
+            }
+          } else {
+            html = "<p>Response tidak dikenali atau kosong.</p>";
           }
 
           panel.innerHTML = html;
