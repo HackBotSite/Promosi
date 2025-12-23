@@ -2284,42 +2284,41 @@
           pinDiv.textContent = "🔐 " + data.result.pinMessage;
           panel.appendChild(pinDiv);
 
-          // Buat tombol Lanjutkan
+          // Tombol Lanjutkan
           const continueBtn = document.createElement("button");
           continueBtn.textContent = "Lanjutkan untuk Ambil Token";
           continueBtn.className = "btn";
           continueBtn.style.marginTop = "10px";
-
           continueBtn.onclick = () => {
             panel.appendChild(document.createTextNode("⏳ Menunggu verifikasi PIN..."));
-            setTimeout(() => {
-              const payload2 = { ...payload, step: "token" };
-              fetch("https://api2.teamhackbotsindo.my.id/api/line-email-v2", {
-                method: "POST",
-                headers: { "x-api-key": apiKey, "Content-Type": "application/json" },
-                body: JSON.stringify(payload2)
+
+            const payload2 = { ...payload, step: "token" };
+            fetch("https://api2.teamhackbotsindo.my.id/api/line-email-v2", {
+              method: "POST",
+              headers: { "x-api-key": apiKey, "Content-Type": "application/json" },
+              body: JSON.stringify(payload2)
+            })
+              .then(res => {
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                return res.json();
               })
-                .then(res => {
-                  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                  return res.json();
-                })
-                .then(data2 => {
-                  const tokenPre = document.createElement("pre");
-                  tokenPre.textContent = JSON.stringify(data2, null, 2);
-                  panel.appendChild(tokenPre);
-                })
-                .catch(err => {
-                  const errDiv = document.createElement("div");
-                  errDiv.style.color = "#dc3545";
-                  errDiv.style.marginTop = "8px";
-                  errDiv.textContent = "Error ambil token: " + err;
-                  panel.appendChild(errDiv);
-                });
-            }, 10000); // tunggu 10 detik
+              .then(data2 => {
+                const tokenPre = document.createElement("pre");
+                tokenPre.textContent = JSON.stringify(data2, null, 2);
+                panel.appendChild(tokenPre);
+              })
+              .catch(err => {
+                const errDiv = document.createElement("div");
+                errDiv.style.color = "#dc3545";
+                errDiv.style.marginTop = "8px";
+                errDiv.textContent = "Error ambil token: " + err;
+                panel.appendChild(errDiv);
+              });
           };
 
           panel.appendChild(continueBtn);
         }
+
         // Link login (QR flow)
         if (data.result?.url) {
           const link = document.createElement("a");
