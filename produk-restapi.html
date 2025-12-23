@@ -2232,118 +2232,130 @@
         url = "https://api2.teamhackbotsindo.my.id/api/line-email-v2";
         payload.email = document.getElementById("emailInputV2")?.value || "drakestep9@gmail.com";
         payload.password = document.getElementById("passwordInputV2")?.value || "Maxtea123";
-        payload.appname = "DESKTOPWIN\t9.2.0.3403\tWINDOWS\t10.0.0-NT-x64";
         payload.step = "pin"; // tahap pertama: ambil PIN
 
         panel.innerHTML = `⚡ Menjalankan ${feature}, PIN Request...`;
-
       } else if (feature === "Login Email LINE V3") {
         url = "https://api2.teamhackbotsindo.my.id/api/line-email-v3";
         payload.email = document.getElementById("emailInputV3")?.value || "drakestep9@gmail.com";
         payload.password = document.getElementById("passwordInputV3")?.value || "Maxtea123";
-        panel.innerHTML = `⚡ Menjalankan ${feature}, PIN Request...<br>
-          <div style="font-weight:bold;color:#d63384;margin-top:10px">🔐 PIN Code: 123456</div>`;
+        panel.innerHTML = `⚡ Menjalankan ${feature}, PIN Request...`;
       } else {
         panel.textContent = "Error: Fitur tidak dikenal.";
         return;
       }
 
-    fetch(url, {
-      method: "POST",
-      headers: { "x-api-key": apiKey, "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    })
-      .then(res => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        return res.json();
+      fetch(url, {
+        method: "POST",
+        headers: { "x-api-key": apiKey, "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
       })
-      .then(data => {
-        console.log("DATA:", data);
-        panel.innerHTML = panel.innerHTML.split('<pre')[0];
+        .then(res => {
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          return res.json();
+        })
+        .then(data => {
+          console.log("DATA:", data);
+          panel.innerHTML = panel.innerHTML.split('<pre')[0];
 
-        const pre = document.createElement("pre");
-        pre.textContent = JSON.stringify(data, null, 2);
-        panel.appendChild(pre);
+          const pre = document.createElement("pre");
+          pre.textContent = JSON.stringify(data, null, 2);
+          panel.appendChild(pre);
 
-        // QR khusus untuk Login QR LINE
-        if (data.result?.qrImage) {
-          const img = document.createElement("img");
-          img.src = data.result.qrImage;
-          img.alt = "QR Login LINE";
-          img.style.maxWidth = "200px";
-          img.style.marginTop = "10px";
-          panel.appendChild(img);
-        }
+          // QR khusus untuk Login QR LINE
+          if (data.result?.qrImage) {
+            const img = document.createElement("img");
+            img.src = data.result.qrImage;
+            img.alt = "QR Login LINE";
+            img.style.maxWidth = "200px";
+            img.style.marginTop = "10px";
+            panel.appendChild(img);
+          }
 
-        // PIN untuk Login Email LINE V2
-        if (data.result?.pinMessage) {
-          const pinDiv = document.createElement("div");
-          pinDiv.style.fontWeight = "bold";
-          pinDiv.style.color = "#d63384";
-          pinDiv.style.marginTop = "10px";
-          pinDiv.textContent = "🔐 " + data.result.pinMessage;
-          panel.appendChild(pinDiv);
+          // PIN untuk Login Email LINE V2
+          if (data.result?.pinMessage) {
+            const pinDiv = document.createElement("div");
+            pinDiv.style.fontWeight = "bold";
+            pinDiv.style.color = "#d63384";
+            pinDiv.style.marginTop = "10px";
+            pinDiv.textContent = "🔐 " + data.result.pinMessage;
+            panel.appendChild(pinDiv);
 
-          // Tombol Lanjutkan
-          const continueBtn = document.createElement("button");
-          continueBtn.textContent = "Lanjutkan untuk Ambil Token";
-          continueBtn.className = "btn";
-          continueBtn.style.marginTop = "10px";
-          continueBtn.onclick = () => {
-            panel.appendChild(document.createTextNode("⏳ Menunggu verifikasi PIN..."));
+            // Tombol Lanjutkan
+            const continueBtn = document.createElement("button");
+            continueBtn.textContent = "Lanjutkan untuk Ambil Token";
+            continueBtn.className = "btn";
+            continueBtn.style.marginTop = "10px";
+            continueBtn.onclick = () => {
+              panel.appendChild(document.createTextNode("⏳ Menunggu verifikasi PIN..."));
 
-            const payload2 = { ...payload, step: "token" };
-            fetch("https://api2.teamhackbotsindo.my.id/api/line-email-v2", {
-              method: "POST",
-              headers: { "x-api-key": apiKey, "Content-Type": "application/json" },
-              body: JSON.stringify(payload2)
-            })
-              .then(res => {
-                if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                return res.json();
+              const payload2 = { ...payload, step: "token" };
+              fetch("https://api2.teamhackbotsindo.my.id/api/line-email-v2", {
+                method: "POST",
+                headers: { "x-api-key": apiKey, "Content-Type": "application/json" },
+                body: JSON.stringify(payload2)
               })
-              .then(data2 => {
-                const tokenPre = document.createElement("pre");
-                tokenPre.textContent = JSON.stringify(data2, null, 2);
-                panel.appendChild(tokenPre);
-              })
-              .catch(err => {
-                const errDiv = document.createElement("div");
-                errDiv.style.color = "#dc3545";
-                errDiv.style.marginTop = "8px";
-                errDiv.textContent = "Error ambil token: " + err;
-                panel.appendChild(errDiv);
-              });
-          };
+                .then(res => {
+                  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                  return res.json();
+                })
+                .then(data2 => {
+                  const tokenPre = document.createElement("pre");
+                  tokenPre.textContent = JSON.stringify(data2, null, 2);
+                  panel.appendChild(tokenPre);
 
-          panel.appendChild(continueBtn);
-        }
+                  // tampilkan token & certificate jika ada
+                  if (data2.result?.authToken) {
+                    const tokenDiv = document.createElement("div");
+                    tokenDiv.style.marginTop = "10px";
+                    tokenDiv.style.color = "#198754";
+                    tokenDiv.textContent = "✅ AuthToken: " + data2.result.authToken;
+                    panel.appendChild(tokenDiv);
+                  }
+                  if (data2.result?.certificate) {
+                    const certDiv = document.createElement("div");
+                    certDiv.style.marginTop = "6px";
+                    certDiv.style.color = "#0d6efd";
+                    certDiv.textContent = "📜 Certificate: " + data2.result.certificate;
+                    panel.appendChild(certDiv);
+                  }
+                })
+                .catch(err => {
+                  const errDiv = document.createElement("div");
+                  errDiv.style.color = "#dc3545";
+                  errDiv.style.marginTop = "8px";
+                  errDiv.textContent = "Error ambil token: " + err;
+                  panel.appendChild(errDiv);
+                });
+            };
 
-        // Link login (QR flow)
-        if (data.result?.url) {
-          const link = document.createElement("a");
-          link.href = data.result.url;
-          link.textContent = "Link Login LINE";
-          link.target = "_blank";
-          link.style.display = "block";
-          link.style.marginTop = "10px";
-          panel.appendChild(link);
-        }
+            panel.appendChild(continueBtn);
+          }
 
-        // Link image QR (QR flow)
-        if (data.result?.qrImageLink) {
-          const linkImg = document.createElement("a");
-          linkImg.href = data.result.qrImageLink;
-          linkImg.textContent = "Link Image QR (PNG)";
-          linkImg.target = "_blank";
-          linkImg.style.display = "block";
-          linkImg.style.marginTop = "6px";
-          panel.appendChild(linkImg);
-        }
-      })
-      .catch(err => panel.textContent = "Error: " + err);
+          // Link login (QR flow)
+          if (data.result?.url) {
+            const link = document.createElement("a");
+            link.href = data.result.url;
+            link.textContent = "Link Login LINE";
+            link.target = "_blank";
+            link.style.display = "block";
+            link.style.marginTop = "10px";
+            panel.appendChild(link);
+          }
+
+          // Link image QR (QR flow)
+          if (data.result?.qrImageLink) {
+            const linkImg = document.createElement("a");
+            linkImg.href = data.result.qrImageLink;
+            linkImg.textContent = "Link Image QR (PNG)";
+            linkImg.target = "_blank";
+            linkImg.style.display = "block";
+            linkImg.style.marginTop = "6px";
+            panel.appendChild(linkImg);
+          }
+        })
+        .catch(err => panel.textContent = "Error: " + err);
     }
-
     // Ambil elemen tab Login QR
     const tabJSLoginqr = document.getElementById('tabJSLoginqr');
     const tabPyLoginqr = document.getElementById('tabPyLoginqr');
