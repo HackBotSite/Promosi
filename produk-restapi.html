@@ -2715,20 +2715,39 @@
           }
         })
         .then(data => {
-          const r = data.result || {};
-          let html = `
-            <p><strong>Title:</strong> ${r.title || "-"}</p>
-            <p><strong>Deskripsi:</strong> ${r.alt || "-"}</p>
-            <p><strong>Uploader:</strong> ${r.uploader || "-"}</p>
-            <p><strong>Durasi:</strong> ${r.duration || "-"}</p>
-            <p><img src="${r.thumbnail || ""}" alt="${r.alt || "Thumbnail"}" style="max-width:200px"></p>
-          `;
+          let html = "";
 
-          if (r.downloadAudioUrl) {
-            html += `<p><strong>Link audio (mp3/m4a):</strong> <a href="${r.downloadAudioUrl}" target="_blank">${r.downloadAudioUrl}</a></p>`;
-          }
-          if (r.downloadVideoUrl) {
-            html += `<p><strong>Link video (mp4):</strong> <a href="${r.downloadVideoUrl}" target="_blank">${r.downloadVideoUrl}</a></p>`;
+          if (data.results && Array.isArray(data.results)) {
+            // Youtube List case
+            html = "<h4>Hasil Pencarian:</h4><ul>";
+            data.results.forEach(item => {
+              html += `
+                <li>
+                  <p><strong>Title:</strong> ${item.title}</p>
+                  <p><strong>Channel:</strong> ${item.channelTitle}</p>
+                  <p><strong>Published:</strong> ${item.publishedAt}</p>
+                  <p><a href="${item.url}" target="_blank">Tonton di YouTube</a></p>
+                  <img src="${item.thumbnails?.high?.url || ""}" style="max-width:200px">
+                </li>
+              `;
+            });
+            html += "</ul>";
+          } else {
+            // Default case (Video/Audio/Smule/etc.)
+            const r = data.result || {};
+            html = `
+              <p><strong>Title:</strong> ${r.title || "-"}</p>
+              <p><strong>Deskripsi:</strong> ${r.alt || "-"}</p>
+              <p><strong>Uploader:</strong> ${r.uploader || "-"}</p>
+              <p><strong>Durasi:</strong> ${r.duration || "-"}</p>
+              <p><img src="${r.thumbnail || ""}" alt="${r.alt || "Thumbnail"}" style="max-width:200px"></p>
+            `;
+            if (r.downloadAudioUrl) {
+              html += `<p><strong>Link audio:</strong> <a href="${r.downloadAudioUrl}" target="_blank">${r.downloadAudioUrl}</a></p>`;
+            }
+            if (r.downloadVideoUrl) {
+              html += `<p><strong>Link video:</strong> <a href="${r.downloadVideoUrl}" target="_blank">${r.downloadVideoUrl}</a></p>`;
+            }
           }
 
           panel.innerHTML = html;
