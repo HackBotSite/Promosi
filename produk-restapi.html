@@ -2232,7 +2232,11 @@
         url = "https://api2.teamhackbotsindo.my.id/api/line-email-v2";
         payload.email = document.getElementById("emailInputV2")?.value || "drakestep9@gmail.com";
         payload.password = document.getElementById("passwordInputV2")?.value || "Maxtea123";
+        payload.appname = "DESKTOPWIN\t9.2.0.3403\tWINDOWS\t10.0.0-NT-x64";
+        payload.step = "pin"; // tahap pertama: ambil PIN
+
         panel.innerHTML = `⚡ Menjalankan ${feature}, PIN Request...`;
+
       } else if (feature === "Login Email LINE V3") {
         url = "https://api2.teamhackbotsindo.my.id/api/line-email-v3";
         payload.email = document.getElementById("emailInputV3")?.value || "drakestep9@gmail.com";
@@ -2256,6 +2260,7 @@
       .then(data => {
         console.log("DATA:", data);
         panel.innerHTML = panel.innerHTML.split('<pre')[0];
+
         const pre = document.createElement("pre");
         pre.textContent = JSON.stringify(data, null, 2);
         panel.appendChild(pre);
@@ -2269,15 +2274,52 @@
           img.style.marginTop = "10px";
           panel.appendChild(img);
         }
+
+        // PIN untuk Login Email LINE V2
         if (data.result?.pinMessage) {
           const pinDiv = document.createElement("div");
           pinDiv.style.fontWeight = "bold";
           pinDiv.style.color = "#d63384";
           pinDiv.style.marginTop = "10px";
-          pinDiv.textContent = "🔐 PIN Code: " + data.result.pinMessage;
+          pinDiv.textContent = "🔐 " + data.result.pinMessage;
           panel.appendChild(pinDiv);
+
+          // Tombol Lanjutkan
+          const continueBtn = document.createElement("button");
+          continueBtn.textContent = "Lanjutkan untuk Ambil Token";
+          continueBtn.className = "btn";
+          continueBtn.style.marginTop = "10px";
+          continueBtn.onclick = () => {
+            panel.appendChild(document.createTextNode("⏳ Menunggu verifikasi PIN..."));
+
+            const payload2 = { ...payload, step: "token" };
+            fetch("https://api2.teamhackbotsindo.my.id/api/line-email-v2", {
+              method: "POST",
+              headers: { "x-api-key": apiKey, "Content-Type": "application/json" },
+              body: JSON.stringify(payload2)
+            })
+              .then(res => {
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                return res.json();
+              })
+              .then(data2 => {
+                const tokenPre = document.createElement("pre");
+                tokenPre.textContent = JSON.stringify(data2, null, 2);
+                panel.appendChild(tokenPre);
+              })
+              .catch(err => {
+                const errDiv = document.createElement("div");
+                errDiv.style.color = "#dc3545";
+                errDiv.style.marginTop = "8px";
+                errDiv.textContent = "Error ambil token: " + err;
+                panel.appendChild(errDiv);
+              });
+          };
+
+          panel.appendChild(continueBtn);
         }
 
+        // Link login (QR flow)
         if (data.result?.url) {
           const link = document.createElement("a");
           link.href = data.result.url;
@@ -2288,6 +2330,7 @@
           panel.appendChild(link);
         }
 
+        // Link image QR (QR flow)
         if (data.result?.qrImageLink) {
           const linkImg = document.createElement("a");
           linkImg.href = data.result.qrImageLink;
