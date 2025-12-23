@@ -2284,7 +2284,12 @@
           pinDiv.textContent = "🔐 " + data.result.pinMessage;
           panel.appendChild(pinDiv);
 
-          // Tombol Lanjutkan
+          // Buat tombol Lanjutkan
+          const continueBtn = document.createElement("button");
+          continueBtn.textContent = "Lanjutkan untuk Ambil Token";
+          continueBtn.className = "btn";
+          continueBtn.style.marginTop = "10px";
+
           continueBtn.onclick = () => {
             panel.appendChild(document.createTextNode("⏳ Menunggu verifikasi PIN..."));
             setTimeout(() => {
@@ -2310,11 +2315,11 @@
                   errDiv.textContent = "Error ambil token: " + err;
                   panel.appendChild(errDiv);
                 });
-            },           10000); // tunggu 10 detik
+            }, 10000); // tunggu 10 detik
           };
+
           panel.appendChild(continueBtn);
         }
-
         // Link login (QR flow)
         if (data.result?.url) {
           const link = document.createElement("a");
