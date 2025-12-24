@@ -1599,7 +1599,7 @@
         .then(data => console.log("Translate:", data));
 
       // Kodepos
-      fetch("https://api.teamhackbotsindo.my.id/api/kodepos?daerah=ciomas", {
+      fetch("https://api2.teamhackbotsindo.my.id/api/kodepos?daerah=ciomas", {
         headers: { "x-api-key": apiKey }
       })
         .then(res => res.json())
@@ -1636,7 +1636,7 @@
       print("Translate:", resp.json())
 
       # Kodepos
-      resp = requests.get("https://api.teamhackbotsindo.my.id/api/kodepos?daerah=ciomas", headers={"x-api-key": apiKey})
+      resp = requests.get("https://api2.teamhackbotsindo.my.id/api/kodepos?daerah=ciomas", headers={"x-api-key": apiKey})
       print("Kodepos:", resp.json())
 
       # Info Gempa
@@ -1677,9 +1677,83 @@
 
       func main() {
         fetchAPI("https://api.teamhackbotsindo.my.id/api/translate?text=selamat%20pagi&to=en", true)
-        fetchAPI("https://api.teamhackbotsindo.my.id/api/kodepos?daerah=ciomas", false)
+        fetchAPI("https://api2.teamhackbotsindo.my.id/api/kodepos?daerah=ciomas", false)
         fetchAPI("https://api.teamhackbotsindo.my.id/api/gempa", false)
         fetchAPI("https://api.teamhackbotsindo.my.id/api/cord-lagu?judul=melukis%20senja", false)
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Code samples Kodepos -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Kodepos</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Kodepos">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsKodepos" id="tabJSKodepos">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyKodepos" id="tabPyKodepos">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goKodepos" id="tabGoKodepos">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsKodepos" role="tabpanel" aria-labelledby="tabJSKodepos" class="code">
+      <pre><code class="language-js">
+
+      // Kodepos
+      fetch("https://api2.teamhackbotsindo.my.id/api/kodepos?daerah=ciomas", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Kodepos:", data));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyKodepos" role="tabpanel" aria-labelledby="tabPyKodepos" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      headers = { 
+        "x-api-key": apiKey,
+        "Origin": "https://teamhackbotsindo.my.id"
+      }
+
+      # Kodepos
+      resp = requests.get("https://api2.teamhackbotsindo.my.id/api/kodepos?daerah=ciomas", headers={"x-api-key": apiKey})
+      print("Kodepos:", resp.json())
+
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goKodepos" role="tabpanel" aria-labelledby="tabGoKodepos" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func fetchAPI(url string, withOrigin bool) {
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+        if withOrigin {
+          req.Header.Set("Origin", "https://teamhackbotsindo.my.id")
+        }
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(url, ":", string(body))
+      }
+
+      func main() {
+        fetchAPI("https://api2.teamhackbotsindo.my.id/api/kodepos?daerah=ciomas", false)
       }
       </code></pre>
           </div>
@@ -3124,7 +3198,7 @@
         url = `https://api.teamhackbotsindo.my.id/api/translate?text=${encodeURIComponent(text)}&to=${lang}`;
         headers.Origin = "https://teamhackbotsindo.my.id"; // jika diperlukan oleh server
       } else if (feature === "Kodepos") {
-        url = `https://api.teamhackbotsindo.my.id/api/kodepos?daerah=ciomas`;
+        url = `https://api2.teamhackbotsindo.my.id/api/kodepos?daerah=ciomas`;
       } else if (feature === "Info Gempa") {
         url = `https://api.teamhackbotsindo.my.id/api/gempa`;
       } else if (feature === "Cord Lagu") {
@@ -3158,6 +3232,27 @@
         .then(data => panel.textContent = JSON.stringify(data, null, 2))
         .catch(err => panel.textContent = "Error: " + err);
     }
+
+    // Tabs kodepos
+    const tabJSKodepos = document.getElementById('tabJSKodepos');
+    const tabPyKodepos = document.getElementById('tabPyKodepos');
+    const tabGoKodepos = document.getElementById('tabGoKodepos');
+
+    const jsKodepos = document.getElementById('jsKodepos');
+    const pyKodepos = document.getElementById('pyKodepos');
+    const goKodepos = document.getElementById('goKodepos');
+
+    function showKodepos(tab) {
+      [tabJSKodepos, tabPyKodepos, tabGoKodepos].forEach(btn => btn.classList.remove('active'));
+      [jsKodepos, pyKodepos, goKodepos].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    tabJSKodepos.addEventListener('click', () => showKodepos(tabJSKodepos));
+    tabPyKodepos.addEventListener('click', () => showKodepos(tabPyKodepos));
+    tabGoKodepos.addEventListener('click', () => showKodepos(tabGoKodepos));
 
     // API-ISLAMI
     const islamiEndpoints = [
