@@ -1322,6 +1322,93 @@
         </div>
       </section>
 
+      <!-- Section Smule Downloader -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Smule Downloader</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Smule Downloader">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsSmuleDownloader" id="tabJSSmuleDownloader">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pySmuleDownloader" id="tabPySmuleDownloader">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goSmuleDownloader" id="tabGoSmuleDownloader">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsSmuleDownloader" role="tabpanel" aria-labelledby="tabJSSmuleDownloader" class="code">
+      <pre><code class="language-js">
+      // Smule Audio / Video
+      const apiKey = "YOUR_API_KEY";
+      const link = "https://www.smule.com/sing-recording/2857539585_5092417239";
+
+      fetch(`https://api2.teamhackbotsindo.my.id/api/smule-downloader?link=${link}`, {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => {
+          console.log("Judul:", data.result.title);
+          console.log("Video mp4:", data.result.downloadVideoUrl);
+          console.log("Audio mp3:", data.result.downloadAudioUrl);
+        })
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pySmuleDownloader" role="tabpanel" aria-labelledby="tabPySmuleDownloader" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      link = "https://www.smule.com/sing-recording/2857539585_5092417239"
+
+      url = f"https://api2.teamhackbotsindo.my.id/api/smule-downloader?link={link}"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      data = resp.json()
+
+      print("Judul:", data["result"]["title"])
+      print("Video mp4:", data["result"].get("downloadVideoUrl"))
+      print("Audio mp3:", data["result"].get("downloadAudioUrl"))
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goSmuleDownloader" role="tabpanel" aria-labelledby="tabGoSmuleDownloader" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+        "encoding/json"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        link := "https://www.smule.com/sing-recording/2857539585_5092417239"
+        url := fmt.Sprintf("https://api2.teamhackbotsindo.my.id/api/smule-downloader?link=%s", link)
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+
+        var data map[string]interface{}
+        json.Unmarshal(body, &data)
+
+        result := data["result"].(map[string]interface{})
+        fmt.Println("Judul:", result["title"])
+        fmt.Println("Video mp4:", result["downloadVideoUrl"])
+        fmt.Println("Audio mp3:", result["downloadAudioUrl"])
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
       <!-- Section Facebook Video -->
       <section class="card">
         <div class="card-header">Contoh Kode — Facebook Video</div>
@@ -2651,8 +2738,9 @@
       { no: 3, name: "Youtube Audio", method: "GET", desc: "Download audio dari YouTube", query: "apikey, link" },
       { no: 4, name: "Smule Profile", method: "GET", desc: "Profil pengguna Smule", query: "apikey, handle" },
       { no: 5, name: "Smule Audio / Video", method: "GET", desc: "Download media dari Smule", query: "apikey, link" },
-      { no: 6, name: "Facebook", method: "GET", desc: "Download video dari Facebook", query: "apikey, link" },
-      { no: 7, name: "Tiktok", method: "GET", desc: "Download video dari Tiktok", query: "apikey, link" }
+      { no: 6, name: "Smule Downloader", method: "GET", desc: "Download media dari Smule", query: "apikey, link" },
+      { no: 7, name: "Facebook", method: "GET", desc: "Download video dari Facebook", query: "apikey, link" },
+      { no: 8, name: "Tiktok", method: "GET", desc: "Download video dari Tiktok", query: "apikey, link" }
     ];
 
     const downloaderBody = document.getElementById('downloaderTableBody');
@@ -2696,6 +2784,9 @@
           break;
         case "Smule Audio / Video":
           url = `https://api2.teamhackbotsindo.my.id/api/smule-video?link=https://www.smule.com/c/962903912_5157606717`;
+          break;
+        case "Smule Downloader":
+          url = `https://api2.teamhackbotsindo.my.id/api/smule-downloader?link=https://www.smule.com/c/962903912_5157606717`;
           break;
         case "Facebook":
           url = `https://api2.teamhackbotsindo.my.id/api/facebook-video?link=https://www.facebook.com/share/r/17px4C4PmR/`;
@@ -2799,7 +2890,7 @@
               </p>
             `;
           } else if (feature === "Smule Audio / Video" && data.result) {
-            // Smule Audio/Video
+            // Smule Audio/Video via Sownloader
             const r = data.result;
             html = `
               <p><strong>Title:</strong> ${r.title || "-"}</p>
@@ -2808,11 +2899,28 @@
               <p><img src="${r.thumbnail || ""}" alt="${r.title || "Thumbnail"}" style="max-width:200px"></p>
             `;
             if (r.downloadAudioUrl) {
-              html += `<p><strong>Link audio (Smule):</strong> <a href="${r.downloadAudioUrl}" target="_blank">${r.downloadAudioUrl}</a></p>`;
+              html += `<p><strong>Link audio (Smule - Sownloader):</strong> <a href="${r.downloadAudioUrl}" target="_blank">${r.downloadAudioUrl}</a></p>`;
             }
             if (r.downloadVideoUrl) {
-              html += `<p><strong>Link video (Smule):</strong> <a href="${r.downloadVideoUrl}" target="_blank">${r.downloadVideoUrl}</a></p>`;
+              html += `<p><strong>Link video (Smule - Sownloader):</strong> <a href="${r.downloadVideoUrl}" target="_blank">${r.downloadVideoUrl}</a></p>`;
             }
+
+          } else if (feature === "Smule Downloader" && data.result) {
+            // Smule Downloader via smulevideodownloader.com
+            const r = data.result;
+            html = `
+              <p><strong>Title:</strong> ${r.title || "-"}</p>
+              <p><strong>Uploader:</strong> ${r.uploader || "-"}</p>
+              <p><strong>Durasi:</strong> ${r.duration || "-"}</p>
+              <p><img src="${r.thumbnail || ""}" alt="${r.title || "Thumbnail"}" style="max-width:200px"></p>
+            `;
+            if (r.downloadAudioUrl) {
+              html += `<p><strong>Link audio (Smule Downloader):</strong> <a href="${r.downloadAudioUrl}" target="_blank">${r.downloadAudioUrl}</a></p>`;
+            }
+            if (r.downloadVideoUrl) {
+              html += `<p><strong>Link video (Smule Downloader):</strong> <a href="${r.downloadVideoUrl}" target="_blank">${r.downloadVideoUrl}</a></p>`;
+            }
+
           } else {
             html = "<p>Response tidak dikenali atau kosong.</p>";
           }
@@ -2926,6 +3034,27 @@
     tabJSSmuleVideo.addEventListener('click', () => showSmuleVideo(tabJSSmuleVideo));
     tabPySmuleVideo.addEventListener('click', () => showSmuleVideo(tabPySmuleVideo));
     tabGoSmuleVideo.addEventListener('click', () => showSmuleVideo(tabGoSmuleVideo));
+
+    // TAB SMULE DOWNLOADER
+    const tabJSSmuleDownloader = document.getElementById('tabJSSmuleDownloader');
+    const tabPySmuleDownloader = document.getElementById('tabPySmuleDownloader');
+    const tabGoSmuleDownloader = document.getElementById('tabGoSmuleDownloader');
+
+    const jsSmuleDownloader = document.getElementById('jsSmuleDownloader');
+    const pySmuleDownloader = document.getElementById('pySmuleDownloader');
+    const goSmuleDownloader = document.getElementById('goSmuleDownloader');
+
+    function showSmuleDownloader(tab) {
+      [tabJSSmuleDownloader, tabPySmuleDownloader, tabGoSmuleDownloader].forEach(btn => btn.classList.remove('active'));
+      [jsSmuleDownloader, pySmuleDownloader, goSmuleDownloader].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    tabJSSmuleDownloader.addEventListener('click', () => showSmuleVideo(tabJSSmuleDownloader));
+    tabPySmuleDownloader.addEventListener('click', () => showSmuleVideo(tabPySmuleDownloader));
+    tabGoSmuleDownloader.addEventListener('click', () => showSmuleVideo(tabGoSmuleDownloader));
 
     //  TAB TIKTOK VIDEO 
     const tabJSTikTokVideo = document.getElementById('tabJSTikTokVideo');
