@@ -1035,13 +1035,13 @@
           <!-- JS -->
           <div id="jsQuotes" role="tabpanel" aria-labelledby="tabJSQuotes" class="code">
       <pre><code class="language-js">
-      // Kata Bijak
+      // Quotes
       const apiKey = "YOUR_API_KEY";
       fetch("https://api2.teamhackbotsindo.my.id/api/quotes", {
         headers: { "x-api-key": apiKey }
       })
         .then(res => res.json())
-        .then(data => console.log("Kata Bijak:", data))
+        .then(data => console.log("Quotes:", data))
         .catch(err => console.error(err));
       </code></pre>
           </div>
