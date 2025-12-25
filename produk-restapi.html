@@ -1849,7 +1849,7 @@
       <pre><code class="language-js">
 
       // Cuaca
-      fetch("https://api2.teamhackbotsindo.my.id/api/cuaca", {
+      fetch("https://api2.teamhackbotsindo.my.id/api/cuaca?kota=bogor", {
         headers: { "x-api-key": apiKey }
       })
         .then(res => res.json())
@@ -1868,7 +1868,7 @@
       }
 
       # Cuaca
-      resp = requests.get("https://api2.teamhackbotsindo.my.id/api/cuaca", headers={"x-api-key": apiKey})
+      resp = requests.get("https://api2.teamhackbotsindo.my.id/api/cuaca?kota=bogor", headers={"x-api-key": apiKey})
       print("Cuaca:", resp.json())
 
       </code></pre>
@@ -1901,7 +1901,7 @@
       }
 
       func main() {
-        fetchAPI("https://api2.teamhackbotsindo.my.id/api/cuaca", false)
+        fetchAPI("https://api2.teamhackbotsindo.my.id/api/cuaca?kota=bogor", false)
       }
       </code></pre>
           </div>
