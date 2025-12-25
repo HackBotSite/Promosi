@@ -1026,13 +1026,13 @@
           <!-- JS -->
           <div id="jsKatabijak" role="tabpanel" aria-labelledby="tabJSKatabijak" class="code">
       <pre><code class="language-js">
-      // Random Nama
+      // Kata Bijak
       const apiKey = "YOUR_API_KEY";
-      fetch("https://api2.teamhackbotsindo.my.id/api/random-name", {
+      fetch("https://api2.teamhackbotsindo.my.id/api/katabijak", {
         headers: { "x-api-key": apiKey }
       })
         .then(res => res.json())
-        .then(data => console.log("Random Nama:", data))
+        .then(data => console.log("Kata Bijak:", data))
         .catch(err => console.error(err));
       </code></pre>
           </div>
@@ -1043,7 +1043,7 @@
       import requests
 
       apiKey = "YOUR_API_KEY"
-      url = "https://api2.teamhackbotsindo.my.id/api/random-name"
+      url = "https://api2.teamhackbotsindo.my.id/api/katabijak"
       resp = requests.get(url, headers={"x-api-key": apiKey})
       print(resp.json())
       </code></pre>
@@ -1062,7 +1062,7 @@
 
       func main() {
         apiKey := "YOUR_API_KEY"
-        url := "https://api2.teamhackbotsindo.my.id/api/random-name"
+        url := "https://api2.teamhackbotsindo.my.id/api/katabijak"
 
         client := &http.Client{}
         req, _ := http.NewRequest("GET", url, nil)
@@ -4046,27 +4046,6 @@
     tabJSRandom.addEventListener('click', () => showRandom(tabJSRandom));
     tabPyRandom.addEventListener('click', () => showRandom(tabPyRandom));
     tabGoRandom.addEventListener('click', () => showRandom(tabGoRandom));
-
-    // TAB RANDOM NAMA
-    const tabJSRandomName = document.getElementById('tabJSRandomName');
-    const tabPyRandomName = document.getElementById('tabPyRandomName');
-    const tabGoRandomName = document.getElementById('tabGoRandomName');
-
-    const jsRandomName = document.getElementById('jsRandomName');
-    const pyRandomName = document.getElementById('pyRandomName');
-    const goRandomName = document.getElementById('goRandomName');
-
-    function showRandomName(tab) {
-      [tabJSRandomName, tabPyRandomName, tabGoRandomName].forEach(btn => btn.classList.remove('active'));
-      [jsRandomName, pyRandomName, goRandomName].forEach(panel => panel.style.display = 'none');
-
-      tab.classList.add('active');
-      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    }
-
-    tabJSRandomName.addEventListener('click', () => showRandomName(tabJSRandomName));
-    tabPyRandomName.addEventListener('click', () => showRandomName(tabPyRandomName));
-    tabGoRandomName.addEventListener('click', () => showRandomName(tabGoRandomName));
 
     // TAB RANDOM NAMA
     const tabJSRandomName = document.getElementById('tabJSRandomName');
