@@ -947,6 +947,138 @@
         </div>
       </section>
 
+      <!-- Tabs Random Nama -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Random Nama</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Random Nama">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsRandomName" id="tabJSRandomName">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyRandomName" id="tabPyRandomName">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goRandomName" id="tabGoRandomName">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsRandomName" role="tabpanel" aria-labelledby="tabJSRandomName" class="code">
+      <pre><code class="language-js">
+      // Random Nama
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api2.teamhackbotsindo.my.id/api/random-name", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Random Nama:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyRandomName" role="tabpanel" aria-labelledby="tabPyRandomName" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      url = "https://api2.teamhackbotsindo.my.id/api/random-name"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goRandomName" role="tabpanel" aria-labelledby="tabGoRandomName" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        url := "https://api2.teamhackbotsindo.my.id/api/random-name"
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tabs Kata Bijak -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Kata Bijak</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Kata Bijak">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsKatabijak" id="tabJSKatabijak">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyKatabijak" id="tabPyKatabijak">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goKatabijak" id="tabGoKatabijak">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsKatabijak" role="tabpanel" aria-labelledby="tabJSKatabijak" class="code">
+      <pre><code class="language-js">
+      // Random Nama
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api2.teamhackbotsindo.my.id/api/random-name", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Random Nama:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyKatabijak" role="tabpanel" aria-labelledby="tabPyKatabijak" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      url = "https://api2.teamhackbotsindo.my.id/api/random-name"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goKatabijak" role="tabpanel" aria-labelledby="tabGoKatabijak" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        url := "https://api2.teamhackbotsindo.my.id/api/random-name"
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
       <!-- Section Downloader -->
       <section class="card" id="downloader" aria-labelledby="downloader-title">
         <div class="card-header" id="downloader-title">Dokumentasi API — Downloader</div>
@@ -3860,7 +3992,8 @@
       { no: 2, name: "Donghua", method: "GET", desc: "Random", query: "apikey" },
       { no: 3, name: "Anime Waifu", method: "GET", desc: "Random", query: "apikey" },
       { no: 4, name: "Anime 18+", method: "GET", desc: "Random", query: "apikey" },
-      { no: 5, name: "Random Nama", method: "GET", desc: "Random", query: "apikey" }
+      { no: 5, name: "Random Nama", method: "GET", desc: "Random", query: "apikey" },
+      { no: 6, name: "Kata Bijak", method: "GET", desc: "Random", query: "apikey" }
     ];
 
     // Fungsi Try untuk Random Image
@@ -3882,6 +4015,8 @@
         url = "https://api.teamhackbotsindo.my.id/api/anime-nsfw";
       } else if (feature === "Random Nama") {
         url = "https://api2.teamhackbotsindo.my.id/api/random-name";
+      } else if (feature === "Kata Bijak") {
+        url = "https://api2.teamhackbotsindo.my.id/api/katabijak";
       }
 
       fetch(url, {
@@ -3932,6 +4067,48 @@
     tabJSRandomName.addEventListener('click', () => showRandomName(tabJSRandomName));
     tabPyRandomName.addEventListener('click', () => showRandomName(tabPyRandomName));
     tabGoRandomName.addEventListener('click', () => showRandomName(tabGoRandomName));
+
+    // TAB RANDOM NAMA
+    const tabJSRandomName = document.getElementById('tabJSRandomName');
+    const tabPyRandomName = document.getElementById('tabPyRandomName');
+    const tabGoRandomName = document.getElementById('tabGoRandomName');
+
+    const jsRandomName = document.getElementById('jsRandomName');
+    const pyRandomName = document.getElementById('pyRandomName');
+    const goRandomName = document.getElementById('goRandomName');
+
+    function showRandomName(tab) {
+      [tabJSRandomName, tabPyRandomName, tabGoRandomName].forEach(btn => btn.classList.remove('active'));
+      [jsRandomName, pyRandomName, goRandomName].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    tabJSRandomName.addEventListener('click', () => showRandomName(tabJSRandomName));
+    tabPyRandomName.addEventListener('click', () => showRandomName(tabPyRandomName));
+    tabGoRandomName.addEventListener('click', () => showRandomName(tabGoRandomName));
+
+    // TAB KATA BIJAK
+    const tabJSKatabijak = document.getElementById('tabJSKatabijak');
+    const tabPyKatabijak = document.getElementById('tabPyKatabijak');
+    const tabGoKatabijak = document.getElementById('tabGoKatabijak');
+
+    const jsKatabijak = document.getElementById('jsKatabijak');
+    const pyKatabijak = document.getElementById('pyKatabijak');
+    const goKatabijak = document.getElementById('goKatabijak');
+
+    function showKatabijak(tab) {
+      [tabJSKatabijak, tabPyKatabijak, tabGoKatabijak].forEach(btn => btn.classList.remove('active'));
+      [jsKatabijak, pyKatabijak, goKatabijak].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    tabJSKatabijak.addEventListener('click', () => showKatabijak(tabJSKatabijak));
+    tabPyKatabijak.addEventListener('click', () => showKatabijak(tabPyKatabijak));
+    tabGoKatabijak.addEventListener('click', () => showKatabijak(tabGoKatabijak));
 
     // Tabs Information
     const tabJSInfo = document.getElementById('tabJSInfo');
