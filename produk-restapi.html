@@ -1612,12 +1612,12 @@
         .then(res => res.json())
         .then(data => console.log("Info Gempa:", data));
 
-      // Cord Lagu
-      fetch("https://api.teamhackbotsindo.my.id/api/cord-lagu?judul=melukis%20senja", {
+      // Info Cuaca
+      fetch("https://api2.teamhackbotsindo.my.id/api/cuaca?kota=jakarta", {
         headers: { "x-api-key": apiKey }
       })
         .then(res => res.json())
-        .then(data => console.log("Cord Lagu:", data));
+        .then(data => console.log("Info Cuaca:", data));
       </code></pre>
           </div>
 
@@ -1643,9 +1643,9 @@
       resp = requests.get("https://api.teamhackbotsindo.my.id/api/gempa", headers={"x-api-key": apiKey})
       print("Info Gempa:", resp.json())
 
-      # Cord Lagu
-      resp = requests.get("https://api.teamhackbotsindo.my.id/api/cord-lagu?judul=melukis%20senja", headers={"x-api-key": apiKey})
-      print("Cord Lagu:", resp.json())
+      # Info Cuaca
+      resp = requests.get("https://api2.teamhackbotsindo.my.id/api/cuaca?kota=jakarta", headers={"x-api-key": apiKey})
+      print("Info Cuaca:", resp.json())
       </code></pre>
           </div>
 
@@ -1678,8 +1678,8 @@
       func main() {
         fetchAPI("https://api.teamhackbotsindo.my.id/api/translate?text=selamat%20pagi&to=en", true)
         fetchAPI("https://api2.teamhackbotsindo.my.id/api/kodepos?daerah=ciomas", false)
-        fetchAPI("https://api.teamhackbotsindo.my.id/api/gempa", false)
-        fetchAPI("https://api.teamhackbotsindo.my.id/api/cord-lagu?judul=melukis%20senja", false)
+        fetchAPI("https://api2.teamhackbotsindo.my.id/api/gempa", false)
+        fetchAPI("https://api2.teamhackbotsindo.my.id/api/cuaca?kota=jakarta", false)
       }
       </code></pre>
           </div>
@@ -1828,6 +1828,80 @@
 
       func main() {
         fetchAPI("https://api2.teamhackbotsindo.my.id/api/gempa", false)
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Code samples Cuaca -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Cuaca</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Cuaca">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsCuaca" id="tabJSCuaca">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyCuaca" id="tabPyCuaca">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goCuaca" id="tabGoCuaca">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsCuaca" role="tabpanel" aria-labelledby="tabJSCuaca" class="code">
+      <pre><code class="language-js">
+
+      // Cuaca
+      fetch("https://api2.teamhackbotsindo.my.id/api/cuaca", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Cuaca:", data));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyCuaca" role="tabpanel" aria-labelledby="tabPyCuaca" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      headers = { 
+        "x-api-key": apiKey,
+        "Origin": "https://teamhackbotsindo.my.id"
+      }
+
+      # Cuaca
+      resp = requests.get("https://api2.teamhackbotsindo.my.id/api/cuaca", headers={"x-api-key": apiKey})
+      print("Cuaca:", resp.json())
+
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goCuaca" role="tabpanel" aria-labelledby="tabGoCuaca" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func fetchAPI(url string, withOrigin bool) {
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+        if withOrigin {
+          req.Header.Set("Origin", "https://teamhackbotsindo.my.id")
+        }
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(url, ":", string(body))
+      }
+
+      func main() {
+        fetchAPI("https://api2.teamhackbotsindo.my.id/api/cuaca", false)
       }
       </code></pre>
           </div>
@@ -3230,7 +3304,7 @@
       { no: 1, name: "Translate", method: "GET", desc: "Terjemahkan teks ke bahasa lain", query: "apikey, text, to" },
       { no: 2, name: "Kodepos", method: "GET", desc: "Cari kodepos berdasarkan daerah", query: "apikey, daerah" },
       { no: 3, name: "Info Gempa", method: "GET", desc: "Informasi gempa terbaru dari BMKG", query: "apikey" },
-      { no: 4, name: "Cord Lagu", method: "GET", desc: "Chord lagu berdasarkan judul", query: "apikey, judul" }
+      { no: 4, name: "Info cuaca", method: "GET", desc: "Informasi cuaca berdasarkan kota", query: "apikey, kota" }
     ];
 
     const infoBody = document.getElementById('informationTableBody');
@@ -3275,8 +3349,8 @@
         url = `https://api2.teamhackbotsindo.my.id/api/kodepos?daerah=ciomas`;
       } else if (feature === "Info Gempa") {
         url = `https://api2.teamhackbotsindo.my.id/api/gempa`;
-      } else if (feature === "Cord Lagu") {
-        url = `https://api.teamhackbotsindo.my.id/api/cord-lagu?judul=melukis%20senja`;
+      } else if (feature === "Cuaca") {
+        url = `https://api2.teamhackbotsindo.my.id/api/cuaca?kota=jakarta`;
       } else {
         panel.textContent = "Error: Fitur tidak dikenal.";
         return;
@@ -3348,6 +3422,27 @@
     tabJSGempa.addEventListener('click', () => showGempa(tabJSGempa));
     tabPyGempa.addEventListener('click', () => showGempa(tabPyGempa));
     tabGoGempa.addEventListener('click', () => showGempa(tabGoGempa));
+
+    // Tabs Cuaca
+    const tabJSCuaca = document.getElementById('tabJSCuaca');
+    const tabPyCuaca = document.getElementById('tabPyCuaca');
+    const tabGoCuaca = document.getElementById('tabGoCuaca');
+
+    const jsCuaca = document.getElementById('jsCuaca');
+    const pyCuaca = document.getElementById('pyCuaca');
+    const goCuaca = document.getElementById('goCuaca');
+
+    function showCuaca(tab) {
+      [tabJSCuaca, tabPyCuaca, tabGoCuaca].forEach(btn => btn.classList.remove('active'));
+      [jsCuaca, pyCuaca, goCuaca].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    tabJSCuaca.addEventListener('click', () => showCuaca(tabJSCuaca));
+    tabPyCuaca.addEventListener('click', () => showCuaca(tabPyCuaca));
+    tabGoCuaca.addEventListener('click', () => showCuaca(tabGoCuaca));
 
     // API-ISLAMI
     const islamiEndpoints = [
