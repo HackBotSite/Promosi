@@ -1088,6 +1088,72 @@
         </div>
       </section>
 
+      <!-- Tabs Kata Bucin -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Kata Bucin</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Kata Bucin">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsKatabucin" id="tabJSKatabucin">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyKatabucin" id="tabPyKatabucin">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goKatabucin" id="tabGoKatabucin">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsKatabucin" role="tabpanel" aria-labelledby="tabJSKatabucin" class="code">
+      <pre><code class="language-js">
+      // Kata Bucin
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api2.teamhackbotsindo.my.id/api/Katabucin", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Kata Bucin:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyKatabucin" role="tabpanel" aria-labelledby="tabPyKatabucin" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      url = "https://api2.teamhackbotsindo.my.id/api/Katabucin"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goKatabucin" role="tabpanel" aria-labelledby="tabGoKatabucin" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        url := "https://api2.teamhackbotsindo.my.id/api/Katabucin"
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
       <!-- Section Downloader -->
       <section class="card" id="downloader" aria-labelledby="downloader-title">
         <div class="card-header" id="downloader-title">Dokumentasi API — Downloader</div>
@@ -4003,7 +4069,8 @@
       { no: 4, name: "Anime 18+", method: "GET", desc: "Random", query: "apikey" },
       { no: 5, name: "Random Nama", method: "GET", desc: "Random", query: "apikey" },
       { no: 6, name: "Kata Bijak", method: "GET", desc: "Random", query: "apikey" },
-      { no: 7, name: "Quotes", method: "GET", desc: "Random", query: "apikey" }
+      { no: 7, name: "Quotes", method: "GET", desc: "Random", query: "apikey" },
+      { no: 8, name: "Kata Bucin", method: "GET", desc: "Random", query: "apikey" }
     ];
 
     // Fungsi Try untuk Random Image
@@ -4029,6 +4096,8 @@
         url = "https://api2.teamhackbotsindo.my.id/api/katabijak";
       } else if (feature === "Quotes") {
         url = "https://api2.teamhackbotsindo.my.id/api/quotes";
+      } else if (feature === "Kata Bucin") {
+        url = "https://api2.teamhackbotsindo.my.id/api/katabucin";
       }
 
       fetch(url, {
@@ -4121,6 +4190,27 @@
     tabJSQuotes.addEventListener('click', () => showQuotes(tabJSQuotes));
     tabPyQuotes.addEventListener('click', () => showQuotes(tabPyQuotes));
     tabGoQuotes.addEventListener('click', () => showQuotes(tabGoQuotes));
+
+    // TAB KATA BUCIN
+    const tabJSKatabucin = document.getElementById('tabJSKatabucin');
+    const tabPyKatabucin = document.getElementById('tabPyKatabucin');
+    const tabGoKatabucin = document.getElementById('tabGoKatabucin');
+
+    const jsKatabucin = document.getElementById('jsKatabucin');
+    const pyKatabucin = document.getElementById('pyKatabucin');
+    const goKatabucin = document.getElementById('goKatabucin');
+
+    function showKatabucin(tab) {
+      [tabJSKatabucin, tabPyKatabucin, tabGoKatabucin].forEach(btn => btn.classList.remove('active'));
+      [jsKatabucin, pyKatabucin, goKatabucin].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    tabJSKatabucin.addEventListener('click', () => showKatabucin(tabJSKatabucin));
+    tabPyKatabucin.addEventListener('click', () => showKatabucin(tabPyKatabucin));
+    tabGoKatabucin.addEventListener('click', () => showKatabucin(tabGoKatabucin));
 
     // Tabs Information
     const tabJSInfo = document.getElementById('tabJSInfo');
