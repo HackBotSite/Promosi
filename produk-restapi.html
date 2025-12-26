@@ -3938,7 +3938,8 @@
         panel.innerHTML = `⚡ Menjalankan ${feature}...`;
 
         const apiKey = document.getElementById('apiKeyInput').value;
-        const query = document.getElementById('queryInput').value || "cat";
+        const queryInputEl = document.getElementById('queryInput');
+        const query = queryInputEl ? queryInputEl.value || "cat" : "cat";
 
         let url = "";
         if (feature === "Search Image") {
@@ -3954,12 +3955,10 @@
                     panel.innerHTML = `<div class="error">❌ ${data.error}</div>`;
                     return;
                 }
-
                 if (!data.results || data.results.length === 0) {
                     panel.innerHTML = `<div class="empty">Tidak ada gambar ditemukan untuk <strong>${data.query}</strong>.</div>`;
                     return;
                 }
-
                 panel.innerHTML = data.results.map(item => `
                     <div class="image-card">
                         <img src="${item.image_small}" alt="${item.description}" />
