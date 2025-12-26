@@ -3926,48 +3926,70 @@
     tabPyCuaca.addEventListener('click', () => showCuaca(tabPyCuaca));
     tabGoCuaca.addEventListener('click', () => showCuaca(tabGoCuaca));
 
-    // API Random Image
+    // API Search Image
     const imageEndpoints = [
-      { no: 1, name: "Search Image", method: "GET", desc: "Cari gambar dari Unsplash", query: "q, apikey" }
+        { no: 1, name: "Search Image", method: "GET", desc: "Cari gambar dari Unsplash", query: "q, apikey" }
     ];
 
-    // Fungsi Try untuk Random Image
+    // Fungsi Try untuk Search Image
     function trySearchimage(feature) {
-      const panel = document.getElementById('imageResponsePanel');
-      panel.style.display = 'block';
-      panel.textContent = `⚡ Menjalankan ${feature}...`;
+        const panel = document.getElementById('imageResponsePanel');
+        panel.style.display = 'block';
+        panel.innerHTML = `⚡ Menjalankan ${feature}...`;
 
-      const apiKey = document.getElementById('apiKeyInput').value;
-      const query = document.getElementById('queryInput').value || "cat";
+        const apiKey = document.getElementById('apiKeyInput').value;
+        const query = document.getElementById('queryInput').value || "cat";
 
-      let url = "";
-      if (feature === "Search Image") {
-        url = `https://api2.teamhackbotsindo.my.id/api/searchimage?q=cat`;
-      }
+        let url = "";
+        if (feature === "Search Image") {
+            url = `https://api2.teamhackbotsindo.my.id/api/searchimage?q=${encodeURIComponent(query)}`;
+        }
 
-      fetch(url, {
-        headers: { "x-api-key": apiKey }
-      })
-        .then(res => res.json())
-        .then(data => panel.textContent = JSON.stringify(data, null, 2))
-        .catch(err => panel.textContent = "Error: " + err);
+        fetch(url, {
+            headers: { "x-api-key": apiKey }
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.error) {
+                    panel.innerHTML = `<div class="error">❌ ${data.error}</div>`;
+                    return;
+                }
+
+                if (!data.results || data.results.length === 0) {
+                    panel.innerHTML = `<div class="empty">Tidak ada gambar ditemukan untuk <strong>${data.query}</strong>.</div>`;
+                    return;
+                }
+
+                panel.innerHTML = data.results.map(item => `
+                    <div class="image-card">
+                        <img src="${item.image_small}" alt="${item.description}" />
+                        <p><strong>${item.photographer}</strong></p>
+                        <p>${item.description}</p>
+                        <a href="${item.profile}" target="_blank">Lihat di Unsplash</a>
+                    </div>
+                `).join('');
+            })
+            .catch(err => {
+                panel.innerHTML = `<div class="error">❌ Error: ${err.message}</div>`;
+            });
     }
 
+    // Render tabel Search Image
     const imageBody = document.getElementById('imageTableBody');
     imageEndpoints.forEach(ep => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${ep.no}</td>
-        <td>${ep.name}</td>
-        <td><span class="badge GET">${ep.method}</span></td>
-        <td>${ep.desc}</td>
-        <td>${ep.query}</td>
-        <td><button class="btn" onclick="trySearchimage('${ep.name}')">Try</button></td>
-      `;
-      imageBody.appendChild(tr);
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${ep.no}</td>
+            <td>${ep.name}</td>
+            <td><span class="badge GET">${ep.method}</span></td>
+            <td>${ep.desc}</td>
+            <td>${ep.query}</td>
+            <td><button class="btn" onclick="trySearchimage('${ep.name}')">Try</button></td>
+        `;
+        imageBody.appendChild(tr);
     });
 
-    //TAB SEARCH IMAGE
+    // Tab switching untuk Search Image
     const tabJSSearchimage = document.getElementById('tabJSSearchimage');
     const tabPySearchimage = document.getElementById('tabPySearchimage');
     const tabGoSearchimage = document.getElementById('tabGoSearchimage');
@@ -3977,11 +3999,11 @@
     const goSearchimage = document.getElementById('goSearchimage');
 
     function showSearchimage(tab) {
-      [tabJSSearchimage, tabPySearchimage, tabGoSearchimage].forEach(btn => btn.classList.remove('active'));
-      [jsSearchimage, pySearchimage, goSearchimage].forEach(panel => panel.style.display = 'none');
+        [tabJSSearchimage, tabPySearchimage, tabGoSearchimage].forEach(btn => btn.classList.remove('active'));
+        [jsSearchimage, pySearchimage, goSearchimage].forEach(panel => panel.style.display = 'none');
 
-      tab.classList.add('active');
-      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+        tab.classList.add('active');
+        document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
     }
 
     tabJSSearchimage.addEventListener('click', () => showSearchimage(tabJSSearchimage));
