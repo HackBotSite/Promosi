@@ -1310,6 +1310,71 @@
         </div>
       </section>
 
+      <!-- Tabs Youtube Video V2-->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Youtube Video V2</div>
+        <div class="tab-list" role="tablist" aria-label="Contoh kode Youtube Video V2">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsYoutubeVideoV2" id="tabJSYoutubeVideoV2V2">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyYoutubeVideoV2" id="tabPyYoutubeVideoV2">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goYoutubeVideoV2" id="tabGoYoutubeVideoV2">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsYoutubeVideoV2" role="tabpanel" aria-labelledby="tabJSYoutubeVideoV2" class="code">
+      <pre><code class="language-js">
+      // Youtube Video
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api2.teamhackbotsindo.my.id/api/youtubeVideo?link=https://youtu.be/igaeQ2fJRxE?si=lFgNyMiAgXVJHti3", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Youtube Video:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyYoutubeVideoV2" role="tabpanel" aria-labelledby="tabPyYoutubeVideoV2" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      url = "https://api2.teamhackbotsindo.my.id/api/youtubeVideo?link=https://youtu.be/igaeQ2fJRxE?si=lFgNyMiAgXVJHti3"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goYoutubeVideoV2" role="tabpanel" aria-labelledby="tabGoYoutubeVideoV2" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        url := "https://api2.teamhackbotsindo.my.id/api/youtubeVideo?link=https://youtu.be/igaeQ2fJRxE?si=lFgNyMiAgXVJHti3"
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
       <!-- Tabs Youtube Audio -->
       <section class="card">
         <div class="card-header">Contoh Kode — Youtube Audio</div>
@@ -3439,12 +3504,13 @@
     const downloaderEndpoints = [
       { no: 1, name: "Youtube List", method: "GET", desc: "Pencarian video berdasarkan kata kunci", query: "apikey, query" },
       { no: 2, name: "Youtube Video", method: "GET", desc: "Download video YouTube", query: "apikey, link" },
-      { no: 3, name: "Youtube Audio", method: "GET", desc: "Download audio dari YouTube", query: "apikey, link" },
-      { no: 4, name: "Smule Profile", method: "GET", desc: "Profil pengguna Smule", query: "apikey, handle" },
-      { no: 5, name: "Smule Audio / Video", method: "GET", desc: "Download media dari Smule", query: "apikey, link" },
-      { no: 6, name: "Smule Downloader", method: "GET", desc: "Download media dari Smule", query: "apikey, link" },
-      { no: 7, name: "Facebook", method: "GET", desc: "Download video dari Facebook", query: "apikey, link" },
-      { no: 8, name: "Tiktok", method: "GET", desc: "Download video dari Tiktok", query: "apikey, link" }
+      { no: 3, name: "Youtube Video V2", method: "GET", desc: "Download video YouTube", query: "apikey, link" },
+      { no: 4, name: "Youtube Audio", method: "GET", desc: "Download audio dari YouTube", query: "apikey, link" },
+      { no: 5, name: "Smule Profile", method: "GET", desc: "Profil pengguna Smule", query: "apikey, handle" },
+      { no: 6, name: "Smule Audio / Video", method: "GET", desc: "Download media dari Smule", query: "apikey, link" },
+      { no: 7, name: "Smule Downloader", method: "GET", desc: "Download media dari Smule", query: "apikey, link" },
+      { no: 8, name: "Facebook", method: "GET", desc: "Download video dari Facebook", query: "apikey, link" },
+      { no: 9, name: "Tiktok", method: "GET", desc: "Download video dari Tiktok", query: "apikey, link" }
     ];
 
     const downloaderBody = document.getElementById('downloaderTableBody');
@@ -3479,6 +3545,9 @@
           break;
         case "Youtube Video":
           url = `https://api2.teamhackbotsindo.my.id/api/youtube-video?link=https://youtu.be/igaeQ2fJRxE`;
+          break;
+        case "Youtube Video V2":
+          url = `https://api2.teamhackbotsindo.my.id/api/youtubeVideo?link=https://youtu.be/igaeQ2fJRxE`;
           break;
         case "Youtube Audio":
           url = `https://api2.teamhackbotsindo.my.id/api/youtube-audio?link=https://www.youtube.com/watch?v=igaeQ2fJRxE`;
@@ -3567,6 +3636,20 @@
             }
             if (r.downloadVideoUrl) {
               html += `<p><strong>Link video (YouTube):</strong> <a href="${r.downloadVideoUrl}" target="_blank">${r.downloadVideoUrl}</a></p>`;
+            }
+          } else if (feature === "Youtube Video V2" && data.result) {
+            const r = data.result;
+            html = `
+              <p><strong>Type:</strong> ${r.type || "-"}</p>
+              <p><strong>Quality:</strong> ${r.quality || "-"}</p>
+              <p><strong>Mime:</strong> ${r.mime || "-"}</p>
+              <p><strong>Comment:</strong> ${r.comment || "-"}</p>
+            `;
+            if (r.file) {
+              html += `<p><strong>Link utama :</strong> <a href="${r.file}" target="_blank">${r.file}</a></p>`;
+            }
+            if (r.reserved_file) {
+              html += `<p><strong>Link cadangan :</strong> <a href="${r.reserved_file}" target="_blank">${r.reserved_file}</a></p>`;
             }
           } else if (feature === "Facebook" && data.result) {
             // Facebook Video case
@@ -3675,6 +3758,27 @@
     tabJSYoutubeVideo.addEventListener('click', () => showYoutubeVideo(tabJSYoutubeVideo));
     tabPyYoutubeVideo.addEventListener('click', () => showYoutubeVideo(tabPyYoutubeVideo));
     tabGoYoutubeVideo.addEventListener('click', () => showYoutubeVideo(tabGoYoutubeVideo));
+
+    // TAB YOUTUBE VIDEO V2
+    const tabJSYoutubeVideoV2 = document.getElementById('tabJSYoutubeVideoV2');
+    const tabPyYoutubeVideoV2 = document.getElementById('tabPyYoutubeVideoV2');
+    const tabGoYoutubeVideoV2 = document.getElementById('tabGoYoutubeVideoV2');
+
+    const jsYoutubeVideoV2 = document.getElementById('jsYoutubeVideoV2');
+    const pyYoutubeVideoV2 = document.getElementById('pyYoutubeVideoV2');
+    const goYoutubeVideoV2 = document.getElementById('goYoutubeVideoV2');
+
+    function showYoutubeVideoV2(tab) {
+      [tabJSYoutubeVideoV2, tabPyYoutubeVideoV2, tabGoYoutubeVideoV2].forEach(btn => btn.classList.remove('active'));
+      [jsYoutubeVideoV2, pyYoutubeVideoV2, goYoutubeVideoV2].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    tabJSYoutubeVideoV2.addEventListener('click', () => showYoutubeVideoV2(tabJSYoutubeVideoV2));
+    tabPyYoutubeVideoV2.addEventListener('click', () => showYoutubeVideoV2(tabPyYoutubeVideoV2));
+    tabGoYoutubeVideoV2.addEventListener('click', () => showYoutubeVideoV2(tabGoYoutubeVideoV2));
 
     // TAB YOUTUBE AUDIO
     const tabJSYoutubeAudio = document.getElementById('tabJSYoutubeAudio');
