@@ -3925,20 +3925,21 @@
 
     // API Random Image
     const imageEndpoints = [
-      { no: 1, name: "Search Image", method: "GET", desc: "query", query: "apikey", "query" }
+      { no: 1, name: "Search Image", method: "GET", desc: "Cari gambar dari Unsplash", query: "q, apikey" }
     ];
 
     // Fungsi Try untuk Random Image
     function trySearchimage(feature) {
-      const panel = document.getElementById('randomResponsePanel');
+      const panel = document.getElementById('imageResponsePanel'); // FIX: pakai panel Search Image
       panel.style.display = 'block';
       panel.textContent = `⚡ Menjalankan ${feature}...`;
 
       const apiKey = document.getElementById('apiKeyInput').value;
+      const query = document.getElementById('queryInput').value || "cat"; // ambil query
 
       let url = "";
       if (feature === "Search Image") {
-        url = "https://api2.teamhackbotsindo.my.id/api/searchimage";
+        url = `https://api2.teamhackbotsindo.my.id/api/searchimage?q=${encodeURIComponent(query)}`;
       }
 
       fetch(url, {
@@ -3948,6 +3949,26 @@
         .then(data => panel.textContent = JSON.stringify(data, null, 2))
         .catch(err => panel.textContent = "Error: " + err);
     }
+
+    const imageTableBody = document.getElementById('imageTableBody');
+
+    function renderImageTable() {
+      imageTableBody.innerHTML = imageEndpoints.map(ep => `
+        <tr>
+          <td>${ep.no}</td>
+          <td>${ep.name}</td>
+          <td>${ep.method}</td>
+          <td>${ep.desc}</td>
+          <td>${ep.query}</td>
+          <td>
+            <button onclick="trySearchimage('${ep.name}')">Try</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    renderImageTable();
+
     //TAB SEARCH IMAGE
     const tabJSSearchimage = document.getElementById('tabJSSearchimage');
     const tabPySearchimage = document.getElementById('tabPySearchimage');
