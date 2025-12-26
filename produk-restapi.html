@@ -2148,6 +2148,9 @@
             <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pySearchimage" id="tabPySearchimage">Python</button>
             <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goSearchimage" id="tabGoSearchimage">Golang</button>
           </div>
+          <!-- isi code samples sama seperti Information -->
+        </div>
+      </section>
 
           <!-- JS -->
           <div id="jsSearchimage" role="tabpanel" aria-labelledby="tabJSSearchimage" class="code">
@@ -3930,12 +3933,12 @@
 
     // Fungsi Try untuk Random Image
     function trySearchimage(feature) {
-      const panel = document.getElementById('imageResponsePanel'); // FIX: pakai panel Search Image
+      const panel = document.getElementById('imageResponsePanel');
       panel.style.display = 'block';
       panel.textContent = `⚡ Menjalankan ${feature}...`;
 
       const apiKey = document.getElementById('apiKeyInput').value;
-      const query = document.getElementById('queryInput').value || "cat"; // ambil query
+      const query = document.getElementById('queryInput').value || "cat";
 
       let url = "";
       if (feature === "Search Image") {
@@ -3950,24 +3953,19 @@
         .catch(err => panel.textContent = "Error: " + err);
     }
 
-    const imageTableBody = document.getElementById('imageTableBody');
-
-    function renderImageTable() {
-      imageTableBody.innerHTML = imageEndpoints.map(ep => `
-        <tr>
-          <td>${ep.no}</td>
-          <td>${ep.name}</td>
-          <td>${ep.method}</td>
-          <td>${ep.desc}</td>
-          <td>${ep.query}</td>
-          <td>
-            <button onclick="trySearchimage('${ep.name}')">Try</button>
-          </td>
-        </tr>
-      `).join('');
-    }
-
-    renderImageTable();
+    const imageBody = document.getElementById('imageTableBody');
+    imageEndpoints.forEach(ep => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${ep.no}</td>
+        <td>${ep.name}</td>
+        <td><span class="badge GET">${ep.method}</span></td>
+        <td>${ep.desc}</td>
+        <td>${ep.query}</td>
+        <td><button class="btn" onclick="trySearchimage('${ep.name}')">Try</button></td>
+      `;
+      imageBody.appendChild(tr);
+    });
 
     //TAB SEARCH IMAGE
     const tabJSSearchimage = document.getElementById('tabJSSearchimage');
