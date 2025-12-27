@@ -825,12 +825,21 @@
           <div id="jsRandom" role="tabpanel" aria-labelledby="tabJSRandom" class="code">
       <pre><code class="language-js">
       fetch("https://api.teamhackbotsindo.my.id/api/anime-random", {
+      fetch("https://api2.teamhackbotsindo.my.id/api/random-name", {
         headers: { "x-api-key": apiKey }
       })
         .then(res => res.json())
         .then(data => console.log("Anime Random:", data));
 
-      // dst untuk Donghua, Waifu, Anime 18+
+      // Random Nama
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api2.teamhackbotsindo.my.id/api/random-name", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Random Nama:", data))
+        .catch(err => console.error(err));
+
       </code></pre>
           </div>
 
@@ -931,6 +940,204 @@
       func main() {
         apiKey := "YOUR_API_KEY"
         url := "https://api2.teamhackbotsindo.my.id/api/random-name"
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tabs Kata Bijak -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Kata Bijak</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Kata Bijak">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsKatabijak" id="tabJSKatabijak">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyKatabijak" id="tabPyKatabijak">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goKatabijak" id="tabGoKatabijak">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsKatabijak" role="tabpanel" aria-labelledby="tabJSKatabijak" class="code">
+      <pre><code class="language-js">
+      // Kata Bijak
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api2.teamhackbotsindo.my.id/api/katabijak", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Kata Bijak:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyKatabijak" role="tabpanel" aria-labelledby="tabPyKatabijak" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      url = "https://api2.teamhackbotsindo.my.id/api/katabijak"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goKatabijak" role="tabpanel" aria-labelledby="tabGoKatabijak" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        url := "https://api2.teamhackbotsindo.my.id/api/katabijak"
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tabs Quotes -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Quotes</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Quotes">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsQuotes" id="tabJSQuotes">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyQuotes" id="tabPyQuotes">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goQuotes" id="tabGoQuotes">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsQuotes" role="tabpanel" aria-labelledby="tabJSQuotes" class="code">
+      <pre><code class="language-js">
+      // Quotes
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api2.teamhackbotsindo.my.id/api/quotes", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Quotes:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyQuotes" role="tabpanel" aria-labelledby="tabPyQuotes" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      url = "https://api2.teamhackbotsindo.my.id/api/quotes"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goQuotes" role="tabpanel" aria-labelledby="tabGoQuotes" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        url := "https://api2.teamhackbotsindo.my.id/api/quotes"
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tabs Kata Bucin -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Kata Bucin</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Kata Bucin">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsKatabucin" id="tabJSKatabucin">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyKatabucin" id="tabPyKatabucin">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goKatabucin" id="tabGoKatabucin">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsKatabucin" role="tabpanel" aria-labelledby="tabJSKatabucin" class="code">
+      <pre><code class="language-js">
+      // Kata Bucin
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api2.teamhackbotsindo.my.id/api/Katabucin", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Kata Bucin:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyKatabucin" role="tabpanel" aria-labelledby="tabPyKatabucin" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      url = "https://api2.teamhackbotsindo.my.id/api/Katabucin"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goKatabucin" role="tabpanel" aria-labelledby="tabGoKatabucin" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        url := "https://api2.teamhackbotsindo.my.id/api/Katabucin"
 
         client := &http.Client{}
         req, _ := http.NewRequest("GET", url, nil)
