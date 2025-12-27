@@ -3601,7 +3601,7 @@
     ];
 
     const gameBody = document.getElementById('gameTableBody');
-    gameEndpoints.forEach(ep => {
+    primbonEndpoints.forEach(ep => {
       const tr = document.createElement('tr');
       tr.innerHTML = `
         <td>${ep.no}</td>
@@ -3642,26 +3642,16 @@
           }
         })
         .then(data => {
-          if (!data.result) {
-            panel.textContent = "Tidak ada data kuis ditemukan.";
+          if (data.error) {
+            panel.textContent = "Error: " + data.error;
             return;
           }
-
-          const question = data.result.question || "-";
-          const answers = data.result.answers || [];
-
-          let html = `<p><strong>${question}</strong></p><ul>`;
-          answers.forEach((ans, i) => {
-            html += `<li>${i + 1}. ${ans}</li>`;
-          });
-          html += "</ul>";
-
-          panel.innerHTML = html;
+          panel.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
         })
         .catch(err => panel.textContent = "Error: " + err);
     }
 
-    // TAB KUIS V1
+    // TAB Kuis V1
     const tabJSKuisV1 = document.getElementById('tabJSKuisV1');
     const tabPyKuisV1 = document.getElementById('tabPyKuisV1');
     const tabGoKuisV1 = document.getElementById('tabGoKuisV1');
@@ -3671,16 +3661,11 @@
     const goKuisV1 = document.getElementById('goKuisV1');
 
     function showKuisV1(tab) {
-        [tabJSKuisV1, tabPyKuisV1, tabGoKuisV1].forEach(btn => {
-            btn.classList.remove('active');
-            btn.setAttribute('aria-selected', 'false');
-        });
+      [tabJSKuisV1, tabPyKuisV1, tabGoKuisV1].forEach(btn => btn.classList.remove('active'));
+      [jsKuisV1, pyKuisV1, goKuisV1].forEach(panel => panel.style.display = 'none');
 
-        [jsKuisV1, pyKuisV1, goKuisV1].forEach(panel => panel.style.display = 'none');
-
-        tab.classList.add('active');
-        tab.setAttribute('aria-selected', 'true');
-        document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
     }
 
     tabJSKuisV1.addEventListener('click', () => showKuisV1(tabJSKuisV1));
