@@ -2550,13 +2550,13 @@
       <pre><code class="language-js">
       // Kuis V1
       fetch("https://api2.teamhackbotsindo.my.id/api/kuisv1?apikey=" + apiKey, {
-          headers: { "x-api-key": apiKey }
+        headers: { "x-api-key": apiKey }
       })
-          .then(res => res.json())
-          .then(data => {
-              console.log("Kuis V1 Question:", data.result.question);
-              console.log("Kuis V1 Answers:", data.result.answers);
-          });
+        .then(res => res.json())
+        .then(data => {
+          console.log("Kuis V1 Question:", data.result.question);
+          console.log("Kuis V1 Answers:", data.result.answers);
+        });
       </code></pre>
           </div>
 
@@ -2567,7 +2567,7 @@
 
       headers = { "x-api-key": apiKey }
 
-       # Kuis V1
+      # Kuis V1
       resp = requests.get("https://api2.teamhackbotsindo.my.id/api/kuisv1?apikey=" + apiKey, headers=headers)
       data = resp.json()
       print("Kuis V1 Question:", data["result"]["question"])
@@ -2581,25 +2581,25 @@
       package main
 
       import (
-          "fmt"
-          "net/http"
-          "io/ioutil"
+        "fmt"
+        "net/http"
+        "io/ioutil"
       )
 
       func fetchAPI(url string) {
-          client := &http.Client{}
-          req, _ := http.NewRequest("GET", url, nil)
-          req.Header.Set("x-api-key", apiKey)
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
 
-          resp, _ := client.Do(req)
-          defer resp.Body.Close()
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
 
-          body, _ := ioutil.ReadAll(resp.Body)
-          fmt.Println("Response:", string(body))
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println("Response:", string(body))
       }
 
       func main() {
-          fetchAPI("https://api2.teamhackbotsindo.my.id/api/kuisv1?apikey=" + apiKey)
+        fetchAPI("https://api2.teamhackbotsindo.my.id/api/kuisv1?apikey=" + apiKey)
       }
       </code></pre>
           </div>
@@ -3597,7 +3597,7 @@
 
     // API-Game
     const gameEndpoints = [
-      { no: 1, name: "Kuis V1", method: "GET", desc: "Kuis V1", query: ["apikey"] }
+      { no: 1, name: "Kuis V1", method: "GET", desc: "Quiz API V1", query: ["apikey"] }
     ];
 
     const gameBody = document.getElementById('gameTableBody');
