@@ -2511,6 +2511,101 @@
         </div>
       </section>
 
+      <!-- Section Game -->
+      <section class="card" id="game" aria-labelledby="game-title">
+        <div class="card-header" id="game-title">Dokumentasi API — game</div>
+
+        <div class="table-wrapper">
+          <table class="table" aria-describedby="game-title">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Feature Name</th>
+                <th>Request Method</th>
+                <th>Description</th>
+                <th>Query Parameter</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="gameTableBody">
+              <!-- Diisi lewat JS -->
+            </tbody>
+          </table>
+        </div>
+        <div id="gameResponsePanel" class="response" aria-live="polite" style="display:none"></div>
+      </section>
+
+      <!-- Section Kuis V1 -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Kuis V1</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Kuis V1">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsKuisV1" id="tabJSKuisV1">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyKuisV1" id="tabPyKuisV1">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goKuisV1" id="tabGoKuisV1">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsKuisV1" role="tabpanel" aria-labelledby="tabJSKuisV1" class="code">
+      <pre><code class="language-js">
+      // Kuis V1
+      fetch("https://api2.teamhackbotsindo.my.id/api/kuisv1?apikey=" + apiKey, {
+          headers: { "x-api-key": apiKey }
+      })
+          .then(res => res.json())
+          .then(data => {
+              console.log("Kuis V1 Question:", data.result.question);
+              console.log("Kuis V1 Answers:", data.result.answers);
+          });
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyKuisV1" role="tabpanel" aria-labelledby="tabPyKuisV1" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      headers = { "x-api-key": apiKey }
+
+       # Kuis V1
+      resp = requests.get("https://api2.teamhackbotsindo.my.id/api/kuisv1?apikey=" + apiKey, headers=headers)
+      data = resp.json()
+      print("Kuis V1 Question:", data["result"]["question"])
+      print("Kuis V1 Answers:", data["result"]["answers"])
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goKuisV1" role="tabpanel" aria-labelledby="tabGoKuisV1" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+          "fmt"
+          "net/http"
+          "io/ioutil"
+      )
+
+      func fetchAPI(url string) {
+          client := &http.Client{}
+          req, _ := http.NewRequest("GET", url, nil)
+          req.Header.Set("x-api-key", apiKey)
+
+          resp, _ := client.Do(req)
+          defer resp.Body.Close()
+
+          body, _ := ioutil.ReadAll(resp.Body)
+          fmt.Println("Response:", string(body))
+      }
+
+      func main() {
+          fetchAPI("https://api2.teamhackbotsindo.my.id/api/kuisv1?apikey=" + apiKey)
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
       <!-- Section Primbon -->
       <section class="card" id="primbon" aria-labelledby="primbon-title">
         <div class="card-header" id="primbon-title">Dokumentasi API — Primbon</div>
@@ -3499,6 +3594,98 @@
         })
         .catch(err => panel.textContent = "Error: " + err);
     }
+
+    // API-Game
+    const gameEndpoints = [
+      { no: 1, name: "Kuis V1", method: "GET", desc: "Kuis V1", query: ["apikey"] }
+    ];
+
+    const gameBody = document.getElementById('gameTableBody');
+    gameEndpoints.forEach(ep => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${ep.no}</td>
+        <td>${ep.name}</td>
+        <td><span class="badge ${ep.method}">${ep.method}</span></td>
+        <td>${ep.desc}</td>
+        <td>${Array.isArray(ep.query) ? ep.query.join(", ") : ep.query}</td>
+        <td><button class="btn" onclick="tryGame('${ep.name}')">Try</button></td>
+      `;
+      gameBody.appendChild(tr);
+    });
+
+    function tryGame(feature) {
+      const panel = document.getElementById('gameResponsePanel');
+      panel.style.display = 'block';
+      panel.textContent = `⚡ Menjalankan ${feature}...`;
+
+      const apiKey = document.getElementById('apiKeyInput')?.value || "";
+      if (!apiKey) {
+        panel.textContent = "Error: API key wajib diisi!";
+        return;
+      }
+
+      let url = "";
+      switch (feature) {
+        case "Kuis V1":
+          url = `https://api2.teamhackbotsindo.my.id/api/kuisv1?apikey=${apiKey}`;
+          break;
+      }
+
+      fetch(url, { headers: { "x-api-key": apiKey } })
+        .then(async res => {
+          const raw = await res.text();
+          try {
+            return JSON.parse(raw);
+          } catch {
+            return { error: "Response bukan JSON", raw: raw.slice(0,200) };
+          }
+        })
+        .then(data => {
+          if (!data.result) {
+            panel.textContent = "Tidak ada data kuis ditemukan.";
+            return;
+          }
+
+          const question = data.result.question || "-";
+          const answers = data.result.answers || [];
+
+          let html = `<p><strong>${question}</strong></p><ul>`;
+          answers.forEach((ans, i) => {
+            html += `<li>${i + 1}. ${ans}</li>`;
+          });
+          html += "</ul>";
+
+          panel.innerHTML = html;
+        })
+        .catch(err => panel.textContent = "Error: " + err);
+    }
+
+    // TAB KUIS V1
+    const tabJSKuisV1 = document.getElementById('tabJSKuisV1');
+    const tabPyKuisV1 = document.getElementById('tabPyKuisV1');
+    const tabGoKuisV1 = document.getElementById('tabGoKuisV1');
+
+    const jsKuisV1 = document.getElementById('jsKuisV1');
+    const pyKuisV1 = document.getElementById('pyKuisV1');
+    const goKuisV1 = document.getElementById('goKuisV1');
+
+    function showKuisV1(tab) {
+        [tabJSKuisV1, tabPyKuisV1, tabGoKuisV1].forEach(btn => {
+            btn.classList.remove('active');
+            btn.setAttribute('aria-selected', 'false');
+        });
+
+        [jsKuisV1, pyKuisV1, goKuisV1].forEach(panel => panel.style.display = 'none');
+
+        tab.classList.add('active');
+        tab.setAttribute('aria-selected', 'true');
+        document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    tabJSKuisV1.addEventListener('click', () => showKuisV1(tabJSKuisV1));
+    tabPyKuisV1.addEventListener('click', () => showKuisV1(tabPyKuisV1));
+    tabGoKuisV1.addEventListener('click', () => showKuisV1(tabGoKuisV1));
 
     // API DOWNLOADER
     const downloaderEndpoints = [
