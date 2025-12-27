@@ -3938,6 +3938,7 @@
             const r = data.result;
             html = `
               <p><strong>Title:</strong> ${r.title || "-"}</p>
+              ${r.alt ? `<p><strong>Deskripsi:</strong> ${r.alt}</p>` : ""}
               <p><strong>Uploader:</strong> ${r.uploader || "-"}</p>
               <p><strong>Durasi:</strong> ${r.duration || "-"}</p>
               <p><img src="${r.thumbnail || ""}" alt="${r.title || "Thumbnail"}" style="max-width:200px"></p>
@@ -3948,7 +3949,6 @@
             if (r.downloadVideoUrl) {
               html += `<p><strong>Link video (Smule - Sownloader):</strong> <a href="${r.downloadVideoUrl}" target="_blank">${r.downloadVideoUrl}</a></p>`;
             }
-
           } else if (feature === "Smule Downloader" && data.result) {
             // Smule Downloader via smulevideodownloader.com
             const r = data.result;
