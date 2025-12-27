@@ -367,7 +367,7 @@
         <li><a href="#primbon">Primbon</a></li>
         <li><a href="#downloader">Downloader</a></li>
         <li><a href="#information">Information</a></li>
-        <li><a href="#image">Search Image</a></li>
+        <li><a href="#anime">Anime / Manga</a></li>
         <li><a href="#education">Education</a></li>
         <li><a href="#news">News</a></li>
         <li><a href="#game">Game</a></li>
@@ -2115,100 +2115,6 @@
         </div>
       </section>
 
-      <!-- Section Search Image -->
-      <section class="card" id="image" aria-labelledby="image-title">
-        <div class="card-header" id="image-title">Dokumentasi API — Search Image</div>
-
-        <div class="table-wrapper">
-          <table class="table" aria-describedby="image-title">
-            <thead>
-              <tr>
-                <th>No</th>
-                <th>Feature Name</th>
-                <th>Request Method</th>
-                <th>Description</th>
-                <th>Query Parameter</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody id="imageTableBody">
-              <!-- Diisi lewat JS -->
-            </tbody>
-          </table>
-        </div>
-        <div id="imageResponsePanel" class="response" aria-live="polite" style="display:none"></div>
-      </section>
-
-      <!-- Code samples Search Image -->
-      <section class="card">
-        <div class="card-header">Contoh Kode — Search Image</div>
-        <div class="tabs">
-          <div class="tab-list" role="tablist" aria-label="Contoh kode Search Image">
-            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsSearchimage" id="tabJSSearchimage">JavaScript</button>
-            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pySearchimage" id="tabPySearchimage">Python</button>
-            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goSearchimage" id="tabGoSearchimage">Golang</button>
-          </div>
-          <!-- isi code samples sama seperti Information -->
-        </div>
-      </section>
-
-          <!-- JS -->
-          <div id="jsSearchimage" role="tabpanel" aria-labelledby="tabJSSearchimage" class="code">
-      <pre><code class="language-js">
-      // Search Image
-      const apiKey = "YOUR_API_KEY";
-      fetch("https://api2.teamhackbotsindo.my.id/api/searchimage?q=cat", {
-        headers: { "x-api-key": apiKey }
-      })
-        .then(res => res.json())
-        .then(data => console.log("Search Image:", data))
-        .catch(err => console.error(err));
-      </code></pre>
-          </div>
-
-          <!-- Python -->
-          <div id="pySearchimage" role="tabpanel" aria-labelledby="tabPySearchimage" class="code" style="display:none">
-      <pre><code class="language-python">
-      import requests
-
-      apiKey = "YOUR_API_KEY"
-      url = "https://api2.teamhackbotsindo.my.id/api/searchimage?q=cat"
-      resp = requests.get(url, headers={"x-api-key": apiKey})
-      print("Search Image:", resp.json())
-      </code></pre>
-          </div>
-
-          <!-- Golang -->
-          <div id="goSearchimage" role="tabpanel" aria-labelledby="tabGoSearchimage" class="code" style="display:none">
-      <pre><code class="language-go">
-      package main
-
-      import (
-        "fmt"
-        "net/http"
-        "io/ioutil"
-      )
-
-      func main() {
-        apiKey := "YOUR_API_KEY"
-        url := "https://api2.teamhackbotsindo.my.id/api/searchimage?q=cat"
-
-        client := &http.Client{}
-        req, _ := http.NewRequest("GET", url, nil)
-        req.Header.Set("x-api-key", apiKey)
-
-        resp, _ := client.Do(req)
-        defer resp.Body.Close()
-
-        body, _ := ioutil.ReadAll(resp.Body)
-        fmt.Println("Search Image:", string(body))
-      }
-      </code></pre>
-          </div>
-        </div>
-      </section>
-
-
       <!-- Section Education -->
       <section class="card" id="education" aria-labelledby="education-title">
         <div class="card-header" id="education-title">Dokumentasi API — Education</div>
@@ -3925,84 +3831,6 @@
     tabJSCuaca.addEventListener('click', () => showCuaca(tabJSCuaca));
     tabPyCuaca.addEventListener('click', () => showCuaca(tabPyCuaca));
     tabGoCuaca.addEventListener('click', () => showCuaca(tabGoCuaca));
-
-    // API-Search Image
-    const imageEndpoints = [
-        { no: 1, name: "Search Image", method: "GET", desc: "Cari gambar dengan Query", query: ["apikey", "q"] }
-    ];
-
-    const imageBody = document.getElementById('imageTableBody');
-    imageEndpoints.forEach(ep => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td>${ep.no}</td>
-            <td>${ep.name}</td>
-            <td><span class="badge ${ep.method}">${ep.method}</span></td>
-            <td>${ep.desc}</td>
-            <td>${Array.isArray(ep.query) ? ep.query.join(", ") : ep.query}</td>
-            <td><button class="btn" onclick="trySearchimage('${ep.name}')">Try</button></td>
-        `;
-        imageBody.appendChild(tr);
-    });
-
-    function trySearchimage(feature) {
-        const panel = document.getElementById('imageResponsePanel');
-        panel.style.display = 'block';
-        panel.textContent = `⚡ Menjalankan ${feature}...`;
-
-        const apiKey = document.getElementById('apiKeyInput')?.value || "";
-        if (!apiKey) {
-            panel.textContent = "Error: API key wajib diisi!";
-            return;
-        }
-
-        let url = "";
-        switch (feature) {
-            case "Search Image":
-                // Hardcode query = cat
-                url = `https://api2.teamhackbotsindo.my.id/api/searchimage?apikey=${apiKey}&q=cat`;
-                break;
-        }
-
-        fetch(url, { headers: { "x-api-key": apiKey } })
-            .then(async res => {
-                const raw = await res.text();
-                try {
-                    return JSON.parse(raw);
-                } catch {
-                    return { error: "Response bukan JSON", raw: raw.slice(0,200) };
-                }
-            })
-            .then(data => {
-                if (data.error) {
-                    panel.textContent = "Error: " + data.error;
-                    return;
-                }
-                panel.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
-            })
-            .catch(err => panel.textContent = "Error: " + err);
-    }
-
-    // Tab switching untuk Search Image
-    const tabJSSearchimage = document.getElementById('tabJSSearchimage');
-    const tabPySearchimage = document.getElementById('tabPySearchimage');
-    const tabGoSearchimage = document.getElementById('tabGoSearchimage');
-
-    const jsSearchimage = document.getElementById('jsSearchimage');
-    const pySearchimage = document.getElementById('pySearchimage');
-    const goSearchimage = document.getElementById('goSearchimage');
-
-    function showSearchimage(tab) {
-        [tabJSSearchimage, tabPySearchimage, tabGoSearchimage].forEach(btn => btn.classList.remove('active'));
-        [jsSearchimage, pySearchimage, goSearchimage].forEach(panel => panel.style.display = 'none');
-
-        tab.classList.add('active');
-        document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    }
-
-    tabJSSearchimage.addEventListener('click', () => showSearchimage(tabJSSearchimage));
-    tabPySearchimage.addEventListener('click', () => showSearchimage(tabPySearchimage));
-    tabGoSearchimage.addEventListener('click', () => showSearchimage(tabGoSearchimage));
 
     // API-ISLAMI
     const islamiEndpoints = [
