@@ -2271,71 +2271,6 @@
         </div>
       </section>
 
-      <!-- Code samples Lirik Lagu -->
-      <section class="card">
-        <div class="card-header">Contoh Kode — Lirik Lagu</div>
-        <div class="tabs">
-          <div class="tab-list" role="tablist" aria-label="Contoh kode Lirik Lagu">
-            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsLyrics" id="tabJSLyrics">JavaScript</button>
-            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyLyrics" id="tabPyLyrics">Python</button>
-            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goLyrics" id="tabGoLyrics">Golang</button>
-          </div>
-
-          <!-- JS -->
-          <div id="jsLyrics" role="tabpanel" aria-labelledby="tabJSLyrics" class="code">
-      <pre><code class="language-js">
-      // Lirik Lagu
-      const apiKey = "YOUR_API_KEY";
-      fetch("https://api2.teamhackbotsindo.my.id/api/lirik?title=yang%20terdalam&artist=peterpan", {
-        headers: { "x-api-key": apiKey }
-      })
-        .then(res => res.json())
-        .then(data => console.log("Lyrics:", data))
-        .catch(err => console.error(err));
-      </code></pre>
-          </div>
-
-          <!-- Python -->
-          <div id="pyLyrics" role="tabpanel" aria-labelledby="tabPyLyrics" class="code" style="display:none">
-      <pre><code class="language-python">
-      import requests
-
-      apiKey = "YOUR_API_KEY"
-      url = "https://api2.teamhackbotsindo.my.id/api/lirik?title=yang%20terdalam&artist=peterpan"
-      resp = requests.get(url, headers={"x-api-key": apiKey})
-      print(resp.json())
-      </code></pre>
-          </div>
-
-          <!-- Golang -->
-          <div id="goLyrics" role="tabpanel" aria-labelledby="tabGoLyrics" class="code" style="display:none">
-      <pre><code class="language-go">
-      package main
-
-      import (
-        "fmt"
-        "net/http"
-        "io/ioutil"
-      )
-
-      func main() {
-        apiKey := "YOUR_API_KEY"
-        url := "https://api2.teamhackbotsindo.my.id/api/lirik?title=yang%20terdalam&artist=peterpan"
-
-        client := &http.Client{}
-        req, _ := http.NewRequest("GET", url, nil)
-        req.Header.Set("x-api-key", apiKey)
-
-        resp, _ := client.Do(req)
-        defer resp.Body.Close()
-
-        body, _ := ioutil.ReadAll(resp.Body)
-        fmt.Println(string(body))
-      }
-      </code></pre>
-          </div>
-        </div>
-      </section>
 
       <!-- Section Education -->
       <section class="card" id="education" aria-labelledby="education-title">
@@ -3568,10 +3503,9 @@
     tabPyPrimbonJodoh.addEventListener('click', () => showPrimbonJodoh(tabPyPrimbonJodoh));
     tabGoPrimbonJodoh.addEventListener('click', () => showPrimbonJodoh(tabGoPrimbonJodoh));
 
-    // API-SearchImage + Lirik Lagu
+    // API-SearchImage
     const imageEndpoints = [
-      { no: 1, name: "Search Image", method: "GET", desc: "Cari gambar dari query", query: "apikey, q" },
-      { no: 2, name: "Lirik Lagu", method: "GET", desc: "Cari lirik dari title+artis", query: "apikey, title, artist" }
+      { no: 1, name: "Search Image", method: "GET", desc: "Cari gambar dari query", query: "apikey, q" }
     ];
 
     const imageBody = document.getElementById('imageTableBody');
@@ -3605,46 +3539,28 @@
           // contoh query default "cat"
           url = `https://api2.teamhackbotsindo.my.id/api/searchimage?apikey=${apiKey}&q=cat`;
           break;
-        case "Lirik Lagu":
-          // contoh default: judul "yang terdalam", artis "peterpan"
-          url = `https://api2.teamhackbotsindo.my.id/api/lirik?title=yang%20terdalam&artist=peterpan`;
-          break;
       }
 
       fetch(url, { headers: { "x-api-key": apiKey } })
         .then(res => res.json())
         .then(data => {
-          if (feature === "Search Image") {
-            const results = data.results || [];
-            if (!results.length) {
-              panel.textContent = "Tidak ada gambar ditemukan.";
-              return;
-            }
-            let html = "<h4>Hasil Pencarian:</h4><ul>";
-            results.forEach(img => {
-              html += `
-                <li>
-                  <p><strong>${img.description || "-"}</strong></p>
-                  <p><strong>Photographer:</strong> <a href="${img.profile}" target="_blank">${img.photographer}</a></p>
-                  <img src="${img.image_small}" style="max-width:200px">
-                </li>
-              `;
-            });
-            html += "</ul>";
-            panel.innerHTML = html;
-          } else if (feature === "Lirik Lagu") {
-            const lyrics = data.result?.lyrics || [];
-            if (!lyrics.length) {
-              panel.textContent = "Tidak ada lirik ditemukan.";
-              return;
-            }
-            let html = "<h4>Lirik Lagu:</h4><pre>";
-            lyrics.forEach(line => {
-              if (line.text) html += line.text + "\n";
-            });
-            html += "</pre>";
-            panel.innerHTML = html;
+          const results = data.results || [];
+          if (!results.length) {
+            panel.textContent = "Tidak ada gambar ditemukan.";
+            return;
           }
+          let html = "<h4>Hasil Pencarian:</h4><ul>";
+          results.forEach(img => {
+            html += `
+              <li>
+                <p><strong>${img.description || "-"}</strong></p>
+                <p><strong>Photographer:</strong> <a href="${img.profile}" target="_blank">${img.photographer}</a></p>
+                <img src="${img.image_small}" style="max-width:200px">
+              </li>
+            `;
+          });
+          html += "</ul>";
+          panel.innerHTML = html;
         })
         .catch(err => panel.textContent = "Error: " + err);
     }
@@ -3672,30 +3588,6 @@
     tabJSImage.addEventListener('click', () => showImage(tabJSImage));
     tabPyImage.addEventListener('click', () => showImage(tabPyImage));
     tabGoImage.addEventListener('click', () => showImage(tabGoImage));
-
-    // TAB LIRIK LAGU
-    const tabJSLirik = document.getElementById('tabJSLirik');
-    const tabPyLirik = document.getElementById('tabPyLirik');
-    const tabGoLirik = document.getElementById('tabGoLirik');
-
-    const jsLirik = document.getElementById('jsLirik');
-    const pyLirik = document.getElementById('pyLirik');
-    const goLirik = document.getElementById('goLirik');
-
-    function showLirik(tab) {
-      // reset semua tab & panel
-      [tabJSLirik, tabPyLirik, tabGoLirik].forEach(btn => btn.classList.remove('active'));
-      [jsLirik, pyLirik, goLirik].forEach(panel => panel.style.display = 'none');
-
-      // aktifkan tab yang dipilih
-      tab.classList.add('active');
-      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    }
-
-    // event listener
-    tabJSLirik.addEventListener('click', () => showLirik(tabJSLirik));
-    tabPyLirik.addEventListener('click', () => showLirik(tabPyLirik));
-    tabGoLirik.addEventListener('click', () => showLirik(tabGoLirik));
 
     // API-Education
     const educationEndpoints = [
