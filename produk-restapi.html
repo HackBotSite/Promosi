@@ -2428,6 +2428,72 @@
         </div>
       </section>
 
+      <!-- Code samples Cek Domain -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Cek Domain</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Cek Domain">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsCekDomain" id="tabJSCekDomain">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyCekDomain" id="tabPyCekDomain">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goCekDomain" id="tabGoCekDomain">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsCekDomain" role="tabpanel" aria-labelledby="tabJSCekDomain" class="code">
+      <pre><code class="language-js">
+      // Cek Domain
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api2.teamhackbotsindo.my.id/api/cekdomain?domain=api.lolhuman.xyz", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Cek Domain:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyCekDomain" role="tabpanel" aria-labelledby="tabPyCekDomain" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      url = "https://api2.teamhackbotsindo.my.id/api/cekdomain?domain=api.lolhuman.xyz"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goCekDomain" role="tabpanel" aria-labelledby="tabGoCekDomain" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        url := "https://api2.teamhackbotsindo.my.id/api/cekdomain?domain=api.lolhuman.xyz"
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
       <!-- Section Education -->
       <section class="card" id="education" aria-labelledby="education-title">
         <div class="card-header" id="education-title">Dokumentasi API — Education</div>
@@ -3790,7 +3856,8 @@
 
     // API-Checker
     const checkEndpoints = [
-      { no: 1, name: "Cek Resi", method: "GET", desc: "Lacak paket berdasarkan nomor resi", query: "apikey, resi, courier" }
+      { no: 1, name: "Cek Resi", method: "GET", desc: "Lacak paket berdasarkan nomor resi", query: "apikey, resi, courier" },
+      { no: 2, name: "Cek Domain", method: "GET", desc: "Periksa status DNS sebuah domain", query: "apikey, domain" }
     ];
 
     const checkBody = document.getElementById('checkTableBody');
@@ -3821,8 +3888,10 @@
       let url = "";
       switch (feature) {
         case "Cek Resi":
-          // contoh default: resi JNE
           url = `https://api2.teamhackbotsindo.my.id/api/resi?resi=JP1234567890&courier=jne`;
+          break;
+        case "Cek Domain":
+          url = `https://api2.teamhackbotsindo.my.id/api/cekdomain?domain=api.lolhuman.xyz`;
           break;
       }
 
@@ -3849,11 +3918,51 @@
               html += "</ul>";
             }
             panel.innerHTML = html;
+          } else if (feature === "Cek Domain") {
+            if (!data.result) {
+              panel.textContent = "Tidak ada data domain ditemukan.";
+              return;
+            }
+            const r = data.result;
+            let html = "<h4>Hasil Cek Domain:</h4>";
+            html += `<p><strong>Domain:</strong> ${r.domain || "-"}</p>`;
+            html += `<p><strong>Valid:</strong> ${r.valid ? "Ya" : "Tidak"}</p>`;
+            if (r.A && r.A.length) {
+              html += "<p><strong>A Records:</strong></p><ul>";
+              r.A.forEach(ip => { html += `<li>${ip}</li>`; });
+              html += "</ul>";
+            }
+            if (r.AAAA && r.AAAA.length) {
+              html += "<p><strong>AAAA Records:</strong></p><ul>";
+              r.AAAA.forEach(ipv6 => { html += `<li>${ipv6}</li>`; });
+              html += "</ul>";
+            }
+            if (r.CNAME && r.CNAME.length) {
+              html += "<p><strong>CNAME:</strong></p><ul>";
+              r.CNAME.forEach(cn => { html += `<li>${cn}</li>`; });
+              html += "</ul>";
+            }
+            if (r.NS && r.NS.length) {
+              html += "<p><strong>NS Records:</strong></p><ul>";
+              r.NS.forEach(ns => { html += `<li>${ns}</li>`; });
+              html += "</ul>";
+            }
+            if (r.MX && r.MX.length) {
+              html += "<p><strong>MX Records:</strong></p><ul>";
+              r.MX.forEach(mx => { html += `<li>${mx}</li>`; });
+              html += "</ul>";
+            }
+            if (r.TXT && r.TXT.length) {
+              html += "<p><strong>TXT Records:</strong></p><ul>";
+              r.TXT.forEach(txt => { html += `<li>${txt}</li>`; });
+              html += "</ul>";
+            }
+            panel.innerHTML = html;
           }
         })
         .catch(err => panel.textContent = "Error: " + err);
-    }
 
+    }
     // TAB Cek Resi
     const tabJSCekResi = document.getElementById('tabJSCekResi');
     const tabPyCekResi = document.getElementById('tabPyCekResi');
@@ -3877,6 +3986,30 @@
     tabJSCekResi.addEventListener('click', () => showCekResi(tabJSCekResi));
     tabPyCekResi.addEventListener('click', () => showCekResi(tabPyCekResi));
     tabGoCekResi.addEventListener('click', () => showCekResi(tabGoCekResi));
+
+    // TAB Cek Domain
+    const tabJSCekDomain = document.getElementById('tabJSCekDomain');
+    const tabPyCekDomain = document.getElementById('tabPyCekDomain');
+    const tabGoCekDomain = document.getElementById('tabGoCekDomain');
+
+    const jsCekDomain = document.getElementById('jsCekDomain');
+    const pyCekDomain = document.getElementById('pyCekDomain');
+    const goCekDomain = document.getElementById('goCekDomain');
+
+    function showCekDomain(tab) {
+      // reset semua tab & panel
+      [tabJSCekDomain, tabPyCekDomain, tabGoCekDomain].forEach(btn => btn.classList.remove('active'));
+      [jsCekDomain, pyCekDomain, goCekDomain].forEach(panel => panel.style.display = 'none');
+
+      // aktifkan tab yang dipilih
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    // event listener
+    tabJSCekDomain.addEventListener('click', () => showCekDomain(tabJSCekDomain));
+    tabPyCekDomain.addEventListener('click', () => showCekDomain(tabPyCekDomain));
+    tabGoCekDomain.addEventListener('click', () => showCekDomain(tabGoCekDomain));
 
     // API-Education
     const educationEndpoints = [
