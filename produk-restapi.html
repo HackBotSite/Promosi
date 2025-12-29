@@ -368,6 +368,7 @@
         <li><a href="#downloader">Downloader</a></li>
         <li><a href="#information">Information</a></li>
         <li><a href="#image">Searcher</a></li>
+        <li><a href="#check">Checker</a></li>
         <li><a href="#education">Education</a></li>
         <li><a href="#news">News</a></li>
         <li><a href="#game">Game</a></li>
@@ -2337,6 +2338,130 @@
         </div>
       </section>
 
+      <!-- Section Checker -->
+      <section class="card" id="check" aria-labelledby="check-title">
+        <div class="card-header" id="check-title">Dokumentasi API — Checker</div>
+
+        <div class="table-wrapper">
+          <table class="table" aria-describedby="check-title">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Feature Name</th>
+                <th>Request Method</th>
+                <th>Description</th>
+                <th>Query Parameter</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="checkTableBody">
+              <!-- Diisi lewat JS -->
+            </tbody>
+          </table>
+        </div>
+        <div id="checkResponsePanel" class="response" aria-live="polite" style="display:none"></div>
+      </section>
+
+      <!-- Code samples Cek Resi -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Cek Resi</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Cek Resi">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsCekResi" id="tabJSCekResi">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyCekResi" id="tabPyCekResi">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goCekResi" id="tabGoCekResi">Golang</button>
+          </div>
+
+          <!-- Section Checker -->
+      <section class="card" id="check" aria-labelledby="check-title">
+        <div class="card-header" id="check-title">Dokumentasi API — Checker</div>
+
+        <div class="table-wrapper">
+          <table class="table" aria-describedby="check-title">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Feature Name</th>
+                <th>Request Method</th>
+                <th>Description</th>
+                <th>Query Parameter</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="checkTableBody">
+              <!-- Diisi lewat JS -->
+            </tbody>
+          </table>
+        </div>
+        <div id="checkResponsePanel" class="response" aria-live="polite" style="display:none"></div>
+      </section>
+
+      <!-- Code samples Cek Resi -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Cek Resi</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Cek Resi">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsCekResi" id="tabJSCekResi">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyCekResi" id="tabPyCekResi">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goCekResi" id="tabGoCekResi">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsCekResi" role="tabpanel" aria-labelledby="tabJSCekResi" class="code">
+      <pre><code class="language-js">
+      // Cek Resi
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api2.teamhackbotsindo.my.id/api/resi?resi=JP1234567890&courier=jne", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Cek Resi:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyCekResi" role="tabpanel" aria-labelledby="tabPyCekResi" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      url = "https://api2.teamhackbotsindo.my.id/api/resi?resi=JP1234567890&courier=jne"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goCekResi" role="tabpanel" aria-labelledby="tabGoCekResi" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        url := "https://api2.teamhackbotsindo.my.id/api/resi?resi=JP1234567890&courier=jne"
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
       <!-- Section Education -->
       <section class="card" id="education" aria-labelledby="education-title">
         <div class="card-header" id="education-title">Dokumentasi API — Education</div>
@@ -3696,6 +3821,96 @@
     tabJSLirik.addEventListener('click', () => showLirik(tabJSLirik));
     tabPyLirik.addEventListener('click', () => showLirik(tabPyLirik));
     tabGoLirik.addEventListener('click', () => showLirik(tabGoLirik));
+
+    // API-Checker
+    const checkEndpoints = [
+      { no: 1, name: "Cek Resi", method: "GET", desc: "Lacak paket berdasarkan nomor resi", query: "apikey, resi, courier" }
+    ];
+
+    const checkBody = document.getElementById('checkTableBody');
+    checkEndpoints.forEach(ep => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${ep.no}</td>
+        <td>${ep.name}</td>
+        <td><span class="badge ${ep.method}">${ep.method}</span></td>
+        <td>${ep.desc}</td>
+        <td>${ep.query}</td>
+        <td><button class="btn" onclick="tryCheck('${ep.name}')">Try</button></td>
+      `;
+      checkBody.appendChild(tr);
+    });
+
+    function tryCheck(feature) {
+      const panel = document.getElementById('checkResponsePanel');
+      panel.style.display = 'block';
+      panel.textContent = `⚡ Menjalankan ${feature}...`;
+
+      const apiKey = document.getElementById('apiKeyInput')?.value || "";
+      if (!apiKey) {
+        panel.textContent = "Error: API key wajib diisi!";
+        return;
+      }
+
+      let url = "";
+      switch (feature) {
+        case "Cek Resi":
+          // contoh default: resi JNE
+          url = `https://api2.teamhackbotsindo.my.id/api/resi?resi=JP1234567890&courier=jne`;
+          break;
+      }
+
+      fetch(url, { headers: { "x-api-key": apiKey } })
+        .then(res => res.json())
+        .then(data => {
+          if (feature === "Cek Resi") {
+            if (!data.result) {
+              panel.textContent = "Tidak ada data resi ditemukan.";
+              return;
+            }
+            const r = data.result;
+            let html = "<h4>Hasil Tracking:</h4>";
+            html += `<p><strong>Courier:</strong> ${r.courier || "-"}</p>`;
+            html += `<p><strong>AWB:</strong> ${r.awb || "-"}</p>`;
+            html += `<p><strong>Status:</strong> ${r.status || "-"}</p>`;
+            html += `<p><strong>Tanggal Kirim:</strong> ${r.sent_date || "-"}</p>`;
+            html += `<p><strong>Penerima:</strong> ${r.receiver || "-"}</p>`;
+            if (r.history && r.history.length) {
+              html += "<h5>History:</h5><ul>";
+              r.history.forEach(h => {
+                html += `<li>${h.date} - ${h.desc}</li>`;
+              });
+              html += "</ul>";
+            }
+            panel.innerHTML = html;
+          }
+        })
+        .catch(err => panel.textContent = "Error: " + err);
+    }
+
+    // TAB Cek Resi
+    const tabJSCekResi = document.getElementById('tabJSCekResi');
+    const tabPyCekResi = document.getElementById('tabPyCekResi');
+    const tabGoCekResi = document.getElementById('tabGoCekResi');
+
+    const jsCekResi = document.getElementById('jsCekResi');
+    const pyCekResi = document.getElementById('pyCekResi');
+    const goCekResi = document.getElementById('goCekResi');
+
+    function showCekResi(tab) {
+      // reset semua tab & panel
+      [tabJSCekResi, tabPyCekResi, tabGoCekResi].forEach(btn => btn.classList.remove('active'));
+      [jsCekResi, pyCekResi, goCekResi].forEach(panel => panel.style.display = 'none');
+
+      // aktifkan tab yang dipilih
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    // event listener
+    tabJSCekResi.addEventListener('click', () => showCekResi(tabJSCekResi));
+    tabPyCekResi.addEventListener('click', () => showCekResi(tabPyCekResi));
+    tabGoCekResi.addEventListener('click', () => showCekResi(tabGoCekResi));
 
     // API-Education
     const educationEndpoints = [
