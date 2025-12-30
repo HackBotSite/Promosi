@@ -1683,6 +1683,72 @@
         </div>
       </section>
 
+      <!-- Tabs SnackVideo -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — SnackVideo</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode SnackVideo">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jssnackVideo" id="tabJSsnackVideo">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pysnackVideo" id="tabPysnackVideo">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="gosnackVideo" id="tabGosnackVideo">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jssnackVideo" role="tabpanel" aria-labelledby="tabJSsnackVideo" class="code">
+      <pre><code class="language-js">
+      // SnackVideo
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api2.teamhackbotsindo.my.id/api/snackVideo?https://www.snackvideo.com/@grrfi010/video/5222918303188264802", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("snackVideo:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pysnackVideo" role="tabpanel" aria-labelledby="tabPysnackVideo" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      url = "https://api2.teamhackbotsindo.my.id/api/snackVideo?https://www.snackvideo.com/@grrfi010/video/5222918303188264802"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="gosnackVideo" role="tabpanel" aria-labelledby="tabGosnackVideo" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        url := "https://api2.teamhackbotsindo.my.id/api/snackVideo?https://www.snackvideo.com/@grrfi010/video/5222918303188264802"
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
       <!-- Section Facebook Video -->
       <section class="card">
         <div class="card-header">Contoh Kode — Facebook Video</div>
@@ -4188,7 +4254,8 @@
       { no: 6, name: "Smule Downloader", method: "GET", desc: "Download media dari Smule", query: "apikey, link" },
       { no: 7, name: "Facebook", method: "GET", desc: "Download video dari Facebook", query: "apikey, link" },
       { no: 8, name: "Tiktok", method: "GET", desc: "Download video dari Tiktok", query: "apikey, link" },
-      { no: 9, name: "Youtube Video V2", method: "GET", desc: "Download video YouTube V2", query: "apikey, link" }
+      { no: 9, name: "Youtube Video V2", method: "GET", desc: "Download video YouTube V2", query: "apikey, link" },
+      { no: 10, name: "SnackVideo", method: "GET", desc: "Download video SnackVideo", query: "apikey, link" }
     ];
 
     const downloaderBody = document.getElementById('downloaderTableBody');
@@ -4244,6 +4311,9 @@
           break;
         case "Youtube Video V2":
           url = `https://api2.teamhackbotsindo.my.id/api/youtubeVideoV2?link=https://youtu.be/igaeQ2fJRxE`;
+          break;
+        case "SnackVideo":
+          url = `https://api2.teamhackbotsindo.my.id/api/snackVideo?link=https://www.snackvideo.com/@grrfi010/video/5222918303188264802`;
           break;
       }
 
@@ -4329,6 +4399,20 @@
             }
             if (r.reserved_file) {
               html += `<p><strong>Link cadangan:</strong> <a href="${r.reserved_file}" target="_blank">${r.reserved_file}</a></p>`;
+            }
+          } else if (feature === "SnackVideo" && data.result) {
+            const r = data.result;
+            html = `
+              <p><strong>Download Video:</strong> 
+                <a href="${r.downloadVideoUrl}" target="_blank">${r.downloadVideoUrl}</a>
+              </p>
+            `;
+            if (r.thumbnail) {
+              html += `
+                <p><strong>Thumbnail:</strong><br>
+                <img src="${r.thumbnail}" alt="thumbnail" style="max-width:300px;">
+                </p>
+              `;
             }
           } else if (feature === "Facebook" && data.result) {
             // Facebook Video case
@@ -4437,6 +4521,27 @@
     tabJSYoutubeVideo.addEventListener('click', () => showYoutubeVideo(tabJSYoutubeVideo));
     tabPyYoutubeVideo.addEventListener('click', () => showYoutubeVideo(tabPyYoutubeVideo));
     tabGoYoutubeVideo.addEventListener('click', () => showYoutubeVideo(tabGoYoutubeVideo));
+
+    // TAB SnackVideo
+    const tabJSsnackVideo = document.getElementById('tabJSsnackVideo');
+    const tabPysnackVideo = document.getElementById('tabPysnackVideo');
+    const tabGosnackVideo = document.getElementById('tabGosnackVideo');
+
+    const jssnackVideo = document.getElementById('jssnackVideo');
+    const pysnackVideo = document.getElementById('pysnackVideo');
+    const gosnackVideo = document.getElementById('gosnackVideo');
+
+    function showsnackVideo(tab) {
+      [tabJSsnackVideo, tabPysnackVideo, tabGosnackVideo].forEach(btn => btn.classList.remove('active'));
+      [jssnackVideo, pysnackVideo, gosnackVideo].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    tabJSsnackVideo.addEventListener('click', () => showsnackVideo(tabJSsnackVideo));
+    tabPysnackVideo.addEventListener('click', () => showsnackVideo(tabPysnackVideo));
+    tabGosnackVideo.addEventListener('click', () => showsnackVideo(tabGosnackVideo));
 
     // TAB YOUTUBE AUDIO
     const tabJSYoutubeAudio = document.getElementById('tabJSYoutubeAudio');
