@@ -1698,7 +1698,7 @@
       <pre><code class="language-js">
       // SnackVideo
       const apiKey = "YOUR_API_KEY";
-      fetch("https://api2.teamhackbotsindo.my.id/api/snackVideo?https://www.snackvideo.com/@grrfi010/video/5222918303188264802", {
+      fetch("https://api2.teamhackbotsindo.my.id/api/snackVideo?link=https://www.snackvideo.com/@grrfi010/video/5222918303188264802", {
         headers: { "x-api-key": apiKey }
       })
         .then(res => res.json())
@@ -1713,7 +1713,7 @@
       import requests
 
       apiKey = "YOUR_API_KEY"
-      url = "https://api2.teamhackbotsindo.my.id/api/snackVideo?https://www.snackvideo.com/@grrfi010/video/5222918303188264802"
+      url = "https://api2.teamhackbotsindo.my.id/api/snackVideo?link=https://www.snackvideo.com/@grrfi010/video/5222918303188264802"
       resp = requests.get(url, headers={"x-api-key": apiKey})
       print(resp.json())
       </code></pre>
@@ -1732,7 +1732,73 @@
 
       func main() {
         apiKey := "YOUR_API_KEY"
-        url := "https://api2.teamhackbotsindo.my.id/api/snackVideo?https://www.snackvideo.com/@grrfi010/video/5222918303188264802"
+        url := "https://api2.teamhackbotsindo.my.id/api/snackVideo?link=https://www.snackvideo.com/@grrfi010/video/5222918303188264802"
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tabs Instagram Video -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Instagram Video</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Instagram Video">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsinstagramVideo" id="tabJSinstagramVideo">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyinstagramVideo" id="tabPyinstagramVideo">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goinstagramVideo" id="tabGoinstagramVideo">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsinstagramVideo" role="tabpanel" aria-labelledby="tabJSinstagramVideo" class="code">
+      <pre><code class="language-js">
+      // instagramVideo
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api2.teamhackbotsindo.my.id/api/instagramVideo?link=https://www.instagram.com/reel/DSiBOPIjIgU/?igsh=MXRtYTU2OTl2bm9i", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("instagramVideo:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyinstagramVideo" role="tabpanel" aria-labelledby="tabPyinstagramVideo" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      url = "https://api2.teamhackbotsindo.my.id/api/instagramVideo?link=https://www.instagramVideo.com/@grrfi010/video/5222918303188264802"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goinstagramVideo" role="tabpanel" aria-labelledby="tabGoinstagramVideo" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        url := "https://api2.teamhackbotsindo.my.id/api/instagramVideo?link=https://www.instagramVideo.com/@grrfi010/video/5222918303188264802"
 
         client := &http.Client{}
         req, _ := http.NewRequest("GET", url, nil)
@@ -4255,7 +4321,8 @@
       { no: 7, name: "Facebook", method: "GET", desc: "Download video dari Facebook", query: "apikey, link" },
       { no: 8, name: "Tiktok", method: "GET", desc: "Download video dari Tiktok", query: "apikey, link" },
       { no: 9, name: "Youtube Video V2", method: "GET", desc: "Download video YouTube V2", query: "apikey, link" },
-      { no: 10, name: "SnackVideo", method: "GET", desc: "Download video SnackVideo", query: "apikey, link" }
+      { no: 10, name: "SnackVideo", method: "GET", desc: "Download video SnackVideo", query: "apikey, link" },
+      { no: 10, name: "Instagram Downloader", method: "GET", desc: "Download video reel, post, igtv, story", query: "apikey, link" }
     ];
 
     const downloaderBody = document.getElementById('downloaderTableBody');
@@ -4314,6 +4381,9 @@
           break;
         case "SnackVideo":
           url = `https://api2.teamhackbotsindo.my.id/api/snackVideo?link=https://www.snackvideo.com/@grrfi010/video/5222918303188264802`;
+          break;
+        case "Instagram Downloader":
+          url = `https://api2.teamhackbotsindo.my.id/api/instagram?link=https://www.instagram.com/reel/DSiBOPIjIgU/?igsh=MXRtYTU2OTl2bm9i`;
           break;
       }
 
@@ -4407,6 +4477,26 @@
                 <a href="${r.downloadVideoUrl}" target="_blank">${r.downloadVideoUrl}</a>
               </p>
             `;
+            if (r.thumbnail) {
+              html += `
+                <p><strong>Thumbnail:</strong><br>
+                <img src="${r.thumbnail}" alt="thumbnail" style="max-width:300px;">
+                </p>
+              `;
+            }
+          } else if (feature === "Instagram Downloader" && data.result) {
+            const r = data.result;
+            html = `
+              <p><strong>Type:</strong> ${r.type || "-"}</p>
+              <p><strong>Quality:</strong> ${r.quality || "-"}</p>
+            `;
+            if (r.url) {
+              html += `
+                <p><strong>Download Video:</strong> 
+                  <a href="${r.url}" target="_blank">${r.url}</a>
+                </p>
+              `;
+            }
             if (r.thumbnail) {
               html += `
                 <p><strong>Thumbnail:</strong><br>
@@ -4542,6 +4632,27 @@
     tabJSsnackVideo.addEventListener('click', () => showsnackVideo(tabJSsnackVideo));
     tabPysnackVideo.addEventListener('click', () => showsnackVideo(tabPysnackVideo));
     tabGosnackVideo.addEventListener('click', () => showsnackVideo(tabGosnackVideo));
+
+    // TAB InstagramDownloader
+    const tabJSinstagramVideo = document.getElementById('tabJSinstagramVideo');
+    const tabPyinstagramVideo = document.getElementById('tabPyinstagramVideo');
+    const tabGoinstagramVideo = document.getElementById('tabGoinstagramVideo');
+
+    const jsinstagramVideo = document.getElementById('jsinstagramVideo');
+    const pyinstagramVideo = document.getElementById('pyinstagramVideo');
+    const goinstagramVideo = document.getElementById('goinstagramVideo');
+
+    function showinstagramVideo(tab) {
+      [tabJSinstagramVideo, tabPyinstagramVideo, tabGoinstagramVideo].forEach(btn => btn.classList.remove('active'));
+      [jsinstagramVideo, pyinstagramVideo, goinstagramVideo].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    tabJSinstagramVideo.addEventListener('click', () => showinstagramVideo(tabJSinstagramVideo));
+    tabPyinstagramVideo.addEventListener('click', () => showinstagramVideo(tabPyinstagramVideo));
+    tabGoinstagramVideo.addEventListener('click', () => showinstagramVideo(tabGoinstagramVideo));
 
     // TAB YOUTUBE AUDIO
     const tabJSYoutubeAudio = document.getElementById('tabJSYoutubeAudio');
