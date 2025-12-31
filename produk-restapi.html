@@ -1683,6 +1683,72 @@
         </div>
       </section>
 
+      <!-- Tabs Youtube Video V3 -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Youtube Video V3</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Youtube Video V3">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsYoutubeVideoV3" id="tabJSYoutubeVideoV3">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyYoutubeVideoV3" id="tabPyYoutubeVideoV3">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goYoutubeVideoV3" id="tabGoYoutubeVideoV3">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsYoutubeVideoV3" role="tabpanel" aria-labelledby="tabJSYoutubeVideoV3" class="code">
+      <pre><code class="language-js">
+      // Youtube Video V3
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api2.teamhackbotsindo.my.id/api/youtubeVideoV3?link=https://youtu.be/igaeQ2fJRxE", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Youtube Video V3:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyYoutubeVideoV3" role="tabpanel" aria-labelledby="tabPyYoutubeVideoV3" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      url = "https://api2.teamhackbotsindo.my.id/api/youtubeVideoV3?link=https://youtu.be/igaeQ2fJRxE"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goYoutubeVideoV3" role="tabpanel" aria-labelledby="tabGoYoutubeVideoV3" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        url := "https://api2.teamhackbotsindo.my.id/api/youtubeVideoV3?link=https://youtu.be/igaeQ2fJRxE"
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
       <!-- Tabs SnackVideo -->
       <section class="card">
         <div class="card-header">Contoh Kode — SnackVideo</div>
@@ -4321,8 +4387,9 @@
       { no: 7, name: "Facebook", method: "GET", desc: "Download video dari Facebook", query: "apikey, link" },
       { no: 8, name: "Tiktok", method: "GET", desc: "Download video dari Tiktok", query: "apikey, link" },
       { no: 9, name: "Youtube Video V2", method: "GET", desc: "Download video YouTube V2", query: "apikey, link" },
-      { no: 10, name: "SnackVideo", method: "GET", desc: "Download video SnackVideo", query: "apikey, link" },
-      { no: 11, name: "Instagram Downloader", method: "GET", desc: "Download video reel, post, igtv, story", query: "apikey, link" }
+      { no: 10, name: "Youtube Video V3", method: "GET", desc: "Download video dan Audio", query: "apikey, link" },
+      { no: 11, name: "SnackVideo", method: "GET", desc: "Download video SnackVideo", query: "apikey, link" },
+      { no: 12, name: "Instagram Downloader", method: "GET", desc: "Download video reel, post, igtv, story", query: "apikey, link" }
     ];
 
     const downloaderBody = document.getElementById('downloaderTableBody');
@@ -4378,6 +4445,9 @@
           break;
         case "Youtube Video V2":
           url = `https://api2.teamhackbotsindo.my.id/api/youtubeVideoV2?link=https://youtu.be/igaeQ2fJRxE`;
+          break;
+        case "Youtube Video V3":
+          url = `https://api2.teamhackbotsindo.my.id/api/youtubeVideoV3?link=https://youtu.be/igaeQ2fJRxE`;
           break;
         case "SnackVideo":
           url = `https://api2.teamhackbotsindo.my.id/api/snackVideo?link=https://www.snackvideo.com/@grrfi010/video/5222918303188264802`;
@@ -4469,6 +4539,34 @@
             }
             if (r.reserved_file) {
               html += `<p><strong>Link cadangan:</strong> <a href="${r.reserved_file}" target="_blank">${r.reserved_file}</a></p>`;
+            }
+          } else if (feature === "Youtube Video V3" && data.result) {
+            const r = data.result;
+            html = `
+              <p><strong>Title:</strong> ${r.title || "-"}</p>
+            `;
+
+            // Link audio terbaik
+            if (r.downloadAudioUrl) {
+              html += `
+                <p><strong>Best Audio:</strong> 
+                  <a href="${r.downloadAudioUrl}" target="_blank">${r.downloadAudioUrl}</a>
+                </p>
+              `;
+            }
+
+            // Semua opsi audio
+            if (r.audioFormats && r.audioFormats.length) {
+              html += "<p><strong>Available Formats:</strong></p><ul>";
+              r.audioFormats.forEach(f => {
+                html += `
+                  <li>
+                    ${f.ext} – ${f.quality} 
+                    <a href="${f.url}" target="_blank">Download</a>
+                  </li>
+                `;
+              });
+              html += "</ul>";
             }
           } else if (feature === "SnackVideo" && data.result) {
             const r = data.result;
@@ -4778,6 +4876,27 @@
     tabJSYoutubeVideoV2.addEventListener('click', () => showYoutubeVideoV2(tabJSYoutubeVideoV2));
     tabPyYoutubeVideoV2.addEventListener('click', () => showYoutubeVideoV2(tabPyYoutubeVideoV2));
     tabGoYoutubeVideoV2.addEventListener('click', () => showYoutubeVideoV2(tabGoYoutubeVideoV2));
+
+    // TAB YOUTUBE VIDEO V3
+    const tabJSYoutubeVideoV3 = document.getElementById('tabJSYoutubeVideoV3');
+    const tabPyYoutubeVideoV3 = document.getElementById('tabPyYoutubeVideoV3');
+    const tabGoYoutubeVideoV3 = document.getElementById('tabGoYoutubeVideoV3');
+
+    const jsYoutubeVideoV3 = document.getElementById('jsYoutubeVideoV3');
+    const pyYoutubeVideoV3 = document.getElementById('pyYoutubeVideoV3');
+    const goYoutubeVideoV3 = document.getElementById('goYoutubeVideoV3');
+
+    function showYoutubeVideoV3(tab) {
+      [tabJSYoutubeVideoV3, tabPyYoutubeVideoV3, tabGoYoutubeVideoV3].forEach(btn => btn.classList.remove('active'));
+      [jsYoutubeVideoV3, pyYoutubeVideoV3, goYoutubeVideoV3].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    tabJSYoutubeVideoV3.addEventListener('click', () => showYoutubeVideoV3(tabJSYoutubeVideoV3));
+    tabPyYoutubeVideoV3.addEventListener('click', () => showYoutubeVideoV3(tabPyYoutubeVideoV3));
+    tabGoYoutubeVideoV3.addEventListener('click', () => showYoutubeVideoV3(tabGoYoutubeVideoV3));
 
     // TAB FacebookVideo
     const tabJSFacebookVideo = document.getElementById('tabJSFacebookVideo');
