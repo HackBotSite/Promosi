@@ -4447,7 +4447,7 @@
           url = `https://api2.teamhackbotsindo.my.id/api/youtubeVideoV2?link=https://youtu.be/igaeQ2fJRxE`;
           break;
         case "Youtube Video V3":
-          url = `https://api2.teamhackbotsindo.my.id/api/youtubeVideoV3?link=https://youtu.be/igaeQ2fJRxE`;
+          url = `https://api2.teamhackbotsindo.my.id/api/youtubeVideoV3?link=https://www.youtube.com/watch?v=igaeQ2fJRxE`;
           break;
         case "SnackVideo":
           url = `https://api2.teamhackbotsindo.my.id/api/snackVideo?link=https://www.snackvideo.com/@grrfi010/video/5222918303188264802`;
@@ -4545,28 +4545,39 @@
             html = `
               <p><strong>Title:</strong> ${r.title || "-"}</p>
             `;
+            // Status & progressId
+            if (r.status) {
+              html += `<p><strong>Status:</strong> ${r.status}</p>`;
+            }
+            if (r.progressId) {
+              html += `<p><strong>Progress ID:</strong> ${r.progressId}</p>`;
+            }
+            // Link final
+            if (r.downloadUrl) {
+              html += `
+                <p><strong>Download URL:</strong> 
+                  <a href="${r.downloadUrl}" target="_blank">${r.downloadUrl}</a>
+                </p>
+              `;
+            } else {
+              html += `<p><em>Download URL belum tersedia.</em></p>`;
+            }
+          } else if (feature === "Youtube Audio" && data.result) {
+            const r = data.result;
+            html = `
+              <p><strong>Title:</strong> ${r.title || "-"}</p>
+              <p><strong>Uploader:</strong> ${r.uploader || "-"}</p>
+              <p><strong>Published:</strong> ${r.publishedAt || "-"}</p>
+              <p><strong>Duration:</strong> ${r.duration || "-"}</p>
+              <p><img src="${r.thumbnail || ""}" style="max-width:200px"></p>
+            `;
 
-            // Link audio terbaik
             if (r.downloadAudioUrl) {
               html += `
-                <p><strong>Best Audio:</strong> 
+                <p><strong>Download Audio:</strong> 
                   <a href="${r.downloadAudioUrl}" target="_blank">${r.downloadAudioUrl}</a>
                 </p>
               `;
-            }
-
-            // Semua opsi audio
-            if (r.audioFormats && r.audioFormats.length) {
-              html += "<p><strong>Available Formats:</strong></p><ul>";
-              r.audioFormats.forEach(f => {
-                html += `
-                  <li>
-                    ${f.ext} – ${f.quality} 
-                    <a href="${f.url}" target="_blank">Download</a>
-                  </li>
-                `;
-              });
-              html += "</ul>";
             }
           } else if (feature === "SnackVideo" && data.result) {
             const r = data.result;
