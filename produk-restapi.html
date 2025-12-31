@@ -4780,6 +4780,27 @@
     tabPyYoutubeVideoV2.addEventListener('click', () => showYoutubeVideoV2(tabPyYoutubeVideoV2));
     tabGoYoutubeVideoV2.addEventListener('click', () => showYoutubeVideoV2(tabGoYoutubeVideoV2));
 
+    // TAB FacebookVideo
+    const tabJSFacebookVideo = document.getElementById('tabJSFacebookVideo');
+    const tabPyFacebookVideo = document.getElementById('tabPyFacebookVideo');
+    const tabGoFacebookVideo = document.getElementById('tabGoFacebookVideo');
+
+    const jsFacebookVideo = document.getElementById('jsFacebookVideo');
+    const pyFacebookVideo = document.getElementById('pyFacebookVideo');
+    const goFacebookVideo = document.getElementById('goFacebookVideo');
+
+    function showFacebookVideo(tab) {
+      [tabJSFacebookVideo, tabPyFacebookVideo, tabGoFacebookVideo].forEach(btn => btn.classList.remove('active'));
+      [jsFacebookVideo, pyFacebookVideo, goFacebookVideo].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    tabJSFacebookVideo.addEventListener('click', () => showFacebookVideo(tabJSFacebookVideo));
+    tabPyFacebookVideo.addEventListener('click', () => showFacebookVideo(tabPyFacebookVideo));
+    tabGoFacebookVideo.addEventListener('click', () => showFacebookVideo(tabGoFacebookVideo));
+
     // API-Information
     const informationEndpoints = [
       { no: 1, name: "Translate", method: "GET", desc: "Terjemahkan teks ke bahasa lain", query: "apikey, text, to" },
