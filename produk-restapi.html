@@ -4540,7 +4540,7 @@
             if (r.reserved_file) {
               html += `<p><strong>Link cadangan:</strong> <a href="${r.reserved_file}" target="_blank">${r.reserved_file}</a></p>`;
             }
-          } else if (feature === "Youtube Video V3" && data.result) {
+          } else if (feature === "Youtube Video/Audio" && data.result) {
             const r = data.result;
             html = `
               <p><strong>Title:</strong> ${r.title}</p>
