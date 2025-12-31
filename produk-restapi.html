@@ -4543,25 +4543,13 @@
           } else if (feature === "Youtube Video V3" && data.result) {
             const r = data.result;
             html = `
-              <p><strong>Title:</strong> ${r.title || "-"}</p>
+              <p><strong>Title:</strong> ${r.title}</p>
+              <p><strong>Status:</strong> ${r.status}</p>
+              <p><strong>Progress ID:</strong> ${r.progressId}</p>
+              <p><strong>Download URL:</strong> 
+                <a href="${r.downloadUrl}" target="_blank">${r.downloadUrl}</a>
+              </p>
             `;
-            // Status & progressId
-            if (r.status) {
-              html += `<p><strong>Status:</strong> ${r.status}</p>`;
-            }
-            if (r.progressId) {
-              html += `<p><strong>Progress ID:</strong> ${r.progressId}</p>`;
-            }
-            // Link final
-            if (r.downloadUrl) {
-              html += `
-                <p><strong>Download URL:</strong> 
-                  <a href="${r.downloadUrl}" target="_blank">${r.downloadUrl}</a>
-                </p>
-              `;
-            } else {
-              html += `<p><em>Download URL belum tersedia.</em></p>`;
-            }
           } else if (feature === "Youtube Audio" && data.result) {
             const r = data.result;
             html = `
