@@ -4550,6 +4550,15 @@
                 <a href="${r.downloadUrl}" target="_blank">${r.downloadUrl}</a>
               </p>
             `;
+
+            // optional tambahan kalau backend kirim file/reserved_file
+            if (r.file) {
+              html += `<p><strong>Link utama:</strong> <a href="${r.file}" target="_blank">${r.file}</a></p>`;
+            }
+            if (r.reserved_file) {
+              html += `<p><strong>Link cadangan:</strong> <a href="${r.reserved_file}" target="_blank">${r.reserved_file}</a></p>`;
+            }
+
           } else if (feature === "Youtube Audio" && data.result) {
             const r = data.result;
             html = `
