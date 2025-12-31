@@ -4516,8 +4516,6 @@
                 <a href="${r.downloadVideoUrl}" target="_blank">${r.downloadVideoUrl}</a>
               </p>
             `;
-          } else if (feature === "Tiktok" && data.error) {
-            html = `<p><strong>Error TikTok:</strong> ${data.error}</p>`;
           } else if (feature === "Tiktok" && data.result) {
             const r = data.result;
             html = `
@@ -4526,7 +4524,7 @@
               <p><strong>Durasi:</strong> ${r.duration || "-"}</p>
               <p><img src="${r.thumbnail || ""}" style="max-width:200px"></p>
               <p><strong>Link video (TikTok):</strong> 
-                <a href="${r.downloadVideoUrl}" target="_blank">${r.downloadVideoUrl}</a>
+                <a href="${r.url}" target="_blank">${r.url}</a>
               </p>
             `;
           } else if (feature === "Smule Audio / Video" && data.result) {
