@@ -4523,10 +4523,11 @@
               <p><strong>Uploader:</strong> ${r.uploader || "-"}</p>
               <p><strong>Durasi:</strong> ${r.duration || "-"}</p>
               <p><img src="${r.thumbnail || ""}" style="max-width:200px"></p>
-              <p><strong>Link video (TikTok):</strong> 
-                <a href="${r.url}" target="_blank">${r.url}</a>
+              <p><strong>Link video :</strong> 
+                <a href="${r.url || "#"}" target="_blank">${r.url || "-"}</a>
               </p>
             `;
+
           } else if (feature === "Smule Audio / Video" && data.result) {
             // Smule Audio/Video via Sownloader
             const r = data.result;
