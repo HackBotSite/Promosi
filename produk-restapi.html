@@ -4387,7 +4387,7 @@
       { no: 7, name: "Facebook", method: "GET", desc: "Download video dari Facebook", query: "apikey, link" },
       { no: 8, name: "Tiktok", method: "GET", desc: "Download video dari Tiktok", query: "apikey, link" },
       { no: 9, name: "Youtube Video V2", method: "GET", desc: "Download video YouTube V2", query: "apikey, link" },
-      { no: 10, name: "Youtube Video V3", method: "GET", desc: "Download video dan Audio", query: "apikey, link" },
+      { no: 10, name: "YouTube Video V3", method: "GET", desc: "Download video dan Audio", query: "apikey, link" },
       { no: 11, name: "SnackVideo", method: "GET", desc: "Download video SnackVideo", query: "apikey, link" },
       { no: 12, name: "Instagram Downloader", method: "GET", desc: "Download video reel, post, igtv, story", query: "apikey, link" }
     ];
@@ -4540,7 +4540,7 @@
             if (r.reserved_file) {
               html += `<p><strong>Link cadangan:</strong> <a href="${r.reserved_file}" target="_blank">${r.reserved_file}</a></p>`;
             }
-          } else if (feature === "Youtube Video/Audio" && data.result) {
+          } else if (feature === "YouTube Video V3" && data.result) {
             const r = data.result;
             html = `
               <p><strong>Title:</strong> ${r.title}</p>
