@@ -4638,21 +4638,23 @@
             `;
 
           } else if (feature === "Smule Audio / Video" && data.result) {
-            // Smule Audio/Video via Sownloader
-            const r = data.result;
-            html = `
-              <p><strong>Title:</strong> ${r.title || "-"}</p>
-              ${r.alt ? `<p><strong>Deskripsi:</strong> ${r.alt}</p>` : ""}
-              <p><strong>Uploader:</strong> ${r.uploader || "-"}</p>
-              <p><strong>Durasi:</strong> ${r.duration || "-"}</p>
-              <p><img src="${r.thumbnail || ""}" alt="${r.title || "Thumbnail"}" style="max-width:200px"></p>
-            `;
-            if (r.downloadAudioUrl) {
-              html += `<p><strong>Link audio (Smule - Sownloader):</strong> <a href="${r.downloadAudioUrl}" target="_blank">${r.downloadAudioUrl}</a></p>`;
-            }
-            if (r.downloadVideoUrl) {
-              html += `<p><strong>Link video (Smule - Sownloader):</strong> <a href="${r.downloadVideoUrl}" target="_blank">${r.downloadVideoUrl}</a></p>`;
-            }
+              const r = data.result;
+
+              html = `
+                <p><strong>Title:</strong> ${r.info?.title || "-"}</p>
+                <p><strong>Artist:</strong> ${r.info?.artist || "-"}</p>
+                ${r.info?.description ? `<p><strong>Deskripsi:</strong> ${r.info.description}</p>` : ""}
+                <p><strong>Uploader:</strong> ${r.owner?.first_name || "-"}</p>
+                <p><img src="${r.info?.thumbnail || ""}" alt="${r.info?.title || "Thumbnail"}" style="max-width:200px"></p>
+              `;
+
+              if (r.media?.audioUrl) {
+                html += `<p><strong>Link Audio:</strong> <a href="${r.media.audioUrl}" target="_blank">${r.media.audioUrl}</a></p>`;
+              }
+
+              if (r.media?.videoUrl) {
+                html += `<p><strong>Link Video:</strong> <a href="${r.media.videoUrl}" target="_blank">${r.media.videoUrl}</a></p>`;
+              }
           } else if (feature === "Smule Downloader" && data.result) {
             // Smule Downloader via smulevideodownloader.com
             const r = data.result;
