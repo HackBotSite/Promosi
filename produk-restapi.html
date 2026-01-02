@@ -4544,8 +4544,12 @@
             const r = data.result;
             html = `
               <p><strong>Title:</strong> ${r.title}</p>
-              <p><strong>Status:</strong> ${r.status}</p>
-              <p><strong>Progress ID:</strong> ${r.progressId}</p>
+              <p><strong>Author:</strong> ${r.author}</p>
+              <p><strong>Duration:</strong> ${r.duration} detik</p>
+              <p><strong>Thumbnail:</strong> 
+                <img src="${r.thumbnail}" alt="thumbnail" />
+              </p>
+              <p><strong>Quality:</strong> ${r.quality}</p>
               <p><strong>Download URL:</strong> 
                 <a href="${r.downloadUrl}" target="_blank">${r.downloadUrl}</a>
               </p>
@@ -4558,7 +4562,6 @@
             if (r.reserved_file) {
               html += `<p><strong>Link cadangan:</strong> <a href="${r.reserved_file}" target="_blank">${r.reserved_file}</a></p>`;
             }
-
           } else if (feature === "Youtube Audio" && data.result) {
             const r = data.result;
             html = `
