@@ -372,7 +372,7 @@
         <li><a href="#education">Education</a></li>
         <li><a href="#news">News</a></li>
         <li><a href="#game">Game</a></li>
-        <li><a href="#meme">Meme</a></li>
+        <li><a href="#tool">tool</a></li>
         <li><a href="#entertainment">Entertainment</a></li>
         <li><a href="#random">Random</a></li>
       </ul>
@@ -2692,6 +2692,72 @@
         </div>
       </section>
 
+      <!-- Code samples Check IP -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Check IP</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Check IP">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jscheckIp" id="tabJScheckIp">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pycheckIp" id="tabPycheckIp">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="gocheckIp" id="tabGocheckIp">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jscheckIp" role="tabpanel" aria-labelledby="tabJScheckIp" class="code">
+      <pre><code class="language-js">
+      // CheckIp
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api2.teamhackbotsindo.my.id/api/checkIp?ip=IP_ADDRESS", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Check IP:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pycheckIp" role="tabpanel" aria-labelledby="tabPycheckIp" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      url = "https://api2.teamhackbotsindo.my.id/api/checkIp?ip=IP_ADDRESS"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="gocheckIp" role="tabpanel" aria-labelledby="tabGocheckIp" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        url := "https://api2.teamhackbotsindo.my.id/api/checkIp?ip=IP_ADDRESS"
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
       <!-- Section Education -->
       <section class="card" id="education" aria-labelledby="education-title">
         <div class="card-header" id="education-title">Dokumentasi API — Education</div>
@@ -4055,7 +4121,8 @@
     // API-Checker
     const checkEndpoints = [
       { no: 1, name: "Cek Resi", method: "GET", desc: "Lacak paket berdasarkan nomor resi", query: "apikey, resi, courier" },
-      { no: 2, name: "Cek Domain", method: "GET", desc: "Periksa status DNS sebuah domain", query: "apikey, domain" }
+      { no: 2, name: "Cek Domain", method: "GET", desc: "Periksa status DNS sebuah domain", query: "apikey, domain" },
+      { no: 3, name: "Check IP", method: "GET", desc: "Informasi tentang IP Address", query: "apikey, IP Address" }
     ];
 
     const checkBody = document.getElementById('checkTableBody');
@@ -4090,6 +4157,10 @@
           break;
         case "Cek Domain":
           url = `https://api2.teamhackbotsindo.my.id/api/cekdomain?domain=api.lolhuman.xyz`;
+          break;
+        case "Check IP":
+          const ipInput = document.getElementById('ipInput')?.value || "8.8.8.8";
+          url = `https://api2.teamhackbotsindo.my.id/api/checkIp?ip=${ipInput}`;
           break;
       }
 
@@ -4156,10 +4227,30 @@
               html += "</ul>";
             }
             panel.innerHTML = html;
+          } else if (feature === "Check IP") {
+            if (!data.ip_address) {
+              panel.textContent = "Tidak ada data IP ditemukan.";
+              return;
+            }
+            let html = "<h4>Hasil Cek IP:</h4>";
+            html += `<p><strong>IP Address:</strong> ${data.ip_address || "-"}</p>`;
+            html += `<p><strong>Hostname:</strong> ${data.hostname || "-"}</p>`;
+            html += `<p><strong>ASN:</strong> ${data.asn || "-"}</p>`;
+            html += `<p><strong>ISP:</strong> ${data.isp || "-"}</p>`;
+            html += `<p><strong>Organization:</strong> ${data.organization || "-"}</p>`;
+            html += `<p><strong>Country:</strong> ${data.country || "-"}</p>`;
+            html += `<p><strong>Region:</strong> ${data.region || "-"}</p>`;
+            html += `<p><strong>City:</strong> ${data.city || "-"}</p>`;
+            html += `<p><strong>Latitude:</strong> ${data.latitude || "-"}</p>`;
+            html += `<p><strong>Longitude:</strong> ${data.longitude || "-"}</p>`;
+            html += `<p><strong>Services:</strong> ${data.services || "-"}</p>`;
+            if (data.map) {
+              html += `<p><a href="${data.map}" target="_blank">Lihat di Google Maps</a></p>`;
+            }
+            panel.innerHTML = html;
           }
         })
         .catch(err => panel.textContent = "Error: " + err);
-
     }
     // TAB Cek Resi
     const tabJSCekResi = document.getElementById('tabJSCekResi');
@@ -4208,6 +4299,30 @@
     tabJSCekDomain.addEventListener('click', () => showCekDomain(tabJSCekDomain));
     tabPyCekDomain.addEventListener('click', () => showCekDomain(tabPyCekDomain));
     tabGoCekDomain.addEventListener('click', () => showCekDomain(tabGoCekDomain));
+
+    // TAB Check IP
+    const tabJScheckIp = document.getElementById('tabJScheckIp');
+    const tabPycheckIp = document.getElementById('tabPycheckIp');
+    const tabGocheckIp = document.getElementById('tabGocheckIp');
+
+    const jscheckIp = document.getElementById('jscheckIp');
+    const pycheckIp = document.getElementById('pycheckIp');
+    const gocheckIp = document.getElementById('gocheckIp');
+
+    function showcheckIp(tab) {
+      // reset semua tab & panel
+      [tabJScheckIp, tabPycheckIp, tabGocheckIp].forEach(btn => btn.classList.remove('active'));
+      [jscheckIp, pycheckIp, gocheckIp].forEach(panel => panel.style.display = 'none');
+
+      // aktifkan tab yang dipilih
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    // event listener
+    tabJScheckIp.addEventListener('click', () => showcheckIp(tabJScheckIp));
+    tabPycheckIp.addEventListener('click', () => showcheckIp(tabPycheckIp));
+    tabGocheckIp.addEventListener('click', () => showcheckIp(tabGocheckIp));
 
     // API-Education
     const educationEndpoints = [
