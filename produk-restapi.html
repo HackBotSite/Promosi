@@ -3270,6 +3270,72 @@
         </div>
       </section>
 
+      <!-- Code samples Jadwal Bola -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Jadwal Bola</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Jadwal Tv">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsjadwalBola" id="tabJSjadwalBola">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyjadwalBola" id="tabPyjadwalBola">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="gojadwalBola" id="tabGojadwalBola">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsjadwalBola" role="tabpanel" aria-labelledby="tabJSjadwalBola" class="code">
+      <pre><code class="language-js">
+      // Jadwal Bola
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api2.teamhackbotsindo.my.id/api/jadwalBola", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Jadwal Bola:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyjadwalBola" role="tabpanel" aria-labelledby="tabPyjadwalBola" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      url = "https://api2.teamhackbotsindo.my.id/api/jadwalBola"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="gojadwalBola" role="tabpanel" aria-labelledby="tabGojadwalBola" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        url := "https://api2.teamhackbotsindo.my.id/api/jadwalBola"
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
       <!-- Section Primbon -->
       <section class="card" id="primbon" aria-labelledby="primbon-title">
         <div class="card-header" id="primbon-title">Dokumentasi API — Primbon</div>
@@ -4155,7 +4221,8 @@
 
     // API-Entertainment
     const entertainmentEndpoints = [
-      { no: 1, name: "Jadwal Tv", method: "GET", desc: "Jadwal TV Harian / channel", query: ["apikey", "chanel"] }
+      { no: 1, name: "Jadwal Tv", method: "GET", desc: "Jadwal TV Harian / channel", query: ["apikey", "channel"] },
+      { no: 2, name: "Jadwal Bola", method: "GET", desc: "Jadwal Bola Terupdate", query: ["apikey"] }
     ];
 
     const entertainmentBody = document.getElementById('entertainmentTableBody');
@@ -4188,6 +4255,9 @@
         case "Jadwal Tv":
           const channel = document.getElementById('channelInput')?.value || "rcti";
           url = `https://api2.teamhackbotsindo.my.id/api/jadwalTv?channel=${channel}`;
+          break;
+        case "Jadwal Bola":
+          url = `https://api2.teamhackbotsindo.my.id/api/jadwalBola`;
           break;
       }
 
@@ -4230,6 +4300,27 @@
     tabJSjadwalTv.addEventListener('click', () => showjadwalTv(tabJSjadwalTv));
     tabPyjadwalTv.addEventListener('click', () => showjadwalTv(tabPyjadwalTv));
     tabGojadwalTv.addEventListener('click', () => showjadwalTv(tabGojadwalTv));
+
+    // TAB Jadwal Bola
+    const tabJSjadwalBola = document.getElementById('tabJSjadwalBola');
+    const tabPyjadwalBola = document.getElementById('tabPyjadwalBola');
+    const tabGojadwalBola = document.getElementById('tabGojadwalBola');
+
+    const jsjadwalBola = document.getElementById('jsjadwalBola');
+    const pyjadwalBola = document.getElementById('pyjadwalBola');
+    const gojadwalBola = document.getElementById('gojadwalBola');
+
+    function showjadwalBola(tab) {
+      [tabJSjadwalBola, tabPyjadwalBola, tabGojadwalBola].forEach(btn => btn.classList.remove('active'));
+      [jsjadwalBola, pyjadwalBola, gojadwalBola].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    tabJSjadwalBola.addEventListener('click', () => showjadwalBola(tabJSjadwalBola));
+    tabPyjadwalBola.addEventListener('click', () => showjadwalBola(tabPyjadwalBola));
+    tabGojadwalBola.addEventListener('click', () => showjadwalBola(tabGojadwalBola));
 
     // API-Primbon
     const primbonEndpoints = [
