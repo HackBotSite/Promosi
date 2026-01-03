@@ -372,7 +372,7 @@
         <li><a href="#education">Education</a></li>
         <li><a href="#news">News</a></li>
         <li><a href="#game">Game</a></li>
-        <li><a href="#tool">tool</a></li>
+        <li><a href="#tool">Tool</a></li>
         <li><a href="#entertainment">Entertainment</a></li>
         <li><a href="#random">Random</a></li>
       </ul>
@@ -2536,7 +2536,7 @@
         </div>
       </section>
 
-          <!-- Section Checker -->
+      <!-- Section Checker -->
       <section class="card" id="check" aria-labelledby="check-title">
         <div class="card-header" id="check-title">Dokumentasi API — Checker</div>
 
@@ -3084,6 +3084,96 @@
 
       func main() {
         fetchAPI("https://api2.teamhackbotsindo.my.id/api/kuisv1?apikey=" + apiKey)
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section Tool -->
+      <section class="card" id="tool" aria-labelledby="tool-title">
+        <div class="card-header" id="tool-title">Dokumentasi API — Tool</div>
+
+        <div class="table-wrapper">
+          <table class="table" aria-describedby="tool-title">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Feature Name</th>
+                <th>Request Method</th>
+                <th>Description</th>
+                <th>Query Parameter</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="toolTableBody">
+              <!-- Diisi lewat JS -->
+            </tbody>
+          </table>
+        </div>
+        <div id="toolResponsePanel" class="response" aria-live="polite" style="display:none"></div>
+      </section>
+
+      <!-- Code samples Proxy List -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Proxy List</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Proxy List">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsproxyList" id="tabJSproxyList">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyproxyList" id="tabPyproxyList">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goproxyList" id="tabGoproxyList">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsproxyList" role="tabpanel" aria-labelledby="tabJSproxyList" class="code">
+      <pre><code class="language-js">
+      // Proxy List
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api2.teamhackbotsindo.my.id/api/proxyList", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Proxy List:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyproxyList" role="tabpanel" aria-labelledby="tabPyproxyList" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      url = "https://api2.teamhackbotsindo.my.id/api/proxyList"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goproxyList" role="tabpanel" aria-labelledby="tabGoproxyList" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        url := "https://api2.teamhackbotsindo.my.id/api/proxyList"
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
       }
       </code></pre>
           </div>
@@ -3895,6 +3985,83 @@
     tabJSKuisV1.addEventListener('click', () => showKuisV1(tabJSKuisV1));
     tabPyKuisV1.addEventListener('click', () => showKuisV1(tabPyKuisV1));
     tabGoKuisV1.addEventListener('click', () => showKuisV1(tabGoKuisV1));
+
+    // API-Tool
+    const toolEndpoints = [
+      { no: 1, name: "Proxy List", method: "GET", desc: "Daftar proxy SOCKS4/5", query: ["apikey"] }
+    ];
+
+    const toolBody = document.getElementById('toolTableBody');
+    toolEndpoints.forEach(ep => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${ep.no}</td>
+        <td>${ep.name}</td>
+        <td><span class="badge ${ep.method}">${ep.method}</span></td>
+        <td>${ep.desc}</td>
+        <td>${Array.isArray(ep.query) ? ep.query.join(", ") : ep.query}</td>
+        <td><button class="btn" onclick="trytool('${ep.name}')">Try</button></td>
+      `;
+      toolBody.appendChild(tr);
+    });
+
+    function trytool(feature) {
+      const panel = document.getElementById('toolResponsePanel');
+      panel.style.display = 'block';
+      panel.textContent = `⚡ Menjalankan ${feature}...`;
+
+      const apiKey = document.getElementById('apiKeyInput')?.value || "";
+      if (!apiKey) {
+        panel.textContent = "Error: API key wajib diisi!";
+        return;
+      }
+
+      let url = "";
+      switch (feature) {
+        case "Proxy List":
+          url = `https://api2.teamhackbotsindo.my.id/api/proxyList`;
+          break;
+      }
+
+      fetch(url, { headers: { "x-api-key": apiKey } })
+        .then(async res => {
+          const raw = await res.text();
+          try {
+            return JSON.parse(raw);
+          } catch {
+            return { error: "Response bukan JSON", raw: raw.slice(0,200) };
+          }
+        })
+        .then(data => {
+          if (data.error) {
+            panel.textContent = "Error: " + data.error;
+            return;
+          }
+          panel.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+        })
+        .catch(err => panel.textContent = "Error: " + err);
+    }
+
+    // TAB Kuis V1
+    const tabJSproxyList = document.getElementById('tabJSproxyList');
+    const tabPyproxyList = document.getElementById('tabPyproxyList');
+    const tabGoproxyList = document.getElementById('tabGoproxyList');
+
+    const jsproxyList = document.getElementById('jsproxyList');
+    const pyproxyList = document.getElementById('pyproxyList');
+    const goproxyList = document.getElementById('goproxyList');
+
+    function showproxyList(tab) {
+      [tabJSproxyList, tabPyproxyList, tabGoproxyList].forEach(btn => btn.classList.remove('active'));
+      [jsproxyList, pyproxyList, goproxyList].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    tabJSproxyList.addEventListener('click', () => showproxyList(tabJSproxyList));
+    tabPyproxyList.addEventListener('click', () => showproxyList(tabPyproxyList));
+    tabGoproxyList.addEventListener('click', () => showproxyList(tabGoproxyList));
 
     // API-Primbon
     const primbonEndpoints = [
