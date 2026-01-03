@@ -789,6 +789,95 @@
         </div>
       </section>
 
+      <!-- Tabs Asmaul Husna -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Asmaul Husna</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Kisah Nabi">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsasmaulHusna" id="tabJSasmaulHusna">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyasmaulHusna" id="tabPyasmaulHusna">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goasmaulHusna" id="tabGoasmaulHusna">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsasmaulHusna" role="tabpanel" aria-labelledby="tabJSasmaulHusna" class="code">
+      <pre><code class="language-js">
+      // Asmaul Husna - semua nama
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api2.teamhackbotsindo.my.id/api/asmaulHusna", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Semua Asmaul Husna:", data))
+        .catch(err => console.error(err));
+
+      // Asmaul Husna - detail per nomor (contoh: no=5)
+      fetch("https://api2.teamhackbotsindo.my.id/api/asmaulHusna?no=5", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Detail Asmaul Husna no 5:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyasmaulHusna" role="tabpanel" aria-labelledby="tabPyasmaulHusna" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+
+      # Semua nama
+      url_all = "https://api2.teamhackbotsindo.my.id/api/asmaulHusna"
+      resp_all = requests.get(url_all, headers={"x-api-key": apiKey})
+      print("Semua Asmaul Husna:", resp_all.json())
+
+      # Detail per nomor
+            url_detail = "https://api2.teamhackbotsindo.my.id/api/asmaulHusna?no=5"
+      resp_detail = requests.get(url_detail, headers={"x-api-key": apiKey})
+      print("Detail Asmaul Husna no 5:", resp_detail.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goasmaulHusna" role="tabpanel" aria-labelledby="tabGoasmaulHusna" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+
+        // Semua nama
+        urlAll := "https://api2.teamhackbotsindo.my.id/api/asmaulHusna"
+        client := &http.Client{}
+        reqAll, _ := http.NewRequest("GET", urlAll, nil)
+        reqAll.Header.Set("x-api-key", apiKey)
+        respAll, _ := client.Do(reqAll)
+        defer respAll.Body.Close()
+        bodyAll, _ := ioutil.ReadAll(respAll.Body)
+        fmt.Println("Semua Asmaul Husna:", string(bodyAll))
+
+        // Detail per nomor
+        urlDetail := "https://api2.teamhackbotsindo.my.id/api/asmaulHusna?no=5"
+        reqDetail, _ := http.NewRequest("GET", urlDetail, nil)
+        reqDetail.Header.Set("x-api-key", apiKey)
+        respDetail, _ := client.Do(reqDetail)
+        defer respDetail.Body.Close()
+        bodyDetail, _ := ioutil.ReadAll(respDetail.Body)
+        fmt.Println("Detail Asmaul Husna no 5:", string(bodyDetail))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
       <!-- Section Random -->
       <section class="card" id="random" aria-labelledby="random-title">
         <div class="card-header" id="random-title">Dokumentasi API — Random</div>
@@ -5626,7 +5715,8 @@
       { no: 3, name: "Jadwal Shalat", method: "GET", desc: "Jadwal shalat berdasarkan kota", query: "apikey, city" },
       { no: 4, name: "Qur'an Surah", method: "GET", desc: "Daftar semua surah dalam Al-Qur'an", query: "apikey" },
       { no: 5, name: "Qur'an Detail", method: "GET", desc: "Detail surah berdasarkan nomor", query: "apikey, nomor" },
-      { no: 6, name: "Kisah Nabi", method: "GET", desc: "Kisah nabi berdasarkan nomor", query: "apikey, nomor" }
+      { no: 6, name: "Kisah Nabi", method: "GET", desc: "Kisah nabi berdasarkan nomor", query: "apikey, nomor" },
+      { no: 7, name: "Asmaul Husna", method: "GET", desc: "Asmaul Husna detail", query: "apikey, nomor" }
     ];
 
     const islamiBody = document.getElementById('islamiTableBody');
@@ -5655,26 +5745,24 @@
         case "Doa":
           url = `https://api.teamhackbotsindo.my.id/api/doa`;
           break;
-
         case "Niat Shalat":
           const selectedShalat = document.getElementById('shalatSelectIslami').value;
           url = `https://api.teamhackbotsindo.my.id/api/niat-shalat?shalat=${selectedShalat}`;
           break;
-
         case "Jadwal Shalat":
           url = `https://api2.teamhackbotsindo.my.id/api/jadwal-shalat?city=jakarta`;
           break;
-
         case "Qur'an Surah":
           url = `https://api2.teamhackbotsindo.my.id/api/quran-surah`;
           break;
-
         case "Qur'an Detail":
           url = `https://api2.teamhackbotsindo.my.id/api/quran-detail?apikey=${apiKey}&nomor=1`;
           break;
-
         case "Kisah Nabi":
           url = `https://api2.teamhackbotsindo.my.id/api/kisah-nabi?apikey=${apiKey}&nomor=25`;
+          break;
+        case "Asmaul Husna":
+          url = `https://api2.teamhackbotsindo.my.id/api/asmaulHusna?no=1`;
           break;
       }
 
@@ -5847,6 +5935,27 @@
     tabJSKisahNabi.addEventListener('click', () => showKisahNabi(tabJSKisahNabi));
     tabPyKisahNabi.addEventListener('click', () => showKisahNabi(tabPyKisahNabi));
     tabGoKisahNabi.addEventListener('click', () => showKisahNabi(tabGoKisahNabi));
+
+    // Tabs Asmaul Husna
+    const tabJSasmaulHusna = document.getElementById('tabJSasmaulHusna');
+    const tabPyasmaulHusna = document.getElementById('tabPyasmaulHusna');
+    const tabGoasmaulHusna = document.getElementById('tabGoasmaulHusna');
+
+    const jsasmaulHusna = document.getElementById('jsasmaulHusna');
+    const pyasmaulHusna = document.getElementById('pyasmaulHusna');
+    const goasmaulHusna = document.getElementById('goasmaulHusna');
+
+    function showasmaulHusna(tab) {
+      [tabJSasmaulHusna, tabPyasmaulHusna, tabGoasmaulHusna].forEach(btn => btn.classList.remove('active'));
+      [jsasmaulHusna, pyasmaulHusna, goasmaulHusna].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    }
+
+    tabJSasmaulHusna.addEventListener('click', () => showasmaulHusna(tabJSasmaulHusna));
+    tabPyasmaulHusna.addEventListener('click', () => showasmaulHusna(tabPyasmaulHusna));
+    tabGoasmaulHusna.addEventListener('click', () => showasmaulHusna(tabGoasmaulHusna));
 
     // API Random Image
     const randomEndpoints = [
