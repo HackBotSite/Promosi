@@ -4099,11 +4099,9 @@
     const goLoginqr = document.getElementById('goLoginqr');
 
     function showLoginqr(tab) {
-      // reset semua tab & panel
       [tabJSLoginqr, tabPyLoginqr, tabGoLoginqr].forEach(btn => btn.classList.remove('active'));
       [jsLoginqr, pyLoginqr, goLoginqr].forEach(panel => panel.style.display = 'none');
 
-      // aktifkan tab & panel sesuai klik
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
     }
