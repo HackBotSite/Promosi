@@ -6137,7 +6137,7 @@
     tabPyInfo.addEventListener('click', () => showInfo(tabPyInfo));
     tabGoInfo.addEventListener('click', () => showInfo(tabGoInfo));
 
-    //DOC NAV
+    // DOC NAV
     // Scrollspy untuk sidebar
     document.addEventListener('DOMContentLoaded', () => {
       const navLinks = Array.from(document.querySelectorAll('.sidebar .nav-list a'));
@@ -6150,19 +6150,31 @@
       }, {});
       const sections = Object.values(linkMap).map(x => x.section);
 
+      // Klik link sidebar
       navLinks.forEach(link => {
-        link.addEventListener('click', () => {
+        link.addEventListener('click', e => {
+          e.preventDefault(); // cegah default lompat instan
+          // reset semua link
           navLinks.forEach(el => el.classList.remove('active'));
+          // aktifkan link yang diklik
           link.classList.add('active');
+          // scroll halus ke section
+          const id = link.getAttribute('href').slice(1);
+          const target = document.getElementById(id);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
         });
       });
 
+      // Set aktif berdasarkan hash saat load
       const initialHash = window.location.hash;
       if (initialHash && linkMap[initialHash]) {
         navLinks.forEach(el => el.classList.remove('active'));
         linkMap[initialHash].link.classList.add('active');
       }
 
+      // Scrollspy
       const OFFSET = 130;
       window.addEventListener('scroll', () => {
         let currentId = '';
