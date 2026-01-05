@@ -5651,15 +5651,7 @@
 
       fetch(url, { headers: { "x-api-key": apiKey, "Origin": "https://teamhackbotsindo.my.id" } })
         .then(res => res.json())
-        .then(data => {
-          if (data.error && data.error === "Quota exceeded") {
-            // tampilkan pesan quota habis
-            panel.textContent = `❌ ${data.message}\nAPI Key: ${data.apikey}\nPlan: ${data.plan}\nQuota: ${data.quota}\nUsed: ${data.used}`;
-          } else {
-            // tampilkan hasil translate normal
-            panel.textContent = JSON.stringify(data, null, 2);
-          }
-        })
+        .then(data => panel.textContent = JSON.stringify(data, null, 2))
         .catch(err => panel.textContent = "Error: " + err);
     }
 
