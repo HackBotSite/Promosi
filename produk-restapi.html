@@ -6154,11 +6154,13 @@
       navLinks.forEach(link => {
         link.addEventListener('click', e => {
           e.preventDefault(); // cegah default lompat instan
-          // reset semua link
+
+      // reset semua link
           navLinks.forEach(el => el.classList.remove('active'));
           // aktifkan link yang diklik
           link.classList.add('active');
-          // scroll halus ke section
+
+          // scroll halus ke section target
           const id = link.getAttribute('href').slice(1);
           const target = document.getElementById(id);
           if (target) {
@@ -6167,14 +6169,7 @@
         });
       });
 
-      // Set aktif berdasarkan hash saat load
-      const initialHash = window.location.hash;
-      if (initialHash && linkMap[initialHash]) {
-        navLinks.forEach(el => el.classList.remove('active'));
-        linkMap[initialHash].link.classList.add('active');
-      }
-
-      // Scrollspy
+      // Scrollspy tetap jalan saat user scroll manual
       const OFFSET = 130;
       window.addEventListener('scroll', () => {
         let currentId = '';
