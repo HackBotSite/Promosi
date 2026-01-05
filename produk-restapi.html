@@ -3929,18 +3929,21 @@
       { no: 3, name: "Login Email LINE V3", method: "POST", desc: "Login LINE V3 via Email, menghasilkan Pin Code, token & E2EE", query: "apikey, appname, userAgent" }
     ];
 
-    const loginqrBody = document.getElementById('loginqrTableBody');
-    loginqrEndpoints.forEach(ep => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${ep.no}</td>
-        <td>${ep.name}</td>
-        <td><span class="badge POST">${ep.method}</span></td>
-        <td>${ep.desc}</td>
-        <td>${ep.query}</td>
-        <td><button class="btn" onclick="tryLoginqr('${ep.name}')">Try</button></td>
-      `;
-      loginqrBody.appendChild(tr);
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const loginqrBody = document.getElementById('loginqrTableBody');
+      loginqrEndpoints.forEach(ep => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${ep.no}</td>
+          <td>${ep.name}</td>
+          <td><span class="badge POST">${ep.method}</span></td>
+          <td>${ep.desc}</td>
+          <td>${ep.query}</td>
+          <td><button class="btn" onclick="tryLoginqr('${ep.name}')">Try</button></td>
+        `;
+        loginqrBody.appendChild(tr);
+      });
     });
 
     function tryLoginqr(feature) {
