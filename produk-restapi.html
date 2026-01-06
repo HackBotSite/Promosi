@@ -6588,10 +6588,13 @@
   </script>
 
   <script>
-    // Saat halaman load → hanya visitorCount naik
+    // Jalankan track-visit dulu, lalu ambil stats
     fetch('https://api2.teamhackbotsindo.my.id/api/track-visit')
       .then(() => fetch('https://api2.teamhackbotsindo.my.id/api/stats'))
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error("Status " + res.status);
+        return res.json();
+      })
       .then(stats => {
         document.getElementById('visitorCount').textContent = stats.visitorCount.toLocaleString();
         document.getElementById('userCount').textContent = stats.userCount.toLocaleString();
