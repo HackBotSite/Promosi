@@ -6588,25 +6588,23 @@
   </script>
 
   <script>
-    // Jalankan track-visit dulu, lalu ambil stats
-    fetch('https://api2.teamhackbotsindo.my.id/api/track-visit')
-      .then(() => fetch('https://api2.teamhackbotsindo.my.id/api/stats'))
-      .then(res => {
-        if (!res.ok) throw new Error("Status " + res.status);
-        return res.json();
-      })
-      .then(stats => {
-        document.getElementById('visitorCount').textContent = stats.visitorCount.toLocaleString();
-        document.getElementById('userCount').textContent = stats.userCount.toLocaleString();
-        document.getElementById('totalRequests').textContent = stats.totalRequests.toLocaleString();
-        document.getElementById('requestsToday').textContent = stats.requestsToday.toLocaleString();
-      })
-      .catch(err => {
-        console.error("Gagal ambil stats:", err);
-        ["visitorCount", "userCount", "totalRequests", "requestsToday"].forEach(id => {
-          document.getElementById(id).textContent = "Error";
-        });
-      });
+    function tryTranslate() {
+      fetch('https://api2.teamhackbotsindo.my.id/api/translate?text=halo&to=en')
+        .then(res => res.json())
+        .then(data => {
+          console.log("Hasil translate:", data);
+          // setelah request API nyata, ambil stats lagi
+          return fetch('https://api2.teamhackbotsindo.my.id/api/stats');
+        })
+        .then(res => res.json())
+        .then(stats => {
+          document.getElementById('visitorCount').textContent = stats.visitorCount.toLocaleString();
+          document.getElementById('userCount').textContent = stats.userCount.toLocaleString();
+          document.getElementById('totalRequests').textContent = stats.totalRequests.toLocaleString();
+          document.getElementById('requestsToday').textContent = stats.requestsToday.toLocaleString();
+        })
+        .catch(err => console.error("Error:", err));
+    }
   </script>
 
   <!-- WhatsApp Floating -->
