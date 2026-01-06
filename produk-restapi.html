@@ -6580,7 +6580,7 @@
 
   <script>
     // Ambil data stats dari backend
-    fetch('/api/stats')
+    fetch('https://api2.teamhackbotsindo.my.id/api/stats')
       .then(res => {
         if (!res.ok) throw new Error("Status " + res.status);
         return res.json();
