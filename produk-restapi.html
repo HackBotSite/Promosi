@@ -246,6 +246,29 @@
     .hl-str { color: #9fe7ff }
     .hl-comm { color: #7aa1c7 }
 
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+    .stat-box {
+      background: #1e1e2f;
+      color: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    .stat-box h3 {
+      margin-bottom: 10px;
+      font-size: 1.2em;
+    }
+    .stat-box p {
+      font-size: 1.6em;
+      font-weight: bold;
+    }
+
     /* Footer */
     footer {
       margin-top: 20px;
@@ -395,6 +418,14 @@
       <section class="hero" id="home" aria-labelledby="hero-title">
         <h1 id="hero-title">REST API Showcase</h1>
         <p>API premium dengan desain elegan, interaksi halus, dan dokumentasi yang ramah developer.</p>
+      </section>
+
+      <!-- Statistik Dashboard -->
+      <section id="dashboardStats" class="stats-grid">
+        <div class="stat-box"><h3>Visitor</h3><p id="visitorCount">–</p></div>
+        <div class="stat-box"><h3>Users</h3><p id="userCount">–</p></div>
+        <div class="stat-box"><h3>Total Requests</h3><p id="totalRequests">–</p></div>
+        <div class="stat-box"><h3>Requests Today</h3><p id="requestsToday">–</p></div>
       </section>
 
       <!-- API Key box -->
@@ -6543,6 +6574,26 @@
     });
 
   </script>
+
+  <script>
+    // Ambil data stats dari backend
+    fetch('/api/stats')
+      .then(res => res.json())
+      .then(stats => {
+        document.getElementById('visitorCount').textContent = stats.visitorCount.toLocaleString();
+        document.getElementById('userCount').textContent = stats.userCount.toLocaleString();
+        document.getElementById('totalRequests').textContent = stats.totalRequests.toLocaleString();
+        document.getElementById('requestsToday').textContent = stats.requestsToday.toLocaleString();
+      })
+      .catch(err => {
+        console.error('Gagal ambil stats:', err);
+        document.getElementById('visitorCount').textContent = "Error";
+        document.getElementById('userCount').textContent = "Error";
+        document.getElementById('totalRequests').textContent = "Error";
+        document.getElementById('requestsToday').textContent = "Error";
+      });
+  </script>
+
   <!-- WhatsApp Floating -->
   <a href="https://wa.me/6285717777189" target="_blank" class="wa-float">
     <span class="wa-label">Pesan Apikey</span>
