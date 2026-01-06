@@ -3929,20 +3929,21 @@
       { no: 3, name: "Login Email LINE V3", method: "POST", desc: "Login LINE V3 via Email, menghasilkan Pin Code, token & E2EE", query: "apikey, appname, userAgent" }
     ];
 
-    const loginqrBody = document.getElementById('loginqrTableBody');
-    loginqrEndpoints.forEach(ep => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${ep.no}</td>
-        <td>${ep.name}</td>
-        <td><span class="badge POST">${ep.method}</span></td>
-        <td>${ep.desc}</td>
-        <td>${ep.query}</td>
-        <td><button class="btn" onclick="tryLoginqr('${ep.name}')">Try</button></td>
-      `;
-      loginqrBody.appendChild(tr);
+    document.addEventListener('DOMContentLoaded', () => {
+      const loginqrBody = document.getElementById('loginqrTableBody');
+      loginqrEndpoints.forEach(ep => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${ep.no}</td>
+          <td>${ep.name}</td>
+          <td><span class="badge POST">${ep.method}</span></td>
+          <td>${ep.desc}</td>
+          <td>${ep.query}</td>
+          <td><button class="btn" onclick="tryLoginqr('${ep.name}')">Try</button></td>
+        `;
+        loginqrBody.appendChild(tr);
+      });
     });
-
     function tryLoginqr(feature) {
       const panel = document.getElementById('loginqrResponsePanel');
       panel.style.display = 'block';
@@ -4167,20 +4168,21 @@
       { no: 1, name: "Kuis V1", method: "GET", desc: "Quiz API V1", query: ["apikey"] }
     ];
 
-    const gameBody = document.getElementById('gameTableBody');
-    gameEndpoints.forEach(ep => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${ep.no}</td>
-        <td>${ep.name}</td>
-        <td><span class="badge ${ep.method}">${ep.method}</span></td>
-        <td>${ep.desc}</td>
-        <td>${Array.isArray(ep.query) ? ep.query.join(", ") : ep.query}</td>
-        <td><button class="btn" onclick="tryGame('${ep.name}')">Try</button></td>
-      `;
-      gameBody.appendChild(tr);
+    document.addEventListener('DOMContentLoaded', () => {
+      const gameBody = document.getElementById('gameTableBody');
+      gameEndpoints.forEach(ep => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${ep.no}</td>
+          <td>${ep.name}</td>
+          <td><span class="badge ${ep.method}">${ep.method}</span></td>
+          <td>${ep.desc}</td>
+          <td>${Array.isArray(ep.query) ? ep.query.join(", ") : ep.query}</td>
+          <td><button class="btn" onclick="tryGame('${ep.name}')">Try</button></td>
+        `;
+        gameBody.appendChild(tr);
+      });
     });
-
     function tryGame(feature) {
       const panel = document.getElementById('gameResponsePanel');
       panel.style.display = 'block';
@@ -4244,20 +4246,21 @@
       { no: 1, name: "Proxy List", method: "GET", desc: "Daftar proxy SOCKS4/5", query: ["apikey"] }
     ];
 
-    const toolBody = document.getElementById('toolTableBody');
-    toolEndpoints.forEach(ep => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${ep.no}</td>
-        <td>${ep.name}</td>
-        <td><span class="badge ${ep.method}">${ep.method}</span></td>
-        <td>${ep.desc}</td>
-        <td>${Array.isArray(ep.query) ? ep.query.join(", ") : ep.query}</td>
-        <td><button class="btn" onclick="trytool('${ep.name}')">Try</button></td>
-      `;
-      toolBody.appendChild(tr);
+    document.addEventListener('DOMContentLoaded', () => {
+      const toolBody = document.getElementById('toolTableBody');
+      toolEndpoints.forEach(ep => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${ep.no}</td>
+          <td>${ep.name}</td>
+          <td><span class="badge ${ep.method}">${ep.method}</span></td>
+          <td>${ep.desc}</td>
+          <td>${Array.isArray(ep.query) ? ep.query.join(", ") : ep.query}</td>
+          <td><button class="btn" onclick="trytool('${ep.name}')">Try</button></td>
+        `;
+        toolBody.appendChild(tr);
+      });
     });
-
     function trytool(feature) {
       const panel = document.getElementById('toolResponsePanel');
       panel.style.display = 'block';
@@ -4322,20 +4325,21 @@
       { no: 2, name: "Jadwal Bola", method: "GET", desc: "Jadwal Bola Terupdate", query: ["apikey"] }
     ];
 
-    const entertainmentBody = document.getElementById('entertainmentTableBody');
-    entertainmentEndpoints.forEach(ep => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${ep.no}</td>
-        <td>${ep.name}</td>
-        <td><span class="badge ${ep.method}">${ep.method}</span></td>
-        <td>${ep.desc}</td>
-        <td>${Array.isArray(ep.query) ? ep.query.join(", ") : ep.query}</td>
-        <td><button class="btn" onclick="tryentertainment('${ep.name}')">Try</button></td>
-      `;
-      entertainmentBody.appendChild(tr);
+    document.addEventListener('DOMContentLoaded', () => {
+      const entertainmentBody = document.getElementById('entertainmentTableBody');
+      entertainmentEndpoints.forEach(ep => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${ep.no}</td>
+          <td>${ep.name}</td>
+          <td><span class="badge ${ep.method}">${ep.method}</span></td>
+          <td>${ep.desc}</td>
+          <td>${Array.isArray(ep.query) ? ep.query.join(", ") : ep.query}</td>
+          <td><button class="btn" onclick="tryentertainment('${ep.name}')">Try</button></td>
+        `;
+        entertainmentBody.appendChild(tr);
+      });
     });
-
     function tryentertainment(feature) {
       const panel = document.getElementById('entertainmentResponsePanel');
       panel.style.display = 'block';
@@ -4428,20 +4432,21 @@
       { no: 5, name: "Jodoh", method: "GET", desc: "Calculate jodoh", query: ["apikey"] }
     ];
 
-    const primbonBody = document.getElementById('primbonTableBody');
-    primbonEndpoints.forEach(ep => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${ep.no}</td>
-        <td>${ep.name}</td>
-        <td><span class="badge ${ep.method}">${ep.method}</span></td>
-        <td>${ep.desc}</td>
-        <td>${Array.isArray(ep.query) ? ep.query.join(", ") : ep.query}</td>
-        <td><button class="btn" onclick="tryPrimbon('${ep.name}')">Try</button></td>
-      `;
-      primbonBody.appendChild(tr);
+    document.addEventListener('DOMContentLoaded', () => {
+      const primbonBody = document.getElementById('primbonTableBody');
+      primbonEndpoints.forEach(ep => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${ep.no}</td>
+          <td>${ep.name}</td>
+          <td><span class="badge ${ep.method}">${ep.method}</span></td>
+          <td>${ep.desc}</td>
+          <td>${Array.isArray(ep.query) ? ep.query.join(", ") : ep.query}</td>
+          <td><button class="btn" onclick="tryPrimbon('${ep.name}')">Try</button></td>
+        `;
+        primbonBody.appendChild(tr);
+      });
     });
-
     function tryPrimbon(feature) {
       const panel = document.getElementById('primbonResponsePanel');
       panel.style.display = 'block';
@@ -4518,20 +4523,21 @@
       { no: 2, name: "Lirik Lagu", method: "GET", desc: "Cari lirik dari title+artis", query: "apikey, title, artist" }
     ];
 
-    const imageBody = document.getElementById('imageTableBody');
-    imageEndpoints.forEach(ep => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${ep.no}</td>
-        <td>${ep.name}</td>
-        <td><span class="badge ${ep.method}">${ep.method}</span></td>
-        <td>${ep.desc}</td>
-        <td>${ep.query}</td>
-        <td><button class="btn" onclick="tryImage('${ep.name}')">Try</button></td>
-      `;
-      imageBody.appendChild(tr);
+    document.addEventListener('DOMContentLoaded', () => {
+      const imageBody = document.getElementById('imageTableBody');
+      imageEndpoints.forEach(ep => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${ep.no}</td>
+          <td>${ep.name}</td>
+          <td><span class="badge ${ep.method}">${ep.method}</span></td>
+          <td>${ep.desc}</td>
+          <td>${ep.query}</td>
+          <td><button class="btn" onclick="tryImage('${ep.name}')">Try</button></td>
+        `;
+        imageBody.appendChild(tr);
+      });
     });
-
     function tryImage(feature) {
       const panel = document.getElementById('imageResponsePanel');
       panel.style.display = 'block';
@@ -4648,20 +4654,21 @@
       { no: 3, name: "Check IP", method: "GET", desc: "Informasi tentang IP Address", query: "apikey, IP Address" }
     ];
 
-    const checkBody = document.getElementById('checkTableBody');
-    checkEndpoints.forEach(ep => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${ep.no}</td>
-        <td>${ep.name}</td>
-        <td><span class="badge ${ep.method}">${ep.method}</span></td>
-        <td>${ep.desc}</td>
-        <td>${ep.query}</td>
-        <td><button class="btn" onclick="tryCheck('${ep.name}')">Try</button></td>
-      `;
-      checkBody.appendChild(tr);
+    document.addEventListener('DOMContentLoaded', () => {
+      const checkBody = document.getElementById('checkTableBody');
+      checkEndpoints.forEach(ep => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${ep.no}</td>
+          <td>${ep.name}</td>
+          <td><span class="badge ${ep.method}">${ep.method}</span></td>
+          <td>${ep.desc}</td>
+          <td>${ep.query}</td>
+          <td><button class="btn" onclick="tryCheck('${ep.name}')">Try</button></td>
+        `;
+        checkBody.appendChild(tr);
+      });
     });
-
     function tryCheck(feature) {
       const panel = document.getElementById('checkResponsePanel');
       panel.style.display = 'block';
@@ -4852,20 +4859,21 @@
       { no: 1, name: "Wikipedia", method: "GET", desc: "Cari artikel dari Wikipedia", query: "apikey, q" }
     ];
 
-    const educationBody = document.getElementById('educationTableBody');
-    educationEndpoints.forEach(ep => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${ep.no}</td>
-        <td>${ep.name}</td>
-        <td><span class="badge ${ep.method}">${ep.method}</span></td>
-        <td>${ep.desc}</td>
-        <td>${ep.query}</td>
-        <td><button class="btn" onclick="tryEducation('${ep.name}')">Try</button></td>
-      `;
-      educationBody.appendChild(tr);
+    document.addEventListener('DOMContentLoaded', () => {
+      const educationBody = document.getElementById('educationTableBody');
+      educationEndpoints.forEach(ep => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${ep.no}</td>
+          <td>${ep.name}</td>
+          <td><span class="badge ${ep.method}">${ep.method}</span></td>
+          <td>${ep.desc}</td>
+          <td>${ep.query}</td>
+          <td><button class="btn" onclick="tryEducation('${ep.name}')">Try</button></td>
+        `;
+        educationBody.appendChild(tr);
+      });
     });
-
     function tryEducation(feature) {
       const panel = document.getElementById('educationResponsePanel');
       panel.style.display = 'block';
@@ -4938,20 +4946,21 @@
       { no: 5, name: "Republika", method: "GET", desc: "News Info from Republika", query: ["apikey", "link"] }
     ];
 
-    const newsBody = document.getElementById('newsTableBody');
-    newsEndpoints.forEach(ep => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${ep.no}</td>
-        <td>${ep.name}</td>
-        <td><span class="badge ${ep.method}">${ep.method}</span></td>
-        <td>${ep.desc}</td>
-        <td>${Array.isArray(ep.query) ? ep.query.join(", ") : ep.query}</td>
-        <td><button class="btn" onclick="tryNews('${ep.name}')">Try</button></td>
-      `;
-      newsBody.appendChild(tr);
+    document.addEventListener('DOMContentLoaded', () => {
+      const newsBody = document.getElementById('newsTableBody');
+      newsEndpoints.forEach(ep => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${ep.no}</td>
+          <td>${ep.name}</td>
+          <td><span class="badge ${ep.method}">${ep.method}</span></td>
+          <td>${ep.desc}</td>
+          <td>${Array.isArray(ep.query) ? ep.query.join(", ") : ep.query}</td>
+          <td><button class="btn" onclick="tryNews('${ep.name}')">Try</button></td>
+        `;
+        newsBody.appendChild(tr);
+      });
     });
-
     function tryNews(feature) {
       const panel = document.getElementById('newsResponsePanel');
       panel.style.display = 'block';
@@ -5030,20 +5039,21 @@
       { no: 12, name: "Instagram Downloader", method: "GET", desc: "Download video reel, post, igtv, story", query: "apikey, link" }
     ];
 
-    const downloaderBody = document.getElementById('downloaderTableBody');
-    downloaderEndpoints.forEach(ep => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${ep.no}</td>
-        <td>${ep.name}</td>
-        <td><span class="badge ${ep.method}">${ep.method}</span></td>
-        <td>${ep.desc}</td>
-        <td>${ep.query}</td>
-        <td><button class="btn" onclick="tryDownloader('${ep.name}')">Try</button></td>
-      `;
-      downloaderBody.appendChild(tr);
+    document.addEventListener('DOMContentLoaded', () => {
+      const downloaderBody = document.getElementById('downloaderTableBody');
+      downloaderEndpoints.forEach(ep => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${ep.no}</td>
+          <td>${ep.name}</td>
+          <td><span class="badge ${ep.method}">${ep.method}</span></td>
+          <td>${ep.desc}</td>
+          <td>${ep.query}</td>
+          <td><button class="btn" onclick="tryDownloader('${ep.name}')">Try</button></td>
+        `;
+        downloaderBody.appendChild(tr);
+      });
     });
-
     function tryDownloader(feature) {
       const panel = document.getElementById('downloaderResponsePanel');
       panel.style.display = 'block';
@@ -5579,20 +5589,21 @@
       { no: 4, name: "Info Cuaca", method: "GET", desc: "Informasi cuaca berdasarkan kota", query: "apikey, kota" }
     ];
 
-    const infoBody = document.getElementById('informationTableBody');
-    informationEndpoints.forEach(ep => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${ep.no}</td>
-        <td>${ep.name}</td>
-        <td><span class="badge GET">${ep.method}</span></td>
-        <td>${ep.desc}</td>
-        <td>${ep.query}</td>
-        <td><button class="btn" onclick="tryInformation('${ep.name}')">Try</button></td>
-      `;
-      infoBody.appendChild(tr);
+    document.addEventListener('DOMContentLoaded', () => {
+      const infoBody = document.getElementById('informationTableBody');
+      informationEndpoints.forEach(ep => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${ep.no}</td>
+          <td>${ep.name}</td>
+          <td><span class="badge GET">${ep.method}</span></td>
+          <td>${ep.desc}</td>
+          <td>${ep.query}</td>
+          <td><button class="btn" onclick="tryInformation('${ep.name}')">Try</button></td>
+        `;
+        infoBody.appendChild(tr);
+      });
     });
-
     // Fungsi Try untuk Information (final, fleksibel + validasi)
     function tryInformation(feature) {
       const panel = document.getElementById('informationResponsePanel');
@@ -5727,20 +5738,21 @@
       { no: 7, name: "Asmaul Husna", method: "GET", desc: "Asmaul Husna detail", query: "apikey, nomor" }
     ];
 
-    const islamiBody = document.getElementById('islamiTableBody');
-    islamiEndpoints.forEach(ep => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${ep.no}</td>
-        <td>${ep.name}</td>
-        <td><span class="badge GET">${ep.method}</span></td>
-        <td>${ep.desc}</td>
-        <td>${ep.query}</td>
-        <td><button class="btn" onclick="tryIslami('${ep.name.replace(/'/g, "\\'")}')">Try</button></td>
-      `;
-      islamiBody.appendChild(tr);
+    document.addEventListener('DOMContentLoaded', () => {
+      const islamiBody = document.getElementById('islamiTableBody');
+      islamiEndpoints.forEach(ep => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${ep.no}</td>
+          <td>${ep.name}</td>
+          <td><span class="badge GET">${ep.method}</span></td>
+          <td>${ep.desc}</td>
+          <td>${ep.query}</td>
+          <td><button class="btn" onclick="tryIslami('${ep.name.replace(/'/g, "\\'")}')">Try</button></td>
+        `;
+        islamiBody.appendChild(tr);
+      });
     });
-
     // Fungsi Try untuk Islami (contoh baku)
     function tryIslami(feature) {
       const panel = document.getElementById('islamiResponsePanel');
@@ -5977,6 +5989,23 @@
       { no: 8, name: "Kata Bucin", method: "GET", desc: "Random", query: "apikey" }
     ];
 
+    // Isi tabel Random Image setelah DOM siap
+    document.addEventListener('DOMContentLoaded', () => {
+      const randomBody = document.getElementById('randomTableBody');
+      randomEndpoints.forEach(ep => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${ep.no}</td>
+          <td>${ep.name}</td>
+          <td><span class="badge GET">${ep.method}</span></td>
+          <td>${ep.desc}</td>
+          <td>${ep.query}</td>
+          <td><button class="btn" onclick="tryRandom('${ep.name}')">Try</button></td>
+        `;
+        randomBody.appendChild(tr);
+      });
+    });
+
     // Fungsi Try untuk Random Image
     function tryRandom(feature) {
       const panel = document.getElementById('randomResponsePanel');
@@ -6184,23 +6213,6 @@
           if (linkMap[href]) linkMap[href].link.classList.add('active');
         }
       }, { passive: true });
-    });
-
-    // Isi tabel Random Image setelah DOM siap
-    document.addEventListener('DOMContentLoaded', () => {
-      const randomBody = document.getElementById('randomTableBody');
-      randomEndpoints.forEach(ep => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${ep.no}</td>
-          <td>${ep.name}</td>
-          <td><span class="badge GET">${ep.method}</span></td>
-          <td>${ep.desc}</td>
-          <td>${ep.query}</td>
-          <td><button class="btn" onclick="tryRandom('${ep.name}')">Try</button></td>
-        `;
-        randomBody.appendChild(tr);
-      });
     });
 
     // Helpers
