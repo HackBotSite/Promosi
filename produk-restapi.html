@@ -253,20 +253,23 @@
       margin-top: 30px;
     }
     .stat-box {
-      background: #1e1e2f;
-      color: #fff;
+      background: var(--card);
+      color: var(--text);
       padding: 20px;
       border-radius: 12px;
       text-align: center;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      box-shadow: 0 0 10px rgba(22,214,255,0.15); /* neon shadow */
+      border: 1px solid var(--border);
     }
     .stat-box h3 {
       margin-bottom: 10px;
       font-size: 1.2em;
+      color: var(--muted);
     }
     .stat-box p {
       font-size: 1.6em;
       font-weight: bold;
+      color: var(--accent);
     }
 
     /* Footer */
@@ -6578,7 +6581,10 @@
   <script>
     // Ambil data stats dari backend
     fetch('/api/stats')
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error("Status " + res.status);
+        return res.json();
+      })
       .then(stats => {
         document.getElementById('visitorCount').textContent = stats.visitorCount.toLocaleString();
         document.getElementById('userCount').textContent = stats.userCount.toLocaleString();
@@ -6586,11 +6592,10 @@
         document.getElementById('requestsToday').textContent = stats.requestsToday.toLocaleString();
       })
       .catch(err => {
-        console.error('Gagal ambil stats:', err);
-        document.getElementById('visitorCount').textContent = "Error";
-        document.getElementById('userCount').textContent = "Error";
-        document.getElementById('totalRequests').textContent = "Error";
-        document.getElementById('requestsToday').textContent = "Error";
+        console.error("Gagal ambil stats:", err);
+        ["visitorCount", "userCount", "totalRequests", "requestsToday"].forEach(id => {
+          document.getElementById(id).textContent = "Error";
+        });
       });
   </script>
 
