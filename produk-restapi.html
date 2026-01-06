@@ -6385,7 +6385,7 @@
 
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-      
+
     // Sinkronisasi dengan sidebar
       const targetId = tab.getAttribute('aria-controls');
       const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
@@ -6457,6 +6457,9 @@
 
     // DOC NAV
     // Scrollspy untuk sidebar
+    let manualNav = false; // <--- tambahkan ini di atas
+
+    // Scrollspy untuk sidebar
     document.addEventListener('DOMContentLoaded', () => {
       const navLinks = Array.from(document.querySelectorAll('.sidebar .nav-list a'));
       const linkMap = navLinks.reduce((acc, link) => {
@@ -6471,25 +6474,28 @@
       // Klik link sidebar
       navLinks.forEach(link => {
         link.addEventListener('click', e => {
-          e.preventDefault(); // cegah default lompat instan
+          e.preventDefault();
+          manualNav = true;
 
-      // reset semua link
           navLinks.forEach(el => el.classList.remove('active'));
-          // aktifkan link yang diklik
           link.classList.add('active');
 
-          // scroll halus ke section target
           const id = link.getAttribute('href').slice(1);
           const target = document.getElementById(id);
           if (target) {
             target.scrollIntoView({ behavior: 'smooth', block: 'start' });
           }
+
+          // reset flag setelah scroll selesai
+          setTimeout(() => manualNav = false, 1000);
         });
       });
 
       // Scrollspy tetap jalan saat user scroll manual
       const OFFSET = 130;
       window.addEventListener('scroll', () => {
+        if (manualNav) return; // jangan override kalau user klik manual
+
         let currentId = '';
         const scrollPos = window.scrollY;
         sections.forEach(section => {
