@@ -6588,8 +6588,8 @@
   </script>
 
   <script>
-    // Contoh: panggil endpoint API nyata dulu
-    fetch('https://api2.teamhackbotsindo.my.id/api/translate?text=halo&to=en')
+    // Saat halaman load → hanya visitorCount naik
+    fetch('https://api2.teamhackbotsindo.my.id/api/track-visit')
       .then(() => fetch('https://api2.teamhackbotsindo.my.id/api/stats'))
       .then(res => res.json())
       .then(stats => {
