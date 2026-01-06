@@ -6579,8 +6579,9 @@
   </script>
 
   <script>
-    // Ambil data stats dari backend
-    fetch('https://api2.teamhackbotsindo.my.id/api/stats')
+    // Jalankan track-visit dulu, lalu ambil stats
+    fetch('https://api2.teamhackbotsindo.my.id/api/track-visit')
+      .then(() => fetch('https://api2.teamhackbotsindo.my.id/api/stats'))
       .then(res => {
         if (!res.ok) throw new Error("Status " + res.status);
         return res.json();
