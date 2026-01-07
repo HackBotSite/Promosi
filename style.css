@@ -617,11 +617,14 @@ footer {
 @media (max-width: 768px) {
   /* Navbar tetap horizontal dan bisa scroll */
   nav {
+    display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     padding: 10px;
     overflow-x: auto;
+    position: relative; /* referensi aman */
+    z-index: 10;
   }
 
   nav .menu {
@@ -639,24 +642,43 @@ footer {
     flex-shrink: 0;
   }
 
-  /* Dropdown container */
+  /* HINDARI pemotongan oleh parent */
+  header, nav, .navbar, .nav-wrapper {
+    overflow: visible !important;
+  }
+
+  /* Dropdown jadi panel fixed full-width di bawah navbar */
   .dropdown-content {
-    position: absolute;
-    top: 100%;
+    position: fixed;              /* lepas dari parent */
+    top: calc(var(--nav-height, 56px)); /* sesuaikan tinggi navbar */
     left: 0;
+    right: 0;
     width: 100vw;
-    max-height: 300px;
-    overflow-y: auto;
-    background-color: white;
-    z-index: 999;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    max-height: calc(100vh - var(--nav-height, 56px));
+    overflow-y: auto;             /* scroll isi */
+    background: #fff;
+    z-index: 9999;                /* di atas semua */
+    box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+    border-top: 1px solid #eee;
+    display: none;                /* default tertutup */
+  }
+
+  /* Tampilkan saat aktif */
+  .dropdown.open .dropdown-content {
+    display: block;
   }
 
   .dropdown-content a {
     display: block;
-    padding: 10px 15px;
-    font-size: 0.9rem;
-    border-bottom: 1px solid #eee;
+    padding: 12px 16px;
+    font-size: 0.95rem;
+    color: #222;
+    text-decoration: none;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .dropdown-content a:last-child {
+    border-bottom: none;
   }
 
   .dropbtn {
@@ -664,24 +686,21 @@ footer {
     padding: 10px;
   }
 
-  /* Hero slider */
+  /* Konten lain tetap responsif */
   .slides img { border-radius: 0; }
   .hero-text-below h1 { font-size: 1.4rem; }
   .hero-text-below p { font-size: 0.9rem; }
 
-  /* Produk grid */
   .grid { grid-template-columns: 1fr; }
   .card { width: 95%; margin: 0 auto; }
 
-  /* Form pemesanan */
   #pemesanan form { width: 95%; padding: 15px; }
 
-  /* Footer */
   footer { font-size: 0.8rem; padding: 12px; }
 
-  /* WhatsApp floating */
   .wa-float { width: 45px; height: 45px; bottom: 12px; right: 12px; }
   .wa-float img { width: 22px; height: 22px; }
 }
+
 
 
