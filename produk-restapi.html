@@ -3505,9 +3505,9 @@
             <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goPrimbonJodoh" id="tabGoPrimbonJodoh">Golang</button>
           </div>
 
-          <!-- Tambahkan di bawah Golang -->
-          <div id="curlPrimbonJodoh" role="tabpanel" aria-labelledby="tabCurlPrimbonJodoh" class="code" style="display:none">
-      <pre><code class="language-bash">
+          <!-- CURL -->
+          <div id="curlPrimbonJodoh" role="tabpanel" aria-labelledby="tabcurlPrimbonJodoh" class="code">
+      <pre><code class="language-js">
           # Arti Nama
           curl -X GET "https://api2.teamhackbotsindo.my.id/api/primbon-artinama?nama=Thousand" \
             -H "x-api-key: YOUR_API_KEY"
@@ -4640,6 +4640,7 @@
       }
     }
 
+    tabCurlPrimbonJodoh.addEventListener('click', () => showPrimbonJodoh(tabCurlPrimbonJodoh));
     tabJSPrimbonJodoh.addEventListener('click', () => showPrimbonJodoh(tabJSPrimbonJodoh));
     tabPyPrimbonJodoh.addEventListener('click', () => showPrimbonJodoh(tabPyPrimbonJodoh));
     tabGoPrimbonJodoh.addEventListener('click', () => showPrimbonJodoh(tabGoPrimbonJodoh));
