@@ -621,22 +621,47 @@ footer {
     justify-content: space-between;
     align-items: center;
     padding: 10px;
-    overflow-x: auto;       /* izinkan scroll horizontal */
+    overflow-x: auto;
   }
 
   nav .menu {
     display: flex;
-    flex-direction: row;    /* tetap sejajar */
-    gap: 10px;              /* beri jarak antar link */
-    overflow-x: auto;       /* scroll kalau tidak muat */
-    white-space: nowrap;    /* cegah wrap */
+    flex-direction: row;
+    gap: 10px;
+    overflow-x: auto;
+    white-space: nowrap;
   }
 
   nav .menu a,
   nav .dropbtn {
     margin: 0;
     font-size: 0.9rem;
-    flex-shrink: 0;         /* cegah mengecil */
+    flex-shrink: 0;
+  }
+
+  /* Dropdown container */
+  .dropdown-content {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100vw;
+    max-height: 300px;
+    overflow-y: auto;
+    background-color: white;
+    z-index: 999;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+
+  .dropdown-content a {
+    display: block;
+    padding: 10px 15px;
+    font-size: 0.9rem;
+    border-bottom: 1px solid #eee;
+  }
+
+  .dropbtn {
+    font-size: 0.9rem;
+    padding: 10px;
   }
 
   /* Hero slider */
