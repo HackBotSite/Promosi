@@ -528,9 +528,19 @@
         <div class="card-header">Contoh Kode — Islami</div>
         <div class="tabs">
           <div class="tab-list" role="tablist" aria-label="Contoh kode Islami">
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="curlIslami" id="tabCurlIslami">Curl</button>
             <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsIslami" id="tabJSIslami">JavaScript</button>
             <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyIslami" id="tabPyIslami">Python</button>
             <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goIslami" id="tabGoIslami">Golang</button>
+          </div>
+
+          <!-- CURL -->
+          <div id="curlIslami" role="tabpanel" aria-labelledby="tabCurlIslami" class="code" style="display:none">
+            <pre><code class="language-bash">
+          # Doa API
+          curl -X GET "https://api.teamhackbotsindo.my.id/api/doa" \
+            -H "x-api-key: YOUR_API_KEY"
+            </code></pre>
           </div>
 
           <!-- JS -->
@@ -6119,17 +6129,19 @@
     }
 
     // Tabs Islami
+    const tabCurlIslami = document.getElementById('tabCurlIslami');
     const tabJSIslami = document.getElementById('tabJSIslami');
     const tabPyIslami = document.getElementById('tabPyIslami');
     const tabGoIslami = document.getElementById('tabGoIslami');
 
+    const curlIslami = document.getElementById('curlIslami');
     const jsIslami = document.getElementById('jsIslami');
     const pyIslami = document.getElementById('pyIslami');
     const goIslami = document.getElementById('goIslami');
 
     function showIslami(tab) {
-      [tabJSIslami, tabPyIslami, tabGoIslami].forEach(btn => btn.classList.remove('active'));
-      [jsIslami, pyIslami, goIslami].forEach(panel => panel.style.display = 'none');
+      [tabCurlIslami, tabJSIslami, tabPyIslami, tabGoIslami].forEach(btn => btn.classList.remove('active'));
+      [curlIslami, jsIslami, pyIslami, goIslami].forEach(panel => panel.style.display = 'none');
 
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
@@ -6142,22 +6154,25 @@
       }
     }
 
+    tabCurlIslami.addEventListener('click', () => showIslami(tabCurlIslami));
     tabJSIslami.addEventListener('click', () => showIslami(tabJSIslami));
     tabPyIslami.addEventListener('click', () => showIslami(tabPyIslami));
     tabGoIslami.addEventListener('click', () => showIslami(tabGoIslami));
 
     // Tabs Shalat
+    const tabCurlShalat = document.getElementById('tabCurlShalat');
     const tabJSShalat = document.getElementById('tabJSShalat');
     const tabPyShalat = document.getElementById('tabPyShalat');
     const tabGoShalat = document.getElementById('tabGoShalat');
 
+    const curlShalat = document.getElementById('curlShalat');
     const jsShalat = document.getElementById('jsShalat');
     const pyShalat = document.getElementById('pyShalat');
     const goShalat = document.getElementById('goShalat');
 
     function showShalat(tab) {
-      [tabJSShalat, tabPyShalat, tabGoShalat].forEach(btn => btn.classList.remove('active'));
-      [jsShalat, pyShalat, goShalat].forEach(panel => panel.style.display = 'none');
+      [tabCurlShalat, tabJSShalat, tabPyShalat, tabGoShalat].forEach(btn => btn.classList.remove('active'));
+      [curlShalat, jsShalat, pyShalat, goShalat].forEach(panel => panel.style.display = 'none');
 
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
@@ -6170,6 +6185,7 @@
       }
     }
 
+    tabCurlShalat.addEventListener('click', () => showShalat(tabCurlShalat));
     tabJSShalat.addEventListener('click', () => showShalat(tabJSShalat));
     tabPyShalat.addEventListener('click', () => showShalat(tabPyShalat));
     tabGoShalat.addEventListener('click', () => showShalat(tabGoShalat));
@@ -6226,17 +6242,19 @@
     });
 
     // Tabs Jadwal Shalat
+    const tabCurlJadwalShalat = document.getElementById('tabCurlJadwalShalat');
     const tabJSJadwalShalat = document.getElementById('tabJSJadwalShalat');
     const tabPyJadwalShalat = document.getElementById('tabPyJadwalShalat');
     const tabGoJadwalShalat = document.getElementById('tabGoJadwalShalat');
 
+    const curlJadwalShalat = document.getElementById('curlJadwalShalat');
     const jsJadwalShalat = document.getElementById('jsJadwalShalat');
     const pyJadwalShalat = document.getElementById('pyJadwalShalat');
     const goJadwalShalat = document.getElementById('goJadwalShalat');
 
     function showJadwalShalat(tab) {
-      [tabJSJadwalShalat, tabPyJadwalShalat, tabGoJadwalShalat].forEach(btn => btn.classList.remove('active'));
-      [jsJadwalShalat, pyJadwalShalat, goJadwalShalat].forEach(panel => panel.style.display = 'none');
+      [tabCurlJadwalShalat, tabJSJadwalShalat, tabPyJadwalShalat, tabGoJadwalShalat].forEach(btn => btn.classList.remove('active'));
+      [curlJadwalShalat, jsJadwalShalat, pyJadwalShalat, goJadwalShalat].forEach(panel => panel.style.display = 'none');
 
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
@@ -6249,22 +6267,25 @@
       }
     }
 
+    tabCurlJadwalShalat.addEventListener('click', () => showJadwalShalat(tabCurlJadwalShalat));
     tabJSJadwalShalat.addEventListener('click', () => showJadwalShalat(tabJSJadwalShalat));
     tabPyJadwalShalat.addEventListener('click', () => showJadwalShalat(tabPyJadwalShalat));
     tabGoJadwalShalat.addEventListener('click', () => showJadwalShalat(tabGoJadwalShalat));
 
     // Tabs Qur'an (JS/Py/Go)
+    const tabCurlQuran   = document.getElementById('tabCurlQuranSurah');
     const tabJSQuran   = document.getElementById('tabJSQuranSurah');
     const tabPyQuran   = document.getElementById('tabPyQuranSurah');
     const tabGoQuran   = document.getElementById('tabGoQuranSurah');
 
+    const curlQuran      = document.getElementById('curlQuranSurah');
     const jsQuran      = document.getElementById('jsQuranSurah');
     const pyQuran      = document.getElementById('pyQuranSurah');
     const goQuran      = document.getElementById('goQuranSurah');
 
     function showQuran(tab) {
-      [tabJSQuran, tabPyQuran, tabGoQuran].forEach(btn => btn.classList.remove('active'));
-      [jsQuran, pyQuran, goQuran].forEach(panel => panel.style.display = 'none');
+      [tabCurlQuran, tabJSQuran, tabPyQuran, tabGoQuran].forEach(btn => btn.classList.remove('active'));
+      [curlQuran, jsQuran, pyQuran, goQuran].forEach(panel => panel.style.display = 'none');
 
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
@@ -6277,22 +6298,25 @@
       }
     }
 
+    tabCurlQuran.addEventListener('click', () => showQuran(tabCurlQuran));
     tabJSQuran.addEventListener('click', () => showQuran(tabJSQuran));
     tabPyQuran.addEventListener('click', () => showQuran(tabPyQuran));
     tabGoQuran.addEventListener('click', () => showQuran(tabGoQuran));
 
     // Tabs Kisah Nabi
+    const tabCurlKisahNabi = document.getElementById('tabCurlKisahNabi');
     const tabJSKisahNabi = document.getElementById('tabJSKisahNabi');
     const tabPyKisahNabi = document.getElementById('tabPyKisahNabi');
     const tabGoKisahNabi = document.getElementById('tabGoKisahNabi');
 
+    const curlKisahNabi = document.getElementById('curlKisahNabi');
     const jsKisahNabi = document.getElementById('jsKisahNabi');
     const pyKisahNabi = document.getElementById('pyKisahNabi');
     const goKisahNabi = document.getElementById('goKisahNabi');
 
     function showKisahNabi(tab) {
-      [tabJSKisahNabi, tabPyKisahNabi, tabGoKisahNabi].forEach(btn => btn.classList.remove('active'));
-      [jsKisahNabi, pyKisahNabi, goKisahNabi].forEach(panel => panel.style.display = 'none');
+      [tabCurlKisahNabi, tabJSKisahNabi, tabPyKisahNabi, tabGoKisahNabi].forEach(btn => btn.classList.remove('active'));
+      [curlKisahNabi, jsKisahNabi, pyKisahNabi, goKisahNabi].forEach(panel => panel.style.display = 'none');
 
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
@@ -6305,22 +6329,25 @@
       }
     }
 
+    tabCurlKisahNabi.addEventListener('click', () => showKisahNabi(tabCurlKisahNabi));
     tabJSKisahNabi.addEventListener('click', () => showKisahNabi(tabJSKisahNabi));
     tabPyKisahNabi.addEventListener('click', () => showKisahNabi(tabPyKisahNabi));
     tabGoKisahNabi.addEventListener('click', () => showKisahNabi(tabGoKisahNabi));
 
     // Tabs Asmaul Husna
+    const tabCurlasmaulHusna = document.getElementById('tabCurlasmaulHusna');
     const tabJSasmaulHusna = document.getElementById('tabJSasmaulHusna');
     const tabPyasmaulHusna = document.getElementById('tabPyasmaulHusna');
     const tabGoasmaulHusna = document.getElementById('tabGoasmaulHusna');
 
+    const curlasmaulHusna = document.getElementById('curlasmaulHusna');
     const jsasmaulHusna = document.getElementById('jsasmaulHusna');
     const pyasmaulHusna = document.getElementById('pyasmaulHusna');
     const goasmaulHusna = document.getElementById('goasmaulHusna');
 
     function showasmaulHusna(tab) {
-      [tabJSasmaulHusna, tabPyasmaulHusna, tabGoasmaulHusna].forEach(btn => btn.classList.remove('active'));
-      [jsasmaulHusna, pyasmaulHusna, goasmaulHusna].forEach(panel => panel.style.display = 'none');
+      [tabCurlasmaulHusna, tabJSasmaulHusna, tabPyasmaulHusna, tabGoasmaulHusna].forEach(btn => btn.classList.remove('active'));
+      [curlasmaulHusna, jsasmaulHusna, pyasmaulHusna, goasmaulHusna].forEach(panel => panel.style.display = 'none');
 
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
@@ -6333,6 +6360,7 @@
       }
     }
 
+    tabCurlasmaulHusna.addEventListener('click', () => showasmaulHusna(tabCurlasmaulHusna));
     tabJSasmaulHusna.addEventListener('click', () => showasmaulHusna(tabJSasmaulHusna));
     tabPyasmaulHusna.addEventListener('click', () => showasmaulHusna(tabPyasmaulHusna));
     tabGoasmaulHusna.addEventListener('click', () => showasmaulHusna(tabGoasmaulHusna));
