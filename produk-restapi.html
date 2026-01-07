@@ -227,7 +227,12 @@
 
     /* Tabs for code samples */
     .tabs { margin-top: 16px; }
-    .tab-list { display: flex; gap: 8px; margin-bottom: 10px }
+    .tab-list {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 10px;
+      padding-left: 20px; /* ini yang bikin tab agak ke kanan */
+    }
     .tab-btn {
       padding: 8px 12px; border-radius: 10px; border: 1px solid var(--border);
       background: #0c1426; color: var(--text); cursor: pointer;
@@ -3537,9 +3542,8 @@
           # Jodoh
           curl -X GET "https://api2.teamhackbotsindo.my.id/api/primbon-jodoh?nama1=ridwan&tanggal1=07-03-1986&nama2=nia%20putri&tanggal2=08-03-1997" \
             -H "x-api-key: YOUR_API_KEY"
-        </code></pre>
-      </div>
-
+            </code></pre>
+          </div>
 
           <!-- JS -->
           <div id="jsPrimbonJodoh" role="tabpanel" aria-labelledby="tabJSPrimbonJodoh" class="code">
@@ -3578,7 +3582,7 @@
           })
             .then(res => res.json())
             .then(data => console.log("Jodoh:", data));
-      </code></pre>
+            </code></pre>
           </div>
 
           <!-- Python -->
@@ -3607,7 +3611,7 @@
           # Jodoh
           resp = requests.get("https://api2.teamhackbotsindo.my.id/api/primbon-jodoh?nama1=ridwan&tanggal1=07-03-1986&nama2=nia%20putri&tanggal2=08-03-1997", headers=headers)
           print("Jodoh:", resp.json())
-      </code></pre>
+            </code></pre>
           </div>
 
           <!-- Golang -->
@@ -3640,7 +3644,7 @@
             fetchAPI("https://api2.teamhackbotsindo.my.id/api/primbon-weton")
             fetchAPI("https://api2.teamhackbotsindo.my.id/api/primbon-jodoh?nama1=ridwan&tanggal1=07-03-1986&nama2=nia%20putri&tanggal2=08-03-1997")
           }
-      </code></pre>
+            </code></pre>
           </div>
         </div>
       </section>
