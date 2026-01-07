@@ -3499,9 +3499,35 @@
         <div class="card-header">Contoh Kode — Primbon Jodoh</div>
         <div class="tabs">
           <div class="tab-list" role="tablist" aria-label="Contoh kode Primbon Jodoh">
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="curlPrimbonJodoh" id="tabCurlPrimbonJodoh">Curl</button>
             <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsPrimbonJodoh" id="tabJSPrimbonJodoh">JavaScript</button>
             <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyPrimbonJodoh" id="tabPyPrimbonJodoh">Python</button>
             <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goPrimbonJodoh" id="tabGoPrimbonJodoh">Golang</button>
+          </div>
+
+          <!-- Tambahkan di bawah Golang -->
+          <div id="curlPrimbonJodoh" role="tabpanel" aria-labelledby="tabCurlPrimbonJodoh" class="code" style="display:none">
+      <pre><code class="language-bash">
+          # Arti Nama
+          curl -X GET "https://api2.teamhackbotsindo.my.id/api/primbon-artinama?nama=Thousand" \
+            -H "x-api-key: YOUR_API_KEY"
+
+          # Arti Mimpi
+          curl -X GET "https://api2.teamhackbotsindo.my.id/api/primbon-artimimpi?query=ular" \
+            -H "x-api-key: YOUR_API_KEY"
+
+          # Zodiak
+          curl -X GET "https://api2.teamhackbotsindo.my.id/api/primbon-zodiak?sign=scorpio" \
+            -H "x-api-key: YOUR_API_KEY"
+
+          # Weton
+          curl -X GET "https://api2.teamhackbotsindo.my.id/api/primbon-weton" \
+            -H "x-api-key: YOUR_API_KEY"
+
+          # Jodoh
+          curl -X GET "https://api2.teamhackbotsindo.my.id/api/primbon-jodoh?nama1=ridwan&tanggal1=07-03-1986&nama2=nia%20putri&tanggal2=08-03-1997" \
+            -H "x-api-key: YOUR_API_KEY"
+      </code></pre>
           </div>
 
           <!-- JS -->
@@ -4589,17 +4615,19 @@
     }
 
     // TAB PRIMBON JODOH LIST
+    const tabCurlPrimbonJodoh = document.getElementById('tabCurlPrimbonJodoh');
     const tabJSPrimbonJodoh = document.getElementById('tabJSPrimbonJodoh');
     const tabPyPrimbonJodoh = document.getElementById('tabPyPrimbonJodoh');
     const tabGoPrimbonJodoh = document.getElementById('tabGoPrimbonJodoh');
 
+    const curlPrimbonJodoh = document.getElementById('curlPrimbonJodoh');
     const jsPrimbonJodoh = document.getElementById('jsPrimbonJodoh');
     const pyPrimbonJodoh = document.getElementById('pyPrimbonJodoh');
     const goPrimbonJodoh = document.getElementById('goPrimbonJodoh');
 
     function showPrimbonJodoh(tab) {
-      [tabJSPrimbonJodoh, tabPyPrimbonJodoh, tabGoPrimbonJodoh].forEach(btn => btn.classList.remove('active'));
-      [jsPrimbonJodoh, pyPrimbonJodoh, goPrimbonJodoh].forEach(panel => panel.style.display = 'none');
+      [tabCurlPrimbonJodoh, tabJSPrimbonJodoh, tabPyPrimbonJodoh, tabGoPrimbonJodoh].forEach(btn => btn.classList.remove('active'));
+      [curlPrimbonJodoh, jsPrimbonJodoh, pyPrimbonJodoh, goPrimbonJodoh].forEach(panel => panel.style.display = 'none');
 
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
