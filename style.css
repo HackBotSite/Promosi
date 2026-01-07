@@ -615,22 +615,28 @@ footer {
 
 /* Versi HP */
 @media (max-width: 768px) {
-  /* Navbar tetap horizontal */
+  /* Navbar tetap horizontal dan bisa scroll */
   nav {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     padding: 10px;
+    overflow-x: auto;       /* izinkan scroll horizontal */
   }
+
   nav .menu {
     display: flex;
-    flex-direction: row; /* tetap sejajar */
-    gap: 10px;           /* beri jarak antar link */
+    flex-direction: row;    /* tetap sejajar */
+    gap: 10px;              /* beri jarak antar link */
+    overflow-x: auto;       /* scroll kalau tidak muat */
+    white-space: nowrap;    /* cegah wrap */
   }
+
   nav .menu a,
   nav .dropbtn {
-    margin: 0;           /* reset margin biar rapi */
-    font-size: 0.9rem;   /* sedikit lebih kecil di HP */
+    margin: 0;
+    font-size: 0.9rem;
+    flex-shrink: 0;         /* cegah mengecil */
   }
 
   /* Hero slider */
