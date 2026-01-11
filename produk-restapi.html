@@ -2037,6 +2037,74 @@
         </div>
       </section>
 
+      <!-- Tabs SaveFrom -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — SaveFrom</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode SaveFrom">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jssaveFrom" id="tabJSsaveFrom">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pysaveFrom" id="tabPysaveFrom">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="gosaveFrom" id="tabGosaveFrom">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jssaveFrom" role="tabpanel" aria-labelledby="tabJSsaveFrom" class="code">
+      <pre><code class="language-js">
+      // saveFrom (JavaScript)
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api2.teamhackbotsindo.my.id/api/saveFrom?url=https://www.youtube.com/watch?v=igaeQ2fJRxE", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("saveFrom:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pysaveFrom" role="tabpanel" aria-labelledby="tabPysaveFrom" class="code" style="display:none">
+      <pre><code class="language-python">
+      # saveFrom (Python)
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      url = "https://api2.teamhackbotsindo.my.id/api/saveFrom?url=https://www.youtube.com/watch?v=igaeQ2fJRxE"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="gosaveFrom" role="tabpanel" aria-labelledby="tabGosaveFrom" class="code" style="display:none">
+      <pre><code class="language-go">
+      // saveFrom (Golang)
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        url := "https://api2.teamhackbotsindo.my.id/api/saveFrom?url=https://www.youtube.com/watch?v=igaeQ2fJRxE"
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
       <!-- Section Facebook Video -->
       <section class="card">
         <div class="card-header">Contoh Kode — Facebook Video</div>
@@ -5228,7 +5296,8 @@
       { no: 9, name: "Youtube Video V2", method: "GET", desc: "Download video YouTube V2", query: "apikey, link" },
       { no: 10, name: "Youtube Video V3", method: "GET", desc: "Download video dan Audio", query: "apikey, link" },
       { no: 11, name: "SnackVideo", method: "GET", desc: "Download video SnackVideo", query: "apikey, link" },
-      { no: 12, name: "Instagram Downloader", method: "GET", desc: "Download video reel, post, igtv, story", query: "apikey, link" }
+      { no: 12, name: "Instagram Downloader", method: "GET", desc: "Download video reel, post, igtv, story", query: "apikey, link" },
+      { no: 13, name: "SaveFrom", method: "GET", desc: "Download video reel, post, igtv, story", query: "apikey, link" }
     ];
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -5294,6 +5363,9 @@
           break;
         case "Instagram Downloader":
           url = `https://api2.teamhackbotsindo.my.id/api/instagram?link=https://www.instagram.com/reel/DSiBOPIjIgU/?igsh=MXRtYTU2OTl2bm9i`;
+          break;
+        case "SaveFrom":
+          url = `https://api2.teamhackbotsindo.my.id/api/saveFrom?url=https://www.youtube.com/watch?v=igaeQ2fJRxE`;
           break;
       }
 
@@ -5453,6 +5525,20 @@
                 </p>
               `;
             }
+          } else if (feature === "SaveFrom" && data.result) {
+            const r = data.result;
+            let html = `
+              <p><strong>Title:</strong> ${r.title || "-"}</p>
+              <p><strong>Durasi:</strong> ${r.duration_readable || r.duration || "-"}</p>
+              <p><img src="${r.thumbnail || ""}" alt="${r.title || "Thumbnail"}" style="max-width:200px"></p>
+            `;
+            if (r.url720) {
+              html += `<p><strong>720p:</strong> <a href="${r.url720}" target="_blank" rel="noopener noreferrer">Play / Download 720p</a></p>`;
+            }
+            if (r.url480) {
+              html += `<p><strong>480p:</strong> <a href="${r.url480}" target="_blank" rel="noopener noreferrer">Play / Download 480p</a></p>`;
+            }
+            html += `<p style="font-size:90%"><em>Note:</em> These links may be HLS manifests or time-limited signed URLs — use promptly or proxy via your server for reliable downloads.</p>`;
           } else if (feature === "Facebook" && data.result) {
             // Facebook Video case
             const r = data.result;
@@ -5632,6 +5718,34 @@
     tabJSinstagramVideo.addEventListener('click', () => showinstagramVideo(tabJSinstagramVideo));
     tabPyinstagramVideo.addEventListener('click', () => showinstagramVideo(tabPyinstagramVideo));
     tabGoinstagramVideo.addEventListener('click', () => showinstagramVideo(tabGoinstagramVideo));
+
+    // TAB SaveFrom
+    const tabJSsaveFrom = document.getElementById('tabJSsaveFrom');
+    const tabPysaveFrom = document.getElementById('tabPysaveFrom');
+    const tabGosaveFrom = document.getElementById('tabGosaveFrom');
+
+    const jssaveFrom = document.getElementById('jssaveFrom');
+    const pysaveFrom = document.getElementById('pysaveFrom');
+    const gosaveFrom = document.getElementById('gosaveFrom');
+
+    function showsaveFrom(tab) {
+      [tabJSsaveFrom, tabPysaveFrom, tabGosaveFrom].forEach(btn => btn.classList.remove('active'));
+      [jssaveFrom, pysaveFrom, gosaveFrom].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    // Sinkronisasi dengan sidebar
+      const targetId = tab.getAttribute('aria-controls');
+      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
+      if (sidebarLink) {
+        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
+        sidebarLink.classList.add('active');
+      }
+    }
+
+    tabJSsaveFrom.addEventListener('click', () => showsaveFrom(tabJSsaveFrom));
+    tabPysaveFrom.addEventListener('click', () => showsaveFrom(tabPysaveFrom));
+    tabGosaveFrom.addEventListener('click', () => showsaveFrom(tabGosaveFrom));
 
     // TAB YOUTUBE AUDIO
     const tabJSYoutubeAudio = document.getElementById('tabJSYoutubeAudio');
