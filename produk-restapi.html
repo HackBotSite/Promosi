@@ -5525,20 +5525,19 @@
                 </p>
               `;
             }
-          } else if (feature === "SaveFrom" && (data.result || data)) {
-            const r = data.result || data;
-            let html = `
+          } else if (feature === "SaveFrom" && data.result) {
+            const r = data.result;
+            html = `
               <p><strong>Title:</strong> ${r.title || "-"}</p>
               <p><strong>Durasi:</strong> ${r.duration_readable || r.duration || "-"}</p>
               <p><img src="${r.thumbnail || ""}" alt="${r.title || "Thumbnail"}" style="max-width:200px"></p>
             `;
             if (r.url720) {
-              html += `<p><strong>720p:</strong> <a href="${r.url720}" target="_blank" rel="noopener noreferrer">Play / Download 720p</a></p>`;
+              html += `<p><strong>720p:</strong> <a href="${r.url720}" target="_blank">Play / Download 720p</a></p>`;
             }
             if (r.url480) {
-              html += `<p><strong>480p:</strong> <a href="${r.url480}" target="_blank" rel="noopener noreferrer">Play / Download 480p</a></p>`;
+              html += `<p><strong>480p:</strong> <a href="${r.url480}" target="_blank">Play / Download 480p</a></p>`;
             }
-            html += `<p style="font-size:90%"><em>Note:</em> These links may be HLS manifests or time-limited signed URLs — use promptly or proxy via your server for reliable downloads.</p>`;
           } else if (feature === "Facebook" && data.result) {
             // Facebook Video case
             const r = data.result;
