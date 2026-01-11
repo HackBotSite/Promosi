@@ -5525,8 +5525,8 @@
                 </p>
               `;
             }
-          } else if (feature === "SaveFrom" && data.result) {
-            const r = data.result;
+          } else if (feature === "SaveFrom" && (data.result || data)) {
+            const r = data.result || data;
             let html = `
               <p><strong>Title:</strong> ${r.title || "-"}</p>
               <p><strong>Durasi:</strong> ${r.duration_readable || r.duration || "-"}</p>
