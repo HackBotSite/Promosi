@@ -5538,6 +5538,12 @@
             if (r.url480) {
               html += `<p><strong>480p:</strong> <a href="${r.url480}" target="_blank">Play / Download 480p</a></p>`;
             }
+            if (r.url360) {
+              html += `<p><strong>360p:</strong> <a href="${r.url360}" target="_blank">Play / Download 360p</a></p>`;
+            }
+            if (r.url240) {
+              html += `<p><strong>240p:</strong> <a href="${r.url240}" target="_blank">Play / Download 240p</a></p>`;
+            }
           } else if (feature === "Facebook" && data.result) {
             // Facebook Video case
             const r = data.result;
