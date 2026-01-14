@@ -132,7 +132,7 @@ nav .menu .dropbtn:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 80px;
+  padding-top: 40px;
   position: relative;
   background: linear-gradient(to right, #1c1f2a, #2c2f3a);
 }
@@ -180,7 +180,9 @@ nav .menu .dropbtn:hover {
 
 .hero-text h1,
 .hero-text p {
-  display: none; /* sembunyikan teks judul & paragraf */
+  display: block;
+  color: #fff; /* atau var(--text) jika pakai CSS variable */
+  text-shadow: 0 0 6px rgba(0,0,0,0.3); /* opsional biar lebih kontras */
 }
 
 .hero-text button {
