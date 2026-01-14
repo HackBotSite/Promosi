@@ -122,7 +122,7 @@
       -webkit-background-clip: text; color: transparent;
       text-shadow: 0 0 12px rgba(22,214,255,0.6);
     }
-    .hero-text p { color: var(--muted); }
+    .hero-text p { color: var(--text); }
     .hero-text button {
       margin-top: 20px; padding: 12px 20px;
       background: var(--accent); border: none; border-radius: var(--radius);
@@ -199,27 +199,44 @@
       flex-direction: column;   /* susun vertikal */
       align-items: center;      /* center horizontal */
       margin-top: 60px;
+      min-height: 500px;        /* beri tinggi minimum agar layout stabil */
     }
 
     #pemesanan h2 {
-      margin-bottom: 20px;      /* beri jarak ke box */
+      margin-bottom: 20px;      /* jarak ke box */
       text-align: center;
       color: var(--accent);
     }
 
     #pemesanan form {
-      background: var(--card);
+      background: var(--card);  /* konsisten dengan box card */
       padding: 30px;
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       max-width: 500px;
       margin: 0 auto;
+      font-family: 'Inter', sans-serif; /* pastikan font konsisten */
+      font-size: 1rem;                  /* ukuran tetap */
+      line-height: 1.5;                 /* stabilkan tinggi teks */
     }
+
     #pemesanan input,
     #pemesanan select,
     #pemesanan button {
       width: 100%;
       margin-bottom: 15px;
+      font-size: 1rem;                  /* ukuran teks eksplisit */
+    }
+
+    #pemesanan button {
+      background: var(--accent);
+      border: none;
+      border-radius: var(--radius);
+      color: #000;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 12px 20px;
+      box-shadow: 0 0 12px var(--accent);
     }
     .hero-text-below {
       text-align: center;
