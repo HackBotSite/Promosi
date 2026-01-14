@@ -748,7 +748,6 @@ footer {
     z-index: 1000;
     transition: transform 0.2s ease;
     animation: pulse 2s infinite;
-    will-change: transform;
   }
 
   .wa-float img {
@@ -775,14 +774,8 @@ footer {
   }
 
   @keyframes pulse {
-    0% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.05); /* lebih ringan */
-    }
-    100% {
-      transform: scale(1);
-    }
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
   }
 }
