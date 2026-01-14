@@ -71,7 +71,14 @@
     .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: 0.3px }
     .brand img { height: 42px; width: auto; filter: drop-shadow(0 2px 6px rgba(22,214,255,0.3)); }
     .brand .title { font-weight: 700 }
-    .brand .badge { font-size: 12px; color: var(--accent); border: 1px dashed var(--accent); padding: 2px 8px; border-radius: 999px }
+    .brand .badge {
+        font-size: 12px;
+        color: #fff; /* atau #ff0 untuk kontras tinggi */
+        background-color: var(--accent); /* jika ingin badge berwarna */
+        border: none;
+        padding: 4px 10px;
+        font-weight: 600;
+    }
     nav .menu a {
       color: var(--text); text-decoration: none; margin-left: 20px;
     }
@@ -379,21 +386,31 @@
 
   <!-- Pemesanan -->
   <section id="pemesanan" class="section">
-    <h2>Pemesanan</h2>
-    <form onsubmit="sendToWhatsApp(event)">
-      <input id="nama" type="text" placeholder="Nama"><br><br>
-      <input id="email" type="email" placeholder="Email"><br><br>
-      <input id="wa" type="text" placeholder="Nomor WhatsApp"><br><br>
-      <select id="layanan" required>
-        <option>Pembuatan Website</option>
-        <option>Editing</option>
-        <option>Aplikasi</option>
-        <option>RestAPI</option>
-        <option>Panel VPS</option>
-      </select><br><br>
-      <button type="submit" class="btn-pesan">Kirim Pesanan</button>
-    </form>
+      <h2>Pemesanan</h2>
+      <form onsubmit="sendToWhatsApp(event)">
+          <label for="nama">Nama:</label><br>
+          <input id="nama" type="text" placeholder="Nama"><br><br>
+
+          <label for="email">Email:</label><br>
+          <input id="email" type="email" placeholder="Email"><br><br>
+
+          <label for="wa">Nomor WhatsApp:</label><br>
+          <input id="wa" type="text" placeholder="Nomor WhatsApp"><br><br>
+
+          <label for="layanan">Pilih jenis layanan:</label><br>
+          <select id="layanan" required>
+              <option value="">-- Pilih layanan --</option>
+              <option value="website">Pembuatan Website</option>
+              <option value="editing">Editing</option>
+              <option value="aplikasi">Aplikasi</option>
+              <option value="restapi">RestAPI</option>
+              <option value="panel">Panel VPS</option>
+          </select><br><br>
+
+          <button type="submit" class="btn-pesan">Kirim Pesanan</button>
+      </form>
   </section>
+
 
   <script>
   function sendToWhatsApp(e) {
