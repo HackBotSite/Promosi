@@ -310,11 +310,11 @@ nav .menu .dropbtn:hover {
 /* Card default untuk home & produk */
 .home .card,
 .produk .card {
-  background: white;
-  color: #333;
+  background: var(--card);   /* sama seperti box pemesanan */
+  color: var(--text);        /* teks terang */
   padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
 }
 
 /* Card khusus dashboard */
