@@ -27,7 +27,8 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" onload="this.rel='stylesheet'">
+  <link rel="preload" as="image" href="gambar-hero.png" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
   <!-- Favicon -->
@@ -195,48 +196,48 @@
     }
     /* Section Pemesanan */
     #pemesanan {
-      display: flex;
-      flex-direction: column;   /* susun vertikal */
-      align-items: center;      /* center horizontal */
-      margin-top: 60px;
-      min-height: 500px;        /* beri tinggi minimum agar layout stabil */
+        display: flex;
+        flex-direction: column;       /* susun vertikal */
+        align-items: center;          /* center horizontal */
+        margin-top: 60px;
+        min-height: 500px;            /* beri tinggi minimum agar layout stabil */
+        font-family: 'Inter', sans-serif; /* pastikan font konsisten */
+        font-size: 1rem;              /* ukuran tetap */
+        line-height: 1.5;             /* stabilkan tinggi teks */
     }
 
     #pemesanan h2 {
-      margin-bottom: 20px;      /* jarak ke box */
-      text-align: center;
-      color: var(--accent);
+        margin-bottom: 20px;          /* jarak ke box */
+        text-align: center;
+        color: var(--accent);
     }
 
     #pemesanan form {
-      background: var(--card);  /* konsisten dengan box card */
-      padding: 30px;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      max-width: 500px;
-      margin: 0 auto;
-      font-family: 'Inter', sans-serif; /* pastikan font konsisten */
-      font-size: 1rem;                  /* ukuran tetap */
-      line-height: 1.5;                 /* stabilkan tinggi teks */
+        background: var(--card);      /* konsisten dengan box card */
+        padding: 30px;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        max-width: 500px;
+        margin: 0 auto;
     }
 
     #pemesanan input,
     #pemesanan select,
     #pemesanan button {
-      width: 100%;
-      margin-bottom: 15px;
-      font-size: 1rem;                  /* ukuran teks eksplisit */
+        width: 100%;
+        margin-bottom: 15px;
+        font-size: 1rem;              /* ukuran teks eksplisit */
     }
 
     #pemesanan button {
-      background: var(--accent);
-      border: none;
-      border-radius: var(--radius);
-      color: #000;
-      font-weight: 600;
-      cursor: pointer;
-      padding: 12px 20px;
-      box-shadow: 0 0 12px var(--accent);
+        background: var(--accent);
+        border: none;
+        border-radius: var(--radius);
+        color: #000;
+        font-weight: 600;
+        cursor: pointer;
+        padding: 12px 20px;
+        box-shadow: 0 0 12px var(--accent);
     }
     .hero-text-below {
       text-align: center;
