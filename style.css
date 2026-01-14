@@ -132,9 +132,9 @@ nav .menu .dropbtn:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 40px;
+  padding-top: 20px;
   position: relative;
-  background: linear-gradient(to right, #1c1f2a, #2c2f3a);
+  background: linear-gradient(to right, #1c1f2a, #1c1f2a);
 }
 
 /* Slider */
