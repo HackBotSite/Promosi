@@ -313,17 +313,17 @@
       }
       .layout {
         display: grid;
-        grid-template-columns: 180px 1fr; /* sidebar lebih kecil di HP */
-        height: calc(100vh - 90px);       /* penuh layar dikurangi navbar */
+        grid-template-columns: 180px 1fr;
+        height: calc(100vh - 90px);
       }
 
       aside.sidebar {
-        position: fixed;                  /* tetap menempel di kiri */
-        top: 90px;                        /* offset navbar */
+        position: fixed;
+        top: 90px;
         left: 0;
-        width: 180px;                     /* lebar sidebar di HP */
-        height: calc(100vh - 90px);       /* tinggi penuh layar */
-        overflow-y: auto;                 /* scroll khusus sidebar */
+        width: 180px;
+        height: calc(100vh - 90px);
+        overflow-y: auto;
         background: linear-gradient(180deg, rgba(17,26,46,0.95), rgba(13,20,36,0.95));
         box-shadow: var(--shadow);
         border-radius: var(--radius);
@@ -332,10 +332,15 @@
       }
 
       .content-wrapper {
-        margin-left: 180px;               /* geser konten kanan agar tidak ketiban sidebar */
-        overflow-y: auto;                 /* scroll khusus konten kanan */
+        margin-left: 180px;
         height: calc(100vh - 90px);
+        overflow-y: auto;
+        overflow-x: auto;         /* aktifkan scroll horizontal */
         padding: 16px;
+      }
+
+      .content-wrapper > * {
+        min-width: 600px;         /* biar bisa geser kanan-kiri */
       }
 
       .nav-list a {
