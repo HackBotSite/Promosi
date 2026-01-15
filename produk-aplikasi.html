@@ -87,14 +87,35 @@
     .service-card h3 { color: var(--accent); }
 
     /* Gallery hasil aplikasi */
-    .gallery { margin-top: 60px; }
-    .gallery h2 { text-align: center; color: var(--accent); }
-    .gallery-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
-      gap: 20px; margin-top: 20px;
+    .gallery {
+        margin-top: 60px;
     }
+
+    .gallery h2 {
+        text-align: center;
+        color: var(--accent);
+        margin-bottom: 20px;
+    }
+
+    .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        align-items: stretch; /* memastikan semua item sejajar */
+    }
+
     .gallery-grid img {
-      width: 100%; border-radius: var(--radius); box-shadow: var(--shadow);
+        width: 100%;
+        height: 200px; /* tinggi seragam */
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        object-fit: cover; /* gambar dipotong agar proporsional */
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .gallery-grid img:hover {
+        transform: scale(1.05);
+        box-shadow: 0 12px 25px rgba(0,0,0,0.4);
     }
 
     /* Pricing */
