@@ -5,7 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="canonical" href="https://teamhackbotsrg.my.id/tentang.html">
   <title>Tentang HB Digital Solution</title>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" onload="this.rel='stylesheet'">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/icon.png" type="image/png">
+
   <style>
     :root {
       --bg: #0b1220;
@@ -129,12 +139,20 @@
       100% { transform: scale(1); }
     }
 
+    /* Footer */
     footer {
-      background: #0a1f44;
-      color: white;
-      text-align: center;
-      padding: 20px;
+      margin-top: 20px;
+      background: rgba(10,16,30,0.6); border-top: 1px solid var(--border);
+      backdrop-filter: blur(6px); color: var(--muted);
     }
+    .footer-inner {
+      max-width: 1200px; margin: 0 auto; padding: 18px 20px;
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .links { display: flex; gap: 14px }
+    .links a { color: var(--muted); text-decoration: none }
+    .links a:hover { color: var(--accent) }
+
   </style>
 </head>
 <body>
@@ -143,7 +161,7 @@
     <div class="nav-inner">
       <div class="brand">
         <a href="/#beranda">
-          <img src="https://ik.imagekit.io/wamr3naeq/thb/hbds.png" alt="Logo Hackbots Digital Solution">
+          <img src="https://ik.imagekit.io/wamr3naeq/thb/hbds2.png" alt="Logo Hackbots Digital Solution">
         </a>
         <span class="title">Hacksbots Digital Solution</span>
         <span class="badge">PROFILE</span>
@@ -174,11 +192,18 @@
   <main>
     <!-- Hero Tentang -->
     <section class="hero" id="tentang">
-      <h1>Tentang HB Digital Solution</h1>
-      <p>HB Digital Solution adalah perusahaan teknologi yang berfokus pada layanan digital premium. 
-         Kami menyediakan solusi lengkap mulai dari pembuatan website, editing desain, aplikasi Android & PC, 
-         hingga penyediaan panel VPS dan Rest API. Dengan pengalaman dan tim profesional, kami berkomitmen 
-         menghadirkan layanan yang elegan, aman, dan sesuai kebutuhan bisnis modern.</p>
+      <p>
+        HB Digital Solution adalah perusahaan teknologi yang berfokus pada layanan digital premium dengan harga yang tetap terjangkau. 
+        Kami menyediakan solusi lengkap mulai dari pembuatan website modern, editing desain grafis profesional, pengembangan aplikasi Android, iOS, dan PC, 
+        hingga penyediaan panel VPS serta Rest API untuk kebutuhan integrasi sistem. 
+        Dengan pengalaman bertahun-tahun dan tim yang terdiri dari tenaga ahli di bidangnya, kami berkomitmen menghadirkan layanan yang elegan, aman, 
+        dan sesuai dengan kebutuhan bisnis modern, baik untuk perusahaan besar maupun usaha kecil yang ingin berkembang.
+      </p>
+      <p>
+        Filosofi kami sederhana: teknologi harus memudahkan, bukan membebani. 
+        Oleh karena itu, setiap layanan kami dirancang agar mudah digunakan, scalable, dan hemat biaya. 
+        Kami percaya bahwa solusi digital yang berkualitas tidak harus mahal, sehingga setiap klien dapat menikmati layanan premium dengan harga yang bersahabat.
+      </p>
     </section>
 
     <!-- Profil Perusahaan -->
@@ -187,18 +212,32 @@
       <div class="providers-grid">
         <div class="provider-card">
           <h3>Visi</h3>
-          <p>Menjadi mitra digital terpercaya yang membantu bisnis berkembang melalui teknologi inovatif.</p>
+          <p>
+              Menjadi mitra digital terpercaya yang membantu bisnis berkembang melalui teknologi inovatif, 
+              dengan menghadirkan layanan yang tidak hanya canggih tetapi juga terjangkau bagi semua kalangan. 
+              Kami ingin menjadi pilihan utama bagi perusahaan maupun UMKM yang mencari solusi digital elegan dan efektif.
+          </p>
         </div>
         <div class="provider-card">
           <h3>Misi</h3>
-          <p>Menyediakan layanan digital yang berkualitas, mudah diakses, dan mendukung transformasi bisnis.</p>
+          <p>
+              Menyediakan layanan digital yang berkualitas tinggi, mudah diakses, dan mendukung transformasi bisnis di era modern. 
+              Kami berkomitmen untuk selalu memberikan hasil terbaik dengan desain yang profesional, sistem yang aman, 
+              serta harga yang kompetitif agar setiap klien merasa puas dan terbantu dalam perjalanan digital mereka.
+          </p>
         </div>
         <div class="provider-card">
           <h3>Nilai</h3>
-          <p>Profesionalisme, inovasi, keamanan, dan kepuasan pelanggan adalah prioritas utama kami.</p>
+          <p>
+              Profesionalisme, inovasi, keamanan, dan kepuasan pelanggan adalah prioritas utama kami. 
+              Kami selalu menjaga komunikasi yang sopan dan transparan, memberikan solusi kreatif yang elegan, 
+              serta memastikan setiap layanan dapat diakses dengan biaya yang wajar. 
+              Nilai-nilai ini menjadi fondasi kami dalam membangun hubungan jangka panjang dengan setiap klien.
+          </p>
         </div>
       </div>
     </section>
+
   </main>
 
   <!-- WhatsApp Floating -->
@@ -207,8 +246,13 @@
   </a>
 
   <!-- Footer -->
-  <footer>
-    <p>© 2025 HB Digital Solutions</p>
+  <footer aria-label="Footer">
+    <div class="footer-inner">
+      <div>© 2025 HB Digital Solutions — Produk Aplikasi</div>
+      <div class="links">
+        <a href="#" aria-label="External site">Website</a>
+      </div>
+    </div>
   </footer>
 </body>
 </html>
