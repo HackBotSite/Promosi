@@ -86,21 +86,52 @@
       color: var(--accent);
       text-shadow: 0 0 8px var(--accent);
     }
-    .dropdown { display: inline-block; position: relative; }
+    .dropdown {
+      display: inline-block;
+      position: relative;
+    }
+
     .dropbtn {
-      background: none; border: none; color: var(--text);
-      font: inherit; cursor: pointer; margin-left: 20px;
+      background: none;
+      border: none;
+      color: var(--text);
+      font: inherit;
+      cursor: pointer;
+      margin-left: 20px;
     }
+
     .dropdown-content {
-      display: none; position: absolute; background: var(--card);
-      min-width: 220px; box-shadow: var(--shadow); border-radius: var(--radius);
-      z-index: 1000; padding: 10px;
+      display: none;
+      position: absolute;
+      background: var(--card);
+      min-width: 220px;
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+      z-index: 1000;
+      padding: 10px;
     }
+
     .dropdown-content a {
-      display: block; padding: 8px 12px; color: var(--text); text-decoration: none;
+      display: block;
+      padding: 8px 12px;
+      color: var(--text);
+      text-decoration: none;
     }
-    .dropdown-content a:hover { background: var(--bg-2); color: var(--accent); }
-    .dropdown:hover .dropdown-content { display: block; }
+
+    .dropdown-content a:hover {
+      background: var(--bg-2);
+      color: var(--accent);
+    }
+
+    /* tampilkan saat hover (desktop) */
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    /* tampilkan saat class .open aktif (HP/klik) */
+    .dropdown.open .dropdown-content {
+      display: block;
+    }
 
     main { max-width: 1200px; margin: 0 auto; padding: 140px 20px 40px; }
 
@@ -725,6 +756,19 @@
     function prevSlide() { showSlide(index - 1); }
 
     setInterval(nextSlide, 4000);
+  </script>
+
+  <script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const dropdowns = document.querySelectorAll(".dropdown");
+    dropdowns.forEach(drop => {
+      const btn = drop.querySelector(".dropbtn");
+      btn.addEventListener("click", function(e) {
+        e.preventDefault();
+        drop.classList.toggle("open");
+      });
+    });
+  });
   </script>
 </body>
 </html>
