@@ -311,16 +311,26 @@
         margin-top: 40px;   /* geser slider turun ke bawah */
         padding-top: 0px;  /* opsional, beri ruang dalam */
       }
-      .sidebar-left {
-        position: fixed;
-        top: 100px;         /* geser ke bawah dari atas layar */
-        left: 0;
-        width: 200px;
-        height: calc(100vh - 100px); /* sisa tinggi layar */
-        background: var(--card);
-        overflow-y: auto;
-        z-index: 9999;
-        box-shadow: 2px 0 12px rgba(0,0,0,0.3);
+      aside.sidebar {
+        position: relative;       /* tidak sticky di HP */
+        top: auto;
+        margin-top: 40px;         /* beri jarak dari atas */
+        width: 100%;              /* penuh horizontal */
+        border-radius: var(--radius);
+        padding: 16px;
+        max-height: none;         /* biar tidak terpotong */
+        box-shadow: var(--shadow);
+        background: linear-gradient(180deg, rgba(17,26,46,0.95), rgba(13,20,36,0.95));
+      }
+
+      .nav-list a {
+        font-size: 0.95rem;
+        padding: 10px 14px;
+      }
+
+      .sidebar h2 {
+        font-size: 1rem;
+        margin-bottom: 12px;
       }
 
       nav {
