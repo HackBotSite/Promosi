@@ -684,6 +684,10 @@ footer {
   }
 
   /* Hero slider */
+  .hero {
+    margin-top: 80px;   /* geser slider turun ke bawah */
+    padding-top: 10px;  /* opsional, beri ruang dalam */
+  }
   .slides img { border-radius: 0; }
   .hero-text-below h1 { font-size: 1.4rem; }
   .hero-text-below p { font-size: 0.9rem; }
