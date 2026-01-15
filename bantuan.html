@@ -104,6 +104,58 @@
             line-height: 1.6;
         }
 
+        /* WhatsApp copy */
+        .whatsapp { margin-top: 60px; text-align: center; }
+        .whatsapp input {
+          padding: 10px; border-radius: 8px; border: 1px solid var(--border);
+          background: #0c1426; color: var(--text); font-family: monospace;
+        }
+        .btn {
+          padding: 10px 14px; border-radius: 10px; border: 1px solid var(--accent);
+          background: rgba(22,214,255,0.15); color: var(--text);
+          cursor: pointer; margin-left: 10px;
+        }
+        .toast {
+          position: fixed; bottom: 20px; right: 20px;
+          background: #0e1628; border: 1px solid var(--accent);
+          padding: 10px 14px; border-radius: 12px; box-shadow: var(--shadow);
+          opacity: 0; transition: 0.25s ease;
+        }
+        .toast.show { opacity: 1; }
+        
+        /* WhatsApp Floating */
+        .wa-float {
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
+          background: #25D366;
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+          box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          z-index: 1000;
+          transition: transform 0.2s ease;
+          animation: pulse 2s infinite;
+        }
+        .wa-float img {
+          width: 28px;
+          height: 28px;
+          max-width: 100%;
+          max-height: 100%;
+        }
+        .wa-float:hover {
+          transform: scale(1.1);
+          box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
+        @keyframes pulse {
+          0% { transform: scale(1); }
+          50% { transform: scale(1.1); }
+          100% { transform: scale(1); }
+        }
+
         /* Footer */
         footer {
           margin-top: 20px;
@@ -186,10 +238,15 @@
         </section>
     </main>
 
+    <!-- WhatsApp Floating -->
+    <a href="https://wa.me/6285717777189" target="_blank" class="wa-float">
+      <img src="WhatsApp.svg" alt="WhatsApp" width="48" height="48" loading="lazy">
+    </a>
+
     <!-- Footer -->
     <footer aria-label="Footer">
       <div class="footer-inner">
-        <div>© 2025 HB Digital Solutions — Tentang</div>
+        <div>© 2025 HB Digital Solutions — Bantuan</div>
         <div class="links">
           <a href="#" aria-label="External site">Website</a>
         </div>
