@@ -5,7 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="canonical" href="https://teamhackbotsrg.my.id/produk-aplikasi.html">
   <title>Jasa Pembuatan Aplikasi Profesional</title>
+    <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" onload="this.rel='stylesheet'">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/icon.png" type="image/png">
   <style>
     :root {
       --bg: #0b1220;
@@ -97,6 +106,45 @@
     .pricing-card h3 { color: var(--accent); }
     .pricing-card .price { font-size: 1.5rem; margin: 10px 0; }
 
+    /* Detail Layanan Aplikasi */
+    .detail-layanan {
+      background: var(--card);
+      padding: 40px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-top: 60px;
+    }
+
+    .detail-layanan h2 {
+      color: var(--accent);
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .detail-layanan h3 {
+      color: var(--accent);
+      margin-top: 30px;
+      margin-bottom: 10px;
+    }
+
+    .detail-layanan p {
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 15px;
+    }
+
+    .detail-layanan ul {
+      margin: 15px 0 25px 20px;
+      padding: 0;
+      list-style: disc;
+      color: var(--text);
+    }
+
+    .detail-layanan ul li {
+      margin-bottom: 8px;
+      line-height: 1.6;
+    }
+
     /* Testimoni carousel */
     .testimoni { margin-top: 60px; }
     .testimoni h2 { text-align: center; color: var(--accent); }
@@ -170,7 +218,7 @@
     <div class="nav-inner">
       <div class="brand">
         <a href="/#beranda">
-          <img src="https://ik.imagekit.io/wamr3naeq/thb/hbds.png" alt="Logo Hacksbots Digital Solution">
+          <img src="https://ik.imagekit.io/wamr3naeq/thb/hbds2.png" alt="Logo Hacksbots Digital Solution">
         </a>
         <span class="title">Hackbots Digital Solution</span>
         <span class="badge">Aplikasi</span>
@@ -190,17 +238,70 @@
     <!-- Hero -->
     <section class="hero" id="home">
       <h1>Jasa Pembuatan Aplikasi Profesional</h1>
-      <p>Kami menyediakan aplikasi Android, iOS, dan PC (online/offline) untuk perkantoran maupun usaha kecil.</p>
+      <p>
+        Kami menyediakan layanan pembuatan aplikasi Android, iOS, dan PC (online maupun offline) yang dirancang khusus untuk mendukung kebutuhan bisnis, perkantoran, maupun usaha kecil. 
+        Setiap aplikasi dikembangkan dengan teknologi terbaru, desain UI/UX modern, serta keamanan data yang terjamin sehingga mampu memberikan pengalaman terbaik bagi pengguna.
+      </p>
+      <p>
+        Dengan pengalaman tim kami dalam mengerjakan berbagai proyek, mulai dari aplikasi kasir untuk UMKM, sistem absensi karyawan, hingga aplikasi custom multi-platform untuk startup digital, 
+        kami memastikan setiap solusi yang kami tawarkan dapat meningkatkan efisiensi operasional, memperluas jangkauan pasar, dan membantu bisnis Anda tumbuh lebih cepat.
+      </p>
+      <p>
+        Kami juga menyediakan layanan integrasi dengan database, API, dan dashboard admin, sehingga aplikasi yang Anda miliki tidak hanya fungsional tetapi juga mudah dikelola. 
+        Dukungan maintenance dan update berkala akan memastikan aplikasi tetap relevan dan optimal digunakan dalam jangka panjang.
+      </p>
     </section>
 
     <!-- Services -->
     <section class="services" id="services">
-      <div class="service-card"><h3>Android</h3><p>Aplikasi Android custom untuk bisnis dan personal.</p></div>
-      <div class="service-card"><h3>iOS</h3><p>Aplikasi iOS elegan dengan integrasi App Store.</p></div>
-      <div class="service-card"><h3>PC Online</h3><p>Aplikasi berbasis web untuk akses multi-platform.</p></div>
-      <div class="service-card"><h3>PC Offline</h3><p>Aplikasi desktop offline untuk perkantoran.</p></div>
-      <div class="service-card"><h3>Perkantoran</h3><p>Sistem manajemen karyawan, absensi, dan dokumen.</p></div>
-      <div class="service-card"><h3>Usaha Kecil</h3><p>Aplikasi kasir, inventori, dan laporan sederhana untuk UMKM.</p></div>
+      <div class="service-card">
+        <h3>Android</h3>
+        <p>
+          Aplikasi Android custom yang dirancang sesuai kebutuhan bisnis maupun personal. 
+          Dilengkapi dengan integrasi API, database, dan fitur notifikasi push untuk meningkatkan interaksi pengguna. 
+          Cocok untuk UMKM, startup, maupun perusahaan yang ingin menjangkau pelanggan melalui perangkat mobile.
+        </p>
+      </div>
+      <div class="service-card">
+        <h3>iOS</h3>
+        <p>
+          Aplikasi iOS elegan dengan integrasi penuh ke App Store. 
+          Dibangun dengan standar Apple untuk performa tinggi, keamanan, dan desain UI/UX modern. 
+          Cocok untuk brand yang ingin tampil premium dan menjangkau pengguna iPhone/iPad.
+        </p>
+      </div>
+      <div class="service-card">
+        <h3>PC Online</h3>
+        <p>
+          Aplikasi berbasis web yang dapat diakses dari berbagai perangkat dan platform. 
+          Mendukung multi-user, integrasi cloud, serta dashboard admin untuk monitoring data secara real-time. 
+          Cocok untuk sistem manajemen bisnis, e-commerce, atau aplikasi SaaS.
+        </p>
+      </div>
+      <div class="service-card">
+        <h3>PC Offline</h3>
+        <p>
+          Aplikasi desktop offline untuk perkantoran dengan performa stabil tanpa koneksi internet. 
+          Dilengkapi fitur keamanan lokal, backup data, dan integrasi printer/reporting. 
+          Cocok untuk sistem absensi, akuntansi, atau manajemen dokumen internal.
+        </p>
+      </div>
+      <div class="service-card">
+        <h3>Perkantoran</h3>
+        <p>
+          Sistem aplikasi perkantoran yang mencakup manajemen karyawan, absensi, payroll, dan pengelolaan dokumen. 
+          Dibuat untuk meningkatkan efisiensi operasional dan memudahkan HRD dalam mengelola data perusahaan. 
+          Cocok untuk perusahaan skala kecil hingga besar.
+        </p>
+      </div>
+      <div class="service-card">
+        <h3>Usaha Kecil</h3>
+        <p>
+          Aplikasi kasir, inventori, dan laporan sederhana yang dirancang khusus untuk UMKM. 
+          Memudahkan pencatatan transaksi harian, stok barang, serta laporan keuangan otomatis. 
+          Cocok untuk toko retail, restoran, atau usaha kecil yang ingin lebih modern.
+        </p>
+      </div>
     </section>
 
     <!-- Gallery hasil aplikasi -->
@@ -218,19 +319,64 @@
     <section class="pricing" id="pricing">
       <div class="pricing-card">
         <h3>Basic</h3>
-        <div class="price">Rp 5jt</div>
-        <p>Aplikasi sederhana untuk usaha kecil atau personal.</p>
+        <div class="price">Rp 500 rb</div>
+        <p>
+          Paket Basic cocok untuk usaha kecil atau kebutuhan personal. 
+          Aplikasi sederhana dengan fitur inti seperti input data, laporan dasar, dan tampilan user-friendly. 
+          Ideal untuk UMKM yang baru memulai digitalisasi bisnis.
+        </p>
       </div>
       <div class="pricing-card">
         <h3>Standard</h3>
-        <div class="price">Rp 10jt</div>
-        <p>Aplikasi dengan fitur tambahan dan integrasi database.</p>
+        <div class="price">Rp 1jt</div>
+        <p>
+          Paket Standard menawarkan aplikasi dengan fitur tambahan dan integrasi database. 
+          Mendukung multi-user, sistem login, serta laporan yang lebih lengkap. 
+          Cocok untuk bisnis yang membutuhkan pengelolaan data lebih terstruktur.
+        </p>
       </div>
       <div class="pricing-card">
         <h3>Premium</h3>
-        <div class="price">Rp 20jt</div>
-        <p>Aplikasi custom multi-platform dengan dashboard & integrasi penuh.</p>
+        <div class="price">Rp 3jt</div>
+        <p>
+          Paket Premium adalah solusi aplikasi custom multi-platform (Android, iOS, dan PC). 
+          Dilengkapi dashboard admin, integrasi API, serta fitur keamanan tingkat lanjut. 
+          Cocok untuk perusahaan atau startup yang membutuhkan sistem digital terintegrasi penuh.
+        </p>
       </div>
+    </section>
+
+    <!-- Detail Layanan Aplikasi -->
+    <section class="detail-layanan">
+      <h2>Mengapa Memilih Jasa Pembuatan Aplikasi Kami?</h2>
+      <p>
+        Kami menyediakan jasa pembuatan aplikasi Android, iOS, dan PC (online maupun offline) yang dirancang khusus sesuai kebutuhan bisnis Anda. 
+        Aplikasi bukan hanya sekadar alat, tetapi solusi digital yang dapat meningkatkan efisiensi, memperluas jangkauan pasar, dan memberikan pengalaman terbaik bagi pengguna.
+      </p>
+      <p>
+        Tim kami berpengalaman dalam mengembangkan aplikasi untuk berbagai sektor, mulai dari perkantoran, UMKM, hingga startup digital. 
+        Setiap aplikasi dikembangkan dengan teknologi terbaru, desain UI/UX modern, serta keamanan data yang terjamin.
+      </p>
+
+      <h3>Fitur Utama</h3>
+      <ul>
+        <li>Aplikasi Android & iOS dengan integrasi penuh ke Google Play dan App Store</li>
+        <li>Aplikasi PC berbasis web (online) maupun desktop (offline)</li>
+        <li>Integrasi database, API, dan dashboard admin</li>
+        <li>Desain UI/UX modern dan responsif</li>
+        <li>Maintenance & update berkala sesuai kebutuhan</li>
+      </ul>
+
+      <h3>Contoh Proyek</h3>
+      <p>
+        Kami telah mengembangkan aplikasi kasir untuk UMKM yang memudahkan pencatatan transaksi harian, aplikasi absensi karyawan berbasis PC offline untuk perusahaan, 
+        serta aplikasi Android custom untuk startup digital yang berhasil meningkatkan engagement pelanggan hingga 150%.
+      </p>
+
+      <h3>FAQ</h3>
+      <p><strong>Berapa lama proses pembuatan aplikasi?</strong><br>Rata-rata 3–8 minggu tergantung kompleksitas fitur.</p>
+      <p><strong>Apakah aplikasi bisa diintegrasikan dengan sistem yang sudah ada?</strong><br>Ya, kami mendukung integrasi dengan database, API, dan sistem internal perusahaan.</p>
+      <p><strong>Apakah ada garansi?</strong><br>Kami memberikan garansi maintenance selama 1 bulan setelah aplikasi selesai.</p>
     </section>
 
     <!-- Testimoni -->
