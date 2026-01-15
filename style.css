@@ -616,57 +616,51 @@ footer {
 /* Default desktop/tablet sudah kamu punya */
 
 /* Versi HP */
-/* Versi HP */
 @media (max-width: 768px) {
-  /* Navbar tetap horizontal dan bisa scroll */
   nav {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    overflow-x: auto;
-    position: relative; /* referensi aman */
-    z-index: 10;
+    flex-direction: column;         /* susun vertikal */
+    align-items: flex-start;
+    padding: 16px 20px;             /* lebih tinggi */
+    backdrop-filter: saturate(1.3) blur(10px);
+    background: rgba(10,16,30,0.65); /* transparan tetap */
+    border-bottom: 1px solid var(--border);
+    z-index: 9999;
+  }
+
+  .nav-inner {
+    flex-direction: column;         /* brand di atas, menu di bawah */
+    align-items: flex-start;
+    width: 100%;
   }
 
   nav .menu {
     display: flex;
-    flex-direction: row;
-    gap: 10px;
-    overflow-x: auto;
-    white-space: nowrap;
+    flex-wrap: wrap;                /* izinkan turun baris */
+    gap: 12px;
+    margin-top: 10px;
+    width: 100%;
   }
 
   nav .menu a,
   nav .dropbtn {
-    margin: 0;
     font-size: 0.9rem;
-    flex-shrink: 0;
+    padding: 6px 10px;
+    flex: 1 1 auto;                 /* biar bisa menyesuaikan lebar */
   }
 
-  /* HINDARI pemotongan oleh parent */
-  header, nav, .navbar, .nav-wrapper {
-    overflow: visible !important;
-  }
-
-  /* Dropdown jadi panel fixed full-width di bawah navbar */
   .dropdown-content {
-    position: fixed;
-    top: calc(var(--nav-height, 56px)); /* sesuaikan tinggi navbar */
+    position: absolute;
+    top: 100%;
     left: 0;
-    right: 0;
-    width: 100vw;
-    max-height: calc(100vh - var(--nav-height, 56px));
-    overflow-y: auto;             /* scroll isi */
-    background: #fff;
-    z-index: 9999;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.12);
-    border-top: 1px solid #eee;
+    width: 100%;
+    background: var(--card);
+    z-index: 10000;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
     display: none;
   }
 
-  /* Tampilkan saat aktif */
   .dropdown.open .dropdown-content {
     display: block;
   }
