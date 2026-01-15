@@ -308,9 +308,21 @@
     /* VERSI HP */
     @media (max-width: 768px) {
       .hero {
-        margin-top: 50px;   /* geser slider turun ke bawah */
+        margin-top: 40px;   /* geser slider turun ke bawah */
         padding-top: 0px;  /* opsional, beri ruang dalam */
       }
+      .sidebar-left {
+        position: fixed;
+        top: 40px;         /* geser ke bawah dari atas layar */
+        left: 0;
+        width: 220px;
+        height: calc(100vh - 100px); /* sisa tinggi layar */
+        background: var(--card);
+        overflow-y: auto;
+        z-index: 9999;
+        box-shadow: 2px 0 12px rgba(0,0,0,0.3);
+      }
+
       nav {
         display: flex;
         flex-direction: column;         /* susun vertikal */
