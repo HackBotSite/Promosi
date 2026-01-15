@@ -97,7 +97,7 @@
     /* Sidebar (responsive + sticky) */
     aside.sidebar {
       position: sticky;
-      top: 100px;
+      top: 90px;
       align-self: start;
       background: linear-gradient(180deg, rgba(17,26,46,0.9), rgba(13,20,36,0.9));
       border: 1px solid var(--border);
@@ -307,6 +307,14 @@
 
     /* Responsive */
     @media (max-width: 768px) {
+      .hero {
+        margin-top: 40px; /* sudah kamu pakai, bisa ditambah jadi 60px atau 80px */
+      }
+
+      aside.sidebar {
+        top: 120px; /* misalnya, geser 30px lebih turun dari navbar */
+      }
+
       nav {
         display: flex;
         flex-direction: column;         /* susun vertikal */
