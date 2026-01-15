@@ -311,19 +311,31 @@
         margin-top: 40px;   /* geser slider turun ke bawah */
         padding-top: 0px;  /* opsional, beri ruang dalam */
       }
-      aside.sidebar {
-        position: relative;       
-        top: auto;
-        margin-top: 20px;
-        width: 100%;
-        border-radius: var(--radius);
-        padding: 16px;
-        box-shadow: var(--shadow);
-        background: linear-gradient(180deg, rgba(17,26,46,0.95), rgba(13,20,36,0.95));
+      .layout {
+        display: grid;
+        grid-template-columns: 180px 1fr; /* sidebar lebih kecil di HP */
+        height: calc(100vh - 90px);       /* penuh layar dikurangi navbar */
+      }
 
-        /* aktifkan scroll di HP juga */
-        max-height: calc(100vh - 120px); /* sesuaikan tinggi layar dikurangi navbar */
-        overflow-y: auto;
+      aside.sidebar {
+        position: fixed;                  /* tetap menempel di kiri */
+        top: 90px;                        /* offset navbar */
+        left: 0;
+        width: 180px;                     /* lebar sidebar di HP */
+        height: calc(100vh - 90px);       /* tinggi penuh layar */
+        overflow-y: auto;                 /* scroll khusus sidebar */
+        background: linear-gradient(180deg, rgba(17,26,46,0.95), rgba(13,20,36,0.95));
+        box-shadow: var(--shadow);
+        border-radius: var(--radius);
+        padding: 12px;
+        z-index: 9999;
+      }
+
+      .content-wrapper {
+        margin-left: 180px;               /* geser konten kanan agar tidak ketiban sidebar */
+        overflow-y: auto;                 /* scroll khusus konten kanan */
+        height: calc(100vh - 90px);
+        padding: 16px;
       }
 
       .nav-list a {
