@@ -312,15 +312,18 @@
         padding-top: 0px;  /* opsional, beri ruang dalam */
       }
       aside.sidebar {
-        position: relative;       /* tidak sticky di HP */
+        position: relative;       
         top: auto;
-        margin-top: 40px;         /* beri jarak dari atas */
-        width: 100%;              /* penuh horizontal */
+        margin-top: 20px;
+        width: 100%;
         border-radius: var(--radius);
         padding: 16px;
-        max-height: none;         /* biar tidak terpotong */
         box-shadow: var(--shadow);
         background: linear-gradient(180deg, rgba(17,26,46,0.95), rgba(13,20,36,0.95));
+
+        /* aktifkan scroll di HP juga */
+        max-height: calc(100vh - 120px); /* sesuaikan tinggi layar dikurangi navbar */
+        overflow-y: auto;
       }
 
       .nav-list a {
