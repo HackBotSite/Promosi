@@ -167,6 +167,17 @@
       color: var(--accent);
       text-shadow: 0 0 6px var(--accent);
     }
+    .card a {
+      color: inherit;           /* ikut warna parent, bukan default link */
+      text-decoration: none;    /* hilangkan underline */
+    }
+    .card a:visited {
+      color: inherit;           /* cegah ungu */
+    }
+    .card p {
+      color: #ffffff;           /* paksa putih */
+    }
+
     .card img {
       width: 100%;
       height: auto;
