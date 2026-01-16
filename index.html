@@ -366,6 +366,7 @@
       .nav-inner {
         flex-direction: column;         /* brand di atas, menu di bawah */
         align-items: flex-start;
+        display: flex;
         width: 100%;
       }
 
@@ -382,7 +383,15 @@
         font-size: 0.9rem;
         padding: 6px 10px;
         flex: 1 1 auto;                 /* biar bisa menyesuaikan lebar */
+        min-width: 100px; /* biar tidak terlalu sempit */ 
+        max-width: 100%; /* tetap responsif */ 
+        text-align: left;
       }
+
+      .dropdown {
+        position: relative;
+      }
+
 
       .dropdown-content {
         position: absolute;
@@ -394,6 +403,8 @@
         border-radius: var(--radius);
         box-shadow: var(--shadow);
         display: none;
+        overflow-y: auto; /* kalau isi dropdown panjang */ 
+        max-height: 300px;
       }
 
       .dropdown.open .dropdown-content {
