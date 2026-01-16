@@ -165,16 +165,16 @@
     }
     .card h3 {
       color: var(--accent);
-      text-shadow: 0 0 4px rgba(0,0,0,0.6
-    }
-    .card p {
-      color: #ffffff;
+      text-shadow: 0 0 6px var(--accent);
     }
     .card img {
-      width: 100%;          /* isi penuh box card */
-      height: auto;         /* proporsional */
-      object-fit: cover;    /* crop halus agar seragam */
+      width: 100%;
+      height: auto;
+      max-height: 264px;   /* batasi tinggi gambar */
+      aspect-ratio: 1 / 1; /* atau sesuaikan rasio */
+      object-fit: cover;
       border-radius: var(--radius);
+      margin-bottom: 10px;
       display: block;
     }
 
