@@ -307,6 +307,61 @@
 
     /* Responsive */
     @media (max-width: 768px) {
+      .hero {
+        margin-top: 40px; /* sudah kamu pakai, bisa ditambah jadi 60px atau 80px */
+      }
+
+      aside.sidebar {
+        top: 120px; /* misalnya, geser 30px lebih turun dari navbar */
+      }
+
+      nav {
+        display: flex;
+        flex-direction: column;         /* susun vertikal */
+        align-items: flex-start;
+        padding: 16px 20px;             /* lebih tinggi */
+        backdrop-filter: saturate(1.3) blur(10px);
+        background: rgba(10,16,30,0.65); /* transparan tetap */
+        border-bottom: 1px solid var(--border);
+        z-index: 9999;
+      }
+
+      .nav-inner {
+        flex-direction: column;         /* brand di atas, menu di bawah */
+        align-items: flex-start;
+        width: 100%;
+      }
+
+      nav .menu {
+        display: flex;
+        flex-wrap: wrap;                /* izinkan turun baris */
+        gap: 12px;
+        margin-top: 0px;
+        width: 100%;
+      }
+
+      nav .menu a,
+      nav .dropbtn {
+        font-size: 0.9rem;
+        padding: 6px 10px;
+        flex: 1 1 auto;                 /* biar bisa menyesuaikan lebar */
+      }
+
+      .dropdown-content {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: var(--card);
+        z-index: 10000;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        display: none;
+      }
+
+      .dropdown.open .dropdown-content {
+        display: block;
+      }
       .table-wrapper {
         overflow-x: auto;   /* aktifkan scroll horizontal */
         -webkit-overflow-scrolling: touch;
@@ -6178,6 +6233,210 @@
     tabPyCuaca.addEventListener('click', () => showCuaca(tabPyCuaca));
     tabGoCuaca.addEventListener('click', () => showCuaca(tabGoCuaca));
 
+    // API Random Image
+    const randomEndpoints = [
+      { no: 1, name: "Anime Random", method: "GET", desc: "Random", query: "apikey" },
+      { no: 2, name: "Donghua", method: "GET", desc: "Random", query: "apikey" },
+      { no: 3, name: "Anime Waifu", method: "GET", desc: "Random", query: "apikey" },
+      { no: 4, name: "Anime 18+", method: "GET", desc: "Random", query: "apikey" },
+      { no: 5, name: "Random Nama", method: "GET", desc: "Random", query: "apikey" },
+      { no: 6, name: "Kata Bijak", method: "GET", desc: "Random", query: "apikey" },
+      { no: 7, name: "Quotes", method: "GET", desc: "Random", query: "apikey" },
+      { no: 8, name: "Kata Bucin", method: "GET", desc: "Random", query: "apikey" }
+    ];
+
+    // Isi tabel Random Image setelah DOM siap
+    document.addEventListener('DOMContentLoaded', () => {
+      const randomBody = document.getElementById('randomTableBody');
+      randomEndpoints.forEach(ep => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${ep.no}</td>
+          <td>${ep.name}</td>
+          <td><span class="badge GET">${ep.method}</span></td>
+          <td>${ep.desc}</td>
+          <td>${ep.query}</td>
+          <td><button class="btn" onclick="tryRandom('${ep.name}')">Try</button></td>
+        `;
+        randomBody.appendChild(tr);
+      });
+    });
+
+    // Fungsi Try untuk Random Image
+    function tryRandom(feature) {
+      const panel = document.getElementById('randomResponsePanel');
+      panel.style.display = 'block';
+      panel.textContent = `⚡ Menjalankan ${feature}...`;
+
+      const apiKey = document.getElementById('apiKeyInput').value;
+
+      let url = "";
+      if (feature === "Anime Random") {
+        url = "https://api.teamhackbotsindo.my.id/api/anime-random";
+      } else if (feature === "Donghua") {
+        url = "https://api.teamhackbotsindo.my.id/api/donghua";
+      } else if (feature === "Anime Waifu") {
+        url = "https://api.teamhackbotsindo.my.id/api/waifu";
+      } else if (feature === "Anime 18+") {
+        url = "https://api.teamhackbotsindo.my.id/api/anime-nsfw";
+      } else if (feature === "Random Nama") {
+        url = "https://api2.teamhackbotsindo.my.id/api/random-name";
+      } else if (feature === "Kata Bijak") {
+        url = "https://api2.teamhackbotsindo.my.id/api/katabijak";
+      } else if (feature === "Quotes") {
+        url = "https://api2.teamhackbotsindo.my.id/api/quotes";
+      } else if (feature === "Kata Bucin") {
+        url = "https://api2.teamhackbotsindo.my.id/api/katabucin";
+      }
+
+      fetch(url, {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => panel.textContent = JSON.stringify(data, null, 2))
+        .catch(err => panel.textContent = "Error: " + err);
+    }
+    //TAB RANDOM IMAGE
+    const tabJSRandom = document.getElementById('tabJSRandom');
+    const tabPyRandom = document.getElementById('tabPyRandom');
+    const tabGoRandom = document.getElementById('tabGoRandom');
+
+    const jsRandom = document.getElementById('jsRandom');
+    const pyRandom = document.getElementById('pyRandom');
+    const goRandom = document.getElementById('goRandom');
+
+    function showRandom(tab) {
+      [tabJSRandom, tabPyRandom, tabGoRandom].forEach(btn => btn.classList.remove('active'));
+      [jsRandom, pyRandom, goRandom].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+
+      // Sinkronisasi sidebar ke #random, bukan ke #jsRandom
+      const sidebarLink = document.querySelector('.sidebar .nav-list a[href="#random"]');
+      if (sidebarLink) {
+        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
+        sidebarLink.classList.add('active');
+      }
+    }
+
+    tabJSRandom.addEventListener('click', () => showRandom(tabJSRandom));
+    tabPyRandom.addEventListener('click', () => showRandom(tabPyRandom));
+    tabGoRandom.addEventListener('click', () => showRandom(tabGoRandom));
+
+    // TAB RANDOM NAMA
+    const tabJSRandomName = document.getElementById('tabJSRandomName');
+    const tabPyRandomName = document.getElementById('tabPyRandomName');
+    const tabGoRandomName = document.getElementById('tabGoRandomName');
+
+    const jsRandomName = document.getElementById('jsRandomName');
+    const pyRandomName = document.getElementById('pyRandomName');
+    const goRandomName = document.getElementById('goRandomName');
+
+    function showRandomName(tab) {
+      [tabJSRandomName, tabPyRandomName, tabGoRandomName].forEach(btn => btn.classList.remove('active'));
+      [jsRandomName, pyRandomName, goRandomName].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    // Sinkronisasi dengan sidebar
+      const targetId = tab.getAttribute('aria-controls');
+      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
+      if (sidebarLink) {
+        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
+        sidebarLink.classList.add('active');
+      }
+    }
+
+    tabJSRandomName.addEventListener('click', () => showRandomName(tabJSRandomName));
+    tabPyRandomName.addEventListener('click', () => showRandomName(tabPyRandomName));
+    tabGoRandomName.addEventListener('click', () => showRandomName(tabGoRandomName));
+
+    // TAB KATA BIJAK
+    const tabJSKatabijak = document.getElementById('tabJSKatabijak');
+    const tabPyKatabijak = document.getElementById('tabPyKatabijak');
+    const tabGoKatabijak = document.getElementById('tabGoKatabijak');
+
+    const jsKatabijak = document.getElementById('jsKatabijak');
+    const pyKatabijak = document.getElementById('pyKatabijak');
+    const goKatabijak = document.getElementById('goKatabijak');
+
+    function showKatabijak(tab) {
+      [tabJSKatabijak, tabPyKatabijak, tabGoKatabijak].forEach(btn => btn.classList.remove('active'));
+      [jsKatabijak, pyKatabijak, goKatabijak].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+
+    // Sinkronisasi dengan sidebar
+      const targetId = tab.getAttribute('aria-controls');
+      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
+      if (sidebarLink) {
+        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
+        sidebarLink.classList.add('active');
+      }
+    }
+
+    tabJSKatabijak.addEventListener('click', () => showKatabijak(tabJSKatabijak));
+    tabPyKatabijak.addEventListener('click', () => showKatabijak(tabPyKatabijak));
+    tabGoKatabijak.addEventListener('click', () => showKatabijak(tabGoKatabijak));
+
+    // TAB QUOTES
+    const tabJSQuotes = document.getElementById('tabJSQuotes');
+    const tabPyQuotes = document.getElementById('tabPyQuotes');
+    const tabGoQuotes = document.getElementById('tabGoQuotes');
+
+    const jsQuotes = document.getElementById('jsQuotes');
+    const pyQuotes = document.getElementById('pyQuotes');
+    const goQuotes = document.getElementById('goQuotes');
+
+    function showQuotes(tab) {
+      [tabJSQuotes, tabPyQuotes, tabGoQuotes].forEach(btn => btn.classList.remove('active'));
+      [jsQuotes, pyQuotes, goQuotes].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    // Sinkronisasi dengan sidebar
+      const targetId = tab.getAttribute('aria-controls');
+      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
+      if (sidebarLink) {
+        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
+        sidebarLink.classList.add('active');
+      }
+    }
+
+    tabJSQuotes.addEventListener('click', () => showQuotes(tabJSQuotes));
+    tabPyQuotes.addEventListener('click', () => showQuotes(tabPyQuotes));
+    tabGoQuotes.addEventListener('click', () => showQuotes(tabGoQuotes));
+
+    // TAB KATA BUCIN
+    const tabJSKatabucin = document.getElementById('tabJSKatabucin');
+    const tabPyKatabucin = document.getElementById('tabPyKatabucin');
+    const tabGoKatabucin = document.getElementById('tabGoKatabucin');
+
+    const jsKatabucin = document.getElementById('jsKatabucin');
+    const pyKatabucin = document.getElementById('pyKatabucin');
+    const goKatabucin = document.getElementById('goKatabucin');
+
+    function showKatabucin(tab) {
+      [tabJSKatabucin, tabPyKatabucin, tabGoKatabucin].forEach(btn => btn.classList.remove('active'));
+      [jsKatabucin, pyKatabucin, goKatabucin].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    // Sinkronisasi dengan sidebar
+      const targetId = tab.getAttribute('aria-controls');
+      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
+      if (sidebarLink) {
+        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
+        sidebarLink.classList.add('active');
+      }
+    }
+
+    tabJSKatabucin.addEventListener('click', () => showKatabucin(tabJSKatabucin));
+    tabPyKatabucin.addEventListener('click', () => showKatabucin(tabPyKatabucin));
+    tabGoKatabucin.addEventListener('click', () => showKatabucin(tabGoKatabucin));
+
     // API-ISLAMI
     const islamiEndpoints = [
       { no: 1, name: "Doa", method: "GET", desc: "Ambil doa secara acak", query: "apikey" },
@@ -6487,211 +6746,6 @@
     tabJSasmaulHusna.addEventListener('click', () => showasmaulHusna(tabJSasmaulHusna));
     tabPyasmaulHusna.addEventListener('click', () => showasmaulHusna(tabPyasmaulHusna));
     tabGoasmaulHusna.addEventListener('click', () => showasmaulHusna(tabGoasmaulHusna));
-
-    // API Random Image
-    const randomEndpoints = [
-      { no: 1, name: "Anime Random", method: "GET", desc: "Random", query: "apikey" },
-      { no: 2, name: "Donghua", method: "GET", desc: "Random", query: "apikey" },
-      { no: 3, name: "Anime Waifu", method: "GET", desc: "Random", query: "apikey" },
-      { no: 4, name: "Anime 18+", method: "GET", desc: "Random", query: "apikey" },
-      { no: 5, name: "Random Nama", method: "GET", desc: "Random", query: "apikey" },
-      { no: 6, name: "Kata Bijak", method: "GET", desc: "Random", query: "apikey" },
-      { no: 7, name: "Quotes", method: "GET", desc: "Random", query: "apikey" },
-      { no: 8, name: "Kata Bucin", method: "GET", desc: "Random", query: "apikey" }
-    ];
-
-    // Isi tabel Random Image setelah DOM siap
-    document.addEventListener('DOMContentLoaded', () => {
-      const randomBody = document.getElementById('randomTableBody');
-      randomEndpoints.forEach(ep => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${ep.no}</td>
-          <td>${ep.name}</td>
-          <td><span class="badge GET">${ep.method}</span></td>
-          <td>${ep.desc}</td>
-          <td>${ep.query}</td>
-          <td><button class="btn" onclick="tryRandom('${ep.name}')">Try</button></td>
-        `;
-        randomBody.appendChild(tr);
-      });
-    });
-
-    // Fungsi Try untuk Random Image
-    function tryRandom(feature) {
-      const panel = document.getElementById('randomResponsePanel');
-      panel.style.display = 'block';
-      panel.textContent = `⚡ Menjalankan ${feature}...`;
-
-      const apiKey = document.getElementById('apiKeyInput').value;
-
-      let url = "";
-      if (feature === "Anime Random") {
-        url = "https://api.teamhackbotsindo.my.id/api/anime-random";
-      } else if (feature === "Donghua") {
-        url = "https://api.teamhackbotsindo.my.id/api/donghua";
-      } else if (feature === "Anime Waifu") {
-        url = "https://api.teamhackbotsindo.my.id/api/waifu";
-      } else if (feature === "Anime 18+") {
-        url = "https://api.teamhackbotsindo.my.id/api/anime-nsfw";
-      } else if (feature === "Random Nama") {
-        url = "https://api2.teamhackbotsindo.my.id/api/random-name";
-      } else if (feature === "Kata Bijak") {
-        url = "https://api2.teamhackbotsindo.my.id/api/katabijak";
-      } else if (feature === "Quotes") {
-        url = "https://api2.teamhackbotsindo.my.id/api/quotes";
-      } else if (feature === "Kata Bucin") {
-        url = "https://api2.teamhackbotsindo.my.id/api/katabucin";
-      }
-
-      fetch(url, {
-        headers: { "x-api-key": apiKey }
-      })
-        .then(res => res.json())
-        .then(data => panel.textContent = JSON.stringify(data, null, 2))
-        .catch(err => panel.textContent = "Error: " + err);
-    }
-    //TAB RANDOM IMAGE
-    const tabJSRandom = document.getElementById('tabJSRandom');
-    const tabPyRandom = document.getElementById('tabPyRandom');
-    const tabGoRandom = document.getElementById('tabGoRandom');
-
-    const jsRandom = document.getElementById('jsRandom');
-    const pyRandom = document.getElementById('pyRandom');
-    const goRandom = document.getElementById('goRandom');
-
-    function showRandom(tab) {
-      [tabJSRandom, tabPyRandom, tabGoRandom].forEach(btn => btn.classList.remove('active'));
-      [jsRandom, pyRandom, goRandom].forEach(panel => panel.style.display = 'none');
-
-      tab.classList.add('active');
-      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-
-      // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
-
-    tabJSRandom.addEventListener('click', () => showRandom(tabJSRandom));
-    tabPyRandom.addEventListener('click', () => showRandom(tabPyRandom));
-    tabGoRandom.addEventListener('click', () => showRandom(tabGoRandom));
-
-    // TAB RANDOM NAMA
-    const tabJSRandomName = document.getElementById('tabJSRandomName');
-    const tabPyRandomName = document.getElementById('tabPyRandomName');
-    const tabGoRandomName = document.getElementById('tabGoRandomName');
-
-    const jsRandomName = document.getElementById('jsRandomName');
-    const pyRandomName = document.getElementById('pyRandomName');
-    const goRandomName = document.getElementById('goRandomName');
-
-    function showRandomName(tab) {
-      [tabJSRandomName, tabPyRandomName, tabGoRandomName].forEach(btn => btn.classList.remove('active'));
-      [jsRandomName, pyRandomName, goRandomName].forEach(panel => panel.style.display = 'none');
-
-      tab.classList.add('active');
-      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
-
-    tabJSRandomName.addEventListener('click', () => showRandomName(tabJSRandomName));
-    tabPyRandomName.addEventListener('click', () => showRandomName(tabPyRandomName));
-    tabGoRandomName.addEventListener('click', () => showRandomName(tabGoRandomName));
-
-    // TAB KATA BIJAK
-    const tabJSKatabijak = document.getElementById('tabJSKatabijak');
-    const tabPyKatabijak = document.getElementById('tabPyKatabijak');
-    const tabGoKatabijak = document.getElementById('tabGoKatabijak');
-
-    const jsKatabijak = document.getElementById('jsKatabijak');
-    const pyKatabijak = document.getElementById('pyKatabijak');
-    const goKatabijak = document.getElementById('goKatabijak');
-
-    function showKatabijak(tab) {
-      [tabJSKatabijak, tabPyKatabijak, tabGoKatabijak].forEach(btn => btn.classList.remove('active'));
-      [jsKatabijak, pyKatabijak, goKatabijak].forEach(panel => panel.style.display = 'none');
-
-      tab.classList.add('active');
-      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
-
-    tabJSKatabijak.addEventListener('click', () => showKatabijak(tabJSKatabijak));
-    tabPyKatabijak.addEventListener('click', () => showKatabijak(tabPyKatabijak));
-    tabGoKatabijak.addEventListener('click', () => showKatabijak(tabGoKatabijak));
-
-    // TAB QUOTES
-    const tabJSQuotes = document.getElementById('tabJSQuotes');
-    const tabPyQuotes = document.getElementById('tabPyQuotes');
-    const tabGoQuotes = document.getElementById('tabGoQuotes');
-
-    const jsQuotes = document.getElementById('jsQuotes');
-    const pyQuotes = document.getElementById('pyQuotes');
-    const goQuotes = document.getElementById('goQuotes');
-
-    function showQuotes(tab) {
-      [tabJSQuotes, tabPyQuotes, tabGoQuotes].forEach(btn => btn.classList.remove('active'));
-      [jsQuotes, pyQuotes, goQuotes].forEach(panel => panel.style.display = 'none');
-
-      tab.classList.add('active');
-      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
-
-    tabJSQuotes.addEventListener('click', () => showQuotes(tabJSQuotes));
-    tabPyQuotes.addEventListener('click', () => showQuotes(tabPyQuotes));
-    tabGoQuotes.addEventListener('click', () => showQuotes(tabGoQuotes));
-
-    // TAB KATA BUCIN
-    const tabJSKatabucin = document.getElementById('tabJSKatabucin');
-    const tabPyKatabucin = document.getElementById('tabPyKatabucin');
-    const tabGoKatabucin = document.getElementById('tabGoKatabucin');
-
-    const jsKatabucin = document.getElementById('jsKatabucin');
-    const pyKatabucin = document.getElementById('pyKatabucin');
-    const goKatabucin = document.getElementById('goKatabucin');
-
-    function showKatabucin(tab) {
-      [tabJSKatabucin, tabPyKatabucin, tabGoKatabucin].forEach(btn => btn.classList.remove('active'));
-      [jsKatabucin, pyKatabucin, goKatabucin].forEach(panel => panel.style.display = 'none');
-
-      tab.classList.add('active');
-      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
-
-    tabJSKatabucin.addEventListener('click', () => showKatabucin(tabJSKatabucin));
-    tabPyKatabucin.addEventListener('click', () => showKatabucin(tabPyKatabucin));
-    tabGoKatabucin.addEventListener('click', () => showKatabucin(tabGoKatabucin));
 
     // DOC NAV
     // Scrollspy untuk sidebar
