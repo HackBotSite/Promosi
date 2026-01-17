@@ -263,32 +263,31 @@
         }
 
         .whatsapp-button {
-          display: flex;
+          display: inline-flex;              /* biar ukurannya ikut konten, bukan full width */
           align-items: center;
           justify-content: center;
-          gap: 12px;
-          width: 100%;
-          padding: 16px 32px;
+          gap: 8px;                          /* jarak ikon dan teks lebih kecil */
+          padding: 10px 20px;                /* padding lebih kecil */
           background: rgb(37, 211, 102);
           color: white;
           border: none;
-          border-radius: 12px;
-          font-size: 16px;
+          border-radius: 8px;                /* radius lebih kecil biar proporsional */
+          font-size: 14px;                   /* font sedikit lebih kecil */
           font-weight: 600;
           cursor: pointer;
           transition: all 0.2s ease;
           text-decoration: none;
+          margin: 0 auto;                    /* posisikan di tengah box */
         }
-
         .whatsapp-button:hover {
           background: rgb(30, 180, 85);
           transform: translateY(-2px);
-          box-shadow: 0 8px 25px rgba(37, 211, 102, 0.3);
+          box-shadow: 0 6px 18px rgba(37, 211, 102, 0.3);
         }
-
+        .whatsapp-button img,
         .whatsapp-button svg {
-          width: 20px;
-          height: 20px;
+          width: 18px;                       /* ikon lebih kecil */
+          height: 18px;
         }
 
         .faq-section {
