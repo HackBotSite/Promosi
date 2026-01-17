@@ -471,7 +471,7 @@
     <aside class="sidebar" aria-label="Sidebar navigation">
       <h2>Bots API</h2>
       <ul class="nav-list">
-        <li><a href="#home">Dashboard</a></li>
+        <li><a class="active" href="#home">Dashboard</a></li>
         <li><a href="#islami">Islami</a></li>
         <li><a href="#loginqr">Login Line</a></li>
         <li><a href="#primbon">Primbon</a></li>
@@ -4326,14 +4326,6 @@
 
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
 
     // Event listener
     tabJSLoginqr.addEventListener('click', () => showLoginqr(tabJSLoginqr));
@@ -4369,14 +4361,6 @@
       // aktifkan tab & panel sesuai klik
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
 
     // Event listener
     tabJSLoginEmailV2.addEventListener('click', () => showLoginEmailV2(tabJSLoginEmailV2));
@@ -4391,14 +4375,6 @@
       // aktifkan tab & panel sesuai klik
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
 
     // Event listener
     tabJSLoginEmailV3.addEventListener('click', () => showLoginEmailV3(tabJSLoginEmailV3));
@@ -4477,14 +4453,6 @@
 
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
 
     tabJSKuisV1.addEventListener('click', () => showKuisV1(tabJSKuisV1));
     tabPyKuisV1.addEventListener('click', () => showKuisV1(tabPyKuisV1));
@@ -4562,14 +4530,6 @@
 
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
 
     tabJSproxyList.addEventListener('click', () => showproxyList(tabJSproxyList));
     tabPyproxyList.addEventListener('click', () => showproxyList(tabPyproxyList));
@@ -4652,14 +4612,6 @@
 
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
 
     tabJSjadwalTv.addEventListener('click', () => showjadwalTv(tabJSjadwalTv));
     tabPyjadwalTv.addEventListener('click', () => showjadwalTv(tabPyjadwalTv));
@@ -4680,14 +4632,6 @@
 
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
 
     tabJSjadwalBola.addEventListener('click', () => showjadwalBola(tabJSjadwalBola));
     tabPyjadwalBola.addEventListener('click', () => showjadwalBola(tabPyjadwalBola));
@@ -4783,14 +4727,6 @@
 
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
 
     tabCurlPrimbonJodoh.addEventListener('click', () => showPrimbonJodoh(tabCurlPrimbonJodoh));
     tabJSPrimbonJodoh.addEventListener('click', () => showPrimbonJodoh(tabJSPrimbonJodoh));
@@ -4896,14 +4832,6 @@
       // aktifkan tab yang dipilih
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
 
     // event listener
     tabJSImage.addEventListener('click', () => showImage(tabJSImage));
@@ -4927,14 +4855,6 @@
       // aktifkan tab yang dipilih
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
 
     // event listener
     tabJSLirik.addEventListener('click', () => showLirik(tabJSLirik));
@@ -5093,14 +5013,6 @@
       // aktifkan tab yang dipilih
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
 
     // event listener
     tabJSCekResi.addEventListener('click', () => showCekResi(tabJSCekResi));
@@ -5124,14 +5036,6 @@
       // aktifkan tab yang dipilih
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
 
     // event listener
     tabJSCekDomain.addEventListener('click', () => showCekDomain(tabJSCekDomain));
@@ -5155,14 +5059,6 @@
       // aktifkan tab yang dipilih
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
 
     // event listener
     tabJScheckIp.addEventListener('click', () => showcheckIp(tabJScheckIp));
@@ -5246,14 +5142,6 @@
 
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
 
     tabJSWikipedia.addEventListener('click', () => showWikipedia(tabJSWikipedia));
     tabPyWikipedia.addEventListener('click', () => showWikipedia(tabPyWikipedia));
@@ -5689,14 +5577,6 @@
 
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
 
     tabJSYoutube.addEventListener('click', () => showYoutube(tabJSYoutube));
     tabPyYoutube.addEventListener('click', () => showYoutube(tabPyYoutube));
@@ -5717,14 +5597,6 @@
 
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
 
     tabJSYoutubeVideo.addEventListener('click', () => showYoutubeVideo(tabJSYoutubeVideo));
     tabPyYoutubeVideo.addEventListener('click', () => showYoutubeVideo(tabPyYoutubeVideo));
@@ -5745,14 +5617,6 @@
 
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
 
     tabJSsnackVideo.addEventListener('click', () => showsnackVideo(tabJSsnackVideo));
     tabPysnackVideo.addEventListener('click', () => showsnackVideo(tabPysnackVideo));
@@ -5773,14 +5637,6 @@
 
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
 
     tabJSinstagramVideo.addEventListener('click', () => showinstagramVideo(tabJSinstagramVideo));
     tabPyinstagramVideo.addEventListener('click', () => showinstagramVideo(tabPyinstagramVideo));
@@ -5801,14 +5657,6 @@
 
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
 
     tabJSsaveFrom.addEventListener('click', () => showsaveFrom(tabJSsaveFrom));
     tabPysaveFrom.addEventListener('click', () => showsaveFrom(tabPysaveFrom));
@@ -5829,14 +5677,6 @@
 
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
 
     tabJSYoutubeAudio.addEventListener('click', () => showYoutubeAudio(tabJSYoutubeAudio));
     tabPyYoutubeAudio.addEventListener('click', () => showYoutubeAudio(tabPyYoutubeAudio));
@@ -5857,14 +5697,6 @@
 
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
 
     tabJSSmuleProfile.addEventListener('click', () => showSmuleProfile(tabJSSmuleProfile));
     tabPySmuleProfile.addEventListener('click', () => showSmuleProfile(tabPySmuleProfile));
@@ -5885,14 +5717,6 @@
 
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
 
     tabJSSmuleVideo.addEventListener('click', () => showSmuleVideo(tabJSSmuleVideo));
     tabPySmuleVideo.addEventListener('click', () => showSmuleVideo(tabPySmuleVideo));
@@ -5913,14 +5737,6 @@
 
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
 
     tabJSSmuleDownloader.addEventListener('click', () => showSmuleVideo(tabJSSmuleDownloader));
     tabPySmuleDownloader.addEventListener('click', () => showSmuleVideo(tabPySmuleDownloader));
@@ -5941,14 +5757,6 @@
 
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
 
     tabJSTikTokVideo.addEventListener('click', () => showTikTokVideo(tabJSTikTokVideo));
     tabPyTikTokVideo.addEventListener('click', () => showTikTokVideo(tabPyTikTokVideo));
@@ -5969,14 +5777,6 @@
 
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
 
     tabJSYoutubeVideoV2.addEventListener('click', () => showYoutubeVideoV2(tabJSYoutubeVideoV2));
     tabPyYoutubeVideoV2.addEventListener('click', () => showYoutubeVideoV2(tabPyYoutubeVideoV2));
@@ -5997,14 +5797,6 @@
 
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
 
     tabJSYoutubeVideoV3.addEventListener('click', () => showYoutubeVideoV3(tabJSYoutubeVideoV3));
     tabPyYoutubeVideoV3.addEventListener('click', () => showYoutubeVideoV3(tabPyYoutubeVideoV3));
@@ -6025,14 +5817,6 @@
 
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
 
     tabJSFacebookVideo.addEventListener('click', () => showFacebookVideo(tabJSFacebookVideo));
     tabPyFacebookVideo.addEventListener('click', () => showFacebookVideo(tabPyFacebookVideo));
@@ -6136,14 +5920,6 @@
 
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
 
     tabJSInfo.addEventListener('click', () => showInfo(tabJSInfo));
     tabPyInfo.addEventListener('click', () => showInfo(tabPyInfo));
@@ -6164,14 +5940,6 @@
 
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
 
     tabJSKodepos.addEventListener('click', () => showKodepos(tabJSKodepos));
     tabPyKodepos.addEventListener('click', () => showKodepos(tabPyKodepos));
@@ -6192,14 +5960,6 @@
 
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
 
     tabJSGempa.addEventListener('click', () => showGempa(tabJSGempa));
     tabPyGempa.addEventListener('click', () => showGempa(tabPyGempa));
@@ -6220,14 +5980,6 @@
 
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
 
     tabJSCuaca.addEventListener('click', () => showCuaca(tabJSCuaca));
     tabPyCuaca.addEventListener('click', () => showCuaca(tabPyCuaca));
@@ -6323,14 +6075,6 @@
 
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
 
     tabCurlIslami.addEventListener('click', () => showIslami(tabCurlIslami));
     tabJSIslami.addEventListener('click', () => showIslami(tabJSIslami));
@@ -6354,14 +6098,6 @@
 
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
 
     tabCurlShalat.addEventListener('click', () => showShalat(tabCurlShalat));
     tabJSShalat.addEventListener('click', () => showShalat(tabJSShalat));
@@ -6436,14 +6172,6 @@
 
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
 
     tabCurlJadwalShalat.addEventListener('click', () => showJadwalShalat(tabCurlJadwalShalat));
     tabJSJadwalShalat.addEventListener('click', () => showJadwalShalat(tabJSJadwalShalat));
@@ -6467,14 +6195,6 @@
 
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
 
     tabCurlQuran.addEventListener('click', () => showQuran(tabCurlQuran));
     tabJSQuran.addEventListener('click', () => showQuran(tabJSQuran));
@@ -6498,14 +6218,6 @@
 
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
 
     tabCurlKisahNabi.addEventListener('click', () => showKisahNabi(tabCurlKisahNabi));
     tabJSKisahNabi.addEventListener('click', () => showKisahNabi(tabJSKisahNabi));
@@ -6529,14 +6241,6 @@
 
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
 
     tabCurlasmaulHusna.addEventListener('click', () => showasmaulHusna(tabCurlasmaulHusna));
     tabJSasmaulHusna.addEventListener('click', () => showasmaulHusna(tabJSasmaulHusna));
@@ -6622,15 +6326,6 @@
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
 
-      // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
-
     tabJSRandom.addEventListener('click', () => showRandom(tabJSRandom));
     tabPyRandom.addEventListener('click', () => showRandom(tabPyRandom));
     tabGoRandom.addEventListener('click', () => showRandom(tabGoRandom));
@@ -6650,14 +6345,6 @@
 
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
 
     tabJSRandomName.addEventListener('click', () => showRandomName(tabJSRandomName));
     tabPyRandomName.addEventListener('click', () => showRandomName(tabPyRandomName));
@@ -6679,15 +6366,6 @@
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
 
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
-
     tabJSKatabijak.addEventListener('click', () => showKatabijak(tabJSKatabijak));
     tabPyKatabijak.addEventListener('click', () => showKatabijak(tabPyKatabijak));
     tabGoKatabijak.addEventListener('click', () => showKatabijak(tabGoKatabijak));
@@ -6707,14 +6385,6 @@
 
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
 
     tabJSQuotes.addEventListener('click', () => showQuotes(tabJSQuotes));
     tabPyQuotes.addEventListener('click', () => showQuotes(tabPyQuotes));
@@ -6735,14 +6405,6 @@
 
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
-    // Sinkronisasi dengan sidebar
-      const targetId = tab.getAttribute('aria-controls');
-      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
-      if (sidebarLink) {
-        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
-        sidebarLink.classList.add('active');
-      }
-    }
 
     tabJSKatabucin.addEventListener('click', () => showKatabucin(tabJSKatabucin));
     tabPyKatabucin.addEventListener('click', () => showKatabucin(tabPyKatabucin));
@@ -6801,7 +6463,7 @@
           if (linkMap[href]) linkMap[href].link.classList.add('active');
         }
       }, { passive: true });
-    }); */
+    });*/
 
     // Helpers
     const toastEl = document.getElementById('toast');
