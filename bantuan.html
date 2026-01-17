@@ -136,6 +136,56 @@
           opacity: 0; transition: 0.25s ease;
         }
         .toast.show { opacity: 1; }
+
+        .contact-boxes {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+        }
+
+        .contact-box {
+          background: var(--bg-2);
+          padding: 20px;
+          border-radius: var(--radius);
+          box-shadow: var(--shadow);
+          color: var(--text);
+        }
+
+        .contact-box h3 {
+          margin-bottom: 8px;
+          font-size: 1.2rem;
+          color: var(--accent);
+        }
+
+        .contact-box span {
+          color: var(--muted);
+          font-size: 0.95rem;
+        }
+
+        .wa-button {
+          display: inline-block;
+          padding: 14px 24px;
+          background: #25D366;
+          color: #fff;
+          font-weight: 600;
+          border-radius: 12px;
+          text-decoration: none;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+          transition: transform 0.2s ease;
+        }
+
+        .wa-button:hover {
+          transform: scale(1.05);
+        }
+
+        .faq-box {
+          margin-top: 60px;
+        }
+
+        .faq-box h3 {
+          color: var(--accent);
+          margin-bottom: 20px;
+        }
         
         /* WhatsApp Floating */
         .wa-float {
@@ -296,20 +346,42 @@
         </section>
 
         <section class="help-section">
-            <h2>FAQ (Pertanyaan yang Sering Diajukan)</h2>
-            <p><strong>Apakah layanan HB Digital Solution cocok untuk UMKM?</strong><br>Ya, kami menyediakan paket terjangkau yang dirancang khusus untuk usaha kecil dan menengah.</p>
-            <p><strong>Bagaimana cara menghubungi tim support?</strong><br>Anda dapat menghubungi kami melalui WhatsApp, email, atau form kontak di website.</p>
-            <p><strong>Apakah ada garansi layanan?</strong><br>Kami memberikan garansi maintenance untuk setiap proyek selama periode tertentu sesuai paket yang dipilih.</p>
-            <p><strong>Apakah saya bisa request fitur custom?</strong><br>Tentu, kami mendukung pengembangan fitur sesuai kebutuhan bisnis Anda.</p>
-        </section>
+          <h2>Hubungi Kami</h2>
+          <p style="text-align:center; font-size:1.1rem; color:var(--muted); margin-bottom:30px;">
+            Punya pertanyaan? Tim kami siap membantu Anda
+          </p>
 
-        <section class="help-section">
-            <h2>Hubungi Kami</h2>
-            <p>
-                Jika Anda membutuhkan bantuan lebih lanjut, jangan ragu untuk menghubungi tim kami. 
-                Kami siap membantu dengan komunikasi yang sopan, profesional, dan transparan. 
-                Dukungan tersedia melalui WhatsApp, email, maupun panggilan telepon, sehingga Anda dapat memilih cara yang paling nyaman.
-            </p>
+          <div class="contact-boxes">
+            <div class="contact-box">
+              <h3>📱 WhatsApp</h3>
+              <p>+62 857 7777 7189<br><span>Respon cepat dalam jam kerja</span></p>
+            </div>
+            <div class="contact-box">
+              <h3>✉️ Email</h3>
+              <p>support@restapii.com<br><span>Untuk pertanyaan detail</span></p>
+            </div>
+            <div class="contact-box">
+              <h3>📞 Telepon</h3>
+              <p>+62 857 7777 7189<br><span>Senin - Jumat, 09:00 - 17:00</span></p>
+            </div>
+            <div class="contact-box">
+              <h3>📍 Lokasi</h3>
+              <p>Indonesia<br><span>Melayani seluruh Indonesia</span></p>
+            </div>
+          </div>
+
+          <div style="text-align:center; margin-top:40px;">
+            <a href="https://wa.me/6285717777189" target="_blank" class="wa-button">
+              💬 Buka WhatsApp
+            </a>
+          </div>
+
+          <div class="faq-box">
+            <h3>Pertanyaan Umum</h3>
+            <p><strong>Bagaimana cara mendapatkan API key?</strong><br>Setelah membeli paket, Anda akan menerima API key melalui WhatsApp atau email.</p>
+            <p><strong>Apakah ada masa trial?</strong><br>Ya, kami menyediakan trial gratis dengan request terlebih dahulu.</p>
+            <p><strong>Berapa lama response time?</strong><br>Kami merespons dalam 1–2 jam di jam kerja, maksimal 24 jam.</p>
+          </div>
         </section>
     </main>
 
