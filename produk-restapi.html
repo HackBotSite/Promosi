@@ -139,6 +139,28 @@
     .nav-list a:hover { border-color: var(--border); background: rgba(90,168,255,0.08); color: var(--accent) }
     .nav-list a.active { background: rgba(22,214,255,0.12); border-color: var(--accent); color: var(--accent) }
 
+    .nav-list a .count {
+      background: rgba(0,255,255,0.1);
+      color: #0ff;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 0.85em;
+      transition: all 0.3s ease;
+      text-shadow: none;
+      box-shadow: none;
+      opacity: 0.5;
+    }
+
+    .nav-list a.active .count {
+      background: #0ff;
+      color: #000;
+      text-shadow: 0 0 6px #0ff, 0 0 12px #0ff;
+      box-shadow: 0 0 6px #0ff;
+      opacity: 1;
+    }
+
+
     /* Content wrapper */
     main {
       display: grid; gap: 20px;
@@ -472,19 +494,19 @@
       <h2>Bots API</h2>
       <ul class="nav-list">
         <li><a class="active" href="#home">Dashboard</a></li>
-        <li><a href="#islami">Islami</a></li>
-        <li><a href="#loginqr">Login Line</a></li>
-        <li><a href="#primbon">Primbon</a></li>
-        <li><a href="#downloader">Downloader</a></li>
-        <li><a href="#information">Information</a></li>
-        <li><a href="#image">Searcher</a></li>
-        <li><a href="#check">Checker</a></li>
-        <li><a href="#education">Education</a></li>
-        <li><a href="#news">News</a></li>
-        <li><a href="#game">Game</a></li>
-        <li><a href="#tool">Tool</a></li>
-        <li><a href="#entertainment">Entertainment</a></li>
-        <li><a href="#random">Random</a></li>
+        <li><a href="#islami">Islami</span><span class="count">7</span></a></li>
+        <li><a href="#loginqr">Login Line</span><span class="count">3</span></a></li>
+        <li><a href="#primbon">Primbon</span><span class="count">5</span></a></li>
+        <li><a href="#downloader">Downloader</span><span class="count">13</span></a></li>
+        <li><a href="#information">Information</span><span class="count">4</span></a></li>
+        <li><a href="#image">Searcher</span><span class="count">2</span></a></li>
+        <li><a href="#check">Checker</span><span class="count">3</span></a></li>
+        <li><a href="#education">Education</span><span class="count">1</span></a></li>
+        <li><a href="#news">News</span><span class="count">5</span></a></li>
+        <li><a href="#game">Game</span><span class="count">1</span></a></li>
+        <li><a href="#tool">Tool</span><span class="count">1</span></a></li>
+        <li><a href="#entertainment">Entertainment</span><span class="count">2</span></a></li>
+        <li><a href="#random">Random</span><span class="count">8</span></a></li>
       </ul>
     </aside>
 
@@ -4143,6 +4165,23 @@
 
   <script>
 
+    // Global object 
+    const endpoints = { 
+      islami: islamiEndpoints, 
+      loginqr: loginqrEndpoints, 
+      primbon: primbonEndpoints,
+      downloader: downloaderEndpoints,
+      information: informationEndpoints,
+      searcher: imageEndpoints,
+      checker: checkEndpoints,
+      education: educationEndpoints,
+      news: newsEndpoints,
+      game: gameEndpoints,
+      tool: toolEndpoints,
+      entertainment: entertainmentEndpoints,
+      random: randomEndpoints
+    };
+
     // API-LoginQR
     const loginqrEndpoints = [
       { no: 1, name: "Login QR LINE", method: "POST", desc: "Login LINE via QR code, menghasilkan link login, gambar QR, token & E2EE", query: "apikey, appname, userAgent" },
@@ -6837,6 +6876,20 @@
       });
     });
 
+  </script>
+
+  <script>
+    // pastikan endpoints sudah ada di atas
+    document.querySelectorAll('.nav-list a').forEach(link => {
+      const id = link.getAttribute('href').slice(1);
+      const count = endpoints[id]?.length;
+      if (count !== undefined) {
+        const countSpan = document.createElement("span");
+        countSpan.className = "count";
+        countSpan.textContent = count;
+        link.appendChild(countSpan);
+      }
+    });
   </script>
 
   <script>
