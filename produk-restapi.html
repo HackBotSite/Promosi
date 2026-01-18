@@ -4348,7 +4348,7 @@
         const targetId = link.getAttribute('href').slice(1);
 
         // sembunyikan semua section
-        document.querySelectorAll('.doc-section').forEach(sec => sec.classList.remove('active'));
+        document.querySelectorAll('.card').forEach(sec => sec.classList.remove('active'));
 
         // tampilkan hanya section target
         const targetSection = document.getElementById(targetId);
