@@ -96,11 +96,18 @@
       border: 1px solid var(--border);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
       padding: 24px;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
+    }
+
+    .plan:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 0 20px rgba(22,214,255,0.25), 0 0 8px rgba(22,214,255,0.2);
+      border-color: var(--accent);
     }
 
     .plan h2 {
@@ -190,7 +197,7 @@
           <li>Support email</li>
           <li>Dokumentasi lengkap</li>
         </ul>
-        <button class="btn">Pilih Paket Basic</button>
+        <a class="btn" href="https://wa.me/628571777189" target="_blank">Pilih Paket Basic</a>
       </div>
 
       <div class="plan">
@@ -204,7 +211,7 @@
           <li>Dokumentasi lengkap</li>
           <li>API analytics dashboard</li>
         </ul>
-        <button class="btn">Pilih Paket Premium</button>
+        <a class="btn" href="https://wa.me/628571777189" target="_blank">Pilih Paket Premium</a>
       </div>
 
       <div class="plan">
@@ -219,7 +226,7 @@
           <li>API analytics dashboard</li>
           <li>Account executive manager</li>
         </ul>
-        <button class="btn">Pilih Paket Enterprise</button>
+        <a class="btn" href="https://wa.me/628571777189" target="_blank">Pilih Paket Enterprise</a>
       </div>
     </div>
 
