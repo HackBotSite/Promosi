@@ -4327,7 +4327,7 @@
     const pyLoginqr = document.getElementById('pyLoginqr');
     const goLoginqr = document.getElementById('goLoginqr');
 
-    function showLoginqr(tabJSLoginqr) {
+    function showLoginqr(tab) {
       [tabJSLoginqr, tabPyLoginqr, tabGoLoginqr].forEach(btn => btn.classList.remove('active'));
       [jsLoginqr, pyLoginqr, goLoginqr].forEach(panel => panel.style.display = 'none');
 
@@ -4341,6 +4341,24 @@
         sidebarLink.classList.add('active');
       }
     }
+
+    document.querySelectorAll('.sidebar .nav-list a').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href').slice(1);
+
+        // sembunyikan semua section
+        document.querySelectorAll('.doc-section').forEach(sec => sec.classList.remove('active'));
+
+        // tampilkan hanya section target
+        const targetSection = document.getElementById(targetId);
+        if (targetSection) targetSection.classList.add('active');
+
+        // update highlight sidebar
+        document.querySelectorAll('.sidebar .nav-list a').forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+      });
+    });
 
     // Event listener
     tabJSLoginqr.addEventListener('click', () => showLoginqr(tabJSLoginqr));
