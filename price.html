@@ -158,6 +158,62 @@
       font-size: 0.9rem;
       color: var(--muted);
     }
+    /* Mobile adjustments */
+    @media (max-width: 768px) {
+      nav .nav-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 12px;
+      }
+      .brand {
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .brand img {
+        height: 28px;
+      }
+      .menu {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      .menu a {
+        margin: 0;
+        font-size: 0.95rem;
+      }
+
+      main {
+        padding: 100px 16px 30px;
+      }
+
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+      .hero p {
+        font-size: 1rem;
+      }
+
+      .pricing-grid {
+        grid-template-columns: 1fr; /* satu kolom penuh */
+        gap: 20px;
+      }
+
+      .plan {
+        padding: 20px;
+      }
+      .plan h2 {
+        font-size: 1.2rem;
+      }
+      .price {
+        font-size: 1.5rem;
+      }
+      .btn {
+        width: 100%;
+        text-align: center;
+      }
+    }
   </style>
 </head>
 <body>
