@@ -199,9 +199,6 @@
       background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
       box-shadow: var(--shadow); overflow: hidden;
     }
-    .doc-section { display: none; }
-    .doc-section.active { display: block; }
-
     .card-header { padding: 16px 18px; border-bottom: 1px solid var(--border); font-weight: 700 }
     .table {
       width: 100%; border-collapse: collapse;
@@ -3790,7 +3787,7 @@
       </section>
 
       <!-- Section Login QR LINE -->
-      <section class="doc-section card" id="loginqr" aria-labelledby="loginqr-title">
+      <section class="card" id="loginqr" aria-labelledby="loginqr-title">
         <div class="card-header" id="loginqr-title">Dokumentasi API — Login QR LINE</div>
 
         <div class="table-wrapper">
@@ -3810,23 +3807,22 @@
             </tbody>
           </table>
         </div>
-
-        <!-- Panel hasil Try -->
         <div id="loginqrResponsePanel" class="response" aria-live="polite" style="display:none"></div>
+      </section>
 
-        <!-- Panel contoh kode -->
-        <div id="loginqrCodePanel" class="code-samples" style="display:none">
-          <div class="card-header">Contoh Kode — Login QR LINE</div>
-          <div class="tabs">
-            <div class="tab-list" role="tablist" aria-label="Contoh kode Login QR LINE">
-              <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsLoginqr" id="tabJSLoginqr">JavaScript</button>
-              <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyLoginqr" id="tabPyLoginqr">Python</button>
-              <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goLoginqr" id="tabGoLoginqr">Golang</button>
-            </div>
+      <!-- Code samples Login QR LINE -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Login QR LINE</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Login QR LINE">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsLoginqr" id="tabJSLoginqr">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyLoginqr" id="tabPyLoginqr">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goLoginqr" id="tabGoLoginqr">Golang</button>
+          </div>
 
-            <!-- JS -->
-            <div id="jsLoginqr" role="tabpanel" aria-labelledby="tabJSLoginqr" class="code">
-              <pre><code class="language-js">
+          <!-- JS -->
+          <div id="jsLoginqr" role="tabpanel" aria-labelledby="tabJSLoginqr" class="code">
+      <pre><code class="language-js">
       // Tahap 1: ambil QR image
       fetch("https://api2.teamhackbotsindo.my.id/api/loginqr-line", {
         method: "POST",
@@ -3857,11 +3853,12 @@
             }
           });
       }, 5000);
-              </code></pre>
-            </div>
+      </code></pre>
+          </div>
 
-            <!-- Python -->
-            <div id="pyLoginqr" role="tabpanel" aria-labelledby="tabPyLoginqr" class="code" style="display:none">
+          <!-- Python -->
+          <div id="pyLoginqr" role="tabpanel" aria-labelledby="tabPyLoginqr" class="code" style="display:none">
+      <pre><code class="language-python">
       import requests, time
 
       headers = { "x-api-key": apiKey, "Content-Type": "application/json" }
@@ -3882,10 +3879,13 @@
           else:
               print("Status:", data.get("status"))
           time.sleep(5)
-            </div>
 
-            <!-- Golang -->
-            <div id="goLoginqr" role="tabpanel" aria-labelledby="tabGoLoginqr" class="code" style="display:none">
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goLoginqr" role="tabpanel" aria-labelledby="tabGoLoginqr" class="code" style="display:none">
+      <pre><code class="language-go">
       package main
 
       import (
@@ -3921,7 +3921,7 @@
           time.Sleep(5 * time.Second)
         }
       }
-            </div>
+      </code></pre>
           </div>
         </div>
       </section>
@@ -4168,12 +4168,6 @@
     function tryLoginqr(feature) {
       const panel = document.getElementById('loginqrResponsePanel');
       panel.style.display = 'block';
-      const codePanel = document.getElementById('loginqrCodePanel');
-      codePanel.style.display = 'block';
-
-            // default buka tab JS
-      tabJSLoginqr.classList.add('active');
-      jsLoginqr.style.display = 'block';
 
       const apiKey = document.getElementById('apiKeyInput').value.trim();
       if (!apiKey) {
@@ -4313,7 +4307,6 @@
             linkImg.style.marginTop = "6px";
             panel.appendChild(linkImg);
           }
-          codePanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
         })
         .catch(err => panel.textContent = "Error: " + err);
     }
@@ -4341,24 +4334,6 @@
         sidebarLink.classList.add('active');
       }
     }
-
-    document.querySelectorAll('.sidebar .nav-list a').forEach(link => {
-      link.addEventListener('click', e => {
-        e.preventDefault();
-        const targetId = link.getAttribute('href').slice(1);
-
-        // sembunyikan semua section
-        document.querySelectorAll('.card').forEach(sec => sec.classList.remove('active'));
-
-        // tampilkan hanya section target
-        const targetSection = document.getElementById(targetId);
-        if (targetSection) targetSection.classList.add('active');
-
-        // update highlight sidebar
-        document.querySelectorAll('.sidebar .nav-list a').forEach(l => l.classList.remove('active'));
-        link.classList.add('active');
-      });
-    });
 
     // Event listener
     tabJSLoginqr.addEventListener('click', () => showLoginqr(tabJSLoginqr));
