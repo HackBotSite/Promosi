@@ -3448,63 +3448,63 @@
           <!-- CURL -->
           <div id="curlproxyList" role="tabpanel" aria-labelledby="tabCurlproxyList" class="code">
             <pre><code class="language-bash">
-          # ProxyList
-          curl -X GET "https://api2.teamhackbotsindo.my.id/api/proxyList" \
-            -H "x-api-key: YOUR_API_KEY"
+# ProxyList
+curl -X GET "https://api2.teamhackbotsindo.my.id/api/proxyList" \
+  -H "x-api-key: YOUR_API_KEY"
             </code></pre>
           </div>
 
           <!-- JS -->
           <div id="jsproxyList" role="tabpanel" aria-labelledby="tabJSproxyList" class="code" style="display:none">
       <pre><code class="language-js">
-      // Proxy List
-      const apiKey = "YOUR_API_KEY";
-      fetch("https://api2.teamhackbotsindo.my.id/api/proxyList", {
-        headers: { "x-api-key": apiKey }
-      })
-        .then(res => res.json())
-        .then(data => console.log("Proxy List:", data))
-        .catch(err => console.error(err));
+// Proxy List
+const apiKey = "YOUR_API_KEY";
+fetch("https://api2.teamhackbotsindo.my.id/api/proxyList", {
+  headers: { "x-api-key": apiKey }
+})
+  .then(res => res.json())
+  .then(data => console.log("Proxy List:", data))
+  .catch(err => console.error(err));
       </code></pre>
           </div>
 
           <!-- Python -->
           <div id="pyproxyList" role="tabpanel" aria-labelledby="tabPyproxyList" class="code" style="display:none">
       <pre><code class="language-python">
-      import requests
+import requests
 
-      apiKey = "YOUR_API_KEY"
-      url = "https://api2.teamhackbotsindo.my.id/api/proxyList"
-      resp = requests.get(url, headers={"x-api-key": apiKey})
-      print(resp.json())
+apiKey = "YOUR_API_KEY"
+url = "https://api2.teamhackbotsindo.my.id/api/proxyList"
+resp = requests.get(url, headers={"x-api-key": apiKey})
+print(resp.json())
       </code></pre>
           </div>
 
           <!-- Golang -->
           <div id="goproxyList" role="tabpanel" aria-labelledby="tabGoproxyList" class="code" style="display:none">
       <pre><code class="language-go">
-      package main
+package main
 
-      import (
-        "fmt"
-        "net/http"
-        "io/ioutil"
-      )
+import (
+  "fmt"
+  "net/http"
+  "io/ioutil"
+)
 
-      func main() {
-        apiKey := "YOUR_API_KEY"
-        url := "https://api2.teamhackbotsindo.my.id/api/proxyList"
+func main() {
+  apiKey := "YOUR_API_KEY"
+  url := "https://api2.teamhackbotsindo.my.id/api/proxyList"
 
-        client := &http.Client{}
-        req, _ := http.NewRequest("GET", url, nil)
-        req.Header.Set("x-api-key", apiKey)
+  client := &http.Client{}
+  req, _ := http.NewRequest("GET", url, nil)
+  req.Header.Set("x-api-key", apiKey)
 
-        resp, _ := client.Do(req)
-        defer resp.Body.Close()
+  resp, _ := client.Do(req)
+  defer resp.Body.Close()
 
-        body, _ := ioutil.ReadAll(resp.Body)
-        fmt.Println(string(body))
-      }
+  body, _ := ioutil.ReadAll(resp.Body)
+  fmt.Println(string(body))
+}
       </code></pre>
           </div>
         </div>
