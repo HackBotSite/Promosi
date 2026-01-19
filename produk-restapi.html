@@ -6631,7 +6631,8 @@ func main() {
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
 
       // Sinkronisasi sidebar ke #random, bukan ke #jsRandom
-      const sidebarLink = document.querySelector('.sidebar .nav-list a[href="#random"]');
+      const targetId = tab.getAttribute('aria-controls');
+      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
       if (sidebarLink) {
         document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
         sidebarLink.classList.add('active');
