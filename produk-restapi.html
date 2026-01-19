@@ -3439,9 +3439,19 @@
         <div class="card-header">Contoh Kode — Proxy List</div>
         <div class="tabs">
           <div class="tab-list" role="tablist" aria-label="Contoh kode Proxy List">
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="curlproxyList" id="tabCurlproxyList">Curl</button>
             <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsproxyList" id="tabJSproxyList">JavaScript</button>
             <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyproxyList" id="tabPyproxyList">Python</button>
             <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goproxyList" id="tabGoproxyList">Golang</button>
+          </div>
+
+          <!-- CURL -->
+          <div id="curlproxyList" role="tabpanel" aria-labelledby="tabCurlproxyList" class="code" style="display:none">
+            <pre><code class="language-bash">
+          # ProxyList
+          curl -X GET "https://api2.teamhackbotsindo.my.id/api/proxyList" \
+            -H "x-api-key: YOUR_API_KEY"
+            </code></pre>
           </div>
 
           <!-- JS -->
