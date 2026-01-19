@@ -3500,6 +3500,178 @@
         </div>
       </section>
 
+      <!-- Code samples Screenshot -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Screenshot</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Screenshot">
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="curlscreenshot" id="tabCurlscreenshot">Curl</button>
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsscreenshot" id="tabJSscreenshot">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyscreenshot" id="tabPyscreenshot">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goscreenshot" id="tabGoscreenshot">Golang</button>
+          </div>
+
+          <!-- CURL -->
+          <div id="curlscreenshot" role="tabpanel" aria-labelledby="tabCurlscreenshot" class="code" style="display:none">
+            <pre><code class="language-bash">
+          # Arti Nama
+          curl -H "x-api-key: YOUR_API_KEY" \
+          "https://api2.teamhackbotsindo.my.id/api/screenshot?url=https://www.google.com/&format=jpg&delay=0&timeout=60&image_quality=80"
+            </code></pre>
+          </div>
+
+          <!-- JS -->
+          <div id="jsscreenshot" role="tabpanel" aria-labelledby="tabJSscreenshot" class="code">
+      <pre><code class="language-js">
+      // Screenshot Website
+      const apiKey = "YOUR_API_KEY";
+      const targetUrl = encodeURIComponent("TARGET URL");
+
+      fetch(`https://api2.teamhackbotsindo.my.id/api/screenshot?url=${targetUrl}&format=jpg&delay=0&timeout=60&image_quality=80`, {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => {
+          console.log("Screenshot:", data);
+          console.log("Link hasil screenshot:", data.url);
+        })
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyscreenshot" role="tabpanel" aria-labelledby="tabPyscreenshot" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      targetUrl = "TARGET URL"
+      url = f"https://api2.teamhackbotsindo.my.id/api/screenshot?url={targetUrl}&format=jpg&delay=0&timeout=60&image_quality=80"
+
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      data = resp.json()
+      print("Screenshot:", data)
+      print("Link hasil screenshot:", data.get("url"))
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goscreenshot" role="tabpanel" aria-labelledby="tabGoscreenshot" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        targetUrl := "TARGET URL"
+        url := fmt.Sprintf("https://api2.teamhackbotsindo.my.id/api/screenshot?url=%s&format=jpg&delay=0&timeout=60&image_quality=80", targetUrl)
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Code samples Screenshot V2 -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Screenshot V2</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Screenshot V2">
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="curlscreenshotV2" id="tabCurlscreenshotV2">Curl</button>
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsscreenshotV2" id="tabJSscreenshotV2">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyscreenshotV2" id="tabPyscreenshotV2">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goscreenshotV2" id="tabGoscreenshotV2">Golang</button>
+          </div>
+
+          <!-- CURL -->
+          <div id="curlscreenshotV2" role="tabpanel" aria-labelledby="tabCurlscreenshotV2" class="code" style="display:none">
+            <pre><code class="language-bash">
+          # Arti Nama
+          curl -H "x-api-key: YOUR_API_KEY" \
+          "https://api2.teamhackbotsindo.my.id/api/screenshotV2?url=https://www.google.com/&type=jpeg&width=1080&height=720&quality=80&timeout=0"
+            </code></pre>
+          </div>
+
+          <!-- JS -->
+          <div id="jsscreenshotV2" role="tabpanel" aria-labelledby="tabJSscreenshotV2" class="code">
+      <pre><code class="language-js">
+      // screenshotV2 Website
+      const apiKey = "YOUR_API_KEY";
+      const targetUrl = encodeURIComponent("TARGET URL");
+
+      fetch(`https://api2.teamhackbotsindo.my.id/api/screenshotV2?url=${targetUrl}&type=jpeg&width=1080&height=720&quality=80&timeout=0`, {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => {
+          console.log("screenshotV2:", data);
+          console.log("Link hasil screenshotV2:", data.url);
+        })
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyscreenshotV2" role="tabpanel" aria-labelledby="tabPyscreenshotV2" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      targetUrl = "TARGET URL"
+      url = f"https://api2.teamhackbotsindo.my.id/api/screenshotV2?url={targetUrl}&type=jpeg&width=1080&height=720&quality=80&timeout=0"
+
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      data = resp.json()
+      print("screenshotV2:", data)
+      print("Link hasil screenshotV2:", data.get("url"))
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goscreenshotV2" role="tabpanel" aria-labelledby="tabGoscreenshotV2" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        targetUrl := "TARGET URL"
+        url := fmt.Sprintf("https://api2.teamhackbotsindo.my.id/api/screenshotV2?url=%s&type=jpeg&width=1080&height=720&quality=80&timeout=0", targetUrl)
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
       <!-- Section Entertainment -->
       <section class="card" id="entertainment" aria-labelledby="entertainment-title">
         <div class="card-header" id="entertainment-title">Dokumentasi API — Entertainment</div>
@@ -4546,7 +4718,9 @@
 
     // API-Tool
     const toolEndpoints = [
-      { no: 1, name: "Proxy List", method: "GET", desc: "Daftar proxy SOCKS4/5", query: ["apikey"] }
+      { no: 1, name: "Proxy List", method: "GET", desc: "Daftar proxy SOCKS4/5", query: ["apikey"] },
+      { no: 2, name: "Screenshot", method: "GET", desc: "Screenshot Website fullscreen", query: ["apikey", "url"] },
+      { no: 3, name: "Screenshot V2", method: "GET", desc: "Screenshot Website", query: ["apikey", "url"] }
     ];
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -4580,6 +4754,12 @@
         case "Proxy List":
           url = `https://api2.teamhackbotsindo.my.id/api/proxyList`;
           break;
+        case "Screenshot":
+          url = `https://api2.teamhackbotsindo.my.id/api/screenshot?url=https://teamhackbotsrg.my.id/`;
+          break;
+        case "Screenshot V2":
+          url = `https://api2.teamhackbotsindo.my.id/api/screenshotV2?url=https://teamhackbotsrg.my.id/`;
+          break;
       }
 
       fetch(url, { headers: { "x-api-key": apiKey } })
@@ -4596,23 +4776,33 @@
             panel.textContent = "Error: " + data.error;
             return;
           }
+          // tampilkan JSON hasil
           panel.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+
+          // kalau ada link screenshot, render juga gambarnya
+          if (data.url) {
+            panel.innerHTML += `<div style="margin-top:10px">
+              <img src="${data.url}" alt="Screenshot" style="max-width:100%;border:1px solid #ccc">
+            </div>`;
+          }
         })
         .catch(err => panel.textContent = "Error: " + err);
     }
 
     // TAB Proxy List
+    const tabCurlproxyList = document.getElementById('tabCurlproxyList');
     const tabJSproxyList = document.getElementById('tabJSproxyList');
     const tabPyproxyList = document.getElementById('tabPyproxyList');
     const tabGoproxyList = document.getElementById('tabGoproxyList');
 
+    const curlproxyList = document.getElementById('curlproxyList');
     const jsproxyList = document.getElementById('jsproxyList');
     const pyproxyList = document.getElementById('pyproxyList');
     const goproxyList = document.getElementById('goproxyList');
 
     function showproxyList(tab) {
-      [tabJSproxyList, tabPyproxyList, tabGoproxyList].forEach(btn => btn.classList.remove('active'));
-      [jsproxyList, pyproxyList, goproxyList].forEach(panel => panel.style.display = 'none');
+      [tabCurlproxyList, tabJSproxyList, tabPyproxyList, tabGoproxyList].forEach(btn => btn.classList.remove('active'));
+      [curlproxyList, jsproxyList, pyproxyList, goproxyList].forEach(panel => panel.style.display = 'none');
 
       tab.classList.add('active');
       document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
@@ -4625,9 +4815,73 @@
       }
     }
 
+    tabCurlproxyList.addEventListener('click', () => showscreenshot(tabCurlproxyList));
     tabJSproxyList.addEventListener('click', () => showproxyList(tabJSproxyList));
     tabPyproxyList.addEventListener('click', () => showproxyList(tabPyproxyList));
     tabGoproxyList.addEventListener('click', () => showproxyList(tabGoproxyList));
+
+    // TAB Screenshot
+    const tabCurlscreenshot = document.getElementById('tabCurlscreenshot');
+    const tabJSscreenshot = document.getElementById('tabJSscreenshot');
+    const tabPyscreenshot = document.getElementById('tabPyscreenshot');
+    const tabGoscreenshot = document.getElementById('tabGoscreenshot');
+
+    const curlscreenshot = document.getElementById('curlscreenshot');
+    const jsscreenshot = document.getElementById('jsscreenshot');
+    const pyscreenshot = document.getElementById('pyscreenshot');
+    const goscreenshot = document.getElementById('goscreenshot');
+
+    function showscreenshot(tab) {
+      [tabCurlscreenshot, tabJSscreenshot, tabPyscreenshot, tabGoscreenshot].forEach(btn => btn.classList.remove('active'));
+      [curlscreenshot, jsscreenshot, pyscreenshot, goscreenshot].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    // Sinkronisasi dengan sidebar
+      const targetId = tab.getAttribute('aria-controls');
+      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
+      if (sidebarLink) {
+        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
+        sidebarLink.classList.add('active');
+      }
+    }
+
+    tabCurlscreenshot.addEventListener('click', () => showscreenshot(tabCurlscreenshot));
+    tabJSscreenshot.addEventListener('click', () => showscreenshot(tabJSscreenshot));
+    tabPyscreenshot.addEventListener('click', () => showscreenshot(tabPyscreenshot));
+    tabGoscreenshot.addEventListener('click', () => showscreenshot(tabGoscreenshot));
+
+
+    // TAB Screenshot V2
+    const tabCurlscreenshotV2 = document.getElementById('tabCurlscreenshot');
+    const tabJSscreenshotV2 = document.getElementById('tabJSscreenshotV2');
+    const tabPyscreenshotV2 = document.getElementById('tabPyscreenshotV2');
+    const tabGoscreenshotV2 = document.getElementById('tabGoscreenshotV2');
+
+    const curlscreenshotV2 = document.getElementById('curlscreenshot');
+    const jsscreenshotV2 = document.getElementById('jsscreenshotV2');
+    const pyscreenshotV2 = document.getElementById('pyscreenshotV2');
+    const goscreenshotV2 = document.getElementById('goscreenshotV2');
+
+    function showscreenshotV2(tab) {
+      [tabCurlscreenshotV2, tabJSscreenshotV2, tabPyscreenshotV2, tabGoscreenshotV2].forEach(btn => btn.classList.remove('active'));
+      [curlscreenshotV2, jsscreenshotV2, pyscreenshotV2, goscreenshotV2].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    // Sinkronisasi dengan sidebar
+      const targetId = tab.getAttribute('aria-controls');
+      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
+      if (sidebarLink) {
+        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
+        sidebarLink.classList.add('active');
+      }
+    }
+
+    tabCurlscreenshotV2.addEventListener('click', () => showscreenshotV2(tabCurlscreenshotV2));
+    tabJSscreenshotV2.addEventListener('click', () => showscreenshotV2(tabJSscreenshotV2));
+    tabPyscreenshotV2.addEventListener('click', () => showscreenshotV2(tabPyscreenshotV2));
+    tabGoscreenshotV2.addEventListener('click', () => showscreenshotV2(tabGoscreenshotV2));
 
     // API-Entertainment
     const entertainmentEndpoints = [
