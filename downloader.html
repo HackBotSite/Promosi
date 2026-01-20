@@ -1,0 +1,1643 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Dokumentasi API — Downloader</title>
+  <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+
+        <!-- Section Downloader -->
+      <section class="card" id="downloader" aria-labelledby="downloader-title">
+        <div class="card-header" id="downloader-title">Dokumentasi API — Downloader</div>
+  
+        <div class="table-wrapper">
+          <table class="table" aria-describedby="downloader-title">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Feature Name</th>
+                <th>Request Method</th>
+                <th>Description</th>
+                <th>Query Parameter</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="downloaderTableBody">
+              <!-- Diisi lewat JS -->
+            </tbody>
+          </table>
+        </div>
+        <div id="downloaderResponsePanel" class="response" style="display:none"></div>
+      </section>
+
+      <!-- Tabs Youtube List -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Youtube List</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Youtube List">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsYoutube" id="tabJSYoutube">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyYoutube" id="tabPyYoutube">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goYoutube" id="tabGoYoutube">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsYoutube" role="tabpanel" aria-labelledby="tabJSYoutube" class="code">
+      <pre><code class="language-js">
+      // Youtube List
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api.teamhackbotsindo.my.id/api/youtube-list?query=peterpan", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Youtube List:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyYoutube" role="tabpanel" aria-labelledby="tabPyYoutube" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      url = "https://api2.teamhackbotsindo.my.id/api/youtube-list?query=peterpan"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goYoutube" role="tabpanel" aria-labelledby="tabGoYoutube" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        url := "https://api2.teamhackbotsindo.my.id/api/youtube-list?query=peterpan"
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tabs Youtube Video -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Youtube Video</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Youtube Video">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsYoutubeVideo" id="tabJSYoutubeVideo">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyYoutubeVideo" id="tabPyYoutubeVideo">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goYoutubeVideo" id="tabGoYoutubeVideo">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsYoutubeVideo" role="tabpanel" aria-labelledby="tabJSYoutubeVideo" class="code">
+      <pre><code class="language-js">
+      // Youtube Video
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api2.teamhackbotsindo.my.id/api/youtube-video?link=https://youtu.be/igaeQ2fJRxE?si=lFgNyMiAgXVJHti3", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Youtube Video:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyYoutubeVideo" role="tabpanel" aria-labelledby="tabPyYoutubeVideo" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      url = "https://api2.teamhackbotsindo.my.id/api/youtube-video?link=https://youtu.be/igaeQ2fJRxE?si=lFgNyMiAgXVJHti3"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goYoutubeVideo" role="tabpanel" aria-labelledby="tabGoYoutubeVideo" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        url := "https://api2.teamhackbotsindo.my.id/api/youtube-video?link=https://youtu.be/igaeQ2fJRxE?si=lFgNyMiAgXVJHti3"
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tabs Youtube Audio -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Youtube Audio</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Youtube Audio">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsYoutubeAudio" id="tabJSYoutubeAudio">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyYoutubeAudio" id="tabPyYoutubeAudio">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goYoutubeAudio" id="tabGoYoutubeAudio">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsYoutubeAudio" role="tabpanel" aria-labelledby="tabJSYoutubeAudio" class="code">
+      <pre><code class="language-js">
+      // Youtube Audio
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api2.teamhackbotsindo.my.id/api/youtube-audio?link=https://youtu.be/igaeQ2fJRxE?si=lFgNyMiAgXVJHti3", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Youtube Audio:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyYoutubeAudio" role="tabpanel" aria-labelledby="tabPyYoutubeAudio" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      url = "https://api2.teamhackbotsindo.my.id/api/youtube-audio?link=https://youtu.be/igaeQ2fJRxE?si=lFgNyMiAgXVJHti3"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goYoutubeAudio" role="tabpanel" aria-labelledby="tabGoYoutubeAudio" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        url := "https://api2.teamhackbotsindo.my.id/api/youtube-audio?link=https://youtu.be/igaeQ2fJRxE?si=lFgNyMiAgXVJHti3"
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section Smule Profile -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Smule Profile</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Smule Profile">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsSmuleProfile" id="tabJSSmuleProfile">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pySmuleProfile" id="tabPySmuleProfile">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goSmuleProfile" id="tabGoSmuleProfile">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsSmuleProfile" role="tabpanel" aria-labelledby="tabJSSmuleProfile" class="code">
+      <pre><code class="language-js">
+      // Smule Profile
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api2.teamhackbotsindo.my.id/api/smule-profile?handle=AgnesMo", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Smule Profile:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pySmuleProfile" role="tabpanel" aria-labelledby="tabPySmuleProfile" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      url = "https://api2.teamhackbotsindo.my.id/api/smule-profile?handle=AgnesMo"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goSmuleProfile" role="tabpanel" aria-labelledby="tabGoSmuleProfile" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        url := "https://api2.teamhackbotsindo.my.id/api/smule-profile?handle=AgnesMo"
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section Smule Video -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Smule Audio / Video</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Smule Audio / Video">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsSmuleVideo" id="tabJSSmuleVideo">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pySmuleVideo" id="tabPySmuleVideo">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goSmuleVideo" id="tabGoSmuleVideo">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsSmuleVideo" role="tabpanel" aria-labelledby="tabJSSmuleVideo" class="code">
+      <pre><code class="language-js">
+      // Smule Audio / Video
+      const apiKey = "YOUR_API_KEY";
+      const link = "https://www.smule.com/sing-recording/2857539585_5092417239";
+
+      fetch(`https://api2.teamhackbotsindo.my.id/api/smule-video?link=${link}`, {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => {
+          console.log("Judul:", data.result.title);
+          console.log("Video mp4:", data.result.downloadVideoUrl);
+          console.log("Audio mp3:", data.result.downloadAudioUrl);
+        })
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pySmuleVideo" role="tabpanel" aria-labelledby="tabPySmuleVideo" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      link = "https://www.smule.com/sing-recording/2857539585_5092417239"
+
+      url = f"https://api2.teamhackbotsindo.my.id/api/smule-video?link={link}"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      data = resp.json()
+
+      print("Judul:", data["result"]["title"])
+      print("Video mp4:", data["result"].get("downloadVideoUrl"))
+      print("Audio mp3:", data["result"].get("downloadAudioUrl"))
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goSmuleVideo" role="tabpanel" aria-labelledby="tabGoSmuleVideo" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+        "encoding/json"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        link := "https://www.smule.com/sing-recording/2857539585_5092417239"
+        url := fmt.Sprintf("https://api2.teamhackbotsindo.my.id/api/smule-video?link=%s", link)
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+
+        var data map[string]interface{}
+        json.Unmarshal(body, &data)
+
+        result := data["result"].(map[string]interface{})
+        fmt.Println("Judul:", result["title"])
+        fmt.Println("Video mp4:", result["downloadVideoUrl"])
+        fmt.Println("Audio mp3:", result["downloadAudioUrl"])
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section Smule Downloader -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Smule Downloader</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Smule Downloader">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsSmuleDownloader" id="tabJSSmuleDownloader">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pySmuleDownloader" id="tabPySmuleDownloader">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goSmuleDownloader" id="tabGoSmuleDownloader">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsSmuleDownloader" role="tabpanel" aria-labelledby="tabJSSmuleDownloader" class="code">
+      <pre><code class="language-js">
+      // Smule Audio / Video
+      const apiKey = "YOUR_API_KEY";
+      const link = "https://www.smule.com/sing-recording/2857539585_5092417239";
+
+      fetch(`https://api2.teamhackbotsindo.my.id/api/smule-downloader?link=${link}`, {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => {
+          console.log("Judul:", data.result.title);
+          console.log("Video mp4:", data.result.downloadVideoUrl);
+          console.log("Audio mp3:", data.result.downloadAudioUrl);
+        })
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pySmuleDownloader" role="tabpanel" aria-labelledby="tabPySmuleDownloader" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      link = "https://www.smule.com/sing-recording/2857539585_5092417239"
+
+      url = f"https://api2.teamhackbotsindo.my.id/api/smule-downloader?link={link}"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      data = resp.json()
+
+      print("Judul:", data["result"]["title"])
+      print("Video mp4:", data["result"].get("downloadVideoUrl"))
+      print("Audio mp3:", data["result"].get("downloadAudioUrl"))
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goSmuleDownloader" role="tabpanel" aria-labelledby="tabGoSmuleDownloader" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+        "encoding/json"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        link := "https://www.smule.com/sing-recording/2857539585_5092417239"
+        url := fmt.Sprintf("https://api2.teamhackbotsindo.my.id/api/smule-downloader?link=%s", link)
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+
+        var data map[string]interface{}
+        json.Unmarshal(body, &data)
+
+        result := data["result"].(map[string]interface{})
+        fmt.Println("Judul:", result["title"])
+        fmt.Println("Video mp4:", result["downloadVideoUrl"])
+        fmt.Println("Audio mp3:", result["downloadAudioUrl"])
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tabs Youtube Video V2 -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Youtube Video V2</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Youtube Video V2">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsYoutubeVideoV2" id="tabJSYoutubeVideoV2">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyYoutubeVideoV2" id="tabPyYoutubeVideoV2">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goYoutubeVideoV2" id="tabGoYoutubeVideoV2">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsYoutubeVideoV2" role="tabpanel" aria-labelledby="tabJSYoutubeVideoV2" class="code">
+      <pre><code class="language-js">
+      // Youtube Video V2
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api2.teamhackbotsindo.my.id/api/youtubeVideoV2?link=https://youtu.be/igaeQ2fJRxE", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Youtube Video V2:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyYoutubeVideoV2" role="tabpanel" aria-labelledby="tabPyYoutubeVideoV2" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      url = "https://api2.teamhackbotsindo.my.id/api/youtubeVideoV2?link=https://youtu.be/igaeQ2fJRxE"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goYoutubeVideoV2" role="tabpanel" aria-labelledby="tabGoYoutubeVideoV2" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        url := "https://api2.teamhackbotsindo.my.id/api/youtubeVideoV2?link=https://youtu.be/igaeQ2fJRxE"
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tabs Youtube Video V3 -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Youtube Video V3</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Youtube Video V3">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsYoutubeVideoV3" id="tabJSYoutubeVideoV3">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyYoutubeVideoV3" id="tabPyYoutubeVideoV3">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goYoutubeVideoV3" id="tabGoYoutubeVideoV3">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsYoutubeVideoV3" role="tabpanel" aria-labelledby="tabJSYoutubeVideoV3" class="code">
+      <pre><code class="language-js">
+      // Youtube Video V3
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api2.teamhackbotsindo.my.id/api/youtubeVideoV3?link=https://youtu.be/igaeQ2fJRxE", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Youtube Video V3:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyYoutubeVideoV3" role="tabpanel" aria-labelledby="tabPyYoutubeVideoV3" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      url = "https://api2.teamhackbotsindo.my.id/api/youtubeVideoV3?link=https://youtu.be/igaeQ2fJRxE"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goYoutubeVideoV3" role="tabpanel" aria-labelledby="tabGoYoutubeVideoV3" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        url := "https://api2.teamhackbotsindo.my.id/api/youtubeVideoV3?link=https://youtu.be/igaeQ2fJRxE"
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tabs SnackVideo -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — SnackVideo</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode SnackVideo">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jssnackVideo" id="tabJSsnackVideo">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pysnackVideo" id="tabPysnackVideo">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="gosnackVideo" id="tabGosnackVideo">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jssnackVideo" role="tabpanel" aria-labelledby="tabJSsnackVideo" class="code">
+      <pre><code class="language-js">
+      // SnackVideo
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api2.teamhackbotsindo.my.id/api/snackVideo?link=https://www.snackvideo.com/@grrfi010/video/5222918303188264802", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("snackVideo:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pysnackVideo" role="tabpanel" aria-labelledby="tabPysnackVideo" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      url = "https://api2.teamhackbotsindo.my.id/api/snackVideo?link=https://www.snackvideo.com/@grrfi010/video/5222918303188264802"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="gosnackVideo" role="tabpanel" aria-labelledby="tabGosnackVideo" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        url := "https://api2.teamhackbotsindo.my.id/api/snackVideo?link=https://www.snackvideo.com/@grrfi010/video/5222918303188264802"
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tabs Instagram Video -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Instagram Video</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Instagram Video">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsinstagramVideo" id="tabJSinstagramVideo">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyinstagramVideo" id="tabPyinstagramVideo">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goinstagramVideo" id="tabGoinstagramVideo">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsinstagramVideo" role="tabpanel" aria-labelledby="tabJSinstagramVideo" class="code">
+      <pre><code class="language-js">
+      // instagramVideo
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api2.teamhackbotsindo.my.id/api/instagramVideo?link=https://www.instagram.com/reel/DSiBOPIjIgU/?igsh=MXRtYTU2OTl2bm9i", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("instagramVideo:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyinstagramVideo" role="tabpanel" aria-labelledby="tabPyinstagramVideo" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      url = "https://api2.teamhackbotsindo.my.id/api/instagramVideo?link=https://www.instagramVideo.com/@grrfi010/video/5222918303188264802"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goinstagramVideo" role="tabpanel" aria-labelledby="tabGoinstagramVideo" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        url := "https://api2.teamhackbotsindo.my.id/api/instagramVideo?link=https://www.instagramVideo.com/@grrfi010/video/5222918303188264802"
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tabs SaveFrom -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — SaveFrom</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode SaveFrom">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jssaveFrom" id="tabJSsaveFrom">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pysaveFrom" id="tabPysaveFrom">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="gosaveFrom" id="tabGosaveFrom">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jssaveFrom" role="tabpanel" aria-labelledby="tabJSsaveFrom" class="code">
+      <pre><code class="language-js">
+      // saveFrom (JavaScript)
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api2.teamhackbotsindo.my.id/api/saveFrom?url=https://www.youtube.com/watch?v=igaeQ2fJRxE", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("saveFrom:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pysaveFrom" role="tabpanel" aria-labelledby="tabPysaveFrom" class="code" style="display:none">
+      <pre><code class="language-python">
+      # saveFrom (Python)
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      url = "https://api2.teamhackbotsindo.my.id/api/saveFrom?url=https://www.youtube.com/watch?v=igaeQ2fJRxE"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="gosaveFrom" role="tabpanel" aria-labelledby="tabGosaveFrom" class="code" style="display:none">
+      <pre><code class="language-go">
+      // saveFrom (Golang)
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        url := "https://api2.teamhackbotsindo.my.id/api/saveFrom?url=https://www.youtube.com/watch?v=igaeQ2fJRxE"
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section Facebook Video -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Facebook Video</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Facebook Video">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsFacebookVideo" id="tabJSFacebookVideo">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyFacebookVideo" id="tabPyFacebookVideo">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goFacebookVideo" id="tabGoFacebookVideo">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsFacebookVideo" role="tabpanel" aria-labelledby="tabJSFacebookVideo" class="code">
+      <pre><code class="language-js">
+      // Facebook Video
+      const apiKey = "YOUR_API_KEY";
+      const link = "https://www.facebook.com/share/r/17px4C4PmR/";
+
+      fetch(`https://api2.teamhackbotsindo.my.id/api/facebook-video?link=${encodeURIComponent(link)}`, {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Facebook Video:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyFacebookVideo" role="tabpanel" aria-labelledby="tabPyFacebookVideo" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      link = "https://www.facebook.com/share/r/17px4C4PmR/"
+      url = f"https://api2.teamhackbotsindo.my.id/api/facebook-video?link={link}"
+
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goFacebookVideo" role="tabpanel" aria-labelledby="tabGoFacebookVideo" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        link := "https://www.facebook.com/share/r/17px4C4PmR/"
+        url := "https://api2.teamhackbotsindo.my.id/api/facebook-video?link=" + link
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section TikTok Video -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — TikTok Video</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode TikTok Video">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsTikTokVideo" id="tabJSTikTokVideo">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyTikTokVideo" id="tabPyTikTokVideo">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goTikTokVideo" id="tabGoTikTokVideo">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsTikTokVideo" role="tabpanel" aria-labelledby="tabJSTikTokVideo" class="code">
+      <pre><code class="language-js">
+      // TikTok Video
+      const apiKey = "YOUR_API_KEY";
+      const link = "https://www.tiktok.com/@username/video/1234567890";
+
+      fetch(`https://api2.teamhackbotsindo.my.id/api/tiktok-video?link=${encodeURIComponent(link)}`, {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("TikTok Video:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyTikTokVideo" role="tabpanel" aria-labelledby="tabPyTikTokVideo" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      link = "https://www.tiktok.com/@username/video/1234567890"
+      url = f"https://api2.teamhackbotsindo.my.id/api/tiktok-video?link={link}"
+
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goTikTokVideo" role="tabpanel" aria-labelledby="tabGoTikTokVideo" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        link := "https://www.tiktok.com/@username/video/1234567890"
+        url := "https://api2.teamhackbotsindo.my.id/api/tiktok-video?link=" + link
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+  <script>
+
+        // API DOWNLOADER
+    const downloaderEndpoints = [
+      { no: 1, name: "Youtube List", method: "GET", desc: "Pencarian video berdasarkan kata kunci", query: "apikey, query" },
+      { no: 2, name: "Youtube Video", method: "GET", desc: "Download video YouTube", query: "apikey, link" },
+      { no: 3, name: "Youtube Audio", method: "GET", desc: "Download audio dari YouTube", query: "apikey, link" },
+      { no: 4, name: "Smule Profile", method: "GET", desc: "Profil pengguna Smule", query: "apikey, handle" },
+      { no: 5, name: "Smule Audio / Video", method: "GET", desc: "Download media dari Smule", query: "apikey, link" },
+      { no: 6, name: "Smule Downloader", method: "GET", desc: "Download media dari Smule", query: "apikey, link" },
+      { no: 7, name: "Facebook", method: "GET", desc: "Download video dari Facebook", query: "apikey, link" },
+      { no: 8, name: "Tiktok", method: "GET", desc: "Download video dari Tiktok", query: "apikey, link" },
+      { no: 9, name: "Youtube Video V2", method: "GET", desc: "Download video YouTube V2", query: "apikey, link" },
+      { no: 10, name: "Youtube Video V3", method: "GET", desc: "Download video dan Audio", query: "apikey, link" },
+      { no: 11, name: "SnackVideo", method: "GET", desc: "Download video SnackVideo", query: "apikey, link" },
+      { no: 12, name: "Instagram Downloader", method: "GET", desc: "Download video reel, post, igtv, story", query: "apikey, link" },
+      { no: 13, name: "SaveFrom", method: "GET", desc: "Download video reel, post, igtv, story", query: "apikey, link" }
+    ];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const downloaderBody = document.getElementById('downloaderTableBody');
+      downloaderEndpoints.forEach(ep => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${ep.no}</td>
+          <td>${ep.name}</td>
+          <td><span class="badge ${ep.method}">${ep.method}</span></td>
+          <td>${ep.desc}</td>
+          <td>${ep.query}</td>
+          <td><button class="btn" onclick="tryDownloader('${ep.name}')">Try</button></td>
+        `;
+        downloaderBody.appendChild(tr);
+      });
+    });
+    function tryDownloader(feature) {
+      const panel = document.getElementById('downloaderResponsePanel');
+      panel.style.display = 'block';
+      panel.textContent = `⚡ Menjalankan ${feature}...`;
+
+      const apiKey = document.getElementById('apiKeyInput')?.value || "";
+      if (!apiKey) {
+        panel.textContent = "Error: API key wajib diisi!";
+        return;
+      }
+
+      let url = "";
+      switch (feature) {
+        case "Youtube List":
+          url = `https://api2.teamhackbotsindo.my.id/api/youtube-list?query=peterpan`;
+          break;
+        case "Youtube Video":
+          url = `https://api2.teamhackbotsindo.my.id/api/youtube-video?link=https://youtu.be/igaeQ2fJRxE`;
+          break;
+        case "Youtube Audio":
+          url = `https://api2.teamhackbotsindo.my.id/api/youtube-audio?link=https://www.youtube.com/watch?v=igaeQ2fJRxE`;
+          break;
+        case "Smule Profile":
+          url = `https://api2.teamhackbotsindo.my.id/api/smule-profile?handle=rg_line`;
+          break;
+        case "Smule Audio / Video":
+          url = `https://api2.teamhackbotsindo.my.id/api/smule-video?link=https://www.smule.com/c/962903912_5157606717`;
+          break;
+        case "Smule Downloader":
+          url = `https://api2.teamhackbotsindo.my.id/api/smule-downloader?link=https://www.smule.com/c/962903912_5157606717`;
+          break;
+        case "Facebook":
+          url = `https://api2.teamhackbotsindo.my.id/api/facebook-video?link=https://www.facebook.com/share/r/17px4C4PmR/`;
+          break;
+        case "Tiktok":
+          url = `https://api2.teamhackbotsindo.my.id/api/tiktok-video?link=https://www.tiktok.com/@tiktok/video/7232384225691880746`;
+          break;
+        case "Youtube Video V2":
+          url = `https://api2.teamhackbotsindo.my.id/api/youtubeVideoV2?link=https://youtu.be/igaeQ2fJRxE`;
+          break;
+        case "Youtube Video V3":
+          url = `https://api2.teamhackbotsindo.my.id/api/youtubeVideoV3?link=https://www.youtube.com/watch?v=igaeQ2fJRxE`;
+          break;
+        case "SnackVideo":
+          url = `https://api2.teamhackbotsindo.my.id/api/snackVideo?link=https://www.snackvideo.com/@grrfi010/video/5222918303188264802`;
+          break;
+        case "Instagram Downloader":
+          url = `https://api2.teamhackbotsindo.my.id/api/instagram?link=https://www.instagram.com/reel/DSiBOPIjIgU/?igsh=MXRtYTU2OTl2bm9i`;
+          break;
+        case "SaveFrom":
+          url = `https://api2.teamhackbotsindo.my.id/api/saveFrom?url=https://www.youtube.com/watch?v=igaeQ2fJRxE`;
+          break;
+      }
+
+      fetch(url, { headers: { "x-api-key": apiKey } })
+        .then(async res => {
+          const raw = await res.text();
+          try {
+            return JSON.parse(raw);
+          } catch {
+            return { error: "Response bukan JSON", raw: raw.slice(0,200) };
+          }
+        })
+        .then(data => {
+          let html = "";
+
+          if (data.results && Array.isArray(data.results)) {
+            // Youtube List
+            html = "<h4>Hasil Pencarian:</h4><ul>";
+            data.results.forEach(item => {
+              html += `
+                <li>
+                  <p><strong>Title:</strong> ${item.title}</p>
+                  <p><strong>Deskripsi:</strong> ${item.description || "-"}</p>
+                  <p><strong>Channel:</strong> ${item.channelTitle}</p>
+                  <p><strong>Published:</strong> ${item.publishedAt}</p>
+                  <p><a href="${item.url}" target="_blank">Tonton di YouTube</a></p>
+                  <img src="${item.thumbnails?.high?.url || item.thumbnails?.medium?.url || ""}" style="max-width:200px">
+                </li>
+              `;
+            });
+            html += "</ul>";
+          } else if (feature === "Smule Profile" && data.result) {
+            // Smule Profile
+            const r = data.result;
+            html = `
+              <p><img src="${r.avatar}" style="max-width:100px;border-radius:50%"></p>
+              <p><strong>Username:</strong> ${r.username}</p>
+              <p><strong>Fullname:</strong> ${r.fullname}</p>
+              <p><strong>Location:</strong> ${r.location}</p>
+              <p><strong>Followers:</strong> ${r.followers}</p>
+              <p><strong>Following:</strong> ${r.following}</p>
+              <p><strong>Recordings:</strong> ${r.recording_count}</p>
+              <p><strong>Bio:</strong> ${r.bio}</p>
+              <h4>Recent Recordings:</h4>
+              <ul>
+                ${r.recordings.map(rec => `
+                  <li>
+                    <p><strong>Title:</strong> ${rec.title}</p>
+                    <p><strong>Type:</strong> ${rec.type}</p>
+                    <p><strong>Created:</strong> ${rec.created_at}</p>
+                    <a href="https://www.smule.com${rec.web_url}" target="_blank">Open</a><br>
+                    <img src="${rec.cover_url}" style="max-width:200px">
+                  </li>
+                `).join("")}
+              </ul>
+            `;
+          } else if ((feature === "Youtube Video" || feature === "Youtube Audio") && data.result) {
+            // Youtube Video/Audio
+            const r = data.result;
+            html = `
+              <p><strong>Title:</strong> ${r.title || "-"}</p>
+              <p><strong>Uploader:</strong> ${r.uploader || "-"}</p>
+              <p><strong>Durasi:</strong> ${r.duration || "-"}</p>
+              <p><img src="${r.thumbnail || ""}" alt="${r.title || "Thumbnail"}" style="max-width:200px"></p>
+            `;
+            if (r.downloadAudioUrl) {
+              html += `<p><strong>Link audio (YouTube):</strong> <a href="${r.downloadAudioUrl}" target="_blank">${r.downloadAudioUrl}</a></p>`;
+            }
+            if (r.downloadVideoUrl) {
+              html += `<p><strong>Link video (YouTube):</strong> <a href="${r.downloadVideoUrl}" target="_blank">${r.downloadVideoUrl}</a></p>`;
+            }
+          } else if (feature === "Youtube Video V2" && data.result) {
+            // Youtube Video V2 via RapidAPI
+            const r = data.result;
+            html = `
+              <p><strong>Type:</strong> ${r.type || "-"}</p>
+              <p><strong>Quality:</strong> ${r.quality || "-"}</p>
+              <p><strong>Mime:</strong> ${r.mime || "-"}</p>
+              <p><strong>Comment:</strong> ${r.comment || "-"}</p>
+            `;
+            if (r.file) {
+              html += `<p><strong>Link utama:</strong> <a href="${r.file}" target="_blank">${r.file}</a></p>`;
+            }
+            if (r.reserved_file) {
+              html += `<p><strong>Link cadangan:</strong> <a href="${r.reserved_file}" target="_blank">${r.reserved_file}</a></p>`;
+            }
+          } else if (feature === "Youtube Video V3" && data.result) {
+            const r = data.result;
+            html = `
+              <p><strong>Title:</strong> ${r.title}</p>
+              <p><strong>Author:</strong> ${r.author}</p>
+              <p><strong>Duration:</strong> ${r.duration} detik</p>
+              <p><strong>Thumbnail:</strong> 
+                <img src="${r.thumbnail}" alt="thumbnail" />
+              </p>
+              <p><strong>Quality:</strong> ${r.quality}</p>
+              <p><strong>Download URL:</strong> 
+                <a href="${r.downloadUrl}" target="_blank">${r.downloadUrl}</a>
+              </p>
+            `;
+
+            // optional tambahan kalau backend kirim file/reserved_file
+            if (r.file) {
+              html += `<p><strong>Link utama:</strong> <a href="${r.file}" target="_blank">${r.file}</a></p>`;
+            }
+            if (r.reserved_file) {
+              html += `<p><strong>Link cadangan:</strong> <a href="${r.reserved_file}" target="_blank">${r.reserved_file}</a></p>`;
+            }
+          } else if (feature === "Youtube Audio" && data.result) {
+            const r = data.result;
+            html = `
+              <p><strong>Title:</strong> ${r.title || "-"}</p>
+              <p><strong>Uploader:</strong> ${r.uploader || "-"}</p>
+              <p><strong>Published:</strong> ${r.publishedAt || "-"}</p>
+              <p><strong>Duration:</strong> ${r.duration || "-"}</p>
+              <p><img src="${r.thumbnail || ""}" style="max-width:200px"></p>
+            `;
+
+            if (r.downloadAudioUrl) {
+              html += `
+                <p><strong>Download Audio:</strong> 
+                  <a href="${r.downloadAudioUrl}" target="_blank">${r.downloadAudioUrl}</a>
+                </p>
+              `;
+            }
+          } else if (feature === "SnackVideo" && data.result) {
+            const r = data.result;
+            html = `
+              <p><strong>Download Video:</strong> 
+                <a href="${r.downloadVideoUrl}" target="_blank">${r.downloadVideoUrl}</a>
+              </p>
+            `;
+            if (r.thumbnail) {
+              html += `
+                <p><strong>Thumbnail:</strong><br>
+                <img src="${r.thumbnail}" alt="thumbnail" style="max-width:300px;">
+                </p>
+              `;
+            }
+          } else if (feature === "Instagram Downloader" && data.result) {
+            const r = data.result;
+            html = `
+              <p><strong>Type:</strong> ${r.type || "-"}</p>
+              <p><strong>Quality:</strong> ${r.quality || "-"}</p>
+            `;
+            if (r.url) {
+              html += `
+                <p><strong>Download Video:</strong> 
+                  <a href="${r.url}" target="_blank">${r.url}</a>
+                </p>
+              `;
+            }
+            if (r.thumbnail) {
+              html += `
+                <p><strong>Thumbnail:</strong><br>
+                <img src="${r.thumbnail}" alt="thumbnail" style="max-width:300px;">
+                </p>
+              `;
+            }
+          } else if (feature === "SaveFrom" && data.result) {
+            const r = data.result;
+            html = `
+              <p><strong>Title:</strong> ${r.title || "-"}</p>
+              <p><strong>Durasi:</strong> ${r.duration_readable || r.duration || "-"}</p>
+              <p><img src="${r.thumbnail || ""}" alt="${r.title || "Thumbnail"}" style="max-width:200px"></p>
+            `;
+            if (r.url720) {
+              html += `<p><strong>720p:</strong> <a href="${r.url720}" target="_blank">Play / Download 720p</a></p>`;
+            }
+            if (r.url480) {
+              html += `<p><strong>480p:</strong> <a href="${r.url480}" target="_blank">Play / Download 480p</a></p>`;
+            }
+            if (r.url360) {
+              html += `<p><strong>360p:</strong> <a href="${r.url360}" target="_blank">Play / Download 360p</a></p>`;
+            }
+            if (r.url240) {
+              html += `<p><strong>240p:</strong> <a href="${r.url240}" target="_blank">Play / Download 240p</a></p>`;
+            }
+          } else if (feature === "Facebook" && data.result) {
+            // Facebook Video case
+            const r = data.result;
+            html = `
+              <p><strong>Title:</strong> ${r.title || "-"}</p>
+              <p><strong>Uploader:</strong> ${r.uploader || "-"}</p>
+              <p><strong>Durasi:</strong> ${r.duration || "-"}</p>
+              <p><img src="${r.thumbnail || ""}" style="max-width:200px"></p>
+              <p><strong>Link video (Facebook):</strong> 
+                <a href="${r.downloadVideoUrl}" target="_blank">${r.downloadVideoUrl}</a>
+              </p>
+            `;
+          } else if (feature === "Tiktok" && data.result) {
+            const r = data.result;
+            html = `
+              <p><strong>Title:</strong> ${r.title || "-"}</p>
+              <p><strong>Uploader:</strong> ${r.uploader || "-"}</p>
+              <p><strong>Durasi:</strong> ${r.duration || "-"}</p>
+              <p><img src="${r.thumbnail || ""}" style="max-width:200px"></p>
+              <p><strong>Link video :</strong> 
+                <a href="${r.url || "#"}" target="_blank">${r.url || "-"}</a>
+              </p>
+            `;
+
+          } else if (feature === "Smule Audio / Video" && data.result) {
+            const r = data.result;
+
+            html = `
+              <p><strong>Title:</strong> ${r.info?.title || "-"}</p>
+              <p><strong>Artist:</strong> ${r.info?.artist || "-"}</p>
+              ${r.info?.description ? `<p><strong>Deskripsi:</strong> ${r.info.description}</p>` : ""}
+              <p><strong>Uploader:</strong> ${r.owner?.first_name || "-"}</p>
+              <p><img src="${r.info?.thumbnail || ""}" alt="${r.info?.title || "Thumbnail"}" style="max-width:200px"></p>
+              <p><strong>Type:</strong> ${r.media?.type || "-"}</p>
+            `;
+
+            if (r.media?.audioUrl) {
+              html += `<p><strong>Link Audio:</strong> <a href="${r.media.audioUrl}" target="_blank">${r.media.audioUrl}</a></p>`;
+            }
+
+            if (r.media?.videoUrl) {
+              html += `<p><strong>Link Video:</strong> <a href="${r.media.videoUrl}" target="_blank">${r.media.videoUrl}</a></p>`;
+            }
+          } else if (feature === "Smule Downloader" && data.result) {
+            // Smule Downloader via smulevideodownloader.com
+            const r = data.result;
+            html = `
+              <p><strong>Title:</strong> ${r.title || "-"}</p>
+              <p><strong>Uploader:</strong> ${r.uploader || "-"}</p>
+              <p><strong>Durasi:</strong> ${r.duration || "-"}</p>
+              <p><img src="${r.thumbnail || ""}" alt="${r.title || "Thumbnail"}" style="max-width:200px"></p>
+            `;
+            if (r.downloadAudioUrl) {
+              html += `<p><strong>Link audio (Smule Downloader):</strong> <a href="${r.downloadAudioUrl}" target="_blank">${r.downloadAudioUrl}</a></p>`;
+            }
+            if (r.downloadVideoUrl) {
+              html += `<p><strong>Link video (Smule Downloader):</strong> <a href="${r.downloadVideoUrl}" target="_blank">${r.downloadVideoUrl}</a></p>`;
+            }
+
+          } else {
+            html = "<p>Response tidak dikenali atau kosong.</p>";
+          }
+
+          panel.innerHTML = html;
+        })
+        .catch(err => panel.textContent = "Error: " + err);
+    }
+
+    // TAB YOUTUBE LIST
+    const tabJSYoutube = document.getElementById('tabJSYoutube');
+    const tabPyYoutube = document.getElementById('tabPyYoutube');
+    const tabGoYoutube = document.getElementById('tabGoYoutube');
+
+    const jsYoutube = document.getElementById('jsYoutube');
+    const pyYoutube = document.getElementById('pyYoutube');
+    const goYoutube = document.getElementById('goYoutube');
+
+    function showYoutube(tab) {
+      [tabJSYoutube, tabPyYoutube, tabGoYoutube].forEach(btn => btn.classList.remove('active'));
+      [jsYoutube, pyYoutube, goYoutube].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    // Sinkronisasi dengan sidebar
+      const targetId = tab.getAttribute('aria-controls');
+      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
+      if (sidebarLink) {
+        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
+        sidebarLink.classList.add('active');
+      }
+    }
+
+    tabJSYoutube.addEventListener('click', () => showYoutube(tabJSYoutube));
+    tabPyYoutube.addEventListener('click', () => showYoutube(tabPyYoutube));
+    tabGoYoutube.addEventListener('click', () => showYoutube(tabGoYoutube));
+
+    // TAB YOUTUBE VIDEO
+    const tabJSYoutubeVideo = document.getElementById('tabJSYoutubeVideo');
+    const tabPyYoutubeVideo = document.getElementById('tabPyYoutubeVideo');
+    const tabGoYoutubeVideo = document.getElementById('tabGoYoutubeVideo');
+
+    const jsYoutubeVideo = document.getElementById('jsYoutubeVideo');
+    const pyYoutubeVideo = document.getElementById('pyYoutubeVideo');
+    const goYoutubeVideo = document.getElementById('goYoutubeVideo');
+
+    function showYoutubeVideo(tab) {
+      [tabJSYoutubeVideo, tabPyYoutubeVideo, tabGoYoutubeVideo].forEach(btn => btn.classList.remove('active'));
+      [jsYoutubeVideo, pyYoutubeVideo, goYoutubeVideo].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    // Sinkronisasi dengan sidebar
+      const targetId = tab.getAttribute('aria-controls');
+      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
+      if (sidebarLink) {
+        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
+        sidebarLink.classList.add('active');
+      }
+    }
+
+    tabJSYoutubeVideo.addEventListener('click', () => showYoutubeVideo(tabJSYoutubeVideo));
+    tabPyYoutubeVideo.addEventListener('click', () => showYoutubeVideo(tabPyYoutubeVideo));
+    tabGoYoutubeVideo.addEventListener('click', () => showYoutubeVideo(tabGoYoutubeVideo));
+
+    // TAB SnackVideo
+    const tabJSsnackVideo = document.getElementById('tabJSsnackVideo');
+    const tabPysnackVideo = document.getElementById('tabPysnackVideo');
+    const tabGosnackVideo = document.getElementById('tabGosnackVideo');
+
+    const jssnackVideo = document.getElementById('jssnackVideo');
+    const pysnackVideo = document.getElementById('pysnackVideo');
+    const gosnackVideo = document.getElementById('gosnackVideo');
+
+    function showsnackVideo(tab) {
+      [tabJSsnackVideo, tabPysnackVideo, tabGosnackVideo].forEach(btn => btn.classList.remove('active'));
+      [jssnackVideo, pysnackVideo, gosnackVideo].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    // Sinkronisasi dengan sidebar
+      const targetId = tab.getAttribute('aria-controls');
+      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
+      if (sidebarLink) {
+        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
+        sidebarLink.classList.add('active');
+      }
+    }
+
+    tabJSsnackVideo.addEventListener('click', () => showsnackVideo(tabJSsnackVideo));
+    tabPysnackVideo.addEventListener('click', () => showsnackVideo(tabPysnackVideo));
+    tabGosnackVideo.addEventListener('click', () => showsnackVideo(tabGosnackVideo));
+
+    // TAB InstagramDownloader
+    const tabJSinstagramVideo = document.getElementById('tabJSinstagramVideo');
+    const tabPyinstagramVideo = document.getElementById('tabPyinstagramVideo');
+    const tabGoinstagramVideo = document.getElementById('tabGoinstagramVideo');
+
+    const jsinstagramVideo = document.getElementById('jsinstagramVideo');
+    const pyinstagramVideo = document.getElementById('pyinstagramVideo');
+    const goinstagramVideo = document.getElementById('goinstagramVideo');
+
+    function showinstagramVideo(tab) {
+      [tabJSinstagramVideo, tabPyinstagramVideo, tabGoinstagramVideo].forEach(btn => btn.classList.remove('active'));
+      [jsinstagramVideo, pyinstagramVideo, goinstagramVideo].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    // Sinkronisasi dengan sidebar
+      const targetId = tab.getAttribute('aria-controls');
+      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
+      if (sidebarLink) {
+        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
+        sidebarLink.classList.add('active');
+      }
+    }
+
+    tabJSinstagramVideo.addEventListener('click', () => showinstagramVideo(tabJSinstagramVideo));
+    tabPyinstagramVideo.addEventListener('click', () => showinstagramVideo(tabPyinstagramVideo));
+    tabGoinstagramVideo.addEventListener('click', () => showinstagramVideo(tabGoinstagramVideo));
+
+    // TAB SaveFrom
+    const tabJSsaveFrom = document.getElementById('tabJSsaveFrom');
+    const tabPysaveFrom = document.getElementById('tabPysaveFrom');
+    const tabGosaveFrom = document.getElementById('tabGosaveFrom');
+
+    const jssaveFrom = document.getElementById('jssaveFrom');
+    const pysaveFrom = document.getElementById('pysaveFrom');
+    const gosaveFrom = document.getElementById('gosaveFrom');
+
+    function showsaveFrom(tab) {
+      [tabJSsaveFrom, tabPysaveFrom, tabGosaveFrom].forEach(btn => btn.classList.remove('active'));
+      [jssaveFrom, pysaveFrom, gosaveFrom].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    // Sinkronisasi dengan sidebar
+      const targetId = tab.getAttribute('aria-controls');
+      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
+      if (sidebarLink) {
+        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
+        sidebarLink.classList.add('active');
+      }
+    }
+
+    tabJSsaveFrom.addEventListener('click', () => showsaveFrom(tabJSsaveFrom));
+    tabPysaveFrom.addEventListener('click', () => showsaveFrom(tabPysaveFrom));
+    tabGosaveFrom.addEventListener('click', () => showsaveFrom(tabGosaveFrom));
+
+    // TAB YOUTUBE AUDIO
+    const tabJSYoutubeAudio = document.getElementById('tabJSYoutubeAudio');
+    const tabPyYoutubeAudio = document.getElementById('tabPyYoutubeAudio');
+    const tabGoYoutubeAudio = document.getElementById('tabGoYoutubeAudio');
+
+    const jsYoutubeAudio = document.getElementById('jsYoutubeAudio');
+    const pyYoutubeAudio = document.getElementById('pyYoutubeAudio');
+    const goYoutubeAudio = document.getElementById('goYoutubeAudio');
+
+    function showYoutubeAudio(tab) {
+      [tabJSYoutubeAudio, tabPyYoutubeAudio, tabGoYoutubeAudio].forEach(btn => btn.classList.remove('active'));
+      [jsYoutubeAudio, pyYoutubeAudio, goYoutubeAudio].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    // Sinkronisasi dengan sidebar
+      const targetId = tab.getAttribute('aria-controls');
+      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
+      if (sidebarLink) {
+        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
+        sidebarLink.classList.add('active');
+      }
+    }
+
+    tabJSYoutubeAudio.addEventListener('click', () => showYoutubeAudio(tabJSYoutubeAudio));
+    tabPyYoutubeAudio.addEventListener('click', () => showYoutubeAudio(tabPyYoutubeAudio));
+    tabGoYoutubeAudio.addEventListener('click', () => showYoutubeAudio(tabGoYoutubeAudio));
+
+    // TAB SMULE PROFILE
+    const tabJSSmuleProfile = document.getElementById('tabJSSmuleProfile');
+    const tabPySmuleProfile = document.getElementById('tabPySmuleProfile');
+    const tabGoSmuleProfile = document.getElementById('tabGoSmuleProfile');
+
+    const jsSmuleProfile = document.getElementById('jsSmuleProfile');
+    const pySmuleProfile = document.getElementById('pySmuleProfile');
+    const goSmuleProfile = document.getElementById('goSmuleProfile');
+
+    function showSmuleProfile(tab) {
+      [tabJSSmuleProfile, tabPySmuleProfile, tabGoSmuleProfile].forEach(btn => btn.classList.remove('active'));
+      [jsSmuleProfile, pySmuleProfile, goSmuleProfile].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    // Sinkronisasi dengan sidebar
+      const targetId = tab.getAttribute('aria-controls');
+      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
+      if (sidebarLink) {
+        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
+        sidebarLink.classList.add('active');
+      }
+    }
+
+    tabJSSmuleProfile.addEventListener('click', () => showSmuleProfile(tabJSSmuleProfile));
+    tabPySmuleProfile.addEventListener('click', () => showSmuleProfile(tabPySmuleProfile));
+    tabGoSmuleProfile.addEventListener('click', () => showSmuleProfile(tabGoSmuleProfile));
+
+    // TAB SMULE VIDEO
+    const tabJSSmuleVideo = document.getElementById('tabJSSmuleVideo');
+    const tabPySmuleVideo = document.getElementById('tabPySmuleVideo');
+    const tabGoSmuleVideo = document.getElementById('tabGoSmuleVideo');
+
+    const jsSmuleVideo = document.getElementById('jsSmuleVideo');
+    const pySmuleVideo = document.getElementById('pySmuleVideo');
+    const goSmuleVideo = document.getElementById('goSmuleVideo');
+
+    function showSmuleVideo(tab) {
+      [tabJSSmuleVideo, tabPySmuleVideo, tabGoSmuleVideo].forEach(btn => btn.classList.remove('active'));
+      [jsSmuleVideo, pySmuleVideo, goSmuleVideo].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    // Sinkronisasi dengan sidebar
+      const targetId = tab.getAttribute('aria-controls');
+      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
+      if (sidebarLink) {
+        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
+        sidebarLink.classList.add('active');
+      }
+    }
+
+    tabJSSmuleVideo.addEventListener('click', () => showSmuleVideo(tabJSSmuleVideo));
+    tabPySmuleVideo.addEventListener('click', () => showSmuleVideo(tabPySmuleVideo));
+    tabGoSmuleVideo.addEventListener('click', () => showSmuleVideo(tabGoSmuleVideo));
+
+    // TAB SMULE DOWNLOADER
+    const tabJSSmuleDownloader = document.getElementById('tabJSSmuleDownloader');
+    const tabPySmuleDownloader = document.getElementById('tabPySmuleDownloader');
+    const tabGoSmuleDownloader = document.getElementById('tabGoSmuleDownloader');
+
+    const jsSmuleDownloader = document.getElementById('jsSmuleDownloader');
+    const pySmuleDownloader = document.getElementById('pySmuleDownloader');
+    const goSmuleDownloader = document.getElementById('goSmuleDownloader');
+
+    function showSmuleDownloader(tab) {
+      [tabJSSmuleDownloader, tabPySmuleDownloader, tabGoSmuleDownloader].forEach(btn => btn.classList.remove('active'));
+      [jsSmuleDownloader, pySmuleDownloader, goSmuleDownloader].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    // Sinkronisasi dengan sidebar
+      const targetId = tab.getAttribute('aria-controls');
+      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
+      if (sidebarLink) {
+        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
+        sidebarLink.classList.add('active');
+      }
+    }
+
+    tabJSSmuleDownloader.addEventListener('click', () => showSmuleVideo(tabJSSmuleDownloader));
+    tabPySmuleDownloader.addEventListener('click', () => showSmuleVideo(tabPySmuleDownloader));
+    tabGoSmuleDownloader.addEventListener('click', () => showSmuleVideo(tabGoSmuleDownloader));
+
+    //  TAB TIKTOK VIDEO 
+    const tabJSTikTokVideo = document.getElementById('tabJSTikTokVideo');
+    const tabPyTikTokVideo = document.getElementById('tabPyTikTokVideo');
+    const tabGoTikTokVideo = document.getElementById('tabGoTikTokVideo');
+
+    const jsTikTokVideo = document.getElementById('jsTikTokVideo');
+    const pyTikTokVideo = document.getElementById('pyTikTokVideo');
+    const goTikTokVideo = document.getElementById('goTikTokVideo');
+
+    function showTikTokVideo(tab) {
+      [tabJSTikTokVideo, tabPyTikTokVideo, tabGoTikTokVideo].forEach(btn => btn.classList.remove('active'));
+      [jsTikTokVideo, pyTikTokVideo, goTikTokVideo].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    // Sinkronisasi dengan sidebar
+      const targetId = tab.getAttribute('aria-controls');
+      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
+      if (sidebarLink) {
+        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
+        sidebarLink.classList.add('active');
+      }
+    }
+
+    tabJSTikTokVideo.addEventListener('click', () => showTikTokVideo(tabJSTikTokVideo));
+    tabPyTikTokVideo.addEventListener('click', () => showTikTokVideo(tabPyTikTokVideo));
+    tabGoTikTokVideo.addEventListener('click', () => showTikTokVideo(tabGoTikTokVideo));
+
+    // TAB YOUTUBE VIDEO V2
+    const tabJSYoutubeVideoV2 = document.getElementById('tabJSYoutubeVideoV2');
+    const tabPyYoutubeVideoV2 = document.getElementById('tabPyYoutubeVideoV2');
+    const tabGoYoutubeVideoV2 = document.getElementById('tabGoYoutubeVideoV2');
+
+    const jsYoutubeVideoV2 = document.getElementById('jsYoutubeVideoV2');
+    const pyYoutubeVideoV2 = document.getElementById('pyYoutubeVideoV2');
+    const goYoutubeVideoV2 = document.getElementById('goYoutubeVideoV2');
+
+    function showYoutubeVideoV2(tab) {
+      [tabJSYoutubeVideoV2, tabPyYoutubeVideoV2, tabGoYoutubeVideoV2].forEach(btn => btn.classList.remove('active'));
+      [jsYoutubeVideoV2, pyYoutubeVideoV2, goYoutubeVideoV2].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    // Sinkronisasi dengan sidebar
+      const targetId = tab.getAttribute('aria-controls');
+      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
+      if (sidebarLink) {
+        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
+        sidebarLink.classList.add('active');
+      }
+    }
+
+    tabJSYoutubeVideoV2.addEventListener('click', () => showYoutubeVideoV2(tabJSYoutubeVideoV2));
+    tabPyYoutubeVideoV2.addEventListener('click', () => showYoutubeVideoV2(tabPyYoutubeVideoV2));
+    tabGoYoutubeVideoV2.addEventListener('click', () => showYoutubeVideoV2(tabGoYoutubeVideoV2));
+
+    // TAB YOUTUBE VIDEO V3
+    const tabJSYoutubeVideoV3 = document.getElementById('tabJSYoutubeVideoV3');
+    const tabPyYoutubeVideoV3 = document.getElementById('tabPyYoutubeVideoV3');
+    const tabGoYoutubeVideoV3 = document.getElementById('tabGoYoutubeVideoV3');
+
+    const jsYoutubeVideoV3 = document.getElementById('jsYoutubeVideoV3');
+    const pyYoutubeVideoV3 = document.getElementById('pyYoutubeVideoV3');
+    const goYoutubeVideoV3 = document.getElementById('goYoutubeVideoV3');
+
+    function showYoutubeVideoV3(tab) {
+      [tabJSYoutubeVideoV3, tabPyYoutubeVideoV3, tabGoYoutubeVideoV3].forEach(btn => btn.classList.remove('active'));
+      [jsYoutubeVideoV3, pyYoutubeVideoV3, goYoutubeVideoV3].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    // Sinkronisasi dengan sidebar
+      const targetId = tab.getAttribute('aria-controls');
+      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
+      if (sidebarLink) {
+        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
+        sidebarLink.classList.add('active');
+      }
+    }
+
+    tabJSYoutubeVideoV3.addEventListener('click', () => showYoutubeVideoV3(tabJSYoutubeVideoV3));
+    tabPyYoutubeVideoV3.addEventListener('click', () => showYoutubeVideoV3(tabPyYoutubeVideoV3));
+    tabGoYoutubeVideoV3.addEventListener('click', () => showYoutubeVideoV3(tabGoYoutubeVideoV3));
+
+    // TAB FacebookVideo
+    const tabJSFacebookVideo = document.getElementById('tabJSFacebookVideo');
+    const tabPyFacebookVideo = document.getElementById('tabPyFacebookVideo');
+    const tabGoFacebookVideo = document.getElementById('tabGoFacebookVideo');
+
+    const jsFacebookVideo = document.getElementById('jsFacebookVideo');
+    const pyFacebookVideo = document.getElementById('pyFacebookVideo');
+    const goFacebookVideo = document.getElementById('goFacebookVideo');
+
+    function showFacebookVideo(tab) {
+      [tabJSFacebookVideo, tabPyFacebookVideo, tabGoFacebookVideo].forEach(btn => btn.classList.remove('active'));
+      [jsFacebookVideo, pyFacebookVideo, goFacebookVideo].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    // Sinkronisasi dengan sidebar
+      const targetId = tab.getAttribute('aria-controls');
+      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
+      if (sidebarLink) {
+        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
+        sidebarLink.classList.add('active');
+      }
+    }
+
+    tabJSFacebookVideo.addEventListener('click', () => showFacebookVideo(tabJSFacebookVideo));
+    tabPyFacebookVideo.addEventListener('click', () => showFacebookVideo(tabPyFacebookVideo));
+    tabGoFacebookVideo.addEventListener('click', () => showFacebookVideo(tabGoFacebookVideo));
+
+  </script>
+</body>
+</html>  

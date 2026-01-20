@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Dokumentasi API — Information</title>
+  <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+
+      <!-- Section Information -->
+      <section class="card" id="information" aria-labelledby="information-title">
+        <div class="card-header" id="information-title">Dokumentasi API — Information</div>
+  
+        <div class="table-wrapper">
+          <table class="table" aria-describedby="information-title">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Feature Name</th>
+                <th>Request Method</th>
+                <th>Description</th>
+                <th>Query Parameter</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="informationTableBody">
+              <!-- Diisi lewat JS -->
+            </tbody>
+          </table>
+        </div>
+        <div id="informationResponsePanel" class="response" aria-live="polite" style="display:none"></div>
+      </section>
+
+      <!-- Code samples Information -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Information</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Information">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsInfo" id="tabJSInfo">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyInfo" id="tabPyInfo">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goInfo" id="tabGoInfo">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsInfo" role="tabpanel" aria-labelledby="tabJSInfo" class="code">
+      <pre><code class="language-js">
+      // Translate
+      fetch("https://api.teamhackbotsindo.my.id/api/translate?text=selamat%20pagi&to=en", {
+        headers: { 
+          "x-api-key": apiKey,
+          "Origin": "https://teamhackbotsindo.my.id"
+        }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Translate:", data));
+
+      // Kodepos
+      fetch("https://api2.teamhackbotsindo.my.id/api/kodepos?daerah=ciomas", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Kodepos:", data));
+
+      // Info Gempa
+      fetch("https://api.teamhackbotsindo.my.id/api/gempa", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Info Gempa:", data));
+
+      // Info Cuaca
+      fetch("https://api2.teamhackbotsindo.my.id/api/cuaca?kota=jakarta", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Info Cuaca:", data));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyInfo" role="tabpanel" aria-labelledby="tabPyInfo" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      headers = { 
+        "x-api-key": apiKey,
+        "Origin": "https://teamhackbotsindo.my.id"
+      }
+
+      # Translate
+      resp = requests.get("https://api.teamhackbotsindo.my.id/api/translate?text=selamat%20pagi&to=en", headers=headers)
+      print("Translate:", resp.json())
+
+      # Kodepos
+      resp = requests.get("https://api2.teamhackbotsindo.my.id/api/kodepos?daerah=ciomas", headers={"x-api-key": apiKey})
+      print("Kodepos:", resp.json())
+
+      # Info Gempa
+      resp = requests.get("https://api.teamhackbotsindo.my.id/api/gempa", headers={"x-api-key": apiKey})
+      print("Info Gempa:", resp.json())
+
+      # Info Cuaca
+      resp = requests.get("https://api2.teamhackbotsindo.my.id/api/cuaca?kota=jakarta", headers={"x-api-key": apiKey})
+      print("Info Cuaca:", resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goInfo" role="tabpanel" aria-labelledby="tabGoInfo" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func fetchAPI(url string, withOrigin bool) {
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+        if withOrigin {
+          req.Header.Set("Origin", "https://teamhackbotsindo.my.id")
+        }
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(url, ":", string(body))
+      }
+
+      func main() {
+        fetchAPI("https://api.teamhackbotsindo.my.id/api/translate?text=selamat%20pagi&to=en", true)
+        fetchAPI("https://api2.teamhackbotsindo.my.id/api/kodepos?daerah=ciomas", false)
+        fetchAPI("https://api2.teamhackbotsindo.my.id/api/gempa", false)
+        fetchAPI("https://api2.teamhackbotsindo.my.id/api/cuaca?kota=jakarta", false)
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Code samples Kodepos -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Kodepos</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Kodepos">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsKodepos" id="tabJSKodepos">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyKodepos" id="tabPyKodepos">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goKodepos" id="tabGoKodepos">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsKodepos" role="tabpanel" aria-labelledby="tabJSKodepos" class="code">
+      <pre><code class="language-js">
+
+      // Kodepos
+      fetch("https://api2.teamhackbotsindo.my.id/api/kodepos?daerah=ciomas", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Kodepos:", data));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyKodepos" role="tabpanel" aria-labelledby="tabPyKodepos" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      headers = { 
+        "x-api-key": apiKey,
+        "Origin": "https://teamhackbotsindo.my.id"
+      }
+
+      # Kodepos
+      resp = requests.get("https://api2.teamhackbotsindo.my.id/api/kodepos?daerah=ciomas", headers={"x-api-key": apiKey})
+      print("Kodepos:", resp.json())
+
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goKodepos" role="tabpanel" aria-labelledby="tabGoKodepos" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func fetchAPI(url string, withOrigin bool) {
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+        if withOrigin {
+          req.Header.Set("Origin", "https://teamhackbotsindo.my.id")
+        }
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(url, ":", string(body))
+      }
+
+      func main() {
+        fetchAPI("https://api2.teamhackbotsindo.my.id/api/kodepos?daerah=ciomas", false)
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Code samples Gempa -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Gempa</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Gempa">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsGempa" id="tabJSGempa">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyGempa" id="tabPyGempa">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goGempa" id="tabGoGempa">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsGempa" role="tabpanel" aria-labelledby="tabJSGempa" class="code">
+      <pre><code class="language-js">
+
+      // Gempa
+      fetch("https://api2.teamhackbotsindo.my.id/api/gempa", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Gempa:", data));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyGempa" role="tabpanel" aria-labelledby="tabPyGempa" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      headers = { 
+        "x-api-key": apiKey,
+        "Origin": "https://teamhackbotsindo.my.id"
+      }
+
+      # Gempa
+      resp = requests.get("https://api2.teamhackbotsindo.my.id/api/gempa", headers={"x-api-key": apiKey})
+      print("Gempa:", resp.json())
+
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goGempa" role="tabpanel" aria-labelledby="tabGoGempa" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func fetchAPI(url string, withOrigin bool) {
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+        if withOrigin {
+          req.Header.Set("Origin", "https://teamhackbotsindo.my.id")
+        }
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(url, ":", string(body))
+      }
+
+      func main() {
+        fetchAPI("https://api2.teamhackbotsindo.my.id/api/gempa", false)
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Code samples Cuaca -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Cuaca</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Cuaca">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsCuaca" id="tabJSCuaca">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyCuaca" id="tabPyCuaca">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goCuaca" id="tabGoCuaca">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsCuaca" role="tabpanel" aria-labelledby="tabJSCuaca" class="code">
+      <pre><code class="language-js">
+
+      // Cuaca
+      fetch("https://api2.teamhackbotsindo.my.id/api/cuaca?kota=bogor", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Cuaca:", data));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyCuaca" role="tabpanel" aria-labelledby="tabPyCuaca" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      headers = { 
+        "x-api-key": apiKey,
+        "Origin": "https://teamhackbotsindo.my.id"
+      }
+
+      # Cuaca
+      resp = requests.get("https://api2.teamhackbotsindo.my.id/api/cuaca?kota=bogor", headers={"x-api-key": apiKey})
+      print("Cuaca:", resp.json())
+
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goCuaca" role="tabpanel" aria-labelledby="tabGoCuaca" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func fetchAPI(url string, withOrigin bool) {
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+        if withOrigin {
+          req.Header.Set("Origin", "https://teamhackbotsindo.my.id")
+        }
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(url, ":", string(body))
+      }
+
+      func main() {
+        fetchAPI("https://api2.teamhackbotsindo.my.id/api/cuaca?kota=bogor", false)
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+  <script>
+
+    // API-Information
+    const informationEndpoints = [
+      { no: 1, name: "Translate", method: "GET", desc: "Terjemahkan teks ke bahasa lain", query: "apikey, text, to" },
+      { no: 2, name: "Kodepos", method: "GET", desc: "Cari kodepos berdasarkan daerah", query: "apikey, daerah" },
+      { no: 3, name: "Info Gempa", method: "GET", desc: "Informasi gempa terbaru dari BMKG", query: "apikey" },
+      { no: 4, name: "Info Cuaca", method: "GET", desc: "Informasi cuaca berdasarkan kota", query: "apikey, kota" }
+    ];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const infoBody = document.getElementById('informationTableBody');
+      informationEndpoints.forEach(ep => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${ep.no}</td>
+          <td>${ep.name}</td>
+          <td><span class="badge GET">${ep.method}</span></td>
+          <td>${ep.desc}</td>
+          <td>${ep.query}</td>
+          <td><button class="btn" onclick="tryInformation('${ep.name}')">Try</button></td>
+        `;
+        infoBody.appendChild(tr);
+      });
+    });
+    // Fungsi Try untuk Information (final, fleksibel + validasi)
+    function tryInformation(feature) {
+      const panel = document.getElementById('informationResponsePanel');
+      panel.style.display = 'block';
+      panel.textContent = `⚡ Menjalankan ${feature}...`;
+
+      const apiKey = document.getElementById('apiKeyInput').value.trim();
+      if (!apiKey) {
+        panel.textContent = "Error: API key belum diisi.";
+        return;
+      }
+
+      let url = "";
+      let headers = { "x-api-key": apiKey };
+
+      if (feature === "Translate") {
+        // Ambil input jika tersedia; fallback ke contoh
+        const textEl = document.getElementById('translateText');
+        const langEl = document.getElementById('translateLang');
+        const text = textEl?.value?.trim() || "selamat pagi";
+        const lang = langEl?.value || "en";
+
+        url = `https://api2.teamhackbotsindo.my.id/api/translate?text=${encodeURIComponent(text)}&to=${lang}`;
+        headers.Origin = "https://teamhackbotsindo.my.id"; // jika diperlukan oleh server
+      } else if (feature === "Kodepos") {
+        url = `https://api2.teamhackbotsindo.my.id/api/kodepos?daerah=ciomas`;
+      } else if (feature === "Info Gempa") {
+        url = `https://api2.teamhackbotsindo.my.id/api/gempa`;
+      } else if (feature === "Info Cuaca") {
+        url = `https://api2.teamhackbotsindo.my.id/api/cuaca?kota=bogor`;
+      } else {
+        panel.textContent = "Error: Fitur tidak dikenal.";
+        return;
+      }
+
+      fetch(url, { headers })
+        .then(res => {
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          return res.json();
+        })
+        .then(data => panel.textContent = JSON.stringify(data, null, 2))
+        .catch(err => panel.textContent = "Error: " + err);
+    }
+
+    function tryTranslate() {
+      const panel = document.getElementById('translateResponsePanel');
+      panel.style.display = 'block';
+      panel.textContent = "⚡ Menjalankan Translate...";
+
+      const apiKey = document.getElementById('apiKeyInput').value;
+      const text = document.getElementById('translateText').value || "selamat pagi";
+      const lang = document.getElementById('translateLang').value;
+      const url = `https://api.teamhackbotsindo.my.id/api/translate?text=${encodeURIComponent(text)}&to=${lang}`;
+
+      fetch(url, { headers: { "x-api-key": apiKey, "Origin": "https://teamhackbotsindo.my.id" } })
+        .then(res => res.json())
+        .then(data => panel.textContent = JSON.stringify(data, null, 2))
+        .catch(err => panel.textContent = "Error: " + err);
+    }
+
+    // Tabs Information
+    const tabJSInfo = document.getElementById('tabJSInfo');
+    const tabPyInfo = document.getElementById('tabPyInfo');
+    const tabGoInfo = document.getElementById('tabGoInfo');
+
+    const jsInfo = document.getElementById('jsInfo');
+    const pyInfo = document.getElementById('pyInfo');
+    const goInfo = document.getElementById('goInfo');
+
+    function showInfo(tab) {
+      [tabJSInfo, tabPyInfo, tabGoInfo].forEach(btn => btn.classList.remove('active'));
+      [jsInfo, pyInfo, goInfo].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    // Sinkronisasi dengan sidebar
+      const targetId = tab.getAttribute('aria-controls');
+      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
+      if (sidebarLink) {
+        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
+        sidebarLink.classList.add('active');
+      }
+    }
+
+    tabJSInfo.addEventListener('click', () => showInfo(tabJSInfo));
+    tabPyInfo.addEventListener('click', () => showInfo(tabPyInfo));
+    tabGoInfo.addEventListener('click', () => showInfo(tabGoInfo));
+
+    // Tabs kodepos
+    const tabJSKodepos = document.getElementById('tabJSKodepos');
+    const tabPyKodepos = document.getElementById('tabPyKodepos');
+    const tabGoKodepos = document.getElementById('tabGoKodepos');
+
+    const jsKodepos = document.getElementById('jsKodepos');
+    const pyKodepos = document.getElementById('pyKodepos');
+    const goKodepos = document.getElementById('goKodepos');
+
+    function showKodepos(tab) {
+      [tabJSKodepos, tabPyKodepos, tabGoKodepos].forEach(btn => btn.classList.remove('active'));
+      [jsKodepos, pyKodepos, goKodepos].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    // Sinkronisasi dengan sidebar
+      const targetId = tab.getAttribute('aria-controls');
+      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
+      if (sidebarLink) {
+        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
+        sidebarLink.classList.add('active');
+      }
+    }
+
+    tabJSKodepos.addEventListener('click', () => showKodepos(tabJSKodepos));
+    tabPyKodepos.addEventListener('click', () => showKodepos(tabPyKodepos));
+    tabGoKodepos.addEventListener('click', () => showKodepos(tabGoKodepos));
+
+    // Tabs gempa
+    const tabJSGempa = document.getElementById('tabJSGempa');
+    const tabPyGempa = document.getElementById('tabPyGempa');
+    const tabGoGempa = document.getElementById('tabGoGempa');
+
+    const jsGempa = document.getElementById('jsGempa');
+    const pyGempa = document.getElementById('pyGempa');
+    const goGempa = document.getElementById('goGempa');
+
+    function showGempa(tab) {
+      [tabJSGempa, tabPyGempa, tabGoGempa].forEach(btn => btn.classList.remove('active'));
+      [jsGempa, pyGempa, goGempa].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    // Sinkronisasi dengan sidebar
+      const targetId = tab.getAttribute('aria-controls');
+      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
+      if (sidebarLink) {
+        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
+        sidebarLink.classList.add('active');
+      }
+    }
+
+    tabJSGempa.addEventListener('click', () => showGempa(tabJSGempa));
+    tabPyGempa.addEventListener('click', () => showGempa(tabPyGempa));
+    tabGoGempa.addEventListener('click', () => showGempa(tabGoGempa));
+
+    // Tabs Cuaca
+    const tabJSCuaca = document.getElementById('tabJSCuaca');
+    const tabPyCuaca = document.getElementById('tabPyCuaca');
+    const tabGoCuaca = document.getElementById('tabGoCuaca');
+
+    const jsCuaca = document.getElementById('jsCuaca');
+    const pyCuaca = document.getElementById('pyCuaca');
+    const goCuaca = document.getElementById('goCuaca');
+
+    function showCuaca(tab) {
+      [tabJSCuaca, tabPyCuaca, tabGoCuaca].forEach(btn => btn.classList.remove('active'));
+      [jsCuaca, pyCuaca, goCuaca].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    // Sinkronisasi dengan sidebar
+      const targetId = tab.getAttribute('aria-controls');
+      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
+      if (sidebarLink) {
+        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
+        sidebarLink.classList.add('active');
+      }
+    }
+
+    tabJSCuaca.addEventListener('click', () => showCuaca(tabJSCuaca));
+    tabPyCuaca.addEventListener('click', () => showCuaca(tabPyCuaca));
+    tabGoCuaca.addEventListener('click', () => showCuaca(tabGoCuaca));
+
+  </script>
+</body>
+</html> 

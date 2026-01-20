@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Dokumentasi API — Islami</title>
+  <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+  <!-- Section Islami -->
+      <section class="card" id="islami" aria-labelledby="islami-title">
+        <div class="card-header" id="islami-title">Dokumentasi API — Islami</div>
+  
+        <div class="table-wrapper">
+          <table class="table" aria-describedby="islami-title">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Feature Name</th>
+                <th>Request Method</th>
+                <th>Description</th>
+                <th>Query Parameter</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="islamiTableBody">
+              <!-- Diisi lewat JS -->
+            </tbody>
+          </table>
+        </div>
+  
+        <div id="islamiResponsePanel" class="response" aria-live="polite" style="display:none"></div>
+      </section>
+
+      <section class="card" id="query-islami" aria-labelledby="query-islami-title">
+        <div class="card-header" id="query-islami-title">Set Query</div>
+
+        <!-- Pilih Shalat -->
+        <div style="padding: 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+          <label for="shalatSelectIslami" style="display:flex; align-items:center; gap:8px;">
+            Pilih Shalat:
+            <select id="shalatSelectIslami" style="padding:6px 10px; border-radius:8px; background:#0c1426; color:#eaf2ff; border:1px solid #1d2740;">
+              <option value="subuh">Subuh</option>
+              <option value="dzuhur">Dzuhur</option>
+              <option value="ashar">Ashar</option>
+              <option value="magrib">Magrib</option>
+              <option value="isya">Isya</option>
+              <option value="duha">Duha</option>
+              <option value="tahajud">Tahajud</option>
+              <option value="witir">Witir</option>
+              <option value="hajat">Hajat</option>
+              <option value="istikharah">Istikharah</option>
+              <option value="taubat">Taubat</option>
+            </select>
+          </label>
+          <button class="btn" onclick="tryIslami('Niat Shalat')">Try</button>
+        </div>
+
+        <!-- Pilih Bahasa -->
+        <div style="padding:12px; display:flex; gap:10px; flex-wrap:wrap;">
+          <input id="translateText" type="text" placeholder="Masukkan teks untuk diterjemahkan"
+                 style="flex:1; padding:6px 10px; border-radius:8px; background:#0c1426; color:#eaf2ff; border:1px solid #1d2740;">
+          <select id="translateLang" style="padding:6px 10px; border-radius:8px; background:#0c1426; color:#eaf2ff; border:1px solid #1d2740;">
+            <option value="en">English</option>
+            <option value="id">Indonesia</option>
+            <option value="ar">Arabic</option>
+            <option value="fr">French</option>
+            <option value="ja">Japanese</option>
+            <option value="zh-cn">Chinese (Simplified)</option>
+            <option value="ru">Russian</option>
+          </select>
+          <button class="btn" onclick="tryTranslate()">Try</button>
+        </div>
+
+        <div id="translateResponsePanel" class="response" aria-live="polite" style="display:none; margin-top:16px;"></div>
+      </section>
+
+      <!-- Code samples Islami -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Islami</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Islami">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="curlIslami" id="tabCurlIslami">Curl</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="jsIslami" id="tabJSIslami">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyIslami" id="tabPyIslami">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goIslami" id="tabGoIslami">Golang</button>
+          </div>
+
+          <!-- CURL -->
+          <div id="curlIslami" role="tabpanel" aria-labelledby="tabCurlIslami" class="code">
+            <pre><code class="language-bash">
+          # Doa API
+          curl -X GET "https://api.teamhackbotsindo.my.id/api/doa" \
+            -H "x-api-key: YOUR_API_KEY"
+            </code></pre>
+          </div>
+
+          <!-- JS -->
+          <div id="jsIslami" role="tabpanel" aria-labelledby="tabJSIslami" class="code" style="display:none">
+      <pre><code class="language-js">
+      const url = `https://api.teamhackbotsindo.my.id/api/doa`;
+      fetch(url, {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log(data));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyIslami" role="tabpanel" aria-labelledby="tabPyIslami" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      url = "https://api.teamhackbotsindo.my.id/api/doa"
+      headers = { "x-api-key": apiKey }
+      response = requests.get(url, headers=headers)
+      print(response.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goIslami" role="tabpanel" aria-labelledby="tabGoIslami" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", "https://api.teamhackbotsindo.my.id/api/doa", nil)
+        req.Header.Set("x-api-key", apiKey )
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Code samples Shalat -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Shalat</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Shalat">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsShalat" id="tabJSShalat">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyShalat" id="tabPyShalat">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goShalat" id="tabGoShalat">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsShalat" role="tabpanel" aria-labelledby="tabJSShalat" class="code">
+      <pre><code class="language-js">
+      const selected = "isya"; // bisa diganti sesuai dropdown
+      const url = `https://api.teamhackbotsindo.my.id/api/niat-shalat?shalat=${selected}`;
+
+      fetch(url, {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log(data));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyShalat" role="tabpanel" aria-labelledby="tabPyShalat" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      selected = "dzuhur"  # bisa diganti sesuai dropdown
+      url = f"https://api.teamhackbotsindo.my.id/api/niat-shalat?shalat={selected}"
+      headers = { "x-api-key": apiKey }
+      response = requests.get(url, headers=headers)
+      print(response.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goShalat" role="tabpanel" aria-labelledby="tabGoShalat" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        selected := "magrib"
+        url := "https://api.teamhackbotsindo.my.id/api/niat-shalat?shalat=" + selected
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tabs Jadwal Shalat -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Jadwal Shalat</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Jadwal Shalat">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsJadwalShalat" id="tabJSJadwalShalat">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyJadwalShalat" id="tabPyJadwalShalat">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goJadwalShalat" id="tabGoJadwalShalat">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsJadwalShalat" role="tabpanel" aria-labelledby="tabJSJadwalShalat" class="code">
+      <pre><code class="language-js">
+      // Jadwal Shalat Jakarta
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api2.teamhackbotsindo.my.id/api/jadwal-shalat?city=jakarta", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Jadwal Shalat:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyJadwalShalat" role="tabpanel" aria-labelledby="tabPyJadwalShalat" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      url = "https://api2.teamhackbotsindo.my.id/api/jadwal-shalat?city=jakarta"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goJadwalShalat" role="tabpanel" aria-labelledby="tabGoJadwalShalat" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        url := "https://api2.teamhackbotsindo.my.id/api/jadwal-shalat?city=jakarta"
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tabs Qur'an Surah -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Qur'an Surah</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Qur'an Surah">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsQuranSurah" id="tabJSQuranSurah">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyQuranSurah" id="tabPyQuranSurah">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goQuranSurah" id="tabGoQuranSurah">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsQuranSurah" role="tabpanel" aria-labelledby="tabJSQuranSurah" class="code">
+      <pre><code class="language-js">
+      // Daftar Surah
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api2.teamhackbotsindo.my.id/api/quran-surah", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Qur'an Surah:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyQuranSurah" role="tabpanel" aria-labelledby="tabPyQuranSurah" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      url = "https://api2.teamhackbotsindo.my.id/api/quran-surah"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goQuranSurah" role="tabpanel" aria-labelledby="tabGoQuranSurah" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        url := "https://api2.teamhackbotsindo.my.id/api/quran-surah"
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tabs Kisah Nabi -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Kisah Nabi</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Kisah Nabi">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsKisahNabi" id="tabJSKisahNabi">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyKisahNabi" id="tabPyKisahNabi">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goKisahNabi" id="tabGoKisahNabi">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsKisahNabi" role="tabpanel" aria-labelledby="tabJSKisahNabi" class="code">
+      <pre><code class="language-js">
+      // Kisah Nabi (contoh: id=1 untuk Nabi Adam)
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api2.teamhackbotsindo.my.id/api/kisah-nabi?nomor=25", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Kisah Nabi:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyKisahNabi" role="tabpanel" aria-labelledby="tabPyKisahNabi" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+      url = "https://api2.teamhackbotsindo.my.id/api/kisah-nabi?nomor=25"
+      resp = requests.get(url, headers={"x-api-key": apiKey})
+      print(resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goKisahNabi" role="tabpanel" aria-labelledby="tabGoKisahNabi" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+        url := "https://api2.teamhackbotsindo.my.id/api/kisah-nabi?nomor=25"
+
+        client := &http.Client{}
+        req, _ := http.NewRequest("GET", url, nil)
+        req.Header.Set("x-api-key", apiKey)
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+
+        body, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println(string(body))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tabs Asmaul Husna -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Asmaul Husna</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Kisah Nabi">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsasmaulHusna" id="tabJSasmaulHusna">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyasmaulHusna" id="tabPyasmaulHusna">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goasmaulHusna" id="tabGoasmaulHusna">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsasmaulHusna" role="tabpanel" aria-labelledby="tabJSasmaulHusna" class="code">
+      <pre><code class="language-js">
+      // Asmaul Husna - semua nama
+      const apiKey = "YOUR_API_KEY";
+      fetch("https://api2.teamhackbotsindo.my.id/api/asmaulHusna", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Semua Asmaul Husna:", data))
+        .catch(err => console.error(err));
+
+      // Asmaul Husna - detail per nomor (contoh: no=5)
+      fetch("https://api2.teamhackbotsindo.my.id/api/asmaulHusna?no=5", {
+        headers: { "x-api-key": apiKey }
+      })
+        .then(res => res.json())
+        .then(data => console.log("Detail Asmaul Husna no 5:", data))
+        .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyasmaulHusna" role="tabpanel" aria-labelledby="tabPyasmaulHusna" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      apiKey = "YOUR_API_KEY"
+
+      # Semua nama
+      url_all = "https://api2.teamhackbotsindo.my.id/api/asmaulHusna"
+      resp_all = requests.get(url_all, headers={"x-api-key": apiKey})
+      print("Semua Asmaul Husna:", resp_all.json())
+
+      # Detail per nomor
+            url_detail = "https://api2.teamhackbotsindo.my.id/api/asmaulHusna?no=5"
+      resp_detail = requests.get(url_detail, headers={"x-api-key": apiKey})
+      print("Detail Asmaul Husna no 5:", resp_detail.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goasmaulHusna" role="tabpanel" aria-labelledby="tabGoasmaulHusna" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        apiKey := "YOUR_API_KEY"
+
+        // Semua nama
+        urlAll := "https://api2.teamhackbotsindo.my.id/api/asmaulHusna"
+        client := &http.Client{}
+        reqAll, _ := http.NewRequest("GET", urlAll, nil)
+        reqAll.Header.Set("x-api-key", apiKey)
+        respAll, _ := client.Do(reqAll)
+        defer respAll.Body.Close()
+        bodyAll, _ := ioutil.ReadAll(respAll.Body)
+        fmt.Println("Semua Asmaul Husna:", string(bodyAll))
+
+        // Detail per nomor
+        urlDetail := "https://api2.teamhackbotsindo.my.id/api/asmaulHusna?no=5"
+        reqDetail, _ := http.NewRequest("GET", urlDetail, nil)
+        reqDetail.Header.Set("x-api-key", apiKey)
+        respDetail, _ := client.Do(reqDetail)
+        defer respDetail.Body.Close()
+        bodyDetail, _ := ioutil.ReadAll(respDetail.Body)
+        fmt.Println("Detail Asmaul Husna no 5:", string(bodyDetail))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+  <script>
+    // API-ISLAMI
+    const islamiEndpoints = [
+      { no: 1, name: "Doa", method: "GET", desc: "Ambil doa secara acak", query: "apikey" },
+      { no: 2, name: "Niat Shalat", method: "GET", desc: "Niat shalat berdasarkan nama shalat", query: "apikey, shalat" },
+      { no: 3, name: "Jadwal Shalat", method: "GET", desc: "Jadwal shalat berdasarkan kota", query: "apikey, city" },
+      { no: 4, name: "Qur'an Surah", method: "GET", desc: "Daftar semua surah dalam Al-Qur'an", query: "apikey" },
+      { no: 5, name: "Qur'an Detail", method: "GET", desc: "Detail surah berdasarkan nomor", query: "apikey, nomor" },
+      { no: 6, name: "Kisah Nabi", method: "GET", desc: "Kisah nabi berdasarkan nomor", query: "apikey, nomor" },
+      { no: 7, name: "Asmaul Husna", method: "GET", desc: "Asmaul Husna detail", query: "apikey, nomor" }
+    ];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const islamiBody = document.getElementById('islamiTableBody');
+      islamiEndpoints.forEach(ep => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${ep.no}</td>
+          <td>${ep.name}</td>
+          <td><span class="badge GET">${ep.method}</span></td>
+          <td>${ep.desc}</td>
+          <td>${ep.query}</td>
+          <td><button class="btn" onclick="tryIslami('${ep.name.replace(/'/g, "\\'")}')">Try</button></td>
+        `;
+        islamiBody.appendChild(tr);
+      });
+    });
+    // Fungsi Try untuk Islami (contoh baku)
+    function tryIslami(feature) {
+      const panel = document.getElementById('islamiResponsePanel');
+      panel.style.display = 'block';
+      panel.textContent = `⚡ Menjalankan ${feature}...`;
+
+      const apiKey = document.getElementById('apiKeyInput').value;
+      let url = "";
+      switch (feature) {
+        case "Doa":
+          url = `https://api.teamhackbotsindo.my.id/api/doa`;
+          break;
+        case "Niat Shalat":
+          const selectedShalat = document.getElementById('shalatSelectIslami').value;
+          url = `https://api.teamhackbotsindo.my.id/api/niat-shalat?shalat=${selectedShalat}`;
+          break;
+        case "Jadwal Shalat":
+          url = `https://api2.teamhackbotsindo.my.id/api/jadwal-shalat?city=jakarta`;
+          break;
+        case "Qur'an Surah":
+          url = `https://api2.teamhackbotsindo.my.id/api/quran-surah`;
+          break;
+        case "Qur'an Detail":
+          url = `https://api2.teamhackbotsindo.my.id/api/quran-detail?apikey=${apiKey}&nomor=1`;
+          break;
+        case "Kisah Nabi":
+          url = `https://api2.teamhackbotsindo.my.id/api/kisah-nabi?apikey=${apiKey}&nomor=25`;
+          break;
+        case "Asmaul Husna":
+          url = `https://api2.teamhackbotsindo.my.id/api/asmaulHusna?no=1`;
+          break;
+      }
+
+
+      fetch(url, { headers: { "x-api-key": apiKey } })
+        .then(res => res.text())
+        .then(text => {
+          try {
+            const data = JSON.parse(text);
+            panel.textContent = JSON.stringify(data, null, 2);
+          } catch {
+            panel.textContent = "⚠️ Response bukan JSON:\n" + text.slice(0,200);
+          }
+        })
+        .catch(err => panel.textContent = "Error: " + err);
+    }
+
+    // Tabs Islami
+    const tabCurlIslami = document.getElementById('tabCurlIslami');
+    const tabJSIslami = document.getElementById('tabJSIslami');
+    const tabPyIslami = document.getElementById('tabPyIslami');
+    const tabGoIslami = document.getElementById('tabGoIslami');
+
+    const curlIslami = document.getElementById('curlIslami');
+    const jsIslami = document.getElementById('jsIslami');
+    const pyIslami = document.getElementById('pyIslami');
+    const goIslami = document.getElementById('goIslami');
+
+    function showIslami(tab) {
+      [tabCurlIslami, tabJSIslami, tabPyIslami, tabGoIslami].forEach(btn => btn.classList.remove('active'));
+      [curlIslami, jsIslami, pyIslami, goIslami].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    // Sinkronisasi dengan sidebar
+      const targetId = tab.getAttribute('aria-controls');
+      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
+      if (sidebarLink) {
+        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
+        sidebarLink.classList.add('active');
+      }
+    }
+
+    tabCurlIslami.addEventListener('click', () => showIslami(tabCurlIslami));
+    tabJSIslami.addEventListener('click', () => showIslami(tabJSIslami));
+    tabPyIslami.addEventListener('click', () => showIslami(tabPyIslami));
+    tabGoIslami.addEventListener('click', () => showIslami(tabGoIslami));
+
+    // Tabs Shalat
+    const tabCurlShalat = document.getElementById('tabCurlShalat');
+    const tabJSShalat = document.getElementById('tabJSShalat');
+    const tabPyShalat = document.getElementById('tabPyShalat');
+    const tabGoShalat = document.getElementById('tabGoShalat');
+
+    const curlShalat = document.getElementById('curlShalat');
+    const jsShalat = document.getElementById('jsShalat');
+    const pyShalat = document.getElementById('pyShalat');
+    const goShalat = document.getElementById('goShalat');
+
+    function showShalat(tab) {
+      [tabCurlShalat, tabJSShalat, tabPyShalat, tabGoShalat].forEach(btn => btn.classList.remove('active'));
+      [curlShalat, jsShalat, pyShalat, goShalat].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    // Sinkronisasi dengan sidebar
+      const targetId = tab.getAttribute('aria-controls');
+      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
+      if (sidebarLink) {
+        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
+        sidebarLink.classList.add('active');
+      }
+    }
+
+    tabCurlShalat.addEventListener('click', () => showShalat(tabCurlShalat));
+    tabJSShalat.addEventListener('click', () => showShalat(tabJSShalat));
+    tabPyShalat.addEventListener('click', () => showShalat(tabPyShalat));
+    tabGoShalat.addEventListener('click', () => showShalat(tabGoShalat));
+
+    // Ambil elemen dropdown (ID harus sama dengan di HTML)
+    const shalatSelect = document.getElementById('shalatSelectIslami');
+
+    // Update code sample saat dropdown berubah
+    shalatSelect.addEventListener('change', () => {
+      const selected = shalatSelect.value;
+
+      // Update isi code sample JS
+      document.querySelector('#jsShalat code').textContent =
+    `const url = "https://api.teamhackbotsindo.my.id/api/niat-shalat?shalat=${selected}";
+
+    fetch(url, {
+      headers: { "x-api-key": apiKey }
+    })
+      .then(res => res.json())
+      .then(data => console.log(data));`;
+
+      // Update isi code sample Python
+      document.querySelector('#pyShalat code').textContent =
+    `import requests
+
+    url = "https://api.teamhackbotsindo.my.id/api/niat-shalat?shalat=${selected}"
+    headers = { "x-api-key": apiKey }
+    response = requests.get(url, headers=headers)
+    print(response.json())`;
+
+      // Update isi code sample Golang
+      document.querySelector('#goShalat code').textContent =
+    `package main
+
+    import (
+      "fmt"
+      "net/http"
+      "io/ioutil"
+    )
+
+    func main() {
+      url := "https://api.teamhackbotsindo.my.id/api/niat-shalat?shalat=${selected}"
+
+      client := &http.Client{}
+      req, _ := http.NewRequest("GET", url, nil)
+      req.Header.Set("x-api-key", apiKey)
+
+      resp, _ := client.Do(req)
+      defer resp.Body.Close()
+
+      body, _ := ioutil.ReadAll(resp.Body)
+      fmt.Println(string(body))
+    }`;
+    });
+
+    // Tabs Jadwal Shalat
+    const tabCurlJadwalShalat = document.getElementById('tabCurlJadwalShalat');
+    const tabJSJadwalShalat = document.getElementById('tabJSJadwalShalat');
+    const tabPyJadwalShalat = document.getElementById('tabPyJadwalShalat');
+    const tabGoJadwalShalat = document.getElementById('tabGoJadwalShalat');
+
+    const curlJadwalShalat = document.getElementById('curlJadwalShalat');
+    const jsJadwalShalat = document.getElementById('jsJadwalShalat');
+    const pyJadwalShalat = document.getElementById('pyJadwalShalat');
+    const goJadwalShalat = document.getElementById('goJadwalShalat');
+
+    function showJadwalShalat(tab) {
+      [tabCurlJadwalShalat, tabJSJadwalShalat, tabPyJadwalShalat, tabGoJadwalShalat].forEach(btn => btn.classList.remove('active'));
+      [curlJadwalShalat, jsJadwalShalat, pyJadwalShalat, goJadwalShalat].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    // Sinkronisasi dengan sidebar
+      const targetId = tab.getAttribute('aria-controls');
+      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
+      if (sidebarLink) {
+        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
+        sidebarLink.classList.add('active');
+      }
+    }
+
+    tabCurlJadwalShalat.addEventListener('click', () => showJadwalShalat(tabCurlJadwalShalat));
+    tabJSJadwalShalat.addEventListener('click', () => showJadwalShalat(tabJSJadwalShalat));
+    tabPyJadwalShalat.addEventListener('click', () => showJadwalShalat(tabPyJadwalShalat));
+    tabGoJadwalShalat.addEventListener('click', () => showJadwalShalat(tabGoJadwalShalat));
+
+    // Tabs Qur'an (JS/Py/Go)
+    const tabCurlQuran   = document.getElementById('tabCurlQuranSurah');
+    const tabJSQuran   = document.getElementById('tabJSQuranSurah');
+    const tabPyQuran   = document.getElementById('tabPyQuranSurah');
+    const tabGoQuran   = document.getElementById('tabGoQuranSurah');
+
+    const curlQuran      = document.getElementById('curlQuranSurah');
+    const jsQuran      = document.getElementById('jsQuranSurah');
+    const pyQuran      = document.getElementById('pyQuranSurah');
+    const goQuran      = document.getElementById('goQuranSurah');
+
+    function showQuran(tab) {
+      [tabCurlQuran, tabJSQuran, tabPyQuran, tabGoQuran].forEach(btn => btn.classList.remove('active'));
+      [curlQuran, jsQuran, pyQuran, goQuran].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    // Sinkronisasi dengan sidebar
+      const targetId = tab.getAttribute('aria-controls');
+      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
+      if (sidebarLink) {
+        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
+        sidebarLink.classList.add('active');
+      }
+    }
+
+    tabCurlQuran.addEventListener('click', () => showQuran(tabCurlQuran));
+    tabJSQuran.addEventListener('click', () => showQuran(tabJSQuran));
+    tabPyQuran.addEventListener('click', () => showQuran(tabPyQuran));
+    tabGoQuran.addEventListener('click', () => showQuran(tabGoQuran));
+
+    // Tabs Kisah Nabi
+    const tabCurlKisahNabi = document.getElementById('tabCurlKisahNabi');
+    const tabJSKisahNabi = document.getElementById('tabJSKisahNabi');
+    const tabPyKisahNabi = document.getElementById('tabPyKisahNabi');
+    const tabGoKisahNabi = document.getElementById('tabGoKisahNabi');
+
+    const curlKisahNabi = document.getElementById('curlKisahNabi');
+    const jsKisahNabi = document.getElementById('jsKisahNabi');
+    const pyKisahNabi = document.getElementById('pyKisahNabi');
+    const goKisahNabi = document.getElementById('goKisahNabi');
+
+    function showKisahNabi(tab) {
+      [tabCurlKisahNabi, tabJSKisahNabi, tabPyKisahNabi, tabGoKisahNabi].forEach(btn => btn.classList.remove('active'));
+      [curlKisahNabi, jsKisahNabi, pyKisahNabi, goKisahNabi].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    // Sinkronisasi dengan sidebar
+      const targetId = tab.getAttribute('aria-controls');
+      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
+      if (sidebarLink) {
+        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
+        sidebarLink.classList.add('active');
+      }
+    }
+
+    tabCurlKisahNabi.addEventListener('click', () => showKisahNabi(tabCurlKisahNabi));
+    tabJSKisahNabi.addEventListener('click', () => showKisahNabi(tabJSKisahNabi));
+    tabPyKisahNabi.addEventListener('click', () => showKisahNabi(tabPyKisahNabi));
+    tabGoKisahNabi.addEventListener('click', () => showKisahNabi(tabGoKisahNabi));
+
+    // Tabs Asmaul Husna
+    const tabCurlasmaulHusna = document.getElementById('tabCurlasmaulHusna');
+    const tabJSasmaulHusna = document.getElementById('tabJSasmaulHusna');
+    const tabPyasmaulHusna = document.getElementById('tabPyasmaulHusna');
+    const tabGoasmaulHusna = document.getElementById('tabGoasmaulHusna');
+
+    const curlasmaulHusna = document.getElementById('curlasmaulHusna');
+    const jsasmaulHusna = document.getElementById('jsasmaulHusna');
+    const pyasmaulHusna = document.getElementById('pyasmaulHusna');
+    const goasmaulHusna = document.getElementById('goasmaulHusna');
+
+    function showasmaulHusna(tab) {
+      [tabCurlasmaulHusna, tabJSasmaulHusna, tabPyasmaulHusna, tabGoasmaulHusna].forEach(btn => btn.classList.remove('active'));
+      [curlasmaulHusna, jsasmaulHusna, pyasmaulHusna, goasmaulHusna].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    // Sinkronisasi dengan sidebar
+      const targetId = tab.getAttribute('aria-controls');
+      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
+      if (sidebarLink) {
+        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
+        sidebarLink.classList.add('active');
+      }
+    }
+
+    tabCurlasmaulHusna.addEventListener('click', () => showasmaulHusna(tabCurlasmaulHusna));
+    tabJSasmaulHusna.addEventListener('click', () => showasmaulHusna(tabJSasmaulHusna));
+    tabPyasmaulHusna.addEventListener('click', () => showasmaulHusna(tabPyasmaulHusna));
+    tabGoasmaulHusna.addEventListener('click', () => showasmaulHusna(tabGoasmaulHusna));
+
+  </script>
+</body>
+</html>

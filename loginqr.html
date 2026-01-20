@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Dokumentasi API — Line</title>
+  <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+
+  <!-- Section Login QR LINE -->
+      <section class="card" id="loginqr" aria-labelledby="loginqr-title">
+        <div class="card-header" id="loginqr-title">Dokumentasi API — Login QR LINE</div>
+
+        <div class="table-wrapper">
+          <table class="table" aria-describedby="loginqr-title">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Feature Name</th>
+                <th>Request Method</th>
+                <th>Description</th>
+                <th>Query Parameter</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="loginqrTableBody">
+              <!-- Diisi lewat JS -->
+            </tbody>
+          </table>
+        </div>
+        <div id="loginqrResponsePanel" class="response" aria-live="polite" style="display:none"></div>
+      </section>
+
+      <!-- Code samples Login QR LINE -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Login QR LINE</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Login QR LINE">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsLoginqr" id="tabJSLoginqr">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyLoginqr" id="tabPyLoginqr">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goLoginqr" id="tabGoLoginqr">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsLoginqr" role="tabpanel" aria-labelledby="tabJSLoginqr" class="code">
+      <pre><code class="language-js">
+      // Tahap 1: ambil QR image
+      fetch("https://api2.teamhackbotsindo.my.id/api/loginqr-line", {
+        method: "POST",
+        headers: { "x-api-key": apiKey, "Content-Type": "application/json" },
+        body: JSON.stringify({ appname: "DESKTOPWIN\t9.2.0.3403\tWINDOWS\t10.0.0-NT-x64" })
+      })
+        .then(res => res.json())
+        .then(data => {
+          console.log("Step 1:", data);
+          const img = document.createElement("img");
+          img.src = data.result.qrImage;
+          document.body.appendChild(img);
+        });
+
+      // Tahap 2: polling untuk ambil token
+      setInterval(() => {
+        fetch("https://api2.teamhackbotsindo.my.id/api/loginqr-line", {
+          method: "POST",
+          headers: { "x-api-key": apiKey, "Content-Type": "application/json" }
+        })
+          .then(res => res.json())
+          .then(data => {
+            if (data.step === "token") {
+              console.log("AuthToken:", data.result.authToken);
+              console.log("RefreshToken:", data.result.refreshToken);
+            } else {
+              console.log("Status:", data.status || "pending");
+            }
+          });
+      }, 5000);
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyLoginqr" role="tabpanel" aria-labelledby="tabPyLoginqr" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests, time
+
+      headers = { "x-api-key": apiKey, "Content-Type": "application/json" }
+      payload = { "appname": "DESKTOPWIN\t9.2.0.3403\tWINDOWS\t10.0.0-NT-x64" }
+
+      # Tahap 1: ambil QR
+      resp = requests.post("https://api2.teamhackbotsindo.my.id/api/loginqr-line", headers=headers, json=payload)
+      print("Step 1:", resp.json())
+
+      # Tahap 2: polling untuk token
+      while True:
+          r = requests.post("https://api2.teamhackbotsindo.my.id/api/loginqr-line", headers=headers)
+          data = r.json()
+          if data.get("step") == "token":
+              print("AuthToken:", data["result"]["authToken"])
+              print("RefreshToken:", data["result"]["refreshToken"])
+              break
+          else:
+              print("Status:", data.get("status"))
+          time.sleep(5)
+
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goLoginqr" role="tabpanel" aria-labelledby="tabGoLoginqr" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "bytes"
+        "net/http"
+        "io/ioutil"
+        "time"
+      )
+
+      func main() {
+        client := &http.Client{}
+        body := []byte(`{"appname":"DESKTOPWIN\t9.2.0.3403\tWINDOWS\t10.0.0-NT-x64"}`)
+        req, _ := http.NewRequest("POST", "https://api2.teamhackbotsindo.my.id/api/loginqr-line", bytes.NewBuffer(body))
+        req.Header.Set("x-api-key", apiKey)
+        req.Header.Set("Content-Type", "application/json")
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+        b, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println("Step 1:", string(b))
+
+        // Tahap 2: polling untuk token
+        for {
+          req2, _ := http.NewRequest("POST", "https://api2.teamhackbotsindo.my.id/api/loginqr-line", nil)
+          req2.Header.Set("x-api-key", apiKey)
+          req2.Header.Set("Content-Type", "application/json")
+
+          resp2, _ := client.Do(req2)
+          defer resp2.Body.Close()
+          b2, _ := ioutil.ReadAll(resp2.Body)
+          fmt.Println("Result:", string(b2))
+          time.Sleep(5 * time.Second)
+        }
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Code samples Login Email LINE V2-->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Login Email LINE V2</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Login Email LINE V2">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsLoginEmailV2" id="tabJSLoginEmailV2">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyLoginEmailV2" id="tabPyLoginEmailV2">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goLoginEmailV2" id="tabGoLoginEmailV2">Golang</button>
+          </div>
+
+          <!-- JavaScript -->
+          <div id="jsLoginEmailV2" role="tabpanel" aria-labelledby="tabJSLoginEmailV2" class="code">
+      <pre><code class="language-js">
+      // Login Email LINE V2 — Tahap 1 (PIN)
+      fetch("https://api2.teamhackbotsindo.my.id/api/line-email-v2", {
+        method: "POST",
+        headers: { "x-api-key": apiKey, "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: "user@example.com",
+          password: "yourpassword",
+          appname: "DESKTOPWIN\t9.2.0.3403\tWINDOWS\t10.0.0-NT-x64",
+          step: "pin"
+        })
+      })
+        .then(res => res.json())
+        .then(data => {
+          console.log("PIN Response:", data);
+          document.body.innerHTML += "&lt;pre&gt;" + JSON.stringify(data, null, 2) + "&lt;/pre&gt;";
+          // Setelah PIN diverifikasi di aplikasi LINE, jalankan tahap 2:
+          return fetch("https://api2.teamhackbotsindo.my.id/api/line-email-v2", {
+            method: "POST",
+            headers: { "x-api-key": apiKey, "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: "user@example.com",
+              password: "yourpassword",
+              appname: "DESKTOPWIN\t9.2.0.3403\tWINDOWS\t10.0.0-NT-x64",
+              step: "token"
+            })
+          });
+        })
+        .then(res => res.json())
+        .then(data => {
+          console.log("Token Response:", data);
+          document.body.innerHTML += "&lt;pre&gt;" + JSON.stringify(data, null, 2) + "&lt;/pre&gt;";
+        });
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyLoginEmailV2" role="tabpanel" aria-labelledby="tabPyLoginEmailV2" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      headers = { "x-api-key": apiKey, "Content-Type": "application/json" }
+      payload_pin = {
+        "email": "user@example.com",
+        "password": "yourpassword",
+        "appname": "DESKTOPWIN\t9.2.0.3403\tWINDOWS\t10.0.0-NT-x64",
+        "step": "pin"
+      }
+
+      # Tahap 1: ambil PIN
+      resp = requests.post("https://api2.teamhackbotsindo.my.id/api/line-email-v2", headers=headers, json=payload_pin)
+      print("PIN Response:", resp.json())
+
+      # Setelah PIN diverifikasi di aplikasi LINE, jalankan tahap 2
+      payload_token = { **payload_pin, "step": "token" }
+      resp2 = requests.post("https://api2.teamhackbotsindo.my.id/api/line-email-v2", headers=headers, json=payload_token)
+      print("Token Response:", resp2.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goLoginEmailV2" role="tabpanel" aria-labelledby="tabGoLoginEmailV2" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "bytes"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        client := &http.Client{}
+
+        // Tahap 1: ambil PIN
+        bodyPin := []byte(`{"email":"user@example.com","password":"yourpassword","appname":"DESKTOPWIN\t9.2.0.3403\tWINDOWS\t10.0.0-NT-x64","step":"pin"}`)
+        reqPin, _ := http.NewRequest("POST", "https://api2.teamhackbotsindo.my.id/api/line-email-v2", bytes.NewBuffer(bodyPin))
+        reqPin.Header.Set("x-api-key", apiKey)
+        reqPin.Header.Set("Content-Type", "application/json")
+        respPin, _ := client.Do(reqPin)
+        defer respPin.Body.Close()
+        bPin, _ := ioutil.ReadAll(respPin.Body)
+        fmt.Println("PIN Response:", string(bPin))
+
+        // Tahap 2: ambil Token
+        bodyToken := []byte(`{"email":"user@example.com","password":"yourpassword","appname":"DESKTOPWIN\t9.2.0.3403\tWINDOWS\t10.0.0-NT-x64","step":"token"}`)
+        reqToken, _ := http.NewRequest("POST", "https://api2.teamhackbotsindo.my.id/api/line-email-v2", bytes.NewBuffer(bodyToken))
+        reqToken.Header.Set("x-api-key", apiKey)
+        reqToken.Header.Set("Content-Type", "application/json")
+        respToken, _ := client.Do(reqToken)
+        defer respToken.Body.Close()
+        bToken, _ := ioutil.ReadAll(respToken.Body)
+        fmt.Println("Token Response:", string(bToken))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Code samples Login Email LINE V3-->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Login Email LINE V3</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Login Email LINE V3">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="jsLoginEmailV3" id="tabJSLoginEmailV3">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pyLoginEmailV3" id="tabPyLoginEmailV3">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="goLoginEmailV3" id="tabGoLoginEmailV3">Golang</button>
+          </div>
+
+          <!-- JS -->
+          <div id="jsLoginEmailV3" role="tabpanel" aria-labelledby="tabJSLoginEmailV3" class="code">
+      <pre><code class="language-js">
+      // Login Email LINE V3
+      fetch("https://api2.teamhackbotsindo.my.id/api/line-email-v3", {
+        method: "POST",
+        headers: { "x-api-key": apiKey, "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: "user@example.com",
+          password: "yourpassword",
+          appname: "DESKTOPWIN\t9.2.0.3403\tWINDOWS\t10.0.0-NT-x64"
+        })
+      })
+        .then(res => res.json())
+        .then(data => {
+          console.log("Login Email LINE:", data);
+          // tampilkan hasil token di halaman
+          document.body.innerHTML += "&lt;pre&gt;" + JSON.stringify(data, null, 2) + "&lt;/pre&gt;";
+        });
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pyLoginEmailV3" role="tabpanel" aria-labelledby="tabPyLoginEmailV3" class="code" style="display:none">
+      <pre><code class="language-python">
+      import requests
+
+      headers = { "x-api-key": apiKey, "Content-Type": "application/json" }
+      payload = {
+        "email": "user@example.com",
+        "password": "yourpassword",
+        "appname": "DESKTOPWIN\t9.2.0.3403\tWINDOWS\t10.0.0-NT-x64"
+      }
+
+      resp = requests.post("https://api2.teamhackbotsindo.my.id/api/line-email-v3", headers=headers, json=payload)
+      print("Login Email LINE:", resp.json())
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="goLoginEmailV3" role="tabpanel" aria-labelledby="tabGoLoginEmailV3" class="code" style="display:none">
+      <pre><code class="language-go">
+      package main
+
+      import (
+        "fmt"
+        "bytes"
+        "net/http"
+        "io/ioutil"
+      )
+
+      func main() {
+        client := &http.Client{}
+        body := []byte(`{"email":"user@example.com","password":"yourpassword","appname":"DESKTOPWIN\t9.2.0.3403\tWINDOWS\t10.0.0-NT-x64"}`)
+        req, _ := http.NewRequest("POST", "https://api2.teamhackbotsindo.my.id/api/line-email-v3", bytes.NewBuffer(body))
+        req.Header.Set("x-api-key", apiKey)
+        req.Header.Set("Content-Type", "application/json")
+
+        resp, _ := client.Do(req)
+        defer resp.Body.Close()
+        b, _ := ioutil.ReadAll(resp.Body)
+        fmt.Println("Login Email LINE:", string(b))
+      }
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
+
+  <script>
+
+    // API-LoginQR
+    const loginqrEndpoints = [
+      { no: 1, name: "Login QR LINE", method: "POST", desc: "Login LINE via QR code, menghasilkan link login, gambar QR, token & E2EE", query: "apikey, appname, userAgent" },
+      { no: 2, name: "Login Email LINE V2", method: "POST", desc: "Login LINE V2 via Email, menghasilkan Pin Code, token & E2EE", query: "apikey, appname, userAgent" },
+      { no: 3, name: "Login Email LINE V3", method: "POST", desc: "Login LINE V3 via Email, menghasilkan Pin Code, token & E2EE", query: "apikey, appname, userAgent" }
+    ];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const loginqrBody = document.getElementById('loginqrTableBody');
+      loginqrEndpoints.forEach(ep => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${ep.no}</td>
+          <td>${ep.name}</td>
+          <td><span class="badge POST">${ep.method}</span></td>
+          <td>${ep.desc}</td>
+          <td>${ep.query}</td>
+          <td><button class="btn" onclick="tryLoginqr('${ep.name}')">Try</button></td>
+        `;
+        loginqrBody.appendChild(tr);
+      });
+    });
+    function tryLoginqr(feature) {
+      const panel = document.getElementById('loginqrResponsePanel');
+      panel.style.display = 'block';
+
+      const apiKey = document.getElementById('apiKeyInput').value.trim();
+      if (!apiKey) {
+        panel.textContent = "Error: API key belum diisi.";
+        return;
+      }
+
+      let url = "";
+      let payload = { appname: "DESKTOPWIN\t9.2.0.3403\tWINDOWS\t10.0.0-NT-x64" };
+
+      if (feature === "Login QR LINE") {
+        url = "https://api2.teamhackbotsindo.my.id/api/loginqr-line";
+        panel.innerHTML = `⚡ Menjalankan ${feature}, QR Request...<br>
+          <div style="font-weight:bold;color:#0d6efd;margin-top:10px">📲 Scan QR di aplikasi LINE</div>`;
+      } else if (feature === "Login Email LINE V2") {
+        url = "https://api2.teamhackbotsindo.my.id/api/line-email-v2";
+        payload.email = document.getElementById("emailInputV2")?.value || "drakestep9@gmail.com";
+        payload.password = document.getElementById("passwordInputV2")?.value || "Maxtea123";
+        payload.step = "pin"; // tahap pertama: ambil PIN
+
+        panel.innerHTML = `⚡ Menjalankan ${feature}, PIN Request...`;
+      } else if (feature === "Login Email LINE V3") {
+        url = "https://api2.teamhackbotsindo.my.id/api/line-email-v3";
+        payload.email = document.getElementById("emailInputV3")?.value || "drakestep9@gmail.com";
+        payload.password = document.getElementById("passwordInputV3")?.value || "Maxtea123";
+        panel.innerHTML = `⚡ Menjalankan ${feature}, PIN 123456`;
+      } else {
+        panel.textContent = "Error: Fitur tidak dikenal.";
+        return;
+      }
+
+      fetch(url, {
+        method: "POST",
+        headers: { "x-api-key": apiKey, "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      })
+        .then(res => {
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          return res.json();
+        })
+        .then(data => {
+          console.log("DATA:", data);
+          panel.innerHTML = panel.innerHTML.split('<pre')[0];
+
+          const pre = document.createElement("pre");
+          pre.textContent = JSON.stringify(data, null, 2);
+          panel.appendChild(pre);
+
+          // QR khusus untuk Login QR LINE
+          if (data.result?.qrImage) {
+            const img = document.createElement("img");
+            img.src = data.result.qrImage;
+            img.alt = "QR Login LINE";
+            img.style.maxWidth = "200px";
+            img.style.marginTop = "10px";
+            panel.appendChild(img);
+          }
+
+          // PIN untuk Login Email LINE V2
+          if (data.result?.pinMessage) {
+            const pinDiv = document.createElement("div");
+            pinDiv.style.fontWeight = "bold";
+            pinDiv.style.color = "#d63384";
+            pinDiv.style.marginTop = "10px";
+            pinDiv.textContent = "🔐 " + data.result.pinMessage;
+            panel.appendChild(pinDiv);
+
+            // Tombol Lanjutkan
+            const continueBtn = document.createElement("button");
+            continueBtn.textContent = "Lanjutkan untuk Ambil Token";
+            continueBtn.className = "btn";
+            continueBtn.style.marginTop = "10px";
+            continueBtn.onclick = () => {
+              panel.appendChild(document.createTextNode("⏳ Menunggu verifikasi PIN..."));
+
+              const payload2 = { ...payload, step: "token" };
+              fetch("https://api2.teamhackbotsindo.my.id/api/line-email-v2", {
+                method: "POST",
+                headers: { "x-api-key": apiKey, "Content-Type": "application/json" },
+                body: JSON.stringify(payload2)
+              })
+                .then(res => {
+                  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                  return res.json();
+                })
+                .then(data2 => {
+                  const tokenPre = document.createElement("pre");
+                  tokenPre.textContent = JSON.stringify(data2, null, 2);
+                  panel.appendChild(tokenPre);
+
+                  // tampilkan token & certificate jika ada
+                  if (data2.result?.authToken) {
+                    const tokenDiv = document.createElement("div");
+                    tokenDiv.style.marginTop = "10px";
+                    tokenDiv.style.color = "#198754";
+                    tokenDiv.textContent = "✅ AuthToken: " + data2.result.authToken;
+                    panel.appendChild(tokenDiv);
+                  }
+                  if (data2.result?.certificate) {
+                    const certDiv = document.createElement("div");
+                    certDiv.style.marginTop = "6px";
+                    certDiv.style.color = "#0d6efd";
+                    certDiv.textContent = "📜 Certificate: " + data2.result.certificate;
+                    panel.appendChild(certDiv);
+                  }
+                })
+                .catch(err => {
+                  const errDiv = document.createElement("div");
+                  errDiv.style.color = "#dc3545";
+                  errDiv.style.marginTop = "8px";
+                  errDiv.textContent = "Error ambil token: " + err;
+                  panel.appendChild(errDiv);
+                });
+            };
+
+            panel.appendChild(continueBtn);
+          }
+
+          // Link login (QR flow)
+          if (data.result?.url) {
+            const link = document.createElement("a");
+            link.href = data.result.url;
+            link.textContent = "Link Login LINE";
+            link.target = "_blank";
+            link.style.display = "block";
+            link.style.marginTop = "10px";
+            panel.appendChild(link);
+          }
+
+          // Link image QR (QR flow)
+          if (data.result?.qrImageLink) {
+            const linkImg = document.createElement("a");
+            linkImg.href = data.result.qrImageLink;
+            linkImg.textContent = "Link Image QR (PNG)";
+            linkImg.target = "_blank";
+            linkImg.style.display = "block";
+            linkImg.style.marginTop = "6px";
+            panel.appendChild(linkImg);
+          }
+        })
+        .catch(err => panel.textContent = "Error: " + err);
+    }
+    // Ambil elemen tab Login QR
+    const tabJSLoginqr = document.getElementById('tabJSLoginqr');
+    const tabPyLoginqr = document.getElementById('tabPyLoginqr');
+    const tabGoLoginqr = document.getElementById('tabGoLoginqr');
+
+    // Ambil panel Login QR
+    const jsLoginqr = document.getElementById('jsLoginqr');
+    const pyLoginqr = document.getElementById('pyLoginqr');
+    const goLoginqr = document.getElementById('goLoginqr');
+
+    function showLoginqr(tab) {
+      [tabJSLoginqr, tabPyLoginqr, tabGoLoginqr].forEach(btn => btn.classList.remove('active'));
+      [jsLoginqr, pyLoginqr, goLoginqr].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    // Sinkronisasi dengan sidebar
+      const targetId = tab.getAttribute('aria-controls');
+      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
+      if (sidebarLink) {
+        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
+        sidebarLink.classList.add('active');
+      }
+    }
+
+    // Event listener
+    tabJSLoginqr.addEventListener('click', () => showLoginqr(tabJSLoginqr));
+    tabPyLoginqr.addEventListener('click', () => showLoginqr(tabPyLoginqr));
+    tabGoLoginqr.addEventListener('click', () => showLoginqr(tabGoLoginqr));
+
+
+    // Ambil elemen tab V2
+    const tabJSLoginEmailV2 = document.getElementById('tabJSLoginEmailV2');
+    const tabPyLoginEmailV2 = document.getElementById('tabPyLoginEmailV2');
+    const tabGoLoginEmailV2 = document.getElementById('tabGoLoginEmailV2');
+
+    // Ambil panel V2
+    const jsLoginEmailV2 = document.getElementById('jsLoginEmailV2');
+    const pyLoginEmailV2 = document.getElementById('pyLoginEmailV2');
+    const goLoginEmailV2 = document.getElementById('goLoginEmailV2');
+
+    // Ambil elemen tab V3
+    const tabJSLoginEmailV3 = document.getElementById('tabJSLoginEmailV3');
+    const tabPyLoginEmailV3 = document.getElementById('tabPyLoginEmailV3');
+    const tabGoLoginEmailV3 = document.getElementById('tabGoLoginEmailV3');
+
+    // Ambil panel V3
+    const jsLoginEmailV3 = document.getElementById('jsLoginEmailV3');
+    const pyLoginEmailV3 = document.getElementById('pyLoginEmailV3');
+    const goLoginEmailV3 = document.getElementById('goLoginEmailV3');
+
+    function showLoginEmailV2(tab) {
+      // reset semua tab & panel
+      [tabJSLoginEmailV2, tabPyLoginEmailV2, tabGoLoginEmailV2].forEach(btn => btn.classList.remove('active'));
+      [jsLoginEmailV2, pyLoginEmailV2, goLoginEmailV2].forEach(panel => panel.style.display = 'none');
+
+      // aktifkan tab & panel sesuai klik
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    // Sinkronisasi dengan sidebar
+      const targetId = tab.getAttribute('aria-controls');
+      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
+      if (sidebarLink) {
+        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
+        sidebarLink.classList.add('active');
+      }
+    }
+
+    // Event listener
+    tabJSLoginEmailV2.addEventListener('click', () => showLoginEmailV2(tabJSLoginEmailV2));
+    tabPyLoginEmailV2.addEventListener('click', () => showLoginEmailV2(tabPyLoginEmailV2));
+    tabGoLoginEmailV2.addEventListener('click', () => showLoginEmailV2(tabGoLoginEmailV2)); 
+
+    function showLoginEmailV3(tab) {
+      // reset semua tab & panel
+      [tabJSLoginEmailV3, tabPyLoginEmailV3, tabGoLoginEmailV3].forEach(btn => btn.classList.remove('active'));
+      [jsLoginEmailV3, pyLoginEmailV3, goLoginEmailV3].forEach(panel => panel.style.display = 'none');
+
+      // aktifkan tab & panel sesuai klik
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    // Sinkronisasi dengan sidebar
+      const targetId = tab.getAttribute('aria-controls');
+      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
+      if (sidebarLink) {
+        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
+        sidebarLink.classList.add('active');
+      }
+    }
+
+    // Event listener
+    tabJSLoginEmailV3.addEventListener('click', () => showLoginEmailV3(tabJSLoginEmailV3));
+    tabPyLoginEmailV3.addEventListener('click', () => showLoginEmailV3(tabPyLoginEmailV3));
+    tabGoLoginEmailV3.addEventListener('click', () => showLoginEmailV3(tabGoLoginEmailV3));
+
+  </script>
+</body>
+</html>
