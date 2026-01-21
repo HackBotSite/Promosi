@@ -516,7 +516,7 @@
         <li><a href="#education">Education</span><span class="count">1</span></a></li>
         <li><a href="#news">News</span><span class="count">5</span></a></li>
         <li><a href="#game">Game</span><span class="count">1</span></a></li>
-        <li><a href="#tool">Tool</span><span class="count">3</span></a></li>
+        <li><a href="#tool">Tool</span><span class="count">4</span></a></li>
         <li><a href="#entertainment">Entertainment</span><span class="count">2</span></a></li>
         <li><a href="#random">Random</span><span class="count">8</span></a></li>
       </ul>
@@ -3682,6 +3682,138 @@ func main() {
         </div>
       </section>
 
+      <!-- Code samples Kalender -->
+      <section class="card">
+        <div class="card-header">Contoh Kode — Kalender Hijriah, Masehi & Jawa</div>
+        <div class="tabs">
+          <div class="tab-list" role="tablist" aria-label="Contoh kode Kalender">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="curlkalender" id="tabCurlkalender">Curl</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="jskalender" id="tabJSkalender">JavaScript</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="pykalender" id="tabPykalender">Python</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="gokalender" id="tabGokalender">Golang</button>
+          </div>
+
+          <!-- CURL -->
+          <div id="curlkalender" role="tabpanel" aria-labelledby="tabCurlkalender" class="code">
+            <pre><code class="language-bash">
+# Kalender bulan
+curl -X GET "https://api2.teamhackbotsindo.my.id/api/kalender?bulan=April" \
+  -H "x-api-key: YOUR_API_KEY"
+
+# Kalender Hari
+curl -X GET "https://api2.teamhackbotsindo.my.id/api/kalender?tanggal=17%20Agustus%202026" \
+  -H "x-api-key: YOUR_API_KEY"
+            </code></pre>
+          </div>
+
+          <!-- JS -->
+          <div id="jskalender" role="tabpanel" aria-labelledby="tabJSkalender" class="code" style="display:none">
+      <pre><code class="language-js">
+// kalender bulan
+const apiKey = "YOUR_API_KEY";
+
+fetch("https://api2.teamhackbotsindo.my.id/api/kalender?bulan=April", {
+  headers: { "x-api-key": apiKey }
+})
+  .then(res => res.json())
+  .then(data => console.log("kalender:", data))
+  .catch(err => console.error(err));
+
+
+// kalender Hari
+const apiKey = "YOUR_API_KEY";
+
+fetch("https://api2.teamhackbotsindo.my.id/api/kalender?tanggal=17%20Agustus%202026", {
+  headers: { "x-api-key": apiKey }
+})
+  .then(res => res.json())
+  .then(data => console.log("kalender:", data))
+  .catch(err => console.error(err));
+      </code></pre>
+          </div>
+
+          <!-- Python -->
+          <div id="pykalender" role="tabpanel" aria-labelledby="tabPykalender" class="code" style="display:none">
+      <pre><code class="language-python">
+// Kalender Bulan
+import requests
+
+apiKey = "YOUR_API_KEY"
+url = f"https://api2.teamhackbotsindo.my.id/api/kalender?bulan=April"
+
+resp = requests.get(url, headers={"x-api-key": apiKey})
+data = resp.json()
+print("kalender:", data)
+print("kalender:", data.get("url"))
+
+// Kalender Hari
+import requests
+
+apiKey = "YOUR_API_KEY"
+url = f"https://api2.teamhackbotsindo.my.id/api/kalender?tanggal=17%20Agustus%202026"
+
+resp = requests.get(url, headers={"x-api-key": apiKey})
+data = resp.json()
+print("kalender:", data)
+print("kalender:", data.get("url"))
+      </code></pre>
+          </div>
+
+          <!-- Golang -->
+          <div id="gokalender" role="tabpanel" aria-labelledby="tabGokalender" class="code" style="display:none">
+      <pre><code class="language-go">
+// Kalender Bulan
+package main
+
+import (
+  "fmt"
+  "net/http"
+  "io/ioutil"
+)
+
+func main() {
+  apiKey := "YOUR_API_KEY"
+  url := fmt.Sprintf("https://api2.teamhackbotsindo.my.id/api/kalender?bulan=April")
+
+  client := &http.Client{}
+  req, _ := http.NewRequest("GET", url, nil)
+  req.Header.Set("x-api-key", apiKey)
+
+  resp, _ := client.Do(req)
+  defer resp.Body.Close()
+
+  body, _ := ioutil.ReadAll(resp.Body)
+  fmt.Println(string(body))
+}
+
+// Kalender Hari
+package main
+
+import (
+  "fmt"
+  "net/http"
+  "io/ioutil"
+)
+
+func main() {
+  apiKey := "YOUR_API_KEY"
+  url := fmt.Sprintf("https://api2.teamhackbotsindo.my.id/api/kalender?tanggal=17%20Agustus%202026")
+
+  client := &http.Client{}
+  req, _ := http.NewRequest("GET", url, nil)
+  req.Header.Set("x-api-key", apiKey)
+
+  resp, _ := client.Do(req)
+  defer resp.Body.Close()
+
+  body, _ := ioutil.ReadAll(resp.Body)
+  fmt.Println(string(body))
+}
+      </code></pre>
+          </div>
+        </div>
+      </section>
+
       <!-- Section Entertainment -->
       <section class="card" id="entertainment" aria-labelledby="entertainment-title">
         <div class="card-header" id="entertainment-title">Dokumentasi API — Entertainment</div>
@@ -4730,7 +4862,8 @@ func main() {
     const toolEndpoints = [
       { no: 1, name: "Proxy List", method: "GET", desc: "Daftar proxy SOCKS4/5", query: ["apikey"] },
       { no: 2, name: "Screenshot", method: "GET", desc: "Screenshot Website fullscreen", query: ["apikey", "url"] },
-      { no: 3, name: "Screenshot V2", method: "GET", desc: "Screenshot Website", query: ["apikey", "url"] }
+      { no: 3, name: "Screenshot V2", method: "GET", desc: "Screenshot Website", query: ["apikey", "url"] },
+      { no: 4, name: "Kalender", method: "GET", desc: "Kalender Hijriah, Masehi & Jawa", query: ["apikey", "query"] }
     ];
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -4769,6 +4902,9 @@ func main() {
           break;
         case "Screenshot V2":
           url = `https://api2.teamhackbotsindo.my.id/api/screenshotV2?url=https://teamhackbotsrg.my.id/`;
+          break;
+        case "Kalender":
+          url = `https://api2.teamhackbotsindo.my.id/api/kalender?bulan=April`;
           break;
       }
 
@@ -4892,6 +5028,37 @@ func main() {
     tabJSscreenshotV2.addEventListener('click', () => showscreenshotV2(tabJSscreenshotV2));
     tabPyscreenshotV2.addEventListener('click', () => showscreenshotV2(tabPyscreenshotV2));
     tabGoscreenshotV2.addEventListener('click', () => showscreenshotV2(tabGoscreenshotV2));
+
+    // TAB kalender
+    const tabCurlkalender = document.getElementById('tabCurlkalender');
+    const tabJSkalender = document.getElementById('tabJSkalender');
+    const tabPykalender = document.getElementById('tabPykalender');
+    const tabGokalender = document.getElementById('tabGokalender');
+
+    const curlkalender = document.getElementById('curlkalender');
+    const jskalender = document.getElementById('jskalender');
+    const pykalender = document.getElementById('pykalender');
+    const gokalender = document.getElementById('gokalender');
+
+    function showkalender(tab) {
+      [tabCurlkalender, tabJSkalender, tabPykalender, tabGokalender].forEach(btn => btn.classList.remove('active'));
+      [curlkalender, jskalender, pykalender, gokalender].forEach(panel => panel.style.display = 'none');
+
+      tab.classList.add('active');
+      document.getElementById(tab.getAttribute('aria-controls')).style.display = 'block';
+    // Sinkronisasi dengan sidebar
+      const targetId = tab.getAttribute('aria-controls');
+      const sidebarLink = document.querySelector(`.sidebar .nav-list a[href="#${targetId}"]`);
+      if (sidebarLink) {
+        document.querySelectorAll('.sidebar .nav-list a').forEach(link => link.classList.remove('active'));
+        sidebarLink.classList.add('active');
+      }
+    }
+
+    tabCurlkalender.addEventListener('click', () => showkalender(tabCurlkalender));
+    tabJSkalender.addEventListener('click', () => showkalender(tabJSkalender));
+    tabPykalender.addEventListener('click', () => showkalender(tabPykalender));
+    tabGokalender.addEventListener('click', () => showkalender(tabGokalender));
 
     // API-Entertainment
     const entertainmentEndpoints = [
