@@ -7340,36 +7340,21 @@ func main() {
   </script>
 
   <script>
-    // Fungsi update stats
     function updateStats() {
       fetch('https://api2.teamhackbotsindo.my.id/api/stats')
-        .then(res => {
-          if (!res.ok) throw new Error("Status " + res.status);
-          return res.json();
-        })
+        .then(res => res.json())
         .then(stats => {
           document.getElementById('visitorCount').textContent = stats.visitorCount.toLocaleString();
           document.getElementById('userCount').textContent = stats.userCount.toLocaleString();
           document.getElementById('totalRequests').textContent = stats.totalRequests.toLocaleString();
           document.getElementById('requestsToday').textContent = stats.requestsToday.toLocaleString();
         })
-        .catch(err => {
-          console.error("Gagal ambil stats:", err);
-          ["visitorCount", "userCount", "totalRequests", "requestsToday"].forEach(id => {
-            document.getElementById(id).textContent = "Error";
-          });
-        });
+        .catch(err => console.error("Gagal ambil stats:", err));
     }
 
     // Saat halaman load → visitor naik, lalu update stats
     fetch('https://api2.teamhackbotsindo.my.id/api/track-visit')
       .then(() => updateStats());
-
-    // Saat klik Try API → request counter naik, lalu update stats
-    function tryApi() {
-      fetch('https://api2.teamhackbotsindo.my.id/api/kuisv1')
-        .then(() => updateStats());
-    }
   </script>
 
   <button onclick="tryApi()">Try API</button>
