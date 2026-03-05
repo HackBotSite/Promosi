@@ -6117,21 +6117,26 @@ func main() {
 
           } else if (feature === "Smule Audio / Video" && data.result) {
               const r = data.result;
-
               html = `
                 <p><strong>Title:</strong> ${r.info?.title || "-"}</p>
                 <p><strong>Artist:</strong> ${r.info?.artist || "-"}</p>
-                <p><strong>Uploader:</strong> ${r.info?.owner?.first_name || "-"}</p>
+                <p><strong>Description:</strong> ${r.info?.description || "-"}</p>
+                <p><strong>Uploader:</strong> ${r.info?.owner?.handle || r.info?.owner?.first_name || "-"}</p>
                 <p><img src="${r.downloads?.thumbnail || ""}" alt="${r.info?.title || "Thumbnail"}" style="max-width:200px"></p>
                 <p><strong>Type:</strong> ${r.downloads?.type || "-"}</p>
               `;
-
               if (r.downloads?.audio) {
                 html += `<p><strong>Link Audio:</strong> <a href="${r.downloads.audio}" target="_blank">${r.downloads.audio}</a></p>`;
               }
-
               if (r.downloads?.video) {
                 html += `<p><strong>Link Video:</strong> <a href="${r.downloads.video}" target="_blank">${r.downloads.video}</a></p>`;
+              }
+              if (r.info?.stats) {
+                html += `
+                  <p><strong>Listens:</strong> ${r.info.stats.total_listens || 0}</p>
+                  <p><strong>Loves:</strong> ${r.info.stats.total_loves || 0}</p>
+                  <p><strong>Comments:</strong> ${r.info.stats.total_comments || 0}</p>
+                `;
               }
           } else if (feature === "Smule Downloader" && data.result) {
             // Smule Downloader via smulevideodownloader.com
