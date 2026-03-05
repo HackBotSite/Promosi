@@ -472,14 +472,14 @@
   <nav aria-label="Top navigation">
     <div class="nav-inner">
       <div class="brand">
-        <a href="/#beranda">
+        <a href="index.html#beranda">
           <img src="https://ik.imagekit.io/wamr3naeq/thb/hbds2.png" alt="Logo Hacksbots Digital Solution">
         </a>
         <span class="title">Hacksbots Digital Solution</span>
         <span class="badge">REST API</span>
       </div>
       <div class="menu" role="menubar">
-        <a role="menuitem" href="/beranda">Beranda</a>
+        <a role="menuitem" href="index.html#beranda">Beranda</a>
         <div class="dropdown">
           <button class="dropbtn" aria-haspopup="true" aria-expanded="false">
             Layanan <span class="arrow">▼</span>
@@ -6116,28 +6116,24 @@ func main() {
             `;
 
           } else if (feature === "Smule Audio / Video" && data.result) {
-              const r = data.result;
-              html = `
-                <p><strong>Title:</strong> ${r.info?.title || "-"}</p>
-                <p><strong>Artist:</strong> ${r.info?.artist || "-"}</p>
-                <p><strong>Description:</strong> ${r.info?.description || "-"}</p>
-                <p><strong>Uploader:</strong> ${r.info?.owner?.handle || r.info?.owner?.first_name || "-"}</p>
-                <p><img src="${r.downloads?.thumbnail || ""}" alt="${r.info?.title || "Thumbnail"}" style="max-width:200px"></p>
-                <p><strong>Type:</strong> ${r.downloads?.type || "-"}</p>
-              `;
-              if (r.downloads?.audio) {
-                html += `<p><strong>Link Audio:</strong> <a href="${r.downloads.audio}" target="_blank">${r.downloads.audio}</a></p>`;
-              }
-              if (r.downloads?.video) {
-                html += `<p><strong>Link Video:</strong> <a href="${r.downloads.video}" target="_blank">${r.downloads.video}</a></p>`;
-              }
-              if (r.info?.stats) {
-                html += `
-                  <p><strong>Listens:</strong> ${r.info.stats.total_listens || 0}</p>
-                  <p><strong>Loves:</strong> ${r.info.stats.total_loves || 0}</p>
-                  <p><strong>Comments:</strong> ${r.info.stats.total_comments || 0}</p>
-                `;
-              }
+            const r = data.result;
+
+            html = `
+              <p><strong>Title:</strong> ${r.info?.title || "-"}</p>
+              <p><strong>Artist:</strong> ${r.info?.artist || "-"}</p>
+              ${r.info?.description ? `<p><strong>Deskripsi:</strong> ${r.info.description}</p>` : ""}
+              <p><strong>Uploader:</strong> ${r.owner?.first_name || "-"}</p>
+              <p><img src="${r.info?.thumbnail || ""}" alt="${r.info?.title || "Thumbnail"}" style="max-width:200px"></p>
+              <p><strong>Type:</strong> ${r.media?.type || "-"}</p>
+            `;
+
+            if (r.media?.audioUrl) {
+              html += `<p><strong>Link Audio:</strong> <a href="${r.media.audioUrl}" target="_blank">${r.media.audioUrl}</a></p>`;
+            }
+
+            if (r.media?.videoUrl) {
+              html += `<p><strong>Link Video:</strong> <a href="${r.media.videoUrl}" target="_blank">${r.media.videoUrl}</a></p>`;
+            }
           } else if (feature === "Smule Downloader" && data.result) {
             // Smule Downloader via smulevideodownloader.com
             const r = data.result;
